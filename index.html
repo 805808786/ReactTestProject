@@ -3,10 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <script>
+      (function () {
+        function setRem() {
+          var html = document.documentElement;
+          var width = html.clientWidth;
+          // 设计稿基于 440px，限制最大拉伸宽度为 480px 防止 PC 端元素巨大化
+          if (width > 480) width = 480;
+          // 440px 对应 100px 的 root font-size，即 1rem = 100px
+          html.style.fontSize = width / 4.4 + "px";
+        }
+        setRem();
+        window.addEventListener("resize", setRem);
+        window.addEventListener("pageshow", function (e) {
+          if (e.persisted) setRem();
+        });
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>墅企瞭望台</title>
   </head>
   <body>
