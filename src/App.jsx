@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import CalendarView from './pages/CalendarView'
+import EnterpriseCalendar from './pages/EnterpriseCalendar'
+import SceneCalendar from './pages/SceneCalendar'
+import TagCalendar from './pages/TagCalendar'
 import './index.css'
 
 function App() {
@@ -8,7 +10,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/calendar" element={<CalendarView />} />
+        <Route path="/calendar" element={<EnterpriseCalendar />} />
+        <Route path="/scene-calendar" element={<SceneCalendar />} />
+        <Route path="/tag-calendar" element={<TagCalendar />} />
       </Routes>
     </BrowserRouter>
   )

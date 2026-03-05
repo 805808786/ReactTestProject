@@ -1,0 +1,473 @@
+/* =====================================================
+   TagCalendar.css — 标签日历页面样式
+   设计稿基准：440px，postcss-pxtorem 自动转换 rem
+   ===================================================== */
+
+.tc-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #F9FAFB 0%, #ECF6FF 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-bottom: 32px;
+}
+
+/* ---- Header ---- */
+.tc-header {
+  width: 100%;
+  height: 91px;
+  padding: 16px 16px 0;
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-shrink: 0;
+}
+
+.tc-header-top {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: -8px;
+}
+
+.tc-back-btn {
+  width: 36px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.tc-header-title {
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.45px;
+  color: #ffffff;
+}
+
+/* ---- 主内容区 ---- */
+.tc-content {
+  width: 100%;
+  padding: 32px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+/* ---- Tabs 选项卡 ---- */
+.tc-tabs {
+  position: absolute;
+  top: -24px;
+  left: 16px;
+  right: 16px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1),
+              0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: stretch;
+  z-index: 10;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tc-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.9);
+  cursor: pointer;
+  position: relative;
+  padding: 0 16px;
+}
+
+.tc-tab--active {
+  font-weight: 600;
+  color: #0052D9;
+}
+
+.tc-tab-track {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 3px;
+  background: #0052D9;
+  border-radius: 999px;
+}
+
+/* ---- 标签日历标题区（非下拉，白色卡片）---- */
+.tc-title-card {
+  width: 100%;
+  min-height: 48px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  gap: 4px;
+}
+
+.tc-title-text {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* ---- 标签变化趋势卡片 ---- */
+.tc-trend-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tc-trend-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tc-trend-left {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tc-trend-dot {
+  width: 8px;
+  height: 8px;
+  background: #155DFC;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tc-trend-title {
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #0A0A0A;
+}
+
+.tc-trend-range {
+  display: flex;
+  align-items: center;
+}
+
+.tc-range-btn {
+  height: 20px;
+  min-width: 52px;
+  padding: 0 6px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 10px;
+  line-height: 18px;
+  text-align: center;
+  cursor: pointer;
+  border: 0.5px solid #155DFC;
+  color: rgba(0, 0, 0, 0.6);
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.tc-range-btn:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.tc-range-btn:last-child {
+  border-radius: 0 4px 4px 0;
+}
+
+.tc-range-btn--active {
+  background: #172AFF;
+  color: #ffffff;
+  border-color: #172AFF;
+}
+
+/* ---- 折线图 ---- */
+.tc-chart-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+}
+
+.tc-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 74px;
+  width: 42px;
+  flex-shrink: 0;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 10px;
+  color: #4A5565;
+  text-align: right;
+  line-height: 1;
+  padding-right: 4px;
+}
+
+.tc-y-axis span {
+  line-height: 1;
+}
+
+.tc-chart-body {
+  flex: 1;
+  position: relative;
+}
+
+.tc-chart-body svg {
+  display: block;
+  width: 100%;
+}
+
+.tc-x-axis {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  margin-top: 4px;
+}
+
+.tc-x-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 10px;
+  color: #4A5565;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+/* ---- 时间轴列表 ---- */
+.tc-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 4px;
+}
+
+.tc-timeline-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 8px;
+}
+
+.tc-tl-date {
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: -0.44px;
+  color: #0A0A0A;
+}
+
+.tc-tl-card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- 内容区块 ---- */
+.tc-tl-block {
+  border-radius: 10px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tc-tl-block--blue {
+  background: #EFF6FF;
+}
+
+.tc-tl-block--orange {
+  background: #FFEBE2;
+  gap: 6px;
+}
+
+.tc-tl-block--purple {
+  background: #FAF5FF;
+  gap: 6px;
+}
+
+.tc-tl-label {
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #4A5565;
+}
+
+/* 标签总数行 */
+.tc-tl-count-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.tc-tl-count {
+  font-family: 'PingFang MO', 'PingFang SC', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: -0.44px;
+  color: #155DFC;
+}
+
+.tc-tl-delta {
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #4A5565;
+}
+
+.tc-tl-delta--pos {
+  color: #F4200D;
+}
+
+.tc-tl-delta--neg {
+  color: #0AA34E;
+}
+
+/* 变化原因列表行 */
+.tc-tl-reason-row {
+  display: flex;
+  gap: 4px;
+  align-items: flex-start;
+}
+
+.tc-tl-reason-index {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: #F54900;
+  flex-shrink: 0;
+}
+
+.tc-tl-reason-text {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: #4A5565;
+  line-height: 1.4;
+}
+
+/* 标签变化标题行 */
+.tc-tl-change-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 标签变化每行 */
+.tc-tl-change-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+/* 类型徽章（新增/调整/删除）*/
+.tc-tl-type-badge {
+  flex-shrink: 0;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.tc-tl-type-badge--add {
+  background: #DCFCE7;
+  color: #008236;
+}
+
+.tc-tl-type-badge--adjust {
+  background: #DBEAFE;
+  color: #1447E6;
+}
+
+.tc-tl-type-badge--delete {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+/* 标签变化内容区 */
+.tc-tl-change-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: #4A5565;
+  line-height: 1.4;
+  min-width: 0;
+}
+
+.tc-tl-change-cat {
+  color: #1E2939;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.tc-tl-change-dot {
+  color: #4A5565;
+  flex-shrink: 0;
+}
+
+.tc-tl-change-detail {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 数量徽章 */
+.tc-tl-count-badge {
+  flex-shrink: 0;
+  background: #EFF6FF;
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: #155DFC;
+  white-space: nowrap;
+  line-height: 18px;
+}
