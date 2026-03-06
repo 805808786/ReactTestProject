@@ -11,6 +11,7 @@ import PolicyList from './pages/PolicyList'
 import DataContribution from './pages/DataContribution'
 import FollowEnterprise from './pages/FollowEnterprise'
 import SceneEnterpriseDynamic from './pages/SceneEnterpriseDynamic'
+import WaistEnterprise from './pages/WaistEnterprise'
 import TopEnterpriseDynamic from './pages/TopEnterpriseDynamic'
 import EnterpriseDynamic from './pages/EnterpriseDynamic'
 import PlannedVisits from './pages/PlannedVisits'
@@ -33,6 +34,7 @@ function App() {
         <Route path="/data-contribution" element={<DataContribution />} />
         <Route path="/follow-enterprise" element={<FollowEnterprise />} />
         <Route path="/scene-enterprise-dynamic" element={<SceneEnterpriseDynamic />} />
+        <Route path="/waist-enterprise" element={<WaistEnterprise />} />
         <Route path="/top-enterprise-dynamic" element={<TopEnterpriseDynamic />} />
         <Route path="/enterprise-dynamic" element={<EnterpriseDynamic />} />
         <Route path="/planned-visits" element={<PlannedVisits />} />

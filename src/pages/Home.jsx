@@ -304,7 +304,7 @@ function FocusEnterprise() {
               <span className="item-sub-label green-text">今日+3</span>
             </div>
           </div>
-          <div className="enterprise-item purple-bg">
+          <div className="enterprise-item purple-bg" onClick={() => navigate('/waist-enterprise')} style={{ cursor: 'pointer' }}>
             <div className="item-header">
               <span className="item-label">腰部企业挖掘</span>
               <span className="item-arrow purple-text">→</span>
