@@ -1,0 +1,272 @@
+/* ===================== 页面容器 ===================== */
+.sr-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #F9FAFB;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================== 头部区域 ===================== */
+.sr-header {
+  background: linear-gradient(90deg, rgba(21, 93, 252, 1) 0%, rgba(20, 71, 230, 1) 100%);
+  padding: 16px 16px 0px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 16px;
+}
+
+.sr-header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-back-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -8px;
+}
+
+.sr-back-btn img {
+  filter: brightness(0) invert(1);
+}
+
+.sr-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: #FFFFFF;
+}
+
+/* 搜索行 */
+.sr-search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-search-bar {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 8px;
+  padding: 8px 12px;
+  gap: 8px;
+}
+
+.sr-search-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.sr-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.9);
+  background: transparent;
+}
+
+.sr-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.sr-calendar-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.sr-calendar-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===================== 数据统计区域 ===================== */
+.sr-stats-area {
+  padding: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.sr-stat-card {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sr-stat-card--primary {
+  background: linear-gradient(135deg, #FF9A3E 0%, #FF6B3E 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sr-stat-label {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  opacity: 0.75;
+}
+
+.sr-stat-card--primary .sr-stat-label {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.sr-stat-card:not(.sr-stat-card--primary) .sr-stat-label {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.sr-stat-value {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+}
+
+.sr-stat-card--primary .sr-stat-value {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.sr-stat-card:not(.sr-stat-card--primary) .sr-stat-value {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* ===================== 场景卡片 ===================== */
+.sr-card {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sr-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sr-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: rgba(0, 0, 0, 0.9);
+  flex: 1;
+}
+
+.sr-card-badge {
+  padding: 2px 8px;
+  background: rgba(21, 93, 252, 0.1);
+  border-radius: 4px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+}
+
+.sr-card-desc {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.sr-card-metrics {
+  display: flex;
+  gap: 8px;
+}
+
+.sr-metric-item {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sr-metric-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sr-metric-label {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.sr-metric-arrow {
+  font-size: 14px;
+  line-height: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sr-metric-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 26px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.sr-metric-value small {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.sr-metric-today {
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===================== 列表容器覆盖 ===================== */
+.sr-container .il-container {
+  flex: 1;
+  padding: 0 16px 16px 16px;
+  overflow-y: auto;
+}
+
+.sr-container .il-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sr-container .il-item {
+  padding: 0;
+}
