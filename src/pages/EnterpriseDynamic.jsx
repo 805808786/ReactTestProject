@@ -182,9 +182,40 @@ function MonthHeader({ month, isFirstMonth }) {
 
 /* ===================== 走访记录卡片 ===================== */
 function VisitCard({ item }) {
-  const { date, startTime, endTime, title } = item;
+  const navigate = useNavigate();
+  const { id, date, startTime, endTime, title } = item;
+
+  const handleClick = () => {
+    navigate(`/enterprise-dynamic-detail/${id}`, {
+      state: {
+        visitData: {
+          title,
+          dateTime: `${date} ${startTime}至${endTime}`,
+          summary: '走访大纲: 聚焦企业发展情况，探讨通过政策路径，推动企业价值化与业务拓展。',
+          participants: '参加人员： 陆文婷、王建群、郭李飞、金江锋、高琰',
+          meetingTime: `会议时间： ${date}`,
+          meetingPlace: `会议地点：${title.replace(/走访.*/, '').trim()}`,
+          mainContent: '会议主要内容：',
+          contentParagraphs: [
+            '一、走访情况\n详细记录本次走访的主要内容和企业反馈情况。',
+            '二、企业诉求\n\n企业在发展过程中遇到的主要问题和诉求，以及相关部门的回应和处理方案。',
+          ],
+          relatedCompanies: [
+            {
+              id: 1,
+              name: title.replace(/走访.*/, '').trim() || title,
+              industry: '软件和信息技术服务业',
+              legalPerson: '张伟',
+              status: '存续',
+            },
+          ],
+        },
+      },
+    });
+  };
+
   return (
-    <div className="ed-card">
+    <div className="ed-card" onClick={handleClick} style={{ cursor: 'pointer' }}>
       <div className="ed-card-content">
         <div className="ed-card-date">{date}</div>
         <div className="ed-card-row">

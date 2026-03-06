@@ -1,0 +1,330 @@
+/* ===== 页面容器 ===== */
+.vd-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.vd-header {
+  height: 64px;
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.vd-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.vd-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.vd-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4em;
+  letter-spacing: -0.022em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== 主体区域（可滚动） ===== */
+.vd-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 0px;
+}
+
+/* ===== 卡片通用样式 ===== */
+.vd-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.vd-card--last {
+  margin-bottom: 16px;
+}
+
+.vd-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 0px;
+}
+
+.vd-card-content--related {
+  gap: 12px;
+}
+
+/* ===== 标题 + 日期时间 ===== */
+.vd-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 56px;
+}
+
+.vd-title-row {
+  margin-bottom: 8px;
+}
+
+.vd-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.556em;
+  letter-spacing: -0.024em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.vd-meta-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  height: 16px;
+}
+
+.vd-meta-text {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+/* ===== 分隔线 ===== */
+.vd-separator {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+/* ===== 走访大纲（摘要）===== */
+.vd-summary-box {
+  background: #EFF6FF;
+  border-radius: 10px;
+  padding: 12px 12px 0px;
+  box-sizing: border-box;
+}
+
+.vd-summary-text {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.625em;
+  font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  white-space: pre-wrap;
+}
+
+/* ===== 详情内容 ===== */
+.vd-detail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.vd-detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vd-detail-text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625em;
+  letter-spacing: -0.011em;
+  font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  white-space: pre-wrap;
+}
+
+.vd-detail-text--bold {
+  font-weight: 500;
+  color: #000000;
+  font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.vd-detail-text--heading {
+  font-weight: 500;
+  color: #000000;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ===== 关联企业卡片 ===== */
+.vd-section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 20px;
+  position: relative;
+}
+
+.vd-section-icon {
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+
+.vd-section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.429em;
+  letter-spacing: -0.011em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin-left: 24px;
+}
+
+.vd-section-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  margin-left: 8px;
+}
+
+/* ===== 企业列表 ===== */
+.vd-company-list {
+  background: #F9FAFB;
+  border-radius: 10px;
+  padding: 12px 12px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.vd-company-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.vd-company-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.vd-company-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.vd-company-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.429em;
+  letter-spacing: -0.011em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.vd-company-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.vd-company-industry {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4A5565;
+  line-height: 1.333em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.vd-company-dot {
+  font-size: 12px;
+  color: #4A5565;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  flex-shrink: 0;
+}
+
+.vd-company-person {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4A5565;
+  line-height: 1.333em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+/* 状态标签 */
+.vd-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: #0AA34E;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.333em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  height: 22px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* 查看详情行 */
+.vd-company-detail-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 24px;
+}
+
+.vd-company-detail-link {
+  font-size: 12px;
+  font-weight: 400;
+  color: #155DFC;
+  line-height: 1.333em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  cursor: pointer;
+}
