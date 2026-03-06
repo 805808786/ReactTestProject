@@ -5,6 +5,7 @@ import SceneCalendar from './pages/SceneCalendar'
 import TagCalendar from './pages/TagCalendar'
 import EnterpriseList from './pages/EnterpriseList'
 import SceneRadar from './pages/SceneRadar'
+import SceneEnterprise from './pages/SceneEnterprise'
 import SceneDescription from './pages/SceneDescription'
 import './index.css'
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/tag-calendar" element={<TagCalendar />} />
         <Route path="/enterprise-list" element={<EnterpriseList />} />
         <Route path="/scene-radar" element={<SceneRadar />} />
+        <Route path="/scene-enterprise" element={<SceneEnterprise />} />
         <Route path="/scene-description/:id" element={<SceneDescription />} />
       </Routes>
     </BrowserRouter>

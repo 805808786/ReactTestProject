@@ -84,18 +84,21 @@ const SCENE_DATA = [
 const PAGE_SIZE = 10;
 
 /* ===================== 场景卡片 ===================== */
-function SceneCard({ scene }) {
+function SceneCard({ scene, onSceneDetail }) {
   const navigate = useNavigate();
   const { id, name, description, enterprises, dynamics, todayEnterprises, todayDynamics } = scene;
 
   return (
     <div className="sr-card">
       {/* 顶部：场景名称 + 场景说明 */}
-      <div className="sr-card-header">
-        <div className="sr-card-title">{name}</div>
+      <div className="sr-card-header" onClick={() => onSceneDetail(scene)}>
+        <div className="sr-card-title">1-2{name}</div>
         <span
           className="sr-card-badge"
-          onClick={() => navigate(`/scene-description/${id}`, { state: { sceneName: name } })}
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/scene-description/${id}`, { state: { sceneName: name } });
+          }}
           style={{ cursor: 'pointer' }}
         >场景说明</span>
       </div>
@@ -245,7 +248,17 @@ export default function SceneRadar() {
       {/* ===== 场景列表 ===== */}
       <InfiniteList
         items={displayedItems}
-        renderItem={(item) => <SceneCard scene={item} />}
+        renderItem={(item) => (
+          <SceneCard
+            scene={item}
+            onSceneDetail={(scene) => {
+              const displayName = scene.name.includes('专题场景')
+                ? scene.name.replace('专题场景', '')
+                : scene.name;
+              navigate('/scene-enterprise', { state: { sceneName: displayName } });
+            }}
+          />
+        )}
         onLoadMore={handleLoadMore}
         onRefresh={handleRefresh}
         hasMore={hasMore}
