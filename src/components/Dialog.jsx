@@ -5,13 +5,24 @@ export default function Dialog({ isOpen, onClose, title, content }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
+      
+      // Add keyboard event listener for Escape key
+      const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+          onClose()
+        }
+      }
+      
+      document.addEventListener('keydown', handleEscape)
+      
+      return () => {
+        document.body.style.overflow = ''
+        document.removeEventListener('keydown', handleEscape)
+      }
     } else {
       document.body.style.overflow = ''
     }
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [isOpen])
+  }, [isOpen, onClose])
 
   if (!isOpen) return null
 
