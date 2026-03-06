@@ -97,7 +97,6 @@
 
 /* ===== 筛选区域 ===== */
 .we-filter-area {
-  background: #FFFFFF;
   flex-shrink: 0;
 }
 
@@ -152,6 +151,10 @@
   padding: 16px 16px 1px;
   border-bottom: 1px solid #F3F4F6;
 }
+.we-card-top-header {
+  display: flex;
+  justify-content: space-between;
+}
 
 /* 公司名称行 */
 .we-company-row {
@@ -173,9 +176,6 @@
   color: #101828;
   line-height: 1.714;
   letter-spacing: -0.022em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* 标签行 */

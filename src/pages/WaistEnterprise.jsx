@@ -100,24 +100,28 @@ function EnterpriseCard({ enterprise }) {
     <div className="we-card">
       {/* 顶部白色区域 */}
       <div className="we-card-top">
-        {/* 公司名称行 */}
-        <div className="we-company-row">
-          <img src={iconWaistBuilding} alt="企业" className="we-building-icon" />
-          <span className="we-company-name">{name}</span>
-        </div>
-        {/* 标签行 */}
-        <div className="we-tags-row">
-          <span className="we-type-tag">{type}</span>
-          <span className="we-industry-tag">{industry}</span>
-        </div>
-        {/* 增长率行 */}
-        <div className="we-growth-row">
-          <div className="we-growth-left">
-            <div className="we-growth-rate-row">
-              <img src={iconTrendingUp} alt="增长" className="we-trending-icon" />
-              <span className="we-growth-rate">{growthRate}</span>
+        <div className="we-card-top-header">
+          <div>
+            {/* 公司名称行 */}
+            <div className="we-company-row">
+              <img src={iconWaistBuilding} alt="企业" className="we-building-icon" />
+              <span className="we-company-name">{name}</span>
             </div>
-            <span className="we-growth-label">{growthLabel}</span>
+            {/* 标签行 */}
+            <div className="we-tags-row">
+              <span className="we-type-tag">{type}</span>
+              <span className="we-industry-tag">{industry}</span>
+            </div>
+          </div>
+          {/* 增长率行 */}
+          <div className="we-growth-row">
+            <div className="we-growth-left">
+              <div className="we-growth-rate-row">
+                <img src={iconTrendingUp} alt="增长" className="we-trending-icon" />
+                <span className="we-growth-rate">{growthRate}</span>
+              </div>
+              <span className="we-growth-label">{growthLabel}</span>
+            </div>
           </div>
         </div>
         {/* 挖掘日期行 */}
