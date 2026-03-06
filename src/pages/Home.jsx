@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
+import Dialog from '../components/Dialog'
 
 const tabs = ['企业总览', '关注场景', '关注企业', '数据贡献', '政策匹配']
 
@@ -94,6 +95,7 @@ function TabBar({ tabs, activeTab, onTabChange }) {
 
 function EnterpriseOverview() {
   const navigate = useNavigate()
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const today = new Date()
   const dateStr = `${today.getFullYear()}年${String(today.getMonth() + 1).padStart(2, '0')}月${String(today.getDate()).padStart(2, '0')}日`
   return (
@@ -126,7 +128,7 @@ function EnterpriseOverview() {
           <div className="overview-info">
             <div className="info-label">
               企业总数
-              <span className="info-icon">ⓘ</span>
+              <span className="info-icon" onClick={() => setIsDialogOpen(true)}>ⓘ</span>
             </div>
             <div className="info-count">139,987<span className="info-unit">家</span></div>
           </div>
@@ -167,6 +169,14 @@ function EnterpriseOverview() {
           </div>
         </div>
       </div>
+
+      <Dialog 
+        isOpen={isDialogOpen} 
+        onClose={() => setIsDialogOpen(false)}
+        title="认定规则"
+        content={`一、企业须在拱墅区依法注册
+二、企业实际经营地或纳税地在拱墅区`}
+      />
     </section>
   )
 }

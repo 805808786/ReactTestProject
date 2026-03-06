@@ -1,0 +1,92 @@
+/* Dialog Overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+/* Dialog Container - Figma specs: width 311px, border-radius 12px */
+.dialog-container {
+  width: 311px;
+  background: #FFFFFF;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow: hidden;
+}
+
+/* Dialog Content - Figma specs: padding 32px 24px 0px, gap 8px */
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px 24px 0px;
+}
+
+/* Dialog Title - Figma specs: PingFang SC, 600, 18px, center aligned, 90% black */
+.dialog-title {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.4444444444444444em;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* Dialog Descriptions - Figma specs: Alibaba PuHuiTi, 400, 16px, center aligned, 60% black */
+.dialog-descriptions {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5em;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.6);
+  white-space: pre-line;
+}
+
+/* Dialog Footer - Figma specs: padding 24px, gap 12px */
+.dialog-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 24px;
+}
+
+/* Dialog Button - Figma specs: Brand7-Normal #0052D9, border-radius 6px, padding 8px 16px */
+.dialog-button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  background: #0052D9;
+  border: none;
+  border-radius: 6px;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5em;
+  text-align: center;
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dialog-button:hover {
+  background: #0046B8;
+}
+
+.dialog-button:active {
+  background: #003A96;
+}
