@@ -228,7 +228,7 @@
 
 /* 卡片顶部区（标签+信息+内容） */
 .pc-record-top {
-  padding: 16px 16px 1px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
