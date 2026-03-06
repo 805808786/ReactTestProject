@@ -73,16 +73,18 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 16px 0px;
+  padding: 16px;
 }
 
 /* ===== 动态基本信息 ===== */
 .sedd-info-section {
   position: relative;
-  min-height: 93px;
 }
 
 /* 类型标签 */
+.sedd-badge-wrapper {
+  display: flex;
+}
 .sedd-badge {
   display: inline-flex;
   align-items: center;
@@ -332,7 +334,6 @@
   line-height: 1.333em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 22px;
-  width: 42px;
   box-sizing: border-box;
   flex-shrink: 0;
 }

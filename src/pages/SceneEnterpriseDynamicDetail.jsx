@@ -122,7 +122,9 @@ export default function SceneEnterpriseDynamicDetail() {
             {/* 顶部信息区域 */}
             <div className="sedd-info-section">
               {/* 类型标签 */}
-              <div className="sedd-badge">{data.type}</div>
+              <div className="sedd-badge-wrapper">
+                <div className="sedd-badge">{data.type}</div>
+              </div>  
 
               {/* 标题行 */}
               <div className="sedd-title-row">
