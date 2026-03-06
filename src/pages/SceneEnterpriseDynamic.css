@@ -12,6 +12,7 @@
 
 /* ===== 头部 ===== */
 .sed-header {
+  height: 108px;
   background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
   padding: 16px 16px 0px;
   display: flex;
@@ -56,6 +57,7 @@
 }
 
 .sed-search-bar {
+  display: flex;
   position: relative;
   height: 36px;
 }
@@ -215,7 +217,6 @@
   line-height: 1.333;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 22px;
-  width: 66px;
   box-sizing: border-box;
 }
 
