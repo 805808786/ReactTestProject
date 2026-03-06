@@ -8,6 +8,7 @@ import SceneRadar from './pages/SceneRadar'
 import SceneEnterprise from './pages/SceneEnterprise'
 import SceneDescription from './pages/SceneDescription'
 import FollowEnterprise from './pages/FollowEnterprise'
+import SceneEnterpriseDynamic from './pages/SceneEnterpriseDynamic'
 import './index.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/scene-enterprise" element={<SceneEnterprise />} />
         <Route path="/scene-description/:id" element={<SceneDescription />} />
         <Route path="/follow-enterprise" element={<FollowEnterprise />} />
+        <Route path="/scene-enterprise-dynamic" element={<SceneEnterpriseDynamic />} />
       </Routes>
     </BrowserRouter>
   )

@@ -287,7 +287,7 @@ export default function SceneEnterprise() {
         {/* 场景动态 + 筛选区域 */}
         <div className="se-dynamic-filter-area">
           {/* 场景动态横幅 */}
-          <div className="se-scene-dynamic">
+          <div className="se-scene-dynamic" onClick={() => navigate('/scene-enterprise-dynamic')} style={{ cursor: 'pointer' }}>
             <div className="se-dynamic-left">
               <img src={iconSceneDynamic} alt="场景动态" className="se-dynamic-icon" />
               <span className="se-dynamic-title">场景动态</span>
