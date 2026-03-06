@@ -244,6 +244,7 @@ function FocusScene() {
 }
 
 function FocusEnterprise() {
+  const navigate = useNavigate()
   return (
     <section className="card">
       <div className="card-header">
@@ -263,7 +264,7 @@ function FocusEnterprise() {
           </div>
         </div>
         <div className="summary-right">
-          <a href="#" className="view-all orange-text">查看全部 →</a>
+          <button onClick={() => navigate('/follow-enterprise')} className="view-all orange-text">查看全部 →</button>
         </div>
         <div className="summary-badge orange-badge">今日+3</div>
       </div>
