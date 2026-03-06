@@ -360,6 +360,7 @@ function DataContribution() {
 }
 
 function PolicyMatching() {
+  const navigate = useNavigate()
   return (
     <section className="card">
       <div className="card-header">
@@ -379,7 +380,7 @@ function PolicyMatching() {
           </div>
         </div>
         <div className="summary-right">
-          <a href="#" className="view-all blue-text">查看全部 →</a>
+          <button onClick={() => navigate('/policy-list')} className="view-all blue-text">查看全部 →</button>
         </div>
       </div>
 
