@@ -194,7 +194,7 @@ function FocusScene() {
           <div className="stat-value-large">8个</div>
         </div>
         <div className="stat-right">
-          <button onClick={() => navigate('/scene-radar')} className="view-all" style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}>查看全部 →</button>
+          <button onClick={() => navigate('/scene-radar')} className="view-all">查看全部 →</button>
         </div>
       </div>
 

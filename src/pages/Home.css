@@ -255,6 +255,10 @@
   color: #155DFC;
   text-decoration: none;
   white-space: nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 /* Overview Change Container */
