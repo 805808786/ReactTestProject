@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './EnterpriseCalendar.css';
 import DateSelection from './components/dataSelection/index';
+import useEnterpriseCalendarStore from '../store/enterpriseCalendarStore';
 
 // 生成近半年的每日企业数量数据（130,000 ~ 140,000 范围）
 function generateData(days) {
@@ -139,6 +140,18 @@ function formatDateDisplay(str) {
   return `${y}年${parseInt(m)}月${parseInt(d)}日`;
 }
 
+// 计算默认日期（对于 afterTodayAndToday 类型，默认选昨天）
+function getDefaultPickerDate() {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+// 格式化企业数量显示
+function formatEnterpriseCount(value) {
+  return `${Number(value).toLocaleString()}家`;
+}
+
 export default function EnterpriseCalendar() {
   const navigate = useNavigate();
   const [range, setRange] = useState('half'); // 'month' | 'half'
@@ -149,11 +162,27 @@ export default function EnterpriseCalendar() {
   const [pendingDate, setPendingDate] = useState(null); // 弹框内临时选中
   const [confirmedDate, setConfirmedDate] = useState(null); // 已确认日期
 
+  const { changeDateData, loading, fetchByChangeDate } = useEnterpriseCalendarStore();
+
   useEffect(() => {
     if (chartRef.current) {
       setChartWidth(chartRef.current.clientWidth || 300);
     }
   }, []);
+
+  // 打开日期弹框时，确保有默认选中日期并拉取数据
+  const handleOpenSheet = () => {
+    const defaultDate = confirmedDate || getDefaultPickerDate();
+    setPendingDate(defaultDate);
+    fetchByChangeDate(defaultDate);
+    setSheetOpen(true);
+  };
+
+  // 选择日期时触发接口请求
+  const handleDateSelect = (date) => {
+    setPendingDate(date);
+    fetchByChangeDate(date);
+  };
 
   const displayData = range === 'month' ? oneMonthData : halfYearData;
 
@@ -207,7 +236,7 @@ export default function EnterpriseCalendar() {
         </div>
 
         {/* 企业日历标题区（可点击打开日历弹框） */}
-        <div className="ec-title-card" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }} style={{ cursor: 'pointer' }}>
+        <div className="ec-title-card" onClick={handleOpenSheet} style={{ cursor: 'pointer' }}>
           <span className="ec-title-text">{confirmedDate ? formatDateDisplay(confirmedDate) : '企业日历'}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9"/>
@@ -334,7 +363,7 @@ export default function EnterpriseCalendar() {
             {/* 日历组件 */}
             <DateSelection
               dateDisabledType="afterTodayAndToday"
-              onSelect={date => setPendingDate(date)}
+              onSelect={handleDateSelect}
               defaultValue={pendingDate}
             />
 
@@ -347,8 +376,22 @@ export default function EnterpriseCalendar() {
                 <div className="ec-sheet-card ec-sheet-card--blue">
                   <div className="ec-sheet-card-label">企业总数</div>
                   <div className="ec-sheet-card-row">
-                    <span className="ec-sheet-card-value">18,767家</span>
-                    <span className="ec-sheet-card-delta ec-sheet-card-delta--neg">-13家</span>
+                    {loading ? (
+                      <span className="ec-sheet-card-value">加载中...</span>
+                    ) : (
+                      <>
+                        <span className="ec-sheet-card-value">
+                          {changeDateData?.todayTotal != null
+                            ? formatEnterpriseCount(changeDateData.todayTotal)
+                            : '--'}
+                        </span>
+                        {changeDateData?.changeNum != null && (
+                          <span className={`ec-sheet-card-delta ${changeDateData.changeNum >= 0 ? 'ec-sheet-card-delta--pos' : 'ec-sheet-card-delta--neg'}`}>
+                            {changeDateData.changeNum >= 0 ? `+${changeDateData.changeNum}` : changeDateData.changeNum}家
+                          </span>
+                        )}
+                      </>
+                    )}
                   </div>
                 </div>
 
