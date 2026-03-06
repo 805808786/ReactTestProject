@@ -55,6 +55,7 @@
 .pl-stats-row {
   display: flex;
   align-items: stretch;
+  column-gap: 8px;
   height: 72px;
 }
 
@@ -66,15 +67,6 @@
   padding: 12px 12px 0;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-}
-
-.pl-stat-box + .pl-stat-box {
-  margin-left: 1px;
-  border-radius: 0 10px 10px 0;
-}
-
-.pl-stat-box:first-child {
-  border-radius: 10px 0 0 10px;
 }
 
 .pl-stat-label {
@@ -140,6 +132,7 @@
 /* ===== 政策列表区域 ===== */
 .pl-body {
   flex: 1;
+  padding-top: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -156,7 +149,7 @@
 
 /* 政策头部（始终可见） */
 .pl-policy-header {
-  padding: 16px 16px 0;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -285,6 +278,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding-bottom: 16px;
 }
 
 /* 企业施策子项 */
