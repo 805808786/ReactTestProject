@@ -13,7 +13,7 @@
 /* ===== 头部 ===== */
 .se-header {
   background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
-  padding: 16px 16px 0px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;

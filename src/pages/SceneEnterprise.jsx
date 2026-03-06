@@ -285,9 +285,8 @@ export default function SceneEnterprise() {
             />
           </div>
           <button className="se-calendar-btn" onClick={handleCalendarOpen}>
-              <img src={iconSceneCalendar} alt="日历" className="se-calendar-btn-icon" />
               企业日历
-            </button>
+          </button>
         </div>
 
         {/* 统计数据 */}
