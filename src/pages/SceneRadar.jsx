@@ -171,7 +171,7 @@ export default function SceneRadar() {
     const page = filtered.slice(0, PAGE_SIZE);
     setDisplayedItems(page);
     setHasMore(filtered.length > PAGE_SIZE);
-  }, [getFiltered]);
+  }, [debouncedSearch]); // Use debouncedSearch directly instead of getFiltered
 
   const handleLoadMore = useCallback(async () => {
     if (loading || !hasMore) return;

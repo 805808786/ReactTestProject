@@ -110,7 +110,7 @@
 
 .sr-stat-card {
   flex: 1;
-  background: #FFFFFF;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 12px;
   display: flex;
@@ -119,8 +119,8 @@
 }
 
 .sr-stat-card--primary {
-  background: linear-gradient(135deg, #FF9A3E 0%, #FF6B3E 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #F2F8FF;
+  border: 1px solid #0008FF;
 }
 
 .sr-stat-label {
@@ -131,7 +131,7 @@
 }
 
 .sr-stat-card--primary .sr-stat-label {
-  color: rgba(0, 0, 0, 0.9);
+  color: #155DFC;
 }
 
 .sr-stat-card:not(.sr-stat-card--primary) .sr-stat-label {
@@ -145,7 +145,7 @@
 }
 
 .sr-stat-card--primary .sr-stat-value {
-  color: rgba(0, 0, 0, 0.9);
+  color: #155DFC;
 }
 
 .sr-stat-card:not(.sr-stat-card--primary) .sr-stat-value {
@@ -154,12 +154,13 @@
 
 /* ===================== 场景卡片 ===================== */
 .sr-card {
-  background: #FFFFFF;
+  background: linear-gradient(90deg, rgba(250, 245, 255, 1) 0%, rgba(253, 242, 248, 1) 100%);
   border-radius: 10px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-height: 152px;
 }
 
 .sr-card-header {
