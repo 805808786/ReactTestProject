@@ -2,10 +2,34 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
+import DateSelection from './components/dataSelection/index';
 import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconCompany from '../assets/icon-company.svg';
+import iconElReason from '../assets/icon-el-reason.svg';
+import iconElTag from '../assets/icon-el-tag.svg';
 import './EnterpriseList.css';
+
+/* ===================== 日期显示格式化 ===================== */
+function formatDateDisplay(str) {
+  if (!str) return '';
+  const [y, m, d] = str.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+}
+
+/* ===================== 日期选择弹框 Mock 数据 ===================== */
+const SHEET_MOCK = {
+  count: '1,742',
+  countDelta: '+57',
+  deltaPositive: true,
+  reason: '新增57家企业，多场景企业层级调整优化',
+  tagChanges: [
+    { type: '新增', typeColor: 'add', name: '跨境供应链服务', detail: '新增为出海企业 · 跨境物流' },
+    { type: '新增', typeColor: 'add', name: '跨境供应链服务', detail: '新增为出海企业 · 跨境物流' },
+    { type: '调整', typeColor: 'adjust', name: '产业分类', detail: '由传统制造调整为高端装备制造' },
+    { type: '删除', typeColor: 'delete', name: '基础信息', detail: '企业注销清理相关标签' },
+  ],
+};
 
 /* ===================== Mock 数据 ===================== */
 const STREETS = ['小河街道', '拱宸桥街道', '湖墅街道', '米市巷街道', '大关街道', '和睦街道', '康桥街道', '上塘街道', '祥符街道', '石桥街道'];
@@ -160,6 +184,11 @@ export default function EnterpriseList() {
   // 当前展开的筛选器
   const [activeFilter, setActiveFilter] = useState(null); // 'street' | 'scene' | 'tag' | null
 
+  // 日历弹框
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [pendingDate, setPendingDate] = useState(null);
+  const [confirmedDate, setConfirmedDate] = useState(null);
+
   // 列表数据
   const [displayedItems, setDisplayedItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -246,7 +275,7 @@ export default function EnterpriseList() {
               onChange={e => setSearchText(e.target.value)}
             />
           </div>
-          <button className="el-calendar-btn">企业日历</button>
+          <button className="el-calendar-btn" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }}>企业日历</button>
         </div>
       </div>
 
@@ -318,6 +347,77 @@ export default function EnterpriseList() {
         open={activeFilter === 'tag'}
         multiple
       />
+
+      {/* ===== 日历底部弹框 ===== */}
+      {sheetOpen && (
+        <div className="el-sheet-overlay" onClick={() => setSheetOpen(false)}>
+          <div className="el-sheet" onClick={e => e.stopPropagation()}>
+            {/* 把手 */}
+            <div className="el-sheet-handle" />
+
+            {/* 日历组件 */}
+            <DateSelection
+              dateDisabledType="afterTodayAndToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+
+            {/* 已选择日期信息 */}
+            {pendingDate && (
+              <div className="el-sheet-info">
+                {/* 主卡片：已选择日期 + 企业总数 */}
+                <div className="el-sheet-main-card">
+                  <div className="el-sheet-main-left">
+                    <span className="el-sheet-selected-label">已选择</span>
+                    <span className="el-sheet-selected-date">{formatDateDisplay(pendingDate)}</span>
+                  </div>
+                  <div className="el-sheet-main-right">
+                    <span className="el-sheet-count-label">企业总数</span>
+                    <div className="el-sheet-count-row">
+                      <span className="el-sheet-count-value">{SHEET_MOCK.count}</span>
+                      <span className={`el-sheet-count-delta${SHEET_MOCK.deltaPositive ? ' el-sheet-count-delta--pos' : ' el-sheet-count-delta--neg'}`}>{SHEET_MOCK.countDelta}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 变化原因 */}
+                <div className="el-sheet-section">
+                  <div className="el-sheet-section-header">
+                    <img src={iconElReason} alt="" className="el-sheet-section-icon" />
+                    <span className="el-sheet-section-title el-sheet-section-title--orange">变化原因</span>
+                  </div>
+                  <p className="el-sheet-section-text">{SHEET_MOCK.reason}</p>
+                </div>
+
+                {/* 标签变化 */}
+                <div className="el-sheet-section">
+                  <div className="el-sheet-section-header">
+                    <img src={iconElTag} alt="" className="el-sheet-section-icon" />
+                    <span className="el-sheet-section-title el-sheet-section-title--purple">标签变化</span>
+                    <span className="el-sheet-tag-count-badge">{SHEET_MOCK.tagChanges.length} 项</span>
+                  </div>
+                  <div className="el-sheet-tag-list">
+                    {SHEET_MOCK.tagChanges.map((tc, i) => (
+                      <div className="el-sheet-tag-row" key={i}>
+                        <span className={`el-sheet-tag-badge el-sheet-tag-badge--${tc.typeColor}`}>{tc.type}</span>
+                        <span className="el-sheet-tag-name">{tc.name}</span>
+                        <span className="el-sheet-tag-dot"> · </span>
+                        <span className="el-sheet-tag-desc">{tc.detail}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 底部按钮 */}
+            <div className="el-sheet-footer">
+              <button className="el-sheet-btn el-sheet-btn--cancel" onClick={() => setSheetOpen(false)}>取消</button>
+              <button className="el-sheet-btn el-sheet-btn--confirm" onClick={() => { setConfirmedDate(pendingDate); setSheetOpen(false); }}>确定</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
