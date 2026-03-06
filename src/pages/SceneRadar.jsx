@@ -1,8 +1,10 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InfiniteList from './components/InfiniteList';
+import DateSelection from './components/dataSelection/index';
 import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
+import iconSceneCalendar from '../assets/icon-scene-calendar.svg';
 import './SceneRadar.css';
 
 /* ===================== Mock 数据 ===================== */
@@ -134,12 +136,24 @@ function SceneCard({ scene, onSceneDetail }) {
   );
 }
 
+// 将 'YYYY-MM-DD' 转为友好显示格式
+function formatDateDisplay(str) {
+  if (!str) return '场景日历';
+  const [y, m, d] = str.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+}
+
 /* ===================== 主页面 ===================== */
 export default function SceneRadar() {
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const debounceTimer = useRef(null);
+
+  // 日期选择弹框
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [pendingDate, setPendingDate] = useState(null);
+  const [confirmedDate, setConfirmedDate] = useState(null);
 
   // 列表数据
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -225,7 +239,10 @@ export default function SceneRadar() {
               onChange={e => setSearchText(e.target.value)}
             />
           </div>
-          <button className="sr-calendar-btn">场景日历</button>
+          <button className="sr-calendar-btn" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }}>
+            <img src={iconSceneCalendar} alt="场景日历" className="sr-calendar-icon" />
+            场景日历
+          </button>
         </div>
 
         {/* ===== 数据统计区域 ===== */}
@@ -267,6 +284,59 @@ export default function SceneRadar() {
         emptyText="暂无场景数据"
         endText="已显示全部场景"
       />
+
+      {/* 日期选择底部弹框 */}
+      {sheetOpen && (
+        <div className="sr-sheet-overlay" onClick={() => setSheetOpen(false)}>
+          <div className="sr-sheet" onClick={e => e.stopPropagation()}>
+            {/* 把手 */}
+            <div className="sr-sheet-handle" />
+
+            {/* 日历组件 */}
+            <DateSelection
+              dateDisabledType="afterTodayAndToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+
+            {/* 已选日期信息 */}
+            {pendingDate && (
+              <div className="sr-sheet-info">
+                <div className="sr-sheet-info-date">{formatDateDisplay(pendingDate)}</div>
+
+                {/* 卡片1：场景总数 */}
+                <div className="sr-sheet-card sr-sheet-card--blue">
+                  <div className="sr-sheet-card-label">场景总数</div>
+                  <div className="sr-sheet-card-row">
+                    <span className="sr-sheet-card-value">8个</span>
+                    <span className="sr-sheet-card-delta sr-sheet-card-delta--pos">+1个</span>
+                  </div>
+                </div>
+
+                {/* 卡片2：新增场景 */}
+                <div className="sr-sheet-card sr-sheet-card--orange">
+                  <div className="sr-sheet-card-label">新增场景</div>
+                  <div className="sr-sheet-card-txt">数商企业专题场景</div>
+                </div>
+
+                {/* 卡片3：发布背景 */}
+                <div className="sr-sheet-card sr-sheet-card--purple">
+                  <div className="sr-sheet-card-label">发布背景</div>
+                  <div className="sr-sheet-card-desc">
+                    为全面落实中央、省市区关于科技创新与产业创新深度融合以及新型工业化的各项任务要求，推动拱墅区制造业高质量发展，特制定本行动计划。
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 底部按钮组 */}
+            <div className="sr-sheet-footer">
+              <button className="sr-sheet-btn sr-sheet-btn--cancel" onClick={() => setSheetOpen(false)}>取消</button>
+              <button className="sr-sheet-btn sr-sheet-btn--confirm" onClick={() => { setConfirmedDate(pendingDate); setSheetOpen(false); }}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
