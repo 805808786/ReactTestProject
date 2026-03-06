@@ -277,13 +277,12 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  height: 36px;
+  height: 52px;
 }
 
 .dc-room-left {
   display: flex;
   flex-direction: column;
-  width: 42px;
 }
 
 .dc-room-name {
