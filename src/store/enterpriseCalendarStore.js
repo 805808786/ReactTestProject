@@ -11,9 +11,7 @@ const useEnterpriseCalendarStore = create((set) => ({
   fetchByChangeDate: async (changeDate) => {
     set({ loading: true, error: null });
     try {
-      const res = await getByChangeDate(changeDate);
-      // 兼容接口返回 { data: { todayTotal, changeNum } } 或直接返回数据的情况
-      const data = res.data?.data ?? res.data ?? null;
+      const data = await getByChangeDate(changeDate);
       set({ changeDateData: data, loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
