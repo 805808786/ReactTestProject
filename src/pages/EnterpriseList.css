@@ -318,3 +318,280 @@
 .el-status--closed {
   color: #F4200D;
 }
+
+/* ===============================================
+   日历底部弹框（Sheet）
+   =============================================== */
+
+.el-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.el-sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 14px 14px 0 0;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0px 23px 46px -11px rgba(0, 0, 0, 0.25);
+  padding: 0 0 32px;
+  animation: el-sheet-slide-up 0.28s cubic-bezier(0.32, 0.72, 0, 1) both;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes el-sheet-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* 顶部把手 */
+.el-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  margin: 12px auto 8px;
+}
+
+/* 已选日期信息区 */
+.el-sheet-info {
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* 主卡片（蓝色背景，已选日期 + 企业总数） */
+.el-sheet-main-card {
+  background: #EFF6FF;
+  border: 1px solid #DBEAFE;
+  border-radius: 9px;
+  padding: 15px 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.el-sheet-main-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.el-sheet-selected-label {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 13px;
+  color: #155DFC;
+  line-height: 1.15;
+}
+
+.el-sheet-selected-date {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1E2939;
+  line-height: 1.4;
+}
+
+.el-sheet-main-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.el-sheet-count-label {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 13px;
+  color: #6A7282;
+  line-height: 1.15;
+  text-align: right;
+}
+
+.el-sheet-count-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.el-sheet-count-value {
+  font-family: 'PingFang MO', 'PingFang SC', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #155DFC;
+  line-height: 1.17;
+}
+
+.el-sheet-count-delta {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.el-sheet-count-delta--pos {
+  color: #00A63E;
+}
+
+.el-sheet-count-delta--neg {
+  color: #F4200D;
+}
+
+/* 分区块（变化原因 / 标签变化） */
+.el-sheet-section {
+  border-top: 1px solid #BEDBFF;
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.el-sheet-section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 7px;
+}
+
+.el-sheet-section-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.el-sheet-section-title {
+  font-family: 'PingFang MO', 'PingFang SC', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1;
+}
+
+.el-sheet-section-title--orange {
+  color: #F54900;
+}
+
+.el-sheet-section-title--purple {
+  color: #9810FA;
+}
+
+.el-sheet-section-text {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 13px;
+  color: #364153;
+  line-height: 1.39;
+  margin: 0;
+  padding-left: 22px;
+}
+
+/* 标签变化数量徽标 */
+.el-sheet-tag-count-badge {
+  background: #F3E8FF;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-family: 'PingFang MO', 'PingFang SC', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8200DB;
+  white-space: nowrap;
+}
+
+/* 标签变化列表 */
+.el-sheet-tag-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-left: 22px;
+}
+
+.el-sheet-tag-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 4px;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.el-sheet-tag-badge {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.el-sheet-tag-badge--add {
+  background: #DCFCE7;
+  color: #008236;
+}
+
+.el-sheet-tag-badge--adjust {
+  background: #DBEAFE;
+  color: #1447E6;
+}
+
+.el-sheet-tag-badge--delete {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.el-sheet-tag-name {
+  color: #1E2939;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.el-sheet-tag-dot {
+  color: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.el-sheet-tag-desc {
+  color: #4A5565;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 底部按钮组 */
+.el-sheet-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px 0;
+}
+
+.el-sheet-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 6px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.el-sheet-btn:active {
+  opacity: 0.75;
+}
+
+.el-sheet-btn--cancel {
+  background: #F2F3FF;
+  color: #0052D9;
+}
+
+.el-sheet-btn--confirm {
+  background: #0052D9;
+  color: #ffffff;
+}
