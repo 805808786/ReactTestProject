@@ -281,7 +281,7 @@ function FocusEnterprise() {
               <span className="item-sub-label blue-text">今日走访：1家</span>
             </div>
           </div>
-          <div className="enterprise-item blue-bg">
+          <div className="enterprise-item blue-bg" onClick={() => navigate('/enterprise-dynamic')} style={{ cursor: 'pointer' }}>
             <div className="item-header">
               <span className="item-label">企业走访动态</span>
               <span className="item-arrow blue-text">→</span>
