@@ -29,7 +29,9 @@ export default function InfiniteList({
   const bottomRef = useRef(null);
   const touchStartY = useRef(0);
   const [pullDist, setPullDist] = useState(0);
+  const [pullUpDist, setPullUpDist] = useState(0);
   const PULL_THRESHOLD = 60;
+  const PULL_UP_THRESHOLD = 50;
 
   // 触底加载更多
   useEffect(() => {
@@ -55,19 +57,30 @@ export default function InfiniteList({
 
   const handleTouchMove = useCallback((e) => {
     const container = containerRef.current;
-    if (!container || container.scrollTop > 0 || refreshing) return;
+    if (!container) return;
     const dist = e.touches[0].clientY - touchStartY.current;
-    if (dist > 0) {
+    // 下拉刷新
+    if (container.scrollTop <= 0 && dist > 0 && !refreshing) {
       setPullDist(Math.min(dist * 0.5, PULL_THRESHOLD));
     }
-  }, [refreshing]);
+    // 上拉加载
+    const isAtBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 2;
+    if (isAtBottom && dist < 0 && hasMore && !loading) {
+      setPullUpDist(Math.min(Math.abs(dist) * 0.5, PULL_UP_THRESHOLD));
+    }
+  }, [refreshing, hasMore, loading]);
 
   const handleTouchEnd = useCallback(() => {
     if (pullDist >= PULL_THRESHOLD && !refreshing) {
       onRefresh && onRefresh();
     }
     setPullDist(0);
-  }, [pullDist, refreshing, onRefresh]);
+    // 上拉加载
+    if (pullUpDist >= PULL_UP_THRESHOLD && hasMore && !loading) {
+      onLoadMore && onLoadMore();
+    }
+    setPullUpDist(0);
+  }, [pullDist, refreshing, onRefresh, pullUpDist, hasMore, loading, onLoadMore]);
 
   return (
     <div
@@ -112,6 +125,13 @@ export default function InfiniteList({
           <div className="il-end">{endText}</div>
         ) : null}
       </div>
+
+      {/* 上拉加载指示器 */}
+      {pullUpDist > 0 && hasMore && !loading && (
+        <div className="il-pullup-indicator" style={{ height: pullUpDist }}>
+          <span>{pullUpDist >= PULL_UP_THRESHOLD ? '释放加载' : '上拉加载更多'}</span>
+        </div>
+      )}
     </div>
   );
 }

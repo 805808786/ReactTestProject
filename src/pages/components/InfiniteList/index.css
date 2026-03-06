@@ -69,3 +69,15 @@
 @keyframes il-spin {
   to { transform: rotate(360deg); }
 }
+
+/* 上拉加载指示器 */
+.il-pullup-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: height 0.15s;
+  font-size: 13px;
+  color: #6A7282;
+  flex-shrink: 0;
+}

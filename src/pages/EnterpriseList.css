@@ -13,7 +13,7 @@
 /* ===== 头部 ===== */
 .el-header {
   background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
-  padding: 16px 16px 0;
+  padding: 16px 16px 24px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -54,13 +54,16 @@
   align-items: center;
   gap: 9px;
   height: 36px;
-  margin-bottom: 0;
+  min-width: 0;
 }
 
 .el-search-bar {
   flex: 1;
+  display: flex;
   position: relative;
   height: 36px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .el-search-icon {
@@ -79,7 +82,7 @@
   border-radius: 8px;
   border: none;
   background: rgba(255, 255, 255, 0.9);
-  padding: 4px 12px 4px 36px;
+  padding: 4px 12px 4px 40px;
   font-size: 14px;
   color: #0A0A0A;
   font-family: inherit;
