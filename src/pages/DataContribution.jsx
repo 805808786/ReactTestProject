@@ -192,7 +192,8 @@ function RoomItem({ room }) {
 }
 
 /* ==================== 人员贡献条目 ==================== */
-function PersonItem({ person }) {
+function PersonItem({ person, deptName }) {
+  const navigate = useNavigate()
   return (
     <div className="dc-person-item">
       <div className="dc-person-top">
@@ -207,7 +208,11 @@ function PersonItem({ person }) {
       </div>
       <div className="dc-person-bottom">
         <span className="dc-person-contribution">贡献 {person.value} 条</span>
-        <div className="dc-person-detail">
+        <div
+          className="dc-person-detail"
+          onClick={() => navigate('/person-contribution', { state: { person, deptName } })}
+          style={{ cursor: 'pointer' }}
+        >
           <span className="dc-person-detail-text">查看详情</span>
           <img src={iconDcChevronRight} alt=">" width={12} height={12} className="dc-chevron-right-inline" />
         </div>
@@ -259,7 +264,7 @@ function DeptAccordion({ dept, defaultOpen = false }) {
           <div className="dc-section-title dc-section-title--persons">人员贡献</div>
           <div className="dc-persons-list">
             {dept.persons.map((p) => (
-              <PersonItem key={p.name} person={p} />
+              <PersonItem key={p.name} person={p} deptName={dept.name} />
             ))}
           </div>
         </div>
