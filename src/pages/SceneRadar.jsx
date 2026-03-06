@@ -219,21 +219,21 @@ export default function SceneRadar() {
           </div>
           <button className="sr-calendar-btn">场景日历</button>
         </div>
-      </div>
 
-      {/* ===== 数据统计区域 ===== */}
-      <div className="sr-stats-area">
-        <div className="sr-stat-card sr-stat-card--primary">
-          <div className="sr-stat-label">场景总数</div>
-          <div className="sr-stat-value">{stats.sceneCount}</div>
-        </div>
-        <div className="sr-stat-card">
-          <div className="sr-stat-label">企业总数</div>
-          <div className="sr-stat-value">{stats.totalEnterprises.toLocaleString()}</div>
-        </div>
-        <div className="sr-stat-card">
-          <div className="sr-stat-label">场景动态</div>
-          <div className="sr-stat-value">{stats.totalDynamics}</div>
+        {/* ===== 数据统计区域 ===== */}
+        <div className="sr-stats-area">
+          <div className="sr-stat-card sr-stat-card--primary">
+            <div className="sr-stat-label">场景总数</div>
+            <div className="sr-stat-value">{stats.sceneCount}</div>
+          </div>
+          <div className="sr-stat-card">
+            <div className="sr-stat-label">企业总数</div>
+            <div className="sr-stat-value">{stats.totalEnterprises.toLocaleString()}</div>
+          </div>
+          <div className="sr-stat-card">
+            <div className="sr-stat-label">场景动态</div>
+            <div className="sr-stat-value">{stats.totalDynamics}</div>
+          </div>
         </div>
       </div>
 

@@ -103,7 +103,7 @@
 
 /* ===================== 数据统计区域 ===================== */
 .sr-stats-area {
-  padding: 16px;
+  padding: 0 16px 16px 16px;
   display: flex;
   gap: 8px;
 }
@@ -127,15 +127,14 @@
   font-size: 12px;
   line-height: 20px;
   font-weight: 400;
-  opacity: 0.75;
 }
 
 .sr-stat-card--primary .sr-stat-label {
-  color: #155DFC;
+  color: rgba(21, 93, 252, 0.75);
 }
 
 .sr-stat-card:not(.sr-stat-card--primary) .sr-stat-label {
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .sr-stat-value {
@@ -149,7 +148,7 @@
 }
 
 .sr-stat-card:not(.sr-stat-card--primary) .sr-stat-value {
-  color: rgba(0, 0, 0, 0.9);
+  color: #FFFFFF;
 }
 
 /* ===================== 场景卡片 ===================== */
@@ -203,7 +202,7 @@
 
 .sr-metric-item {
   flex: 1;
-  background: rgba(0, 0, 0, 0.9);
+  background: #FFFFFF;
   border-radius: 4px;
   padding: 8px;
   display: flex;
@@ -221,13 +220,13 @@
   font-size: 12px;
   line-height: 20px;
   font-weight: 400;
-  color: rgba(0, 0, 0, 0.6);
+  color: #4A5565;
 }
 
 .sr-metric-arrow {
   font-size: 14px;
   line-height: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #4A5565;
 }
 
 .sr-metric-body {
@@ -240,7 +239,7 @@
   font-size: 18px;
   font-weight: 600;
   line-height: 26px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(0, 0, 0, 0.9);
 }
 
 .sr-metric-value small {
