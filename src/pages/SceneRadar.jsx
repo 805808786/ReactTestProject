@@ -84,15 +84,20 @@ const SCENE_DATA = [
 const PAGE_SIZE = 10;
 
 /* ===================== 场景卡片 ===================== */
-function SceneCard({ scene, onSceneDetail }) {
-  const { name, description, enterprises, dynamics, todayEnterprises, todayDynamics } = scene;
+function SceneCard({ scene }) {
+  const navigate = useNavigate();
+  const { id, name, description, enterprises, dynamics, todayEnterprises, todayDynamics } = scene;
 
   return (
     <div className="sr-card">
       {/* 顶部：场景名称 + 场景说明 */}
       <div className="sr-card-header">
         <div className="sr-card-title">{name}</div>
-        <span className="sr-card-badge" onClick={() => onSceneDetail(scene)} style={{ cursor: 'pointer' }}>场景说明</span>
+        <span
+          className="sr-card-badge"
+          onClick={() => navigate(`/scene-description/${id}`, { state: { sceneName: name } })}
+          style={{ cursor: 'pointer' }}
+        >场景说明</span>
       </div>
 
       {/* 场景描述 */}
