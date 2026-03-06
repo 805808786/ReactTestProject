@@ -5,7 +5,5 @@ import request from './request'
  * @param {string} changeDate - 日期，格式 YYYY-MM-DD
  */
 export const getEnterpriseChangeByDate = (changeDate) => {
-  return request.get('/backend/dataEnterpriseChange/getByChangeDate', {
-    params: { changeDate },
-  })
+  return request.post('/backend/dataEnterpriseChange/getByChangeDate', { changeDate })
 }
