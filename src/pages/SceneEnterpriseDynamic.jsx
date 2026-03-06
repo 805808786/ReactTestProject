@@ -189,7 +189,7 @@ function FilterButton({ label, active, count, onClick }) {
 }
 
 /* ===================== 动态卡片 ===================== */
-function DynamicCard({ item }) {
+function DynamicCard({ item, onViewDetail }) {
   const { type, title, date, content, source, relatedCount, isFirst } = item;
   const relatedText = `关联 ${relatedCount} 家企业`;
 
@@ -198,7 +198,7 @@ function DynamicCard({ item }) {
       {/* 顶部：类型标签 + 查看详情 */}
       <div className="sed-card-top">
         <div className="sed-badge">{type}</div>
-        <span className="sed-view-detail">查看详情 →</span>
+        <span className="sed-view-detail" onClick={() => onViewDetail && onViewDetail(item.id)}>查看详情 →</span>
       </div>
 
       {/* 标题行：绿点 + 标题 + 日期 */}
@@ -311,6 +311,10 @@ export default function SceneEnterpriseDynamic() {
     setActiveFilter(prev => (prev === key ? null : key));
   };
 
+  const handleViewDetail = useCallback((id) => {
+    navigate(`/scene-enterprise-dynamic-detail/${id}`);
+  }, [navigate]);
+
   return (
     <div className="sed-container">
       {/* ===== 头部 ===== */}
@@ -371,7 +375,7 @@ export default function SceneEnterpriseDynamic() {
         {/* ===== 动态列表 ===== */}
         <InfiniteList
           items={displayedItems}
-          renderItem={(item) => <DynamicCard item={item} />}
+          renderItem={(item) => <DynamicCard item={item} onViewDetail={handleViewDetail} />}
           onLoadMore={handleLoadMore}
           onRefresh={handleRefresh}
           hasMore={hasMore}
