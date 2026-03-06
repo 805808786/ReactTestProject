@@ -1,0 +1,133 @@
+/* =====================================================
+   DateSelection 日历选择组件样式
+   设计参考：Figma 拱墅看板 9280-17612
+   ===================================================== */
+
+.ds-wrap {
+  width: 100%;
+  background: #F9FAFB;
+  border-radius: 10px;
+  padding: 8px 0;
+  user-select: none;
+}
+
+/* ---- 头部 ---- */
+.ds-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  gap: 8px;
+}
+
+.ds-nav-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 0;
+  transition: background 0.2s;
+}
+
+.ds-nav-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.ds-title {
+  flex: 1;
+  text-align: center;
+  font-family: 'PingFang SC', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #0A0A0A;
+}
+
+/* ---- 星期头 ---- */
+.ds-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.ds-weekday {
+  text-align: center;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  line-height: 32px;
+  height: 32px;
+}
+
+/* ---- 日历格子 ---- */
+.ds-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 8px 0;
+}
+
+.ds-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.9);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.2s, box-shadow 0.2s;
+  padding: 0;
+  margin: 0 auto;
+  width: 52px;
+}
+
+.ds-cell--empty {
+  cursor: default;
+}
+
+.ds-cell:not(.ds-cell--disabled):not(.ds-cell--selected):not(.ds-cell--empty):hover {
+  background: rgba(21, 93, 252, 0.08);
+}
+
+.ds-cell--today {
+  color: #155DFC;
+  font-weight: 600;
+}
+
+.ds-cell--selected {
+  background: #155DFC !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.ds-cell--disabled {
+  color: rgba(0, 0, 0, 0.25);
+  cursor: not-allowed;
+}
+
+/* ---- 数据标记小圆点 ---- */
+.ds-dot {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #2B7FFF;
+}
+
+.ds-dot--selected {
+  background: #ffffff;
+}
