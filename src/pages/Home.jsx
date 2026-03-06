@@ -341,7 +341,7 @@ function DataContribution() {
           </div>
         </div>
         <div className="summary-right">
-          <button onClick={() => navigate('/data-contribution')} className="view-all blue-text view-all-btn">查看全部 →</button>
+          <button onClick={() => navigate('/data-contribution')} className="view-all blue-text">查看全部 →</button>
         </div>
       </div>
 

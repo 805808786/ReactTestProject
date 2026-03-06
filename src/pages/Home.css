@@ -263,10 +263,6 @@
   padding: 0;
 }
 
-.view-all-btn {
-  font: inherit;
-}
-
 /* Overview Change Container */
 .overview-change-container {
   display: flex;
