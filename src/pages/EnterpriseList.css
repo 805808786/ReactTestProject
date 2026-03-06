@@ -1,0 +1,320 @@
+/* ===== 页面容器 ===== */
+.el-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.el-header {
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 24px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.el-header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.el-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.el-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+/* 搜索行 */
+.el-search-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 36px;
+  min-width: 0;
+}
+
+.el-search-bar {
+  flex: 1;
+  display: flex;
+  position: relative;
+  height: 36px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.el-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.el-search-input {
+  width: 100%;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 12px 4px 40px;
+  font-size: 14px;
+  color: #0A0A0A;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.el-search-input::placeholder {
+  color: #717182;
+}
+
+.el-calendar-btn {
+  width: 68px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #3D82F4;
+  background: #E5F1FF;
+  color: #0052D9;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 330;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ===== 筛选区域 ===== */
+.el-filter-area {
+  background: #fff;
+  padding: 12px 16px 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.el-filter-row {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.el-filter-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: inherit;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background 0.15s;
+}
+
+.el-filter-btn:last-child {
+  border-right: none;
+}
+
+.el-filter-btn--active {
+  color: #0052D9;
+  background: #EFF6FF;
+  font-weight: 500;
+}
+
+/* 筛选汇总 */
+.el-filter-summary {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding-bottom: 12px;
+  font-size: 12px;
+}
+
+.el-filter-label {
+  color: #6A7282;
+  line-height: 1.33;
+}
+
+.el-filter-count {
+  color: #4A5565;
+  font-weight: 400;
+  line-height: 1.33;
+}
+
+/* ===== 企业卡片 ===== */
+.el-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.el-card--first {
+  background: #F2F8FF;
+  border-color: #155DFC;
+}
+
+/* 卡片顶部 */
+.el-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.el-card-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  height: 54px;
+}
+
+.el-company-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 10px;
+}
+
+.el-company-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.el-company-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.43;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.el-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.el-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: #366EF4;
+  border-radius: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.el-tag--extra {
+  padding: 2px 8px;
+  min-width: 36px;
+}
+
+.el-view-detail {
+  font-size: 12px;
+  color: #155DFC;
+  flex-shrink: 0;
+  white-space: nowrap;
+  margin-left: 4px;
+}
+
+/* 卡片详情 */
+.el-card-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.el-info-row {
+  display: flex;
+  gap: 16px;
+}
+
+.el-info-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.el-info-item--wide {
+  flex: 1;
+}
+
+.el-info-label {
+  font-size: 12px;
+  color: #6A7282;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.el-info-value {
+  font-size: 12px;
+  color: #4A5565;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.el-address {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.el-status--active {
+  color: #10BA51;
+}
+
+.el-status--closed {
+  color: #F4200D;
+}

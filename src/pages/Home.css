@@ -704,3 +704,10 @@
 .green-bg { background: #F0FDF4; }
 .purple-bg { background: #FAF5FF; }
 
+
+.overview-view-all-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
