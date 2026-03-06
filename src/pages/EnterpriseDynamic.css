@@ -1,0 +1,269 @@
+/* ===== 页面容器 ===== */
+.ed-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.ed-header {
+  height: 124px;
+  background: linear-gradient(90deg, rgba(21, 93, 252, 1) 0%, rgba(20, 71, 230, 1) 100%);
+  padding: 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.ed-header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.ed-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.ed-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* 搜索行 */
+.ed-search-row {
+  height: 36px;
+}
+
+.ed-search-bar {
+  display: flex;
+  position: relative;
+  height: 36px;
+}
+
+.ed-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.ed-search-input {
+  width: 100%;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 4px 12px 4px 40px;
+  font-size: 14px;
+  color: #0A0A0A;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.ed-search-input::placeholder {
+  color: #717182;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* ===== 主体区域（可滚动） ===== */
+.ed-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 筛选区域 ===== */
+.ed-filter-area {
+  background: #FFFFFF;
+  padding: 12px 16px 0px;
+  flex-shrink: 0;
+}
+
+.ed-filter-row {
+  display: flex;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.ed-filter-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 12px 8px;
+  background: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  transition: background 0.15s;
+  min-width: 0;
+}
+
+.ed-filter-btn:last-child {
+  border-right: none;
+}
+
+.ed-filter-btn--active {
+  color: #0052D9;
+  background: #EFF6FF;
+  font-weight: 500;
+}
+
+.ed-filter-btn-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5714;
+}
+
+.ed-filter-caret {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: transform 0.15s;
+}
+
+.ed-filter-caret--active {
+  transform: rotate(180deg);
+  opacity: 1;
+}
+
+/* ===== 列表区域覆盖样式 ===== */
+.ed-container .il-container {
+  flex: 1;
+  padding-top: 12px;
+}
+
+.ed-container .il-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px 16px;
+}
+
+.ed-container .il-item {
+  padding: 0;
+}
+
+/* ===== 月份标题 ===== */
+.ed-month-header {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.5556em;
+  letter-spacing: -0.0244em;
+  color: #0A0A0A;
+  padding-bottom: 12px;
+}
+
+.ed-month-header--spaced {
+  margin-top: 8px;
+}
+
+/* ===== 走访记录卡片 ===== */
+.ed-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+
+.ed-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.ed-card-date {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.75em;
+  letter-spacing: -0.0275em;
+  color: #0A0A0A;
+}
+
+.ed-card-row {
+  display: flex;
+  align-items: center;
+  gap: 23px;
+}
+
+.ed-time-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ed-time-start {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3333em;
+  color: #000000;
+}
+
+.ed-time-end {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3333em;
+  color: #8C8C8C;
+}
+
+.ed-separator {
+  width: 0;
+  height: 28px;
+  border-left: 2px solid #155DFC;
+  flex-shrink: 0;
+}
+
+.ed-card-title {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1em;
+  color: #000000;
+  flex: 1;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

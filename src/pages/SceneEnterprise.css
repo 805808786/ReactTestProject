@@ -13,7 +13,7 @@
 /* ===== 头部 ===== */
 .se-header {
   background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
-  padding: 16px 16px 0px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -454,4 +454,201 @@
 
 .se-status--closed {
   color: #F4200D;
+}
+
+/* =====================================================
+   日历底部弹框（Calendar Sheet）
+   ===================================================== */
+
+.se-cal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.se-cal-sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  padding: 0 0 32px;
+  animation: se-cal-slide-up 0.28s cubic-bezier(0.32, 0.72, 0, 1) both;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes se-cal-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* 顶部把手 */
+.se-cal-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  margin: 12px auto 8px;
+}
+
+/* 已选日期信息区 */
+.se-cal-info {
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.se-cal-info-date {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+/* 通用卡片 */
+.se-cal-card {
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.se-cal-card--blue   { background: #F4F7FF; }
+.se-cal-card--orange { background: #FFF8F2; }
+.se-cal-card--purple { background: #F9F6FF; }
+
+.se-cal-card-label {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* 企业总数行 */
+.se-cal-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.se-cal-card-value {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.se-cal-card-delta {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.se-cal-card-delta--pos { color: #F33E3E; }
+.se-cal-card-delta--neg { color: #0AA34E; }
+
+/* 列表样式 */
+.se-cal-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.se-cal-card-list-item {
+  display: flex;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.se-cal-card-list-idx { color: rgba(0, 0, 0, 0.4); }
+.se-cal-card-list-txt { color: rgba(0, 0, 0, 0.9); }
+
+/* 标签变化行 */
+.se-cal-card-tag-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.se-cal-badge {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.se-cal-badge--blue {
+  background: rgba(21, 93, 252, 0.12);
+  color: #155DFC;
+}
+
+.se-cal-tag-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.se-cal-tag-title {
+  color: #1E2939;
+  font-weight: 600;
+}
+
+.se-cal-tag-dot {
+  color: rgba(0, 0, 0, 0.2);
+  margin: 0 2px;
+}
+
+.se-cal-tag-desc {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* 底部按钮组 */
+.se-cal-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.se-cal-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.se-cal-btn:active {
+  opacity: 0.75;
+}
+
+.se-cal-btn--cancel {
+  background: #F3F4F6;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.se-cal-btn--confirm {
+  background: #155DFC;
+  color: #ffffff;
+}
+
+/* 日历按钮图标 */
+.se-calendar-btn-icon {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+  vertical-align: middle;
+  filter: brightness(0) saturate(100%) invert(17%) sepia(89%) saturate(2710%) hue-rotate(217deg) brightness(98%) contrast(100%);
 }
