@@ -103,7 +103,6 @@
 
 /* ===================== 数据统计区域 ===================== */
 .sr-stats-area {
-  padding: 0 16px 16px 16px;
   display: flex;
   gap: 8px;
 }
@@ -257,7 +256,7 @@
 /* ===================== 列表容器覆盖 ===================== */
 .sr-container .il-container {
   flex: 1;
-  padding: 0 16px 16px 16px;
+  padding-top: 16px;
   overflow-y: auto;
 }
 
