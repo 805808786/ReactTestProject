@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 
 const tabs = ['企业总览', '关注场景', '关注企业', '数据贡献', '政策匹配']
@@ -93,6 +93,7 @@ function TabBar({ tabs, activeTab, onTabChange }) {
 }
 
 function EnterpriseOverview() {
+  const navigate = useNavigate()
   const today = new Date()
   const dateStr = `${today.getFullYear()}年${String(today.getMonth() + 1).padStart(2, '0')}月${String(today.getDate()).padStart(2, '0')}日`
   return (
@@ -131,7 +132,7 @@ function EnterpriseOverview() {
           </div>
         </div>
         <div className="overview-right">
-          <a href="#" className="view-all">查看全部 →</a>
+          <button onClick={() => navigate('/enterprise-list')} className="view-all overview-view-all-btn">查看全部 →</button>
         </div>
       </div>
 

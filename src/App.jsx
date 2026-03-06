@@ -3,6 +3,7 @@ import Home from './pages/Home'
 import EnterpriseCalendar from './pages/EnterpriseCalendar'
 import SceneCalendar from './pages/SceneCalendar'
 import TagCalendar from './pages/TagCalendar'
+import EnterpriseList from './pages/EnterpriseList'
 import './index.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route path="/calendar" element={<EnterpriseCalendar />} />
         <Route path="/scene-calendar" element={<SceneCalendar />} />
         <Route path="/tag-calendar" element={<TagCalendar />} />
+        <Route path="/enterprise-list" element={<EnterpriseList />} />
       </Routes>
     </BrowserRouter>
   )
