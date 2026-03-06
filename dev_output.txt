@@ -10,3 +10,15 @@ Port 5175 is in use, trying another one...
   ➜  Local:   http://localhost:5176/
   ➜  Network: use --host to expose
   ➜  press h + enter to show help
+5:58:53 PM [vite] vite.config.js changed, restarting server...
+5:58:53 PM [vite] server restarted.
+5:58:56 PM [vite] vite.config.js changed, restarting server...
+5:58:56 PM [vite] server restarted.
+
+  ➜  Local:   http://localhost:5176/lwt
+  ➜  Network: use --host to expose
+5:58:58 PM [vite] vite.config.js changed, restarting server...
+5:58:58 PM [vite] server restarted.
+
+  ➜  Local:   http://localhost:5176/lwt/
+  ➜  Network: use --host to expose

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './TagCalendar.css';
+import DateSelection from './components/dataSelection/index';
 
 // 生成近半年的每日标签数据（10000 ~ 20000 范围）
 function generateData(days) {
@@ -114,11 +115,23 @@ const timelineItems = [
   },
 ];
 
+// 将 'YYYY-MM-DD' 转为友好显示格式
+function formatDateDisplay(str) {
+  if (!str) return '标签日历';
+  const [y, m, d] = str.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+}
+
 export default function TagCalendar() {
   const navigate = useNavigate();
   const [range, setRange] = useState('half'); // 'month' | 'half'
   const chartRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(300);
+
+  // 日历弹框
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [pendingDate, setPendingDate] = useState(null); // 弹框内临时选中
+  const [confirmedDate, setConfirmedDate] = useState(null); // 已确认日期
 
   useEffect(() => {
     if (chartRef.current) {
@@ -177,11 +190,11 @@ export default function TagCalendar() {
           </div>
         </div>
 
-        {/* 标签日历 标题区（非下拉） */}
-        <div className="tc-title-card">
-          <span className="tc-title-text">标签日历</span>
+        {/* 标签日历 标题区（可点击打开日历弹框） */}
+        <div className="tc-title-card" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }} style={{ cursor: 'pointer' }}>
+          <span className="tc-title-text">{confirmedDate ? formatDateDisplay(confirmedDate) : '标签日历'}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fill-opacity="0.9"/>
+            <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9"/>
           </svg>
         </div>
 
@@ -303,6 +316,73 @@ export default function TagCalendar() {
         </div>
 
       </div>
+
+      {/* 日历底部弹框 */}
+      {sheetOpen && (
+        <div className="tc-sheet-overlay" onClick={() => setSheetOpen(false)}>
+          <div className="tc-sheet" onClick={e => e.stopPropagation()}>
+            {/* 把手 */}
+            <div className="tc-sheet-handle" />
+
+            {/* 日历组件 */}
+            <DateSelection
+              dateDisabledType="afterTodayAndToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+
+            {/* 已选日期信息 */}
+            {pendingDate && (
+              <div className="tc-sheet-info">
+                <div className="tc-sheet-info-date">{formatDateDisplay(pendingDate)}</div>
+
+                {/* 卡片1：标签总数 */}
+                <div className="tc-sheet-card tc-sheet-card--blue">
+                  <div className="tc-sheet-card-label">标签总数</div>
+                  <div className="tc-sheet-card-row">
+                    <span className="tc-sheet-card-value">123,317个</span>
+                    <span className="tc-sheet-card-delta tc-sheet-card-delta--pos">+24个</span>
+                  </div>
+                </div>
+
+                {/* 卡片2：变化原因 */}
+                <div className="tc-sheet-card tc-sheet-card--orange">
+                  <div className="tc-sheet-card-label">变化原因</div>
+                  <div className="tc-sheet-card-list">
+                    <div className="tc-sheet-card-list-item">
+                      <span className="tc-sheet-card-list-idx">1.</span>
+                      <span className="tc-sheet-card-list-txt">AI自动根据企业信息生成新标签</span>
+                    </div>
+                    <div className="tc-sheet-card-list-item">
+                      <span className="tc-sheet-card-list-idx">2.</span>
+                      <span className="tc-sheet-card-list-txt">获取新数据《2025年浙江省“小巨人”企业清单》</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 卡片3：标签变化 */}
+                <div className="tc-sheet-card tc-sheet-card--purple">
+                  <div className="tc-sheet-card-label">标签变化</div>
+                  <div className="tc-sheet-card-tag-row">
+                    <span className="tc-sheet-badge tc-sheet-badge--blue">新增</span>
+                    <div className="tc-sheet-tag-info">
+                      <span className="tc-sheet-tag-title">企业资质</span>
+                      <span className="tc-sheet-tag-dot"> · </span>
+                      <span className="tc-sheet-tag-desc">新增为浙江省“小巨人”企业</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 底部按钮 */}
+            <div className="tc-sheet-footer">
+              <button className="tc-sheet-btn tc-sheet-btn--cancel" onClick={() => setSheetOpen(false)}>取消</button>
+              <button className="tc-sheet-btn tc-sheet-btn--confirm" onClick={() => { setConfirmedDate(pendingDate); setSheetOpen(false); }}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

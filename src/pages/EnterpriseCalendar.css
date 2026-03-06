@@ -447,3 +447,192 @@
   flex: 1;
   min-width: 0;
 }
+
+/* ===============================================
+   日历底部弹框（Sheet）
+   =============================================== */
+
+.ec-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.ec-sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  padding: 0 0 32px;
+  animation: ec-sheet-slide-up 0.28s cubic-bezier(0.32, 0.72, 0, 1) both;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes ec-sheet-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* 顶部把手 */
+.ec-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  margin: 12px auto 8px;
+}
+
+/* 已选日期信息区块 */
+.ec-sheet-info {
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ec-sheet-info-date {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+/* 通用卡片样式 */
+.ec-sheet-card {
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ec-sheet-card--blue { background: #F4F7FF; }
+.ec-sheet-card--orange { background: #FFF8F2; }
+.ec-sheet-card--purple { background: #F9F6FF; }
+
+.ec-sheet-card-label {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* 企业总数行 */
+.ec-sheet-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ec-sheet-card-value {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.ec-sheet-card-delta {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.ec-sheet-card-delta--pos { color: #F33E3E; }
+.ec-sheet-card-delta--neg { color: #0AA34E; }
+
+/* 列表样式 */
+.ec-sheet-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ec-sheet-card-list-item {
+  display: flex;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.ec-sheet-card-list-idx { color: rgba(0, 0, 0, 0.4); }
+.ec-sheet-card-list-txt { color: rgba(0, 0, 0, 0.9); }
+
+/* 标签变化行 */
+.ec-sheet-card-tag-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ec-sheet-badge {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.ec-sheet-badge--blue {
+  background: rgba(21, 93, 252, 0.12);
+  color: #155DFC;
+}
+
+.ec-sheet-tag-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.ec-sheet-tag-title {
+  color: #1E2939;
+  font-weight: 600;
+}
+
+.ec-sheet-tag-dot {
+  color: rgba(0, 0, 0, 0.2);
+  margin: 0 2px;
+}
+
+.ec-sheet-tag-desc {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* 底部按钮组 */
+.ec-sheet-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.ec-sheet-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.ec-sheet-btn:active {
+  opacity: 0.75;
+}
+
+.ec-sheet-btn--cancel {
+  background: #F3F4F6;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.ec-sheet-btn--confirm {
+  background: #155DFC;
+  color: #ffffff;
+}
+

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './SceneCalendar.css';
+import DateSelection from './components/dataSelection/index';
 
 // 生成近一年的每日场景数量数据（0~15范围）
 function generateYearData() {
@@ -65,11 +66,23 @@ const timelineItems = [
   },
 ];
 
+// 将 'YYYY-MM-DD' 转为友好显示格式
+function formatDateDisplay(str) {
+  if (!str) return '场景日历';
+  const [y, m, d] = str.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+}
+
 export default function SceneCalendar() {
   const navigate = useNavigate();
   const [range, setRange] = useState('year'); // 'half' | 'year'
   const chartRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(320);
+
+  // 日历弹框
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [pendingDate, setPendingDate] = useState(null); // 弹框内临时选中
+  const [confirmedDate, setConfirmedDate] = useState(null); // 已确认日期
 
   useEffect(() => {
     if (chartRef.current) {
@@ -127,11 +140,11 @@ export default function SceneCalendar() {
           <div className="sc-tab" onClick={() => navigate('/tag-calendar')}>标签日历</div>
         </div>
 
-        {/* 场景日历标题区（非下拉框） */}
-        <div className="sc-title-card">
-          <span className="sc-title-text">场景日历</span>
+        {/* 场景日历标题区（可点击打开日历弹框） */}
+        <div className="sc-title-card" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }} style={{ cursor: 'pointer' }}>
+          <span className="sc-title-text">{confirmedDate ? formatDateDisplay(confirmedDate) : '场景日历'}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fill-opacity="0.9"/>
+            <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9"/>
           </svg>
         </div>
 
@@ -247,6 +260,59 @@ export default function SceneCalendar() {
         </div>
 
       </div>
+
+      {/* 日历底部弹框 */}
+      {sheetOpen && (
+        <div className="sc-sheet-overlay" onClick={() => setSheetOpen(false)}>
+          <div className="sc-sheet" onClick={e => e.stopPropagation()}>
+            {/* 把手 */}
+            <div className="sc-sheet-handle" />
+
+            {/* 日历组件 */}
+            <DateSelection
+              dateDisabledType="afterTodayAndToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+
+            {/* 已选日期信息 */}
+            {pendingDate && (
+              <div className="sc-sheet-info">
+                <div className="sc-sheet-info-date">{formatDateDisplay(pendingDate)}</div>
+
+                {/* 卡片1：场景总数 */}
+                <div className="sc-sheet-card sc-sheet-card--blue">
+                  <div className="sc-sheet-card-label">场景总数</div>
+                  <div className="sc-sheet-card-row">
+                    <span className="sc-sheet-card-value">7个</span>
+                    <span className="sc-sheet-card-delta sc-sheet-card-delta--pos">+1个</span>
+                  </div>
+                </div>
+
+                {/* 卡片2：新增场景 */}
+                <div className="sc-sheet-card sc-sheet-card--orange">
+                  <div className="sc-sheet-card-label">新增场景</div>
+                  <div className="sc-sheet-card-txt">115X企业筛选场景</div>
+                </div>
+
+                {/* 卡片3：发布背景 */}
+                <div className="sc-sheet-card sc-sheet-card--purple">
+                  <div className="sc-sheet-card-label">发布背景</div>
+                  <div className="sc-sheet-card-desc">
+                    为全面落实中央、省市区关于科技创新与产业创新深度融合以及新型工业化的各项任务要求,推动拱墅区制造业高质量发展，特制定本行动计划。
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 底部按钮 */}
+            <div className="sc-sheet-footer">
+              <button className="sc-sheet-btn sc-sheet-btn--cancel" onClick={() => setSheetOpen(false)}>取消</button>
+              <button className="sc-sheet-btn sc-sheet-btn--confirm" onClick={() => { setConfirmedDate(pendingDate); setSheetOpen(false); }}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

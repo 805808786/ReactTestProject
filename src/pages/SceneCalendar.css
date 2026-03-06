@@ -425,3 +425,146 @@
   color: #4A5565;
   margin: 0;
 }
+
+/* ===============================================
+   日历底部弹框（Sheet）
+   =============================================== */
+
+.sc-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sc-sheet {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 20px 20px 0 0;
+  padding: 0 0 32px;
+  animation: sc-sheet-slide-up 0.28s cubic-bezier(0.32, 0.72, 0, 1) both;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes sc-sheet-slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* 顶部把手 */
+.sc-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  margin: 12px auto 8px;
+}
+
+/* 已选日期信息区块 */
+.sc-sheet-info {
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sc-sheet-info-date {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+  padding: 0 4px;
+  margin-bottom: 2px;
+}
+
+/* 通用卡片样式 */
+.sc-sheet-card {
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sc-sheet-card--blue { background: #F4F7FF; }
+.sc-sheet-card--orange { background: #FFF8F2; }
+.sc-sheet-card--purple { background: #F9F6FF; }
+
+.sc-sheet-card-label {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+/* 场景总数行 */
+.sc-sheet-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sc-sheet-card-value {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.sc-sheet-card-delta {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.sc-sheet-card-delta--pos { color: #F33E3E; }
+.sc-sheet-card-delta--neg { color: #0AA34E; }
+
+/* 文本/详情样式 */
+.sc-sheet-card-txt {
+  font-size: 17px;
+  font-weight: 600;
+  color: #E17100;
+}
+
+.sc-sheet-card-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* 底部按钮组 */
+.sc-sheet-footer {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.sc-sheet-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s;
+}
+
+.sc-sheet-btn:active {
+  opacity: 0.75;
+}
+
+.sc-sheet-btn--cancel {
+  background: #F3F4F6;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.sc-sheet-btn--confirm {
+  background: #155DFC;
+  color: #ffffff;
+}
+

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './EnterpriseCalendar.css';
+import DateSelection from './components/dataSelection/index';
 
 // 生成近半年的每日企业数量数据（130,000 ~ 140,000 范围）
 function generateData(days) {
@@ -131,11 +132,22 @@ const timelineItems = [
   },
 ];
 
+// 将 'YYYY-MM-DD' 转为友好显示格式
+function formatDateDisplay(str) {
+  if (!str) return '企业日历';
+  const [y, m, d] = str.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+}
+
 export default function EnterpriseCalendar() {
   const navigate = useNavigate();
   const [range, setRange] = useState('half'); // 'month' | 'half'
   const chartRef = useRef(null);
   const [chartWidth, setChartWidth] = useState(300);
+  // 日历弹框
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [pendingDate, setPendingDate] = useState(null); // 弹框内临时选中
+  const [confirmedDate, setConfirmedDate] = useState(null); // 已确认日期
 
   useEffect(() => {
     if (chartRef.current) {
@@ -194,11 +206,11 @@ export default function EnterpriseCalendar() {
           <div className="ec-tab" onClick={() => navigate('/tag-calendar')}>标签日历</div>
         </div>
 
-        {/* 企业日历标题区（非下拉） */}
-        <div className="ec-title-card">
-          <span className="ec-title-text">企业日历</span>
+        {/* 企业日历标题区（可点击打开日历弹框） */}
+        <div className="ec-title-card" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }} style={{ cursor: 'pointer' }}>
+          <span className="ec-title-text">{confirmedDate ? formatDateDisplay(confirmedDate) : '企业日历'}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fill-opacity="0.9"/>
+            <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9"/>
           </svg>
         </div>
 
@@ -311,6 +323,73 @@ export default function EnterpriseCalendar() {
         </div>
 
       </div>
+
+      {/* 日历底部弹框 */}
+      {sheetOpen && (
+        <div className="ec-sheet-overlay" onClick={() => setSheetOpen(false)}>
+          <div className="ec-sheet" onClick={e => e.stopPropagation()}>
+            {/* 把手 */}
+            <div className="ec-sheet-handle" />
+
+            {/* 日历组件 */}
+            <DateSelection
+              dateDisabledType="afterTodayAndToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+
+            {/* 已选日期信息 */}
+            {pendingDate && (
+              <div className="ec-sheet-info">
+                <div className="ec-sheet-info-date">{formatDateDisplay(pendingDate)}</div>
+
+                {/* 卡片1：企业总数 */}
+                <div className="ec-sheet-card ec-sheet-card--blue">
+                  <div className="ec-sheet-card-label">企业总数</div>
+                  <div className="ec-sheet-card-row">
+                    <span className="ec-sheet-card-value">18,767家</span>
+                    <span className="ec-sheet-card-delta ec-sheet-card-delta--neg">-13家</span>
+                  </div>
+                </div>
+
+                {/* 卡片2：变化原因 */}
+                <div className="ec-sheet-card ec-sheet-card--orange">
+                  <div className="ec-sheet-card-label">变化原因</div>
+                  <div className="ec-sheet-card-list">
+                    <div className="ec-sheet-card-list-item">
+                      <span className="ec-sheet-card-list-idx">1.</span>
+                      <span className="ec-sheet-card-list-txt">工商信息新注册/新注销企业变化</span>
+                    </div>
+                    <div className="ec-sheet-card-list-item">
+                      <span className="ec-sheet-card-list-idx">2.</span>
+                      <span className="ec-sheet-card-list-txt">商务社区走访新入驻企业</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 卡片3：标签变化 */}
+                <div className="ec-sheet-card ec-sheet-card--purple">
+                  <div className="ec-sheet-card-label">标签变化</div>
+                  <div className="ec-sheet-card-tag-row">
+                    <span className="ec-sheet-badge ec-sheet-badge--blue">新增</span>
+                    <div className="ec-sheet-tag-info">
+                      <span className="ec-sheet-tag-title">跨境供应链服务</span>
+                      <span className="ec-sheet-tag-dot"> · </span>
+                      <span className="ec-sheet-tag-desc">新增为出海企业 · 跨境物流</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 底部按钮 */}
+            <div className="ec-sheet-footer">
+              <button className="ec-sheet-btn ec-sheet-btn--cancel" onClick={() => setSheetOpen(false)}>取消</button>
+              <button className="ec-sheet-btn ec-sheet-btn--confirm" onClick={() => { setConfirmedDate(pendingDate); setSheetOpen(false); }}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
