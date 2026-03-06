@@ -294,7 +294,7 @@ function FocusEnterprise() {
         </div>
 
         <div className="enterprise-row">
-          <div className="enterprise-item green-bg">
+          <div className="enterprise-item green-bg" onClick={() => navigate('/top-enterprise-dynamic')} style={{ cursor: 'pointer' }}>
             <div className="item-header">
               <span className="item-label">头部企业动态</span>
               <span className="item-arrow green-text">→</span>
