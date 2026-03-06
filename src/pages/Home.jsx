@@ -320,6 +320,7 @@ function FocusEnterprise() {
 }
 
 function DataContribution() {
+  const navigate = useNavigate()
   return (
     <section className="card">
       <div className="card-header">
@@ -339,7 +340,7 @@ function DataContribution() {
           </div>
         </div>
         <div className="summary-right">
-          <a href="#" className="view-all blue-text">查看全部 →</a>
+          <button onClick={() => navigate('/data-contribution')} className="view-all blue-text view-all-btn">查看全部 →</button>
         </div>
       </div>
 

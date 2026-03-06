@@ -1,0 +1,410 @@
+/* ========================================
+   数据贡献页面样式
+   设计稿基准：440px，使用 postcss-pxtorem 自动转换
+   ======================================== */
+
+/* ===== 容器 ===== */
+.dc-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #F9FAFB;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== 头部 ===== */
+.dc-header {
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 144px;
+}
+
+.dc-header-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.dc-header-title {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.44px;
+}
+
+/* 统计数据区 */
+.dc-stats-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-stat-card {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 8px 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.dc-stat-label {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.75;
+  text-align: center;
+  line-height: 1.333;
+  width: 100%;
+}
+
+.dc-stat-value {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 1.556;
+  letter-spacing: -0.44px;
+  height: 28px;
+}
+
+/* ===== 内容区 ===== */
+.dc-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+/* ===== 通用卡片 ===== */
+.dc-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 0;
+}
+
+.dc-card-title {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.429;
+  letter-spacing: -0.15px;
+}
+
+/* ===== 柱状图 ===== */
+.dc-barchart-wrapper {
+  width: 100%;
+}
+
+.dc-barchart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== 部门详情卡片 ===== */
+.dc-card--detail {
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* 部门详情头部（渐变蓝色背景） */
+.dc-detail-header {
+  background: linear-gradient(43deg, #155DFC 0%, #7CBEFF 88%);
+  border-bottom: 1px solid #E5E7EB;
+  padding: 16px 16px 1px;
+  height: 53px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-detail-header-title {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.429;
+}
+
+/* ===== 部门列表 ===== */
+.dc-dept-list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 手风琴条目 ===== */
+.dc-dept-item {
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.dc-dept-item:last-child {
+  border-bottom: none;
+}
+
+/* 部门头部行（点击展开/收起） */
+.dc-dept-header {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 16px;
+  text-align: left;
+  gap: 8px;
+}
+
+.dc-dept-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.dc-dept-name-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-dept-name {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.429;
+  letter-spacing: -0.15px;
+}
+
+.dc-dept-growth {
+  background: #F0FDF4;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #00A63E;
+  line-height: 1.333;
+}
+
+.dc-dept-total {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333;
+}
+
+/* 展开/收起箭头 */
+.dc-dept-chevron {
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.dc-dept-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* ===== 展开内容体 ===== */
+.dc-dept-body {
+  padding: 0 16px 16px;
+  background: #F9FAFB;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 子区块标题 */
+.dc-section-title {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.333;
+}
+
+.dc-section-title--persons {
+  margin-top: 8px;
+}
+
+/* ===== 科室贡献网格 ===== */
+.dc-rooms-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-room-item {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 0 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 36px;
+}
+
+.dc-room-left {
+  display: flex;
+  flex-direction: column;
+  width: 42px;
+}
+
+.dc-room-name {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #101828;
+  line-height: 1.429;
+  letter-spacing: -0.15px;
+}
+
+.dc-room-count {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333;
+}
+
+.dc-room-value {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #155DFC;
+  line-height: 1.429;
+}
+
+/* ===== 人员贡献列表 ===== */
+.dc-persons-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dc-person-item {
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 68px;
+}
+
+.dc-person-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dc-person-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-person-name {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.429;
+}
+
+.dc-person-role {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333;
+}
+
+.dc-person-star {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.dc-person-star-val {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.333;
+}
+
+.dc-person-bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.dc-person-contribution {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #4A5565;
+  line-height: 1.333;
+}
+
+.dc-person-detail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.dc-person-detail-text {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #155DFC;
+  line-height: 1.333;
+}
+
+.dc-chevron-right-inline {
+  transform: rotate(-90deg);
+  opacity: 0.6;
+}
