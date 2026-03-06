@@ -1,5 +1,5 @@
 /* ===== 页面容器 ===== */
-.sedd-container {
+.vd-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -11,7 +11,7 @@
 }
 
 /* ===== 头部 ===== */
-.sedd-header {
+.vd-header {
   height: 64px;
   background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
   padding: 16px 16px 0px;
@@ -20,14 +20,14 @@
   flex-shrink: 0;
 }
 
-.sedd-header-row {
+.vd-header-row {
   display: flex;
   align-items: center;
   gap: 8px;
   height: 32px;
 }
 
-.sedd-back-btn {
+.vd-back-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -40,17 +40,17 @@
   flex-shrink: 0;
 }
 
-.sedd-header-title {
+.vd-header-title {
   font-size: 20px;
   font-weight: 600;
   color: #FFFFFF;
-  line-height: 1.4;
+  line-height: 1.4em;
   letter-spacing: -0.022em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
 }
 
 /* ===== 主体区域（可滚动） ===== */
-.sedd-body {
+.vd-body {
   flex: 1;
   overflow-y: auto;
   display: flex;
@@ -60,7 +60,7 @@
 }
 
 /* ===== 卡片通用样式 ===== */
-.sedd-card {
+.vd-card {
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 14px;
@@ -69,78 +69,43 @@
   overflow: hidden;
 }
 
-.sedd-card-content {
+.vd-card--last {
+  margin-bottom: 16px;
+}
+
+.vd-card-content {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
+  padding: 16px 16px;
 }
 
-/* ===== 动态基本信息 ===== */
-.sedd-info-section {
-  position: relative;
+.vd-card-content--related {
+  gap: 12px;
 }
 
-/* 类型标签 */
-.sedd-badge-wrapper {
+/* ===== 标题 + 日期时间 ===== */
+.vd-info-section {
   display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 56px;
 }
-.sedd-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 8px;
-  background: #ECEEF2;
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #030213;
-  line-height: 1.333;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
-  height: 22px;
-  box-sizing: border-box;
+
+.vd-title-row {
   margin-bottom: 8px;
 }
 
-/* 标题行 */
-.sedd-title-row {
-  margin-bottom: 8px;
-}
-
-.sedd-title-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-}
-
-.sedd-green-dot {
-  width: 12px;
-  height: 12px;
-  background: #10BA51;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.sedd-title {
+.vd-title {
   font-size: 18px;
   font-weight: 500;
   color: #0A0A0A;
-  line-height: 1.556;
+  line-height: 28px;
   letter-spacing: -0.024em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* 来源 + 日期行 */
-.sedd-meta-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
-}
-
-.sedd-meta-item {
+.vd-meta-row {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -148,7 +113,7 @@
   height: 16px;
 }
 
-.sedd-meta-text {
+.vd-meta-text {
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -157,60 +122,69 @@
 }
 
 /* ===== 分隔线 ===== */
-.sedd-separator {
+.vd-separator {
   height: 1px;
   background: rgba(0, 0, 0, 0.1);
-  margin: 0;
   flex-shrink: 0;
 }
 
-/* ===== 摘要区域 ===== */
-.sedd-summary-box {
+/* ===== 走访大纲（摘要）===== */
+.vd-summary-box {
   background: #EFF6FF;
   border-radius: 10px;
   padding: 12px 12px 0px;
-  min-height: 51px;
   box-sizing: border-box;
 }
 
-.sedd-summary-text {
+.vd-summary-text {
   margin: 0 0 12px 0;
   font-size: 12px;
   font-weight: 500;
   color: #364153;
   line-height: 1.625;
   font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  white-space: pre-wrap;
 }
 
-/* ===== 正文段落 ===== */
-.sedd-paragraphs {
+/* ===== 详情内容 ===== */
+.vd-detail-section {
   display: flex;
   flex-direction: column;
   gap: 12px;
   padding-bottom: 16px;
 }
 
-.sedd-paragraph {
+.vd-detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vd-detail-text {
   margin: 0;
   font-size: 14px;
   font-weight: 400;
   color: #364153;
   line-height: 1.625;
   letter-spacing: -0.011em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  white-space: pre-wrap;
+}
+
+.vd-detail-text--bold {
+  font-weight: 500;
+  color: #000000;
+  font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.vd-detail-text--heading {
+  font-weight: 500;
+  color: #000000;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* ===== 关联企业卡片 ===== */
-.sedd-card:last-child {
-  margin-bottom: 16px;
-}
-
-.sedd-card:last-child .sedd-card-content {
-  gap: 12px;
-}
-
-/* 卡片标题 */
-.sedd-section-header {
+.vd-section-header {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -218,13 +192,13 @@
   position: relative;
 }
 
-.sedd-section-header img {
+.vd-section-icon {
   position: absolute;
   left: 0;
   top: 2px;
 }
 
-.sedd-section-title {
+.vd-section-title {
   font-size: 14px;
   font-weight: 500;
   color: #0A0A0A;
@@ -234,7 +208,7 @@
   margin-left: 24px;
 }
 
-.sedd-section-count {
+.vd-section-count {
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -244,7 +218,7 @@
 }
 
 /* ===== 企业列表 ===== */
-.sedd-company-list {
+.vd-company-list {
   background: #F9FAFB;
   border-radius: 10px;
   padding: 12px 12px 0px;
@@ -254,13 +228,12 @@
   margin-bottom: 0;
 }
 
-.sedd-company-item {
+.vd-company-item {
   display: flex;
   flex-direction: column;
 }
 
-/* 企业信息行 */
-.sedd-company-main {
+.vd-company-main {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -268,7 +241,7 @@
   gap: 8px;
 }
 
-.sedd-company-left {
+.vd-company-left {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -276,7 +249,7 @@
   min-width: 0;
 }
 
-.sedd-company-name {
+.vd-company-name {
   font-size: 14px;
   font-weight: 500;
   color: #0A0A0A;
@@ -285,14 +258,14 @@
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.sedd-company-info {
+.vd-company-info {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 8px;
 }
 
-.sedd-company-industry {
+.vd-company-industry {
   font-size: 12px;
   font-weight: 400;
   color: #4A5565;
@@ -304,14 +277,14 @@
   max-width: 120px;
 }
 
-.sedd-company-dot {
+.vd-company-dot {
   font-size: 12px;
   color: #4A5565;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
   flex-shrink: 0;
 }
 
-.sedd-company-person {
+.vd-company-person {
   font-size: 12px;
   font-weight: 400;
   color: #4A5565;
@@ -320,7 +293,7 @@
 }
 
 /* 状态标签 */
-.sedd-status-badge {
+.vd-status-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -339,7 +312,7 @@
 }
 
 /* 查看详情行 */
-.sedd-company-detail-row {
+.vd-company-detail-row {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -347,7 +320,7 @@
   height: 24px;
 }
 
-.sedd-company-detail-link {
+.vd-company-detail-link {
   font-size: 12px;
   font-weight: 400;
   color: #155DFC;
