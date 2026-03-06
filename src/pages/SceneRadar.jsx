@@ -240,7 +240,6 @@ export default function SceneRadar() {
             />
           </div>
           <button className="sr-calendar-btn" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }}>
-            <img src={iconSceneCalendar} alt="场景日历" className="sr-calendar-icon" />
             场景日历
           </button>
         </div>

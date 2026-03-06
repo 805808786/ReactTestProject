@@ -44,7 +44,7 @@
   font-size: 20px;
   font-weight: 600;
   color: #FFFFFF;
-  line-height: 1.4em;
+  line-height: 1.4;
   letter-spacing: -0.022em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
 }
@@ -96,7 +96,7 @@
   font-size: 12px;
   font-weight: 500;
   color: #030213;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 22px;
   box-sizing: border-box;
@@ -127,7 +127,7 @@
   font-size: 18px;
   font-weight: 500;
   color: #0A0A0A;
-  line-height: 1.556em;
+  line-height: 1.556;
   letter-spacing: -0.024em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -152,7 +152,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
 
@@ -178,7 +178,7 @@
   font-size: 12px;
   font-weight: 500;
   color: #364153;
-  line-height: 1.625em;
+  line-height: 1.625;
   font-family: Inter, 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
 
@@ -195,7 +195,7 @@
   font-size: 14px;
   font-weight: 400;
   color: #364153;
-  line-height: 1.625em;
+  line-height: 1.625;
   letter-spacing: -0.011em;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
@@ -228,7 +228,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #0A0A0A;
-  line-height: 1.429em;
+  line-height: 1.429;
   letter-spacing: -0.011em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   margin-left: 24px;
@@ -238,7 +238,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
   margin-left: 8px;
 }
@@ -280,7 +280,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #0A0A0A;
-  line-height: 1.429em;
+  line-height: 1.429;
   letter-spacing: -0.011em;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -296,7 +296,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #4A5565;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
   white-space: nowrap;
   overflow: hidden;
@@ -315,7 +315,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #4A5565;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
 
@@ -331,7 +331,7 @@
   font-size: 12px;
   font-weight: 500;
   color: #FFFFFF;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 22px;
   box-sizing: border-box;
@@ -351,7 +351,7 @@
   font-size: 12px;
   font-weight: 400;
   color: #155DFC;
-  line-height: 1.333em;
+  line-height: 1.333;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
   cursor: pointer;
 }

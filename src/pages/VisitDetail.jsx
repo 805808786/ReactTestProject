@@ -81,7 +81,7 @@ export default function VisitDetail() {
             {/* 标题 + 日期时间 */}
             <div className="vd-info-section">
               <div className="vd-title-row">
-                <span className="vd-title">{data.title}</span>
+                <div className="vd-title">{data.title}</div>
               </div>
               <div className="vd-meta-row">
                 <img src={iconCalendar} alt="日期" width={12} height={12} />

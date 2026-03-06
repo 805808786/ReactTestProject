@@ -37,7 +37,7 @@
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
   font-size: 18px;
-  line-height: 1.4444em;
+  line-height: 1.4444;
   text-align: center;
   color: rgba(0, 0, 0, 0.9);
 }
@@ -47,7 +47,7 @@
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5em;
+  line-height: 1.5;
   text-align: center;
   color: rgba(0, 0, 0, 0.6);
   white-space: pre-line;
@@ -76,7 +76,7 @@
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
   font-size: 16px;
-  line-height: 1.5em;
+  line-height: 1.5;
   text-align: center;
   color: #FFFFFF;
   cursor: pointer;
