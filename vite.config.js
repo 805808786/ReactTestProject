@@ -6,6 +6,14 @@ import pxtorem from 'postcss-pxtorem'
 export default defineConfig({
   base: '/lwt/',
   plugins: [react()],
+  server: {
+    proxy: {
+      '/backend': {
+        target: 'https://test-api.yicall.com',
+        changeOrigin: true,
+      },
+    },
+  },
   css: {
     postcss: {
       plugins: [

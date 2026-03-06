@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 import Dialog from '../components/Dialog'
+import { useEnterpriseStore } from '../store/enterpriseStore'
 
 const tabs = ['企业总览', '关注场景', '关注企业', '数据贡献', '政策匹配']
 
@@ -93,17 +94,34 @@ function TabBar({ tabs, activeTab, onTabChange }) {
   )
 }
 
+function formatDateCN(date) {
+  return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, '0')}月${String(date.getDate()).padStart(2, '0')}日`
+}
+
 function EnterpriseOverview() {
   const navigate = useNavigate()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { enterpriseData, loading, fetchEnterpriseData } = useEnterpriseStore()
+
   const today = new Date()
-  const dateStr = `${today.getFullYear()}年${String(today.getMonth() + 1).padStart(2, '0')}月${String(today.getDate()).padStart(2, '0')}日`
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+
+  useEffect(() => {
+    fetchEnterpriseData(todayStr)
+  }, [fetchEnterpriseData, todayStr])
+
+  const todayTotal = enterpriseData?.todayTotal
+  const changeNum = enterpriseData?.changeNum
+  const displayDate = enterpriseData?.changeDate
+    ? formatDateCN(new Date(enterpriseData.changeDate))
+    : formatDateCN(today)
+
   return (
     <section className="card">
       <div className="card-header">
         <span className="card-title">企业总览</span>
         <div className="card-header-right">
-          <span className="card-date">{dateStr}</span>
+          <span className="card-date">{displayDate}</span>
           <Link to="/calendar" className="calendar-tag" style={{ textDecoration: 'none' }}>日历视图</Link>
         </div>
       </div>
@@ -130,7 +148,10 @@ function EnterpriseOverview() {
               企业总数
               <span className="info-icon" onClick={() => setIsDialogOpen(true)}>ⓘ</span>
             </div>
-            <div className="info-count">139,987<span className="info-unit">家</span></div>
+            <div className="info-count">
+              {loading ? '加载中...' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '--')}
+              <span className="info-unit">家</span>
+            </div>
           </div>
         </div>
         <div className="overview-right">
@@ -142,7 +163,10 @@ function EnterpriseOverview() {
         <div className="change-card change-green">
           <div className="change-left-content">
             <div className="change-title">总增量（较昨日）</div>
-            <div className="change-number">+5<span className="change-unit">家</span></div>
+            <div className="change-number">
+              {loading ? '加载中...' : (changeNum !== undefined && changeNum !== null ? `${changeNum > 0 ? '+' : ''}${changeNum}` : '--')}
+              <span className="change-unit">家</span>
+            </div>
           </div>
         </div>
         <div className="change-card change-gradient">
