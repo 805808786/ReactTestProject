@@ -103,8 +103,9 @@ function EnterpriseOverview() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { enterpriseData, loading, fetchEnterpriseData } = useEnterpriseStore()
 
-  const today = new Date()
-  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate() - 1).padStart(2, '0')}`
+  // eslint-disable-next-line react-hooks/purity
+  const today = new Date(Date.now() - 86400000) // T-1（昨天）
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
 
   useEffect(() => {
     fetchEnterpriseData(todayStr)
@@ -149,7 +150,7 @@ function EnterpriseOverview() {
               <span className="info-icon" onClick={() => setIsDialogOpen(true)}>ⓘ</span>
             </div>
             <div className="info-count">
-              {loading ? '加载中...' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '--')}
+              {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '--')}
               <span className="info-unit">家</span>
             </div>
           </div>
@@ -164,7 +165,7 @@ function EnterpriseOverview() {
           <div className="change-left-content">
             <div className="change-title">总增量（较昨日）</div>
             <div className="change-number">
-              {loading ? '加载中...' : (changeNum !== undefined && changeNum !== null ? `${changeNum > 0 ? '+' : ''}${changeNum}` : '--')}
+              {loading ? '--' : (changeNum !== undefined && changeNum !== null ? `${changeNum > 0 ? '+' : ''}${changeNum}` : '--')}
               <span className="change-unit">家</span>
             </div>
           </div>
