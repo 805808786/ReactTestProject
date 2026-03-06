@@ -46,9 +46,9 @@ const MOCK_VISITS = {
 const CALENDAR_DATA = Object.keys(MOCK_VISITS).map(date => ({ date }));
 
 /* ===================== 走访计划卡片 ===================== */
-function VisitCard({ visit }) {
+function VisitCard({ visit, date, onClick }) {
   return (
-    <div className="pv-visit-card">
+    <div className="pv-visit-card" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="pv-visit-inner">
         <div className="pv-visit-time">
           <span className="pv-time-start">{visit.startTime}</span>
@@ -104,7 +104,18 @@ export default function PlannedVisits() {
 
         {/* 当前日期走访计划列表 */}
         {currentVisits.length > 0
-          ? currentVisits.map(visit => <VisitCard key={visit.id} visit={visit} />)
+          ? currentVisits.map(visit => (
+              <VisitCard
+                key={visit.id}
+                visit={visit}
+                date={selectedDate}
+                onClick={() => navigate('/schedule-detail', {
+                  state: {
+                    scheduleKey: `${selectedDate}-${visit.id}`,
+                  },
+                })}
+              />
+            ))
           : <div className="pv-empty">当日暂无走访计划</div>
         }
       </div>
