@@ -190,11 +190,16 @@ function FilterButton({ label, active, count, onClick }) {
 
 /* ===================== 动态卡片 ===================== */
 function DynamicCard({ item }) {
+  const navigate = useNavigate();
   const { type, title, date, content, source, relatedCount, isFirst } = item;
   const relatedText = `关联 ${relatedCount} 家企业`;
 
+  const handleClick = () => {
+    navigate(`/top-enterprise-dynamic-detail/${item.id}`);
+  };
+
   return (
-    <div className={`ted-card${isFirst ? ' ted-card--first' : ''}`}>
+    <div className={`ted-card${isFirst ? ' ted-card--first' : ''}`} onClick={handleClick} style={{ cursor: 'pointer' }}>
       {/* 顶部：类型标签 + 查看详情 */}
       <div className="ted-card-top">
         <div className="ted-badge">{type}</div>
