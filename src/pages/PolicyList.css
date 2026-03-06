@@ -1,0 +1,428 @@
+/* ===== 页面容器 ===== */
+.pl-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.pl-header {
+  background: linear-gradient(135deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* 导航行 */
+.pl-header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin-bottom: 16px;
+}
+
+.pl-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.pl-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* 统计数据行 */
+.pl-stats-row {
+  display: flex;
+  align-items: stretch;
+  height: 72px;
+}
+
+.pl-stat-box {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 12px 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.pl-stat-box + .pl-stat-box {
+  margin-left: 1px;
+  border-radius: 0 10px 10px 0;
+}
+
+.pl-stat-box:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.pl-stat-label {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.33;
+}
+
+.pl-stat-value {
+  font-family: Inter, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.022em;
+}
+
+/* 整体实施进度 */
+.pl-overall-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 8px 0;
+}
+
+.pl-overall-progress-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 16px;
+}
+
+.pl-progress-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.pl-overall-progress-label {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.33;
+}
+
+.pl-overall-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.pl-overall-fill {
+  height: 100%;
+  background: #FFFFFF;
+  border-radius: 999px;
+}
+
+/* ===== 政策列表区域 ===== */
+.pl-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 政策卡片 ===== */
+.pl-policy-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* 政策头部（始终可见） */
+.pl-policy-header {
+  padding: 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pl-policy-header-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pl-policy-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pl-policy-doc-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.pl-policy-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pl-policy-name {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.43;
+  letter-spacing: -0.011em;
+}
+
+.pl-policy-match-info {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.33;
+}
+
+.pl-policy-rate-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  width: 46px;
+}
+
+.pl-policy-rate-value {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.43;
+  letter-spacing: -0.011em;
+  text-align: right;
+}
+
+.pl-policy-rate-label {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.33;
+  text-align: right;
+}
+
+/* 政策进度条 */
+.pl-policy-progress-track {
+  height: 6px;
+  background: #F3F4F6;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.pl-policy-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+/* ===== 展开内容 ===== */
+.pl-expanded-content {
+  border-top: 1px solid #F3F4F6;
+  margin-top: 0;
+}
+
+/* 企业施策建议与进展区域 */
+.pl-enterprise-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+.pl-section-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 16px;
+}
+
+.pl-section-icon {
+  flex-shrink: 0;
+}
+
+.pl-section-title {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.33;
+}
+
+.pl-enterprise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 企业施策子项 */
+.pl-enterprise-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 13px 1px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+}
+
+.pl-enterprise-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.pl-enterprise-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.pl-enterprise-name-row {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.pl-enterprise-name {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.43;
+  letter-spacing: -0.011em;
+}
+
+.pl-enterprise-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 16px;
+}
+
+.pl-enterprise-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.33;
+  height: 20px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.pl-enterprise-progress-status {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.33;
+}
+
+.pl-enterprise-amount {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #155DFC;
+  line-height: 1.43;
+  letter-spacing: -0.011em;
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* 建议行（蓝色背景） */
+.pl-enterprise-advice {
+  position: relative;
+  background: #EFF6FF;
+  border-radius: 4px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pl-advice-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.pl-advice-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.63;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 新政策建议区域 */
+.pl-newpolicy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 17px 16px 0;
+  background: linear-gradient(135deg, #FAF5FF 0%, #EFF6FF 100%);
+}
+
+.pl-newpolicy-card {
+  padding: 13px 13px 1px;
+  background: #FFFFFF;
+  border: 1px solid #E9D4FF;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.pl-newpolicy-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.63;
+  display: block;
+}

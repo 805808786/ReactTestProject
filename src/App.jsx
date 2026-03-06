@@ -7,6 +7,7 @@ import EnterpriseList from './pages/EnterpriseList'
 import SceneRadar from './pages/SceneRadar'
 import SceneEnterprise from './pages/SceneEnterprise'
 import SceneDescription from './pages/SceneDescription'
+import PolicyList from './pages/PolicyList'
 import './index.css'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/scene-radar" element={<SceneRadar />} />
         <Route path="/scene-enterprise" element={<SceneEnterprise />} />
         <Route path="/scene-description/:id" element={<SceneDescription />} />
+        <Route path="/policy-list" element={<PolicyList />} />
       </Routes>
     </BrowserRouter>
   )
