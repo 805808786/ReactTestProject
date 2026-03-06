@@ -2,10 +2,12 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
+import DateSelection from './components/dataSelection/index';
 import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconSceneDynamic from '../assets/icon-scene-dynamic.svg';
 import iconCompany from '../assets/icon-company-se.svg';
+import iconSceneCalendar from '../assets/icon-scene-calendar.svg';
 import './SceneEnterprise.css';
 
 /* ===================== Mock 数据 ===================== */
@@ -69,6 +71,13 @@ const STATS = {
   middle: 890,
   potential: 2199,
 };
+
+/* ===================== 工具函数 ===================== */
+function formatDateDisplay(str) {
+  if (!str) return '';
+  const [y, m, d] = str.split('-');
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`;
+}
 
 /* ===================== 筛选标签按钮 ===================== */
 function FilterButton({ label, active, count, onClick }) {
@@ -162,6 +171,23 @@ export default function SceneEnterprise() {
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const debounceTimer = useRef(null);
+
+  // 日历弹框
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [pendingDate, setPendingDate] = useState(null);
+  const [confirmedDate, setConfirmedDate] = useState(null);
+
+  const handleCalendarOpen = useCallback(() => {
+    setPendingDate(confirmedDate);
+    setCalendarOpen(true);
+  }, [confirmedDate]);
+
+  const handleCalendarClose = useCallback(() => setCalendarOpen(false), []);
+
+  const handleCalendarConfirm = useCallback(() => {
+    setConfirmedDate(pendingDate);
+    setCalendarOpen(false);
+  }, [pendingDate]);
 
   // 筛选状态
   const [streetFilter, setStreetFilter] = useState([]);
@@ -258,7 +284,9 @@ export default function SceneEnterprise() {
               onChange={e => setSearchText(e.target.value)}
             />
           </div>
-          <button className="se-calendar-btn">企业日历</button>
+          <button className="se-calendar-btn" onClick={handleCalendarOpen}>
+              企业日历
+          </button>
         </div>
 
         {/* 统计数据 */}
@@ -366,6 +394,73 @@ export default function SceneEnterprise() {
         open={activeFilter === 'tag'}
         multiple
       />
+
+      {/* ===== 日历底部弹框 ===== */}
+      {calendarOpen && (
+        <div className="se-cal-overlay" onClick={handleCalendarClose}>
+          <div className="se-cal-sheet" onClick={e => e.stopPropagation()}>
+            {/* 把手 */}
+            <div className="se-cal-handle" />
+
+            {/* 日历组件 */}
+            <DateSelection
+              dateDisabledType="afterTodayAndToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+
+            {/* 已选日期信息 */}
+            {pendingDate && (
+              <div className="se-cal-info">
+                <div className="se-cal-info-date">{formatDateDisplay(pendingDate)}</div>
+
+                {/* 企业总数卡片 */}
+                <div className="se-cal-card se-cal-card--blue">
+                  <div className="se-cal-card-label">企业总数</div>
+                  <div className="se-cal-card-row">
+                    <span className="se-cal-card-value">18,767家</span>
+                    <span className="se-cal-card-delta se-cal-card-delta--neg">-13家</span>
+                  </div>
+                </div>
+
+                {/* 变化原因卡片 */}
+                <div className="se-cal-card se-cal-card--orange">
+                  <div className="se-cal-card-label">变化原因</div>
+                  <div className="se-cal-card-list">
+                    <div className="se-cal-card-list-item">
+                      <span className="se-cal-card-list-idx">1.</span>
+                      <span className="se-cal-card-list-txt">工商信息新注册/新注销企业变化</span>
+                    </div>
+                    <div className="se-cal-card-list-item">
+                      <span className="se-cal-card-list-idx">2.</span>
+                      <span className="se-cal-card-list-txt">商务社区走访新入驻企业</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 标签变化卡片 */}
+                <div className="se-cal-card se-cal-card--purple">
+                  <div className="se-cal-card-label">标签变化</div>
+                  <div className="se-cal-card-tag-row">
+                    <span className="se-cal-badge se-cal-badge--blue">新增</span>
+                    <div className="se-cal-tag-info">
+                      <span className="se-cal-tag-title">跨境供应链服务</span>
+                      <span className="se-cal-tag-dot"> · </span>
+                      <span className="se-cal-tag-desc">新增为出海企业 · 跨境物流</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 底部按钮 */}
+            <div className="se-cal-footer">
+              <button className="se-cal-btn se-cal-btn--cancel" onClick={handleCalendarClose}>取消</button>
+              <button className="se-cal-btn se-cal-btn--confirm" onClick={handleCalendarConfirm}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

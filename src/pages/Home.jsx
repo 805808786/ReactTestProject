@@ -271,7 +271,7 @@ function FocusEnterprise() {
 
       <div className="enterprise-grid-container">
         <div className="enterprise-row">
-          <div className="enterprise-item blue-bg">
+          <div className="enterprise-item blue-bg" onClick={() => navigate('/planned-visits')} style={{ cursor: 'pointer' }}>
             <div className="item-header">
               <span className="item-label">拟走访企业</span>
               <span className="item-arrow blue-text">→</span>

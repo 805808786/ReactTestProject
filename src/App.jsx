@@ -12,6 +12,8 @@ import DataContribution from './pages/DataContribution'
 import FollowEnterprise from './pages/FollowEnterprise'
 import SceneEnterpriseDynamic from './pages/SceneEnterpriseDynamic'
 import EnterpriseDynamic from './pages/EnterpriseDynamic'
+import PlannedVisits from './pages/PlannedVisits'
+import SceneEnterpriseDynamicDetail from './pages/SceneEnterpriseDynamicDetail'
 import './index.css'
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
         <Route path="/follow-enterprise" element={<FollowEnterprise />} />
         <Route path="/scene-enterprise-dynamic" element={<SceneEnterpriseDynamic />} />
         <Route path="/enterprise-dynamic" element={<EnterpriseDynamic />} />
+        <Route path="/planned-visits" element={<PlannedVisits />} />
+        <Route path="/scene-enterprise-dynamic-detail/:id" element={<SceneEnterpriseDynamicDetail />} />
       </Routes>
     </BrowserRouter>
   )
