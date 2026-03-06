@@ -17,6 +17,7 @@ import TopEnterpriseDynamic from './pages/TopEnterpriseDynamic'
 import EnterpriseDynamic from './pages/EnterpriseDynamic'
 import PlannedVisits from './pages/PlannedVisits'
 import SceneEnterpriseDynamicDetail from './pages/SceneEnterpriseDynamicDetail'
+import VisitDetail from './pages/VisitDetail'
 import TopEnterpriseDynamicDetail from './pages/TopEnterpriseDynamicDetail'
 import './index.css'
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/enterprise-dynamic" element={<EnterpriseDynamic />} />
         <Route path="/planned-visits" element={<PlannedVisits />} />
         <Route path="/scene-enterprise-dynamic-detail/:id" element={<SceneEnterpriseDynamicDetail />} />
+        <Route path="/enterprise-dynamic-detail/:id" element={<VisitDetail />} />
         <Route path="/top-enterprise-dynamic-detail/:id" element={<TopEnterpriseDynamicDetail />} />
       </Routes>
     </BrowserRouter>
