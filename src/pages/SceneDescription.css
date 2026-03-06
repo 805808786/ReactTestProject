@@ -1,0 +1,275 @@
+/* ===================== 页面容器 ===================== */
+.sd-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #F9FAFB;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===================== 头部 ===================== */
+.sd-header {
+  background: linear-gradient(90deg, rgba(21, 93, 252, 1) 0%, rgba(20, 71, 230, 1) 100%);
+  padding: 16px 16px 0px 16px;
+  height: 64px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.sd-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.sd-back-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -8px;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.sd-header-title {
+  font-family: PingFang SC, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  color: #FFFFFF;
+  letter-spacing: -0.45px;
+}
+
+/* ===================== 内容区域 ===================== */
+.sd-content {
+  flex: 1;
+  padding: 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  padding-bottom: 16px;
+}
+
+/* ===================== 卡片 ===================== */
+.sd-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.sd-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 0px;
+}
+
+/* ===================== 场景基本信息 ===================== */
+.sd-info-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sd-scene-title {
+  font-family: PingFang SC, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 28px;
+  color: #0A0A0A;
+  letter-spacing: -0.44px;
+}
+
+.sd-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 16px;
+}
+
+.sd-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sd-meta-text {
+  font-family: Alibaba PuHuiTi, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #6A7282;
+}
+
+/* 分隔线 */
+.sd-separator {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+/* 政策依据 */
+.sd-policy-box {
+  background: #EFF6FF;
+  border-radius: 10px;
+  padding: 12px 12px 0px;
+  min-height: 63px;
+  box-sizing: border-box;
+  padding-bottom: 12px;
+}
+
+.sd-policy-text {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: #364153;
+  text-decoration: none;
+  display: block;
+  word-break: break-all;
+}
+
+.sd-policy-text:hover {
+  text-decoration: underline;
+  color: #155DFC;
+}
+
+/* 场景描述 */
+.sd-desc-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.sd-desc-text {
+  font-family: Alibaba PuHuiTi, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22.75px;
+  letter-spacing: -0.15px;
+  color: #364153;
+  margin: 0;
+}
+
+/* ===================== 章节标题 ===================== */
+.sd-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 20px;
+  position: relative;
+}
+
+.sd-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: absolute;
+  left: 0;
+  top: 4px;
+}
+
+.sd-dot--success {
+  background: #10BA51;
+}
+
+.sd-dot--warning {
+  background: #F67315;
+}
+
+.sd-section-title {
+  font-family: PingFang SC, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #0A0A0A;
+  letter-spacing: -0.15px;
+  margin-left: 24px;
+}
+
+.sd-section-tag-placeholder {
+  margin-left: 8px;
+  flex: 1;
+}
+
+/* ===================== 工作目标 ===================== */
+.sd-goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.sd-goal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0px 0px 0px 16px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  min-height: 44px;
+}
+
+.sd-goal-text {
+  font-family: Alibaba PuHuiTi, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #364153;
+  flex: 1;
+  padding: 10px 0;
+}
+
+/* ===================== 工作范围 ===================== */
+.sd-scope-desc {
+  font-family: Alibaba PuHuiTi, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #364153;
+  margin: 0;
+}
+
+.sd-tags-container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0px 1px;
+  padding-bottom: 16px;
+}
+
+.sd-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.sd-tag {
+  background: #FFF7ED;
+  border: 1px solid #FFD6A7;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  font-family: Alibaba PuHuiTi, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #CA3500;
+  white-space: nowrap;
+}
