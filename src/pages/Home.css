@@ -226,6 +226,8 @@
 .info-icon {
   color: #bbb;
   font-size: 12px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .info-count {
