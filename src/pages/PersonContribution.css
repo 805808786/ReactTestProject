@@ -1,0 +1,440 @@
+/* ========================================
+   人员贡献记录页面样式
+   设计稿基准：440px，使用 postcss-pxtorem 自动转换
+   ======================================== */
+
+/* ===== 容器 ===== */
+.pc-container {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #F9FAFB;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== 顶部导航栏 ===== */
+.pc-header-topbar {
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-back-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.pc-header-title {
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.44px;
+}
+
+/* ===== 人员信息区 ===== */
+.pc-person-section {
+  background: linear-gradient(135deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 188px;
+}
+
+/* 人员信息行（姓名+职务 / 星级评分） */
+.pc-person-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+/* 左侧：姓名+职务 */
+.pc-person-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.pc-person-name {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.44px;
+}
+
+.pc-person-role-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-person-role {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.9;
+  line-height: 1.4286;
+}
+
+.pc-role-sep {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.75;
+  line-height: 1.4286;
+}
+
+.pc-person-dept {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.9;
+  line-height: 1.4286;
+}
+
+/* 右侧：星级评分 */
+.pc-person-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  width: 62px;
+}
+
+.pc-star-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+}
+
+.pc-star-val {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.3333;
+  text-align: right;
+}
+
+.pc-star-label {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.75;
+  line-height: 1.3333;
+  text-align: right;
+}
+
+/* 累计贡献卡片 */
+.pc-cumulative-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 84px;
+}
+
+.pc-cumulative-label {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #FFFFFF;
+  opacity: 0.9;
+  line-height: 1.4286;
+}
+
+.pc-cumulative-val {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 30px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+/* ===== 贡献记录列表区 ===== */
+.pc-records-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 0;
+}
+
+/* 列表标题行 */
+.pc-records-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.pc-records-title {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.4286;
+  letter-spacing: -0.15px;
+}
+
+/* 记录列表容器 */
+.pc-records-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+/* ===== 每条记录 ===== */
+.pc-record-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* 主卡片 */
+.pc-record-card {
+  background: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0px 1px 2px -1px rgba(0, 0, 0, 0.1), 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 卡片顶部区（标签+信息+内容） */
+.pc-record-top {
+  padding: 16px 16px 1px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+/* 标签行 */
+.pc-record-tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 类型标签基础样式 */
+.pc-type-tag {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3333;
+}
+
+/* 企业走访：紫色 */
+.pc-type-tag--walk {
+  background: #FAF5FF;
+  color: #8200DB;
+}
+
+/* 数据更新：蓝色 */
+.pc-type-tag--update {
+  background: #EFF6FF;
+  color: #1447E6;
+}
+
+/* 政策匹配：琥珀色 */
+.pc-type-tag--policy {
+  background: #FFFBEB;
+  color: #BB4D00;
+}
+
+/* 质量标签（优秀） */
+.pc-quality-tag {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.3333;
+  background: #F0FDF4;
+  border: 1px solid #B9F8CF;
+  color: #00A63E;
+}
+
+/* 元信息行 */
+.pc-record-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-meta-icon {
+  flex-shrink: 0;
+}
+
+.pc-meta-text {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.3333;
+}
+
+.pc-meta-sep {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.3333;
+}
+
+/* 内容区（灰色背景） */
+.pc-record-content {
+  background: #F9FAFB;
+  border-radius: 10px;
+  padding: 12px 12px 0;
+  position: relative;
+  min-height: 70px;
+}
+
+.pc-content-icon {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.pc-record-desc {
+  margin: 0;
+  padding-left: 24px;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625;
+  letter-spacing: -0.15px;
+}
+
+/* ===== 评价区 ===== */
+.pc-record-review {
+  background: linear-gradient(135deg, #F0FDF4 0%, #EFF6FF 100%);
+  padding: 16px 16px 0;
+}
+
+.pc-review-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* 评分（Award + 数字 + Star） */
+.pc-review-score {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  width: 52px;
+}
+
+.pc-review-score-val {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #00A63E;
+  line-height: 1.5556;
+}
+
+/* 评价信息（评价者 + 评语） */
+.pc-review-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.pc-review-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.pc-reviewer-name {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.3333;
+}
+
+.pc-reviewer-time {
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.3333;
+}
+
+.pc-review-comment {
+  margin: 0;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625;
+}
+
+/* ===== 评价按钮区 ===== */
+.pc-eval-section {
+  background: #F9FAFB;
+  border-top: 1px solid #F3F4F6;
+  padding: 13px 12px 0;
+  height: 61px;
+}
+
+.pc-eval-btn {
+  width: 100%;
+  height: 36px;
+  background: #EFF6FF;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.pc-eval-text {
+  font-family: 'PingFang SC', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #155DFC;
+  line-height: 1.4286;
+}

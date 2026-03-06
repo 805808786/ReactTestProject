@@ -9,6 +9,7 @@ import SceneEnterprise from './pages/SceneEnterprise'
 import SceneDescription from './pages/SceneDescription'
 import PolicyList from './pages/PolicyList'
 import DataContribution from './pages/DataContribution'
+import PersonContribution from './pages/PersonContribution'
 import FollowEnterprise from './pages/FollowEnterprise'
 import SceneEnterpriseDynamic from './pages/SceneEnterpriseDynamic'
 import './index.css'
@@ -27,6 +28,7 @@ function App() {
         <Route path="/scene-description/:id" element={<SceneDescription />} />
         <Route path="/policy-list" element={<PolicyList />} />
         <Route path="/data-contribution" element={<DataContribution />} />
+        <Route path="/person-contribution" element={<PersonContribution />} />
         <Route path="/follow-enterprise" element={<FollowEnterprise />} />
         <Route path="/scene-enterprise-dynamic" element={<SceneEnterpriseDynamic />} />
       </Routes>
