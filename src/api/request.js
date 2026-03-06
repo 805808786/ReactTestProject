@@ -3,6 +3,10 @@ import axios from 'axios'
 const request = axios.create({
   baseURL: 'https://test-api.yicall.com',
   timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    'YICALL-SECRET-KEY': 'CQ2Fgiaux3Ml9qoO'
+  }
 })
 
 request.interceptors.response.use(
