@@ -8,6 +8,7 @@ import iconSearchInput from '../assets/icon-search-input.svg';
 import iconSceneDynamic from '../assets/icon-scene-dynamic.svg';
 import iconCompany from '../assets/icon-company-se.svg';
 import iconSceneCalendar from '../assets/icon-scene-calendar.svg';
+import iconStatInfo from '../assets/icon-stat-info.svg';
 import './SceneEnterprise.css';
 
 /* ===================== Mock 数据 ===================== */
@@ -70,6 +71,57 @@ const STATS = {
   top: 156,
   middle: 890,
   potential: 2199,
+};
+
+const STATS_CRITERIA = {
+  top: {
+    title: '头部企业（分类标准）',
+    content: `企业须满足以下其一：
+1、企业获得国家级数据要素领域认证或荣誉：
+  1）国家级典型案例
+  2）国家数据集团联盟成员
+  3）数据要素×大赛国家级参赛企业
+  4）数据要素×大赛国家级获奖企业
+  5）"数字三品"应用场景典型案例企业
+2、企业获得省级数据要素领域认证或荣誉：
+  1）企业入选浙江省领军数商
+  2）数据要素×大赛省级参赛企业
+  3）数据要素×大赛省级获奖企业
+  4）省级典型案例
+3、具有以下数商特征的规上企业、国家高新技术企业、专精特新、省科技型中小企业、重点税源企业:
+  1）在数据交易所有数据产品上架
+  2）有场内或场外数据交易记录
+  3）企业参与数据相关标准起草`,
+  },
+  middle: {
+    title: '腰部企业（分类标准）',
+    content: `企业须满足以下其一：
+1、企业获得市级数据要素领域认证或荣誉：
+  1）市级典型案例
+  2）数据要素×大赛市级参赛企业
+  3）数据要素×大赛市级获奖企业
+2、具有以下数商特征的成长型企业：
+  1）在数字经济产业链中承担关键环节
+  2）具有数字化转型实践案例
+  3）年营业收入500万元以上的数字经济企业
+3、在数据服务领域有一定影响力的中型企业：
+  1）拥有数据相关产品或服务
+  2）参与区级及以上数字经济项目`,
+  },
+  potential: {
+    title: '潜力企业（分类标准）',
+    content: `企业须满足以下其一：
+1、处于成长阶段的数字经济初创企业：
+  1）注册成立3年以内的科技型企业
+  2）获得天使轮或Pre-A轮融资的数字企业
+2、具有数字化发展潜力的传统企业：
+  1）正在推进数字化转型的制造业企业
+  2）引入数字化管理系统的零售、贸易企业
+3、具有以下特征的小微企业：
+  1）年营业收入100万元以上500万元以下
+  2）拥有自主研发的数字化产品或技术
+  3）参与区街道数字经济相关培训或孵化项目`,
+  },
 };
 
 /* ===================== 工具函数 ===================== */
@@ -171,6 +223,9 @@ export default function SceneEnterprise() {
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const debounceTimer = useRef(null);
+
+  // 统计标准弹框
+  const [criteriaPopup, setCriteriaPopup] = useState(null);
 
   // 日历弹框
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -296,15 +351,30 @@ export default function SceneEnterprise() {
             <div className="se-stat-value">{STATS.total.toLocaleString()}</div>
           </div>
           <div className="se-stat-card">
-            <div className="se-stat-label">头部企业</div>
+            <div className="se-stat-label se-stat-label--with-icon">
+              头部企业
+              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('top')} aria-label="头部企业统计标准">
+                <img src={iconStatInfo} alt="" width={10} height={10} />
+              </button>
+            </div>
             <div className="se-stat-value">{STATS.top}</div>
           </div>
           <div className="se-stat-card">
-            <div className="se-stat-label">腰部企业</div>
+            <div className="se-stat-label se-stat-label--with-icon">
+              腰部企业
+              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('middle')} aria-label="腰部企业统计标准">
+                <img src={iconStatInfo} alt="" width={10} height={10} />
+              </button>
+            </div>
             <div className="se-stat-value">{STATS.middle}</div>
           </div>
           <div className="se-stat-card">
-            <div className="se-stat-label">潜力企业</div>
+            <div className="se-stat-label se-stat-label--with-icon">
+              潜力企业
+              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('potential')} aria-label="潜力企业统计标准">
+                <img src={iconStatInfo} alt="" width={10} height={10} />
+              </button>
+            </div>
             <div className="se-stat-value">{STATS.potential}</div>
           </div>
         </div>
@@ -457,6 +527,21 @@ export default function SceneEnterprise() {
             <div className="se-cal-footer">
               <button className="se-cal-btn se-cal-btn--cancel" onClick={handleCalendarClose}>取消</button>
               <button className="se-cal-btn se-cal-btn--confirm" onClick={handleCalendarConfirm}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ===== 统计标准弹框 ===== */}
+      {criteriaPopup && (
+        <div className="se-criteria-overlay" onClick={() => setCriteriaPopup(null)}>
+          <div className="se-criteria-dialog" onClick={e => e.stopPropagation()}>
+            <div className="se-criteria-content">
+              <div className="se-criteria-title">{STATS_CRITERIA[criteriaPopup].title}</div>
+              <div className="se-criteria-text">{STATS_CRITERIA[criteriaPopup].content}</div>
+            </div>
+            <div className="se-criteria-footer">
+              <button className="se-criteria-close-btn" onClick={() => setCriteriaPopup(null)}>关闭</button>
             </div>
           </div>
         </div>
