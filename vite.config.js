@@ -12,12 +12,6 @@ export default defineConfig({
         target: 'https://test-api.yicall.com',
         changeOrigin: true,
       },
-      '/chatProxy/chat/completions': {
-        target: 'https://fastgpt.vip.cpolar.cn',
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/chatProxy/, '/api/v1'),
-      },
     },
   },
   css: {
