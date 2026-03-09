@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import EnterpriseCalendar from './pages/EnterpriseCalendar'
 import SceneCalendar from './pages/SceneCalendar'
@@ -24,7 +24,7 @@ import './index.css'
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/calendar" element={<EnterpriseCalendar />} />
@@ -48,7 +48,7 @@ function App() {
         <Route path="/enterprise-dynamic-detail/:id" element={<VisitDetail />} />
         <Route path="/top-enterprise-dynamic-detail/:id" element={<TopEnterpriseDynamicDetail />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

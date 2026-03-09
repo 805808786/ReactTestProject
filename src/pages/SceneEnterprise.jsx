@@ -353,7 +353,7 @@ export default function SceneEnterprise() {
                 <img src={iconStatInfo} alt="" width={10} height={10} />
               </button>
             </div>
-            <div className="se-stat-value">{STATS.potential}</div>
+            <div className="se-stat-value">{STATS.other}</div>
           </div>
         </div>
       </div>

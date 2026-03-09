@@ -11,9 +11,9 @@ import './SceneRadar.css';
 const SCENE_DATA = [
   {
     id: 1,
-    name: '数商企业专题场景',
-    description: '数商企业专项筛选',
-    enterprises: 21943,
+    name: '人工智能企业筛选场景',
+    description: '人工智能企业筛选',
+    enterprises: 2042,
     dynamics: 32,
     todayEnterprises: 3,
     todayDynamics: 3,
@@ -94,7 +94,7 @@ function SceneCard({ scene, onSceneDetail }) {
     <div className="sr-card">
       {/* 顶部：场景名称 + 场景说明 */}
       <div className="sr-card-header" onClick={() => onSceneDetail(scene)}>
-        <div className="sr-card-title">1-2{name}</div>
+        <div className="sr-card-title">{name}</div>
         <span
           className="sr-card-badge"
           onClick={(e) => {
@@ -110,7 +110,7 @@ function SceneCard({ scene, onSceneDetail }) {
 
       {/* 数据指标 */}
       <div className="sr-card-metrics">
-        <div className="sr-metric-item">
+        <div className="sr-metric-item"  onClick={() => onSceneDetail(scene)}>
           <div className="sr-metric-header">
             <span className="sr-metric-label">{name.replace('专题场景', '')}</span>
             <span className="sr-metric-arrow">→</span>
@@ -121,7 +121,7 @@ function SceneCard({ scene, onSceneDetail }) {
           </div>
         </div>
 
-        <div className="sr-metric-item">
+        <div className="sr-metric-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
           <div className="sr-metric-header">
             <span className="sr-metric-label">{name.replace('专题场景', '')}动态</span>
             <span className="sr-metric-arrow">→</span>

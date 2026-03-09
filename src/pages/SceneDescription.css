@@ -90,11 +90,10 @@
   letter-spacing: -0.44px;
 }
 
-.sd-meta-row {
+.sdd-meta-row {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 16px;
-  height: 16px;
 }
 
 .sd-meta-item {
@@ -126,6 +125,7 @@
   min-height: 63px;
   box-sizing: border-box;
   padding-bottom: 12px;
+  white-space: pre-wrap;
 }
 
 .sd-policy-text {
