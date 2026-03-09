@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 import Dialog from '../components/Dialog'
+import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
 
 const tabs = ['企业总览', '关注场景', '关注企业', '数据贡献', '政策匹配']
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState(0)
+  const [isChatOpen, setIsChatOpen] = useState(false)
 
   // 点击 Tab 时滚动到对应模块
   const handleTabChange = (index) => {
@@ -56,12 +58,17 @@ export default function Home() {
       <Header />
       <TabBar tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
       <div className="content">
-        <div id="section-0"><EnterpriseOverview /></div>
+        <div id="section-0">
+          <AssistantCard onClick={() => setIsChatOpen(true)} />
+          <EnterpriseOverview />
+        </div>
         <div id="section-1"><FocusScene /></div>
         <div id="section-2"><FocusEnterprise /></div>
         <div id="section-3"><DataContribution /></div>
         <div id="section-4"><PolicyMatching /></div>
       </div>
+      
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   )
 }
@@ -419,5 +426,49 @@ function PolicyMatching() {
         </div>
       </div>
     </section>
+  )
+}
+
+import SparklesIcon from '../assets/Sparkles.svg'
+import ZapIcon from '../assets/Zap.svg'
+import MessageCircleIcon from '../assets/MessageCircle.svg'
+
+function AssistantCard({ onClick }) {
+  return (
+    <div className="assistant-card" onClick={onClick} style={{ cursor: 'pointer' }}>
+      <div className="assistant-header">
+        <div className="assistant-icon">
+          <img src={SparklesIcon} alt="Sparkles" width="28" height="28" />
+        </div>
+        <div className="assistant-info">
+          <div className="assistant-title-row">
+            <span className="assistant-title">野企小助手</span>
+            <div className="assistant-arrow">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+          </div>
+          <div className="assistant-subtitle">24小时在线 · 即时响应</div>
+        </div>
+      </div>
+      <div className="assistant-buttons">
+        <button className="assistant-btn">
+          <img src={ZapIcon} alt="Zap" width="16" height="16" style={{ marginRight: '6px' }} />
+          智能问答
+        </button>
+        <button className="assistant-btn">
+          <img src={MessageCircleIcon} alt="Message" width="16" height="16" style={{ marginRight: '6px' }} />
+          数据查询
+        </button>
+      </div>
+      <div className="assistant-footer">
+        <div className="assistant-service">已为您服务 1,234 次</div>
+        <div className="assistant-status-pill">
+          <div className="status-indicator online"></div>
+          <span style={{color: 'white', marginLeft: '6px'}}>在线</span>
+        </div>
+      </div>
+    </div>
   )
 }
