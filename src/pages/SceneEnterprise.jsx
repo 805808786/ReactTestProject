@@ -67,60 +67,29 @@ const ALL_ENTERPRISES = generateEnterprises(50);
 const PAGE_SIZE = 10;
 
 const STATS = {
-  total: 4876,
-  top: 156,
-  middle: 890,
-  potential: 2199,
+  total: 2042,
+  top: 50,
+  middle: 388,
+  potential: 957,
+  other: 647,
 };
 
 const STATS_CRITERIA = {
   top: {
-    title: '头部企业（分类标准）',
-    content: `企业须满足以下其一：
-1、企业获得国家级数据要素领域认证或荣誉：
-  1）国家级典型案例
-  2）国家数据集团联盟成员
-  3）数据要素×大赛国家级参赛企业
-  4）数据要素×大赛国家级获奖企业
-  5）"数字三品"应用场景典型案例企业
-2、企业获得省级数据要素领域认证或荣誉：
-  1）企业入选浙江省领军数商
-  2）数据要素×大赛省级参赛企业
-  3）数据要素×大赛省级获奖企业
-  4）省级典型案例
-3、具有以下数商特征的规上企业、国家高新技术企业、专精特新、省科技型中小企业、重点税源企业:
-  1）在数据交易所有数据产品上架
-  2）有场内或场外数据交易记录
-  3）企业参与数据相关标准起草`,
+    title: '核心企业（分类标准）',
+    content: `已入选市级“296X"先进制造业集群或拱墅区发改局、区科技经信局梳理的规模以上工业和服务业企业名单，具备行业引领与示范效应的企业。`,
   },
   middle: {
-    title: '腰部企业（分类标准）',
-    content: `企业须满足以下其一：
-1、企业获得市级数据要素领域认证或荣誉：
-  1）市级典型案例
-  2）数据要素×大赛市级参赛企业
-  3）数据要素×大赛市级获奖企业
-2、具有以下数商特征的成长型企业：
-  1）在数字经济产业链中承担关键环节
-  2）具有数字化转型实践案例
-  3）年营业收入500万元以上的数字经济企业
-3、在数据服务领域有一定影响力的中型企业：
-  1）拥有数据相关产品或服务
-  2）参与区级及以上数字经济项目`,
+    title: '重点企业（分类标准）',
+    content: `符合市级“115X"先进制造业集群发展方向，且属于拱墅区重点企业，但尚未进入市级“296X"集群、拱墅区发改局、区科技经信局梳理出的规模以上工业和服务业企业名单。`,
   },
   potential: {
     title: '潜力企业（分类标准）',
-    content: `企业须满足以下其一：
-1、处于成长阶段的数字经济初创企业：
-  1）注册成立3年以内的科技型企业
-  2）获得天使轮或Pre-A轮融资的数字企业
-2、具有数字化发展潜力的传统企业：
-  1）正在推进数字化转型的制造业企业
-  2）引入数字化管理系统的零售、贸易企业
-3、具有以下特征的小微企业：
-  1）年营业收入100万元以上500万元以下
-  2）拥有自主研发的数字化产品或技术
-  3）参与区街道数字经济相关培训或孵化项目`,
+    content: `符合拱墅区“115X"先进制造业集群发展方向，具备较强成长性与发展潜力，但暂未取得相关荣誉资质的企业。`,
+  },
+  other:  {
+    title: '后备企业（分类标准）',
+    content: `符合拱墅区“115X"先进制造业集群发展方向，但当前活跃度较低的企业。`,
   },
 };
 
@@ -352,8 +321,8 @@ export default function SceneEnterprise() {
           </div>
           <div className="se-stat-card">
             <div className="se-stat-label se-stat-label--with-icon">
-              头部企业
-              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('top')} aria-label="头部企业统计标准">
+              核心企业
+              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('top')} aria-label="核心企业统计标准">
                 <img src={iconStatInfo} alt="" width={10} height={10} />
               </button>
             </div>
@@ -361,8 +330,8 @@ export default function SceneEnterprise() {
           </div>
           <div className="se-stat-card">
             <div className="se-stat-label se-stat-label--with-icon">
-              腰部企业
-              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('middle')} aria-label="腰部企业统计标准">
+              重点企业
+              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('middle')} aria-label="重点企业统计标准">
                 <img src={iconStatInfo} alt="" width={10} height={10} />
               </button>
             </div>
@@ -372,6 +341,15 @@ export default function SceneEnterprise() {
             <div className="se-stat-label se-stat-label--with-icon">
               潜力企业
               <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('potential')} aria-label="潜力企业统计标准">
+                <img src={iconStatInfo} alt="" width={10} height={10} />
+              </button>
+            </div>
+            <div className="se-stat-value">{STATS.potential}</div>
+          </div>
+          <div className="se-stat-card">
+            <div className="se-stat-label se-stat-label--with-icon">
+              后备企业
+              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('other')} aria-label="后备企业统计标准">
                 <img src={iconStatInfo} alt="" width={10} height={10} />
               </button>
             </div>
