@@ -82,7 +82,7 @@ export default function ChatModal({ isOpen, onClose }) {
     }
 
     try {
-      const response = await fetch('https://gateway.yicall.com/chatProxy/chat/completions', {
+      const response = await fetch('/chatProxy/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
