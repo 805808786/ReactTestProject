@@ -167,12 +167,17 @@ export default function CompanyNewsDetail() {
                       </div>
                     </div>
                     {/* 右侧：状态标签 */}
-                    <div className="cnd-status-badge">{company.status}</div>
+                    <div className="cnd-status-badge--solid">{company.status}</div>
                   </div>
 
                   {/* 查看详情 */}
                   <div className="cnd-company-detail-row">
-                    <span className="cnd-company-detail-link">查看详情 →</span>
+                    <span 
+                      className="cnd-company-detail-link"
+                      onClick={() => navigate(`/company-detail/${company.id}`)}
+                    >
+                      查看详情 →
+                    </span>
                   </div>
                 </div>
               ))}
