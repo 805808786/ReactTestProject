@@ -275,6 +275,11 @@ function FocusScene() {
   )
 }
 
+const KEY_ENTERPRISES = [
+  { name: '科技创新有限公司', type: '头部企业', info: '营收 5.2亿 · 高新技术企业' },
+  { name: '智能制造股份公司', type: '腰部企业', info: '营收 2.8亿 · 制造业转型升级' },
+]
+
 function FocusEnterprise() {
   const navigate = useNavigate()
   return (
@@ -347,6 +352,27 @@ function FocusEnterprise() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="key-enterprise-divider">
+        <div className="key-enterprise-header" onClick={() => navigate('/follow-enterprise')} style={{ cursor: 'pointer' }}>
+          <span className="key-enterprise-title">重点关注企业</span>
+          <img src={iconKeyEnterpriseChevron} alt="查看" className="key-enterprise-chevron" />
+        </div>
+      </div>
+      <div className="key-enterprise-list">
+        {KEY_ENTERPRISES.map((item) => (
+          <div className="key-enterprise-item" key={item.name} onClick={() => navigate('/follow-enterprise')} style={{ cursor: 'pointer' }}>
+            <div className="key-enterprise-info">
+              <div className="key-enterprise-name-row">
+                <span className="key-enterprise-name">{item.name}</span>
+                <span className="key-enterprise-tag">{item.type}</span>
+              </div>
+              <div className="key-enterprise-sub">{item.info}</div>
+            </div>
+            <img src={iconKeyEnterpriseChevronItem} alt="" className="key-enterprise-arrow" />
+          </div>
+        ))}
       </div>
     </section>
   )
@@ -432,6 +458,8 @@ function PolicyMatching() {
 import SparklesIcon from '../assets/Sparkles.svg'
 import ZapIcon from '../assets/Zap.svg'
 import MessageCircleIcon from '../assets/MessageCircle.svg'
+import iconKeyEnterpriseChevron from '../assets/icon-key-enterprise-chevron-right.svg'
+import iconKeyEnterpriseChevronItem from '../assets/icon-key-enterprise-chevron-right2.svg'
 
 function AssistantCard({ onClick }) {
   return (
