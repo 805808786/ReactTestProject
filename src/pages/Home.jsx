@@ -276,8 +276,8 @@ function FocusScene() {
 }
 
 const KEY_ENTERPRISES = [
-  { name: '科技创新有限公司', type: '头部企业', info: '营收 5.2亿 · 高新技术企业' },
-  { name: '智能制造股份公司', type: '腰部企业', info: '营收 2.8亿 · 制造业转型升级' },
+  { id: 1, name: '科技创新有限公司', type: '头部企业', info: '营收 5.2亿 · 高新技术企业' },
+  { id: 2, name: '智能制造股份公司', type: '腰部企业', info: '营收 2.8亿 · 制造业转型升级' },
 ]
 
 function FocusEnterprise() {
@@ -362,7 +362,7 @@ function FocusEnterprise() {
       </div>
       <div className="key-enterprise-list">
         {KEY_ENTERPRISES.map((item) => (
-          <div className="key-enterprise-item" key={item.name} onClick={() => navigate('/follow-enterprise')} style={{ cursor: 'pointer' }}>
+          <div className="key-enterprise-item" key={item.name} onClick={() => navigate(`/company-detail/${item.id}`)} style={{ cursor: 'pointer' }}>
             <div className="key-enterprise-info">
               <div className="key-enterprise-name-row">
                 <span className="key-enterprise-name">{item.name}</span>

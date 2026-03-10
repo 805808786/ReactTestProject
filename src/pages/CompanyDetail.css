@@ -1,0 +1,1428 @@
+/* ===== 页面容器 ===== */
+.cd-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.cd-header {
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  flex-shrink: 0;
+}
+
+.cd-header-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 16px 12px;
+}
+
+.cd-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.cd-company-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Tab 栏 ===== */
+.cd-tab-bar {
+  display: flex;
+  background: #FFFFFF;
+  height: 60px;
+  border-bottom: 1px solid #E5E7EB;
+  position: relative;
+}
+
+.cd-tab-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12px 4px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  gap: 0;
+}
+
+.cd-tab-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  height: 36px;
+  justify-content: center;
+}
+
+.cd-tab-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4A5565;
+  line-height: 1.333em;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cd-tab-btn--active .cd-tab-text {
+  color: #155DFC;
+}
+
+.cd-tab-icon {
+  filter: none;
+  opacity: 0.6;
+}
+
+.cd-tab-icon--active {
+  filter: none;
+}
+
+.cd-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #155DFC;
+  border-radius: 1px 1px 0 0;
+}
+
+/* ===== 内容体 ===== */
+.cd-body {
+  flex: 1;
+  overflow-y: auto;
+  background: #F9FAFB;
+}
+
+/* ===== 通用 section 卡片 ===== */
+.cd-section-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cd-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-section-header--inline {
+  margin-bottom: 8px;
+}
+
+.cd-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+/* ===== 快速导航 ===== */
+.cd-quick-nav {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  margin: 12px 16px 0;
+  overflow: hidden;
+}
+
+.cd-quick-nav-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cd-quick-nav-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cd-quick-nav-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cd-quick-nav-count {
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cd-quick-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: #F3F4F6;
+  border-top: 1px solid #F3F4F6;
+}
+
+.cd-quick-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  background: #FFFFFF;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #4A5565;
+  line-height: 1.3em;
+}
+
+.cd-quick-nav-item:hover {
+  background: #F0F4FF;
+  color: #155DFC;
+}
+
+/* ===== 标签组 ===== */
+.cd-label-group {
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cd-label-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #F9FAFB;
+}
+
+.cd-label-group-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cd-label-collapse-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #6A7282;
+  padding: 0;
+}
+
+.cd-label-categories {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cd-label-category-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-label-cat-badge {
+  flex-shrink: 0;
+  padding: 2px 6px;
+  background: #ECEEF2;
+  border-radius: 4px;
+  font-size: 11px;
+  color: #4A5565;
+  font-weight: 500;
+  min-width: 30px;
+  text-align: center;
+}
+
+.cd-label-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+/* ===== 通用 Tag ===== */
+.cd-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4em;
+}
+
+.cd-tag--blue {
+  background: #EEF3FF;
+  color: #155DFC;
+  border: 1px solid #C7D7FD;
+}
+
+.cd-tag--gray {
+  background: #F3F4F6;
+  color: #4A5565;
+  border: 1px solid #E5E7EB;
+}
+
+/* ===== 基本信息字段 ===== */
+.cd-info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.cd-info-item--full {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.cd-info-item--with-link {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cd-info-label {
+  font-size: 12px;
+  color: #6A7282;
+  flex-shrink: 0;
+  line-height: 1.5em;
+}
+
+.cd-info-value {
+  font-size: 12px;
+  color: #101828;
+  line-height: 1.5em;
+  flex: 1;
+}
+
+.cd-info-link {
+  font-size: 12px;
+  color: #155DFC;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cd-info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+/* ===== 企业介绍 ===== */
+.cd-intro-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-intro-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4A5565;
+}
+
+.cd-intro-text {
+  font-size: 13px;
+  color: #4A5565;
+  line-height: 1.6em;
+  margin: 0;
+}
+
+/* ===== 企业层级 ===== */
+.cd-level-block {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-level-label {
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cd-level-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  background: #EEF3FF;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #155DFC;
+}
+
+/* ===== 服务产品 ===== */
+.cd-product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cd-product-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+}
+
+.cd-product-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+.cd-product-type {
+  font-size: 11px;
+  color: #6A7282;
+}
+
+/* ===== 列表项通用 ===== */
+.cd-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cd-list-item {
+  padding: 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-list-item-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+.cd-list-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  color: #6A7282;
+}
+
+/* ===== 商业模式 ===== */
+.cd-model-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-model-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4A5565;
+}
+
+.cd-model-item {
+  padding: 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-model-item-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-model-item-desc {
+  font-size: 12px;
+  color: #6A7282;
+  line-height: 1.5em;
+}
+
+.cd-upstream-downstream {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.cd-stream-box {
+  padding: 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.cd-stream-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4A5565;
+  margin-bottom: 6px;
+}
+
+.cd-stream-items {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 12px;
+  color: #6A7282;
+}
+
+/* ===== 负面因素 ===== */
+.cd-negative-item {
+  padding: 10px;
+  background: #FFF5F0;
+  border: 1px solid #FFCDB2;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-negative-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cd-negative-type {
+  font-size: 11px;
+  font-weight: 500;
+  color: #C44B00;
+  background: #FFEDD4;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.cd-negative-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-negative-desc {
+  font-size: 12px;
+  color: #6A7282;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+/* ===== 痛点 ===== */
+.cd-pain-item {
+  padding: 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-pain-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-pain-desc {
+  font-size: 12px;
+  color: #6A7282;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+/* ===== 人才 ===== */
+.cd-talent-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.cd-talent-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #EEF3FF;
+  color: #155DFC;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.cd-talent-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cd-talent-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-talent-nation {
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cd-talent-level {
+  font-size: 12px;
+  font-weight: 500;
+  color: #155DFC;
+  background: #EEF3FF;
+  padding: 2px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ===== 税收趋势 ===== */
+.cd-tax-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 80px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.cd-bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.cd-bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.cd-bar {
+  width: 100%;
+  background: linear-gradient(180deg, #155DFC 0%, #BEDBFF 100%);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+}
+
+.cd-bar-label {
+  font-size: 9px;
+  color: #6A7282;
+  margin-top: 4px;
+  line-height: 1em;
+}
+
+/* ===== 政策兑现 ===== */
+.cd-policy-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.cd-policy-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cd-policy-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-policy-date {
+  font-size: 11px;
+  color: #6A7282;
+}
+
+.cd-policy-amount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #155DFC;
+  flex-shrink: 0;
+}
+
+/* ===== 融资信息 ===== */
+.cd-finance-item {
+  padding: 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-finance-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cd-finance-round {
+  font-size: 13px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cd-finance-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #008236;
+}
+
+.cd-finance-meta {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #6A7282;
+}
+
+/* ===== 招投标 ===== */
+.cd-bid-item {
+  padding: 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cd-bid-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+.cd-bid-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cd-bid-status {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.cd-bid-status--win {
+  background: #DCFCE7;
+  color: #008236;
+}
+
+/* ===== 股权 ===== */
+.cd-equity-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.cd-equity-name {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-equity-type {
+  font-size: 11px;
+  color: #6A7282;
+  margin-right: 12px;
+}
+
+.cd-equity-ratio {
+  font-size: 14px;
+  font-weight: 600;
+  color: #155DFC;
+}
+
+/* ===== Data Tab 容器 ===== */
+.cd-data-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 服务矩阵 Tab ===== */
+.cd-sm-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-sm-filters {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 0;
+}
+
+.cd-sm-filter-wrap {
+  position: relative;
+}
+
+.cd-sm-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #4A5565;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cd-sm-filter-btn--active {
+  border-color: #155DFC;
+  color: #155DFC;
+}
+
+.cd-sm-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 100;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+  min-width: 120px;
+  overflow: hidden;
+}
+
+.cd-sm-dropdown-item {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #4A5565;
+  cursor: pointer;
+}
+
+.cd-sm-dropdown-item:hover {
+  background: #F0F4FF;
+  color: #155DFC;
+}
+
+.cd-sm-dropdown-item--active {
+  color: #155DFC;
+  font-weight: 500;
+  background: #EEF3FF;
+}
+
+.cd-sm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 12px 16px 0;
+}
+
+.cd-sm-card {
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.cd-sm-card-header {
+  padding: 12px 14px 8px;
+  background: #F0F4FF;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-sm-level-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-sm-level-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: #155DFC;
+  color: #FFFFFF;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cd-sm-dept-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cd-sm-room-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cd-sm-room-label {
+  font-size: 11px;
+  color: #6A7282;
+  background: #E5E7EB;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.cd-sm-room-name {
+  font-size: 12px;
+  color: #4A5565;
+}
+
+.cd-sm-card-body {
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-sm-info-row {
+  font-size: 12px;
+  color: #4A5565;
+  line-height: 1.5em;
+}
+
+/* ===== 企业服务 Tab ===== */
+.cd-es-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 走访记录时间轴 */
+.cd-visit-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-visit-item {
+  display: flex;
+  gap: 12px;
+}
+
+.cd-visit-timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+}
+
+.cd-visit-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #2B7FFF;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.cd-visit-line {
+  width: 2px;
+  flex: 1;
+  background: #BEDBFF;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+.cd-visit-content {
+  flex: 1;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cd-visit-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: #155DFC;
+}
+
+.cd-visit-desc {
+  font-size: 13px;
+  color: #101828;
+  line-height: 1.5em;
+}
+
+.cd-visit-reporter {
+  font-size: 11px;
+  color: #6A7282;
+}
+
+/* 企业诉求 */
+.cd-demand-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-demand-item {
+  padding: 10px 12px;
+  background: #F9FAFB;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cd-demand-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cd-demand-id-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-demand-id {
+  font-size: 12px;
+  font-weight: 600;
+  color: #155DFC;
+  background: #EEF3FF;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.cd-demand-date {
+  font-size: 11px;
+  color: #6A7282;
+}
+
+.cd-demand-status {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.cd-demand-status--done {
+  background: #DCFCE7;
+  color: #008236;
+}
+
+.cd-demand-status--processing {
+  background: #FFEDD4;
+  color: #CA3500;
+}
+
+.cd-demand-text {
+  font-size: 13px;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+/* ===== 企业动态 Tab ===== */
+.cd-dynamic-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-sub-tabs {
+  display: flex;
+  background: #FFFFFF;
+  padding: 12px 16px 0;
+  gap: 0;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.cd-sub-tab-btn {
+  flex: 1;
+  padding: 8px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4A5565;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cd-sub-tab-btn--active {
+  color: #155DFC;
+  border-bottom-color: #155DFC;
+  font-weight: 600;
+}
+
+/* 企业资讯 */
+.cd-news-section {
+  padding: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cd-news-card {
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-news-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cd-news-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: #ECEEF2;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #4A5565;
+}
+
+.cd-news-detail-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #155DFC;
+  font-weight: 500;
+  padding: 0;
+}
+
+.cd-news-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.cd-news-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #155DFC;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.cd-news-title {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+.cd-news-date {
+  font-size: 11px;
+  color: #6A7282;
+  flex-shrink: 0;
+  margin-left: 4px;
+}
+
+.cd-news-content {
+  font-size: 12px;
+  color: #4A5565;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+.cd-news-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  color: #6A7282;
+}
+
+.cd-news-source {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cd-news-related {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 企业变更 */
+.cd-changes-section {
+  padding: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-change-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cd-change-item {
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.cd-change-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.cd-change-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cd-change-date {
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cd-change-type {
+  font-size: 13px;
+  font-weight: 500;
+  color: #101828;
+}
+
+.cd-change-detail {
+  padding: 10px 14px 12px;
+  background: #F9FAFB;
+  font-size: 13px;
+  color: #4A5565;
+  border-top: 1px solid #F3F4F6;
+}
+
+/* 企业风险 */
+.cd-risks-section {
+  padding: 12px 16px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-risk-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cd-risk-item {
+  background: #FFFFFF;
+  border-radius: 10px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cd-risk-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-risk-date {
+  font-size: 11px;
+  color: #6A7282;
+}
+
+.cd-risk-type {
+  font-size: 12px;
+  color: #4A5565;
+}
+
+.cd-risk-level {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.cd-risk-level--high {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.cd-risk-level--mid {
+  background: #FFEDD4;
+  color: #CA3500;
+}
+
+.cd-risk-level--low {
+  background: #DCFCE7;
+  color: #008236;
+}
+
+.cd-risk-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cd-risk-desc {
+  font-size: 12px;
+  color: #4A5565;
+  margin: 0;
+  line-height: 1.5em;
+}
+
+/* ===== 全生命周期 Tab ===== */
+.cd-lc-tab {
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-lc-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.cd-lc-item {
+  display: flex;
+  gap: 12px;
+}
+
+.cd-lc-timeline-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+}
+
+.cd-lc-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.cd-lc-line {
+  width: 2px;
+  flex: 1;
+  background: #E5E7EB;
+  margin-top: 4px;
+  min-height: 20px;
+}
+
+.cd-lc-content {
+  flex: 1;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cd-lc-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cd-lc-date {
+  font-size: 11px;
+  color: #6A7282;
+}
+
+.cd-lc-type {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.cd-lc-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cd-lc-desc {
+  font-size: 12px;
+  color: #4A5565;
+  margin: 0;
+  line-height: 1.5em;
+}

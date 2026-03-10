@@ -1,0 +1,284 @@
+/* ===== 页面容器 ===== */
+.cnd-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F9FAFB;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.cnd-header {
+  height: 64px;
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.cnd-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.cnd-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.cnd-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4em;
+  letter-spacing: -0.022em;
+}
+
+/* ===== 主体区域（可滚动） ===== */
+.cnd-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 16px 0px;
+}
+
+/* ===== 卡片通用样式 ===== */
+.cnd-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.cnd-card--last {
+  margin-bottom: 24px;
+}
+
+.cnd-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* ===== 资讯基本信息 ===== */
+.cnd-info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 类型标签 */
+.cnd-badge-wrapper {
+  display: flex;
+}
+
+.cnd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: #ECEEF2;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #030213;
+  line-height: 1.333em;
+}
+
+/* 标题行 */
+.cnd-title-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.cnd-title-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cnd-green-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #155DFC;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.cnd-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #101828;
+  line-height: 1.4em;
+  letter-spacing: -0.01em;
+}
+
+/* 来源 + 日期行 */
+.cnd-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cnd-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cnd-meta-text {
+  font-size: 12px;
+  color: #6A7282;
+  line-height: 1.333em;
+}
+
+/* 分隔线 */
+.cnd-separator {
+  height: 1px;
+  background: #E5E7EB;
+}
+
+/* 摘要区域 */
+.cnd-summary-box {
+  background: #F9FAFB;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.cnd-summary-text {
+  font-size: 13px;
+  color: #4A5565;
+  line-height: 1.6em;
+  margin: 0;
+}
+
+/* 正文段落 */
+.cnd-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cnd-paragraph {
+  font-size: 14px;
+  color: #101828;
+  line-height: 1.7em;
+  margin: 0;
+  text-indent: 2em;
+}
+
+/* ===== 关联企业信息卡片 ===== */
+.cnd-section-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cnd-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #101828;
+}
+
+.cnd-section-count {
+  font-size: 14px;
+  color: #6A7282;
+}
+
+.cnd-company-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cnd-company-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.cnd-company-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cnd-company-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cnd-company-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #101828;
+  line-height: 1.4em;
+}
+
+.cnd-company-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cnd-company-dot {
+  color: #6A7282;
+}
+
+.cnd-company-industry,
+.cnd-company-person {
+  font-size: 12px;
+  color: #6A7282;
+}
+
+.cnd-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  background: #DCFCE7;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #008236;
+  flex-shrink: 0;
+}
+
+.cnd-company-detail-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cnd-company-detail-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: #155DFC;
+  cursor: pointer;
+}
