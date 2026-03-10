@@ -20,6 +20,8 @@ import SceneEnterpriseDynamicDetail from './pages/SceneEnterpriseDynamicDetail'
 import ScheduleDetail from './pages/ScheduleDetail'
 import VisitDetail from './pages/VisitDetail'
 import TopEnterpriseDynamicDetail from './pages/TopEnterpriseDynamicDetail'
+import CompanyDetail from './pages/CompanyDetail'
+import CompanyNewsDetail from './pages/CompanyNewsDetail'
 import './index.css'
 
 function App() {
@@ -47,6 +49,8 @@ function App() {
         <Route path="/schedule-detail" element={<ScheduleDetail />} />
         <Route path="/enterprise-dynamic-detail/:id" element={<VisitDetail />} />
         <Route path="/top-enterprise-dynamic-detail/:id" element={<TopEnterpriseDynamicDetail />} />
+        <Route path="/company-detail/:id" element={<CompanyDetail />} />
+        <Route path="/company-news-detail/:id" element={<CompanyNewsDetail />} />
       </Routes>
     </HashRouter>
   )
