@@ -95,12 +95,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 8px;
-  background: #ECEEF2;
-  border-radius: 8px;
+  padding: 4px 10px;
+  background: #F3F4F6;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
-  color: #030213;
+  color: #111827;
   line-height: 1.333em;
 }
 
@@ -160,9 +160,9 @@
 
 /* 摘要区域 */
 .cnd-summary-box {
-  background: #F9FAFB;
+  background: #F0F7FF;
   border-radius: 8px;
-  padding: 12px;
+  padding: 12px 14px;
 }
 
 .cnd-summary-text {
@@ -181,10 +181,10 @@
 
 .cnd-paragraph {
   font-size: 14px;
-  color: #101828;
-  line-height: 1.7em;
+  color: #374151;
+  line-height: 1.8em;
   margin: 0;
-  text-indent: 2em;
+  text-indent: 0;
 }
 
 /* ===== 关联企业信息卡片 ===== */
@@ -259,15 +259,15 @@
   color: #6A7282;
 }
 
-.cnd-status-badge {
+.cnd-status-badge--solid {
   display: inline-flex;
   align-items: center;
-  padding: 2px 8px;
-  background: #DCFCE7;
-  border-radius: 6px;
+  padding: 3px 10px;
+  background: #059669;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
-  color: #008236;
+  color: #FFFFFF;
   flex-shrink: 0;
 }
 
