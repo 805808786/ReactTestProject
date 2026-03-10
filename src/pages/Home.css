@@ -896,7 +896,102 @@
   }
 }
 
-/* 图片预留位置 */
+/* Key Focus Enterprise */
+.key-enterprise-divider {
+  padding-top: 13px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.key-enterprise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.key-enterprise-title {
+  font-size: 12px;
+  font-family: Inter, 'PingFang SC', sans-serif;
+  color: #6A7282;
+  line-height: 1.33;
+}
+
+.key-enterprise-chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.key-enterprise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.key-enterprise-item {
+  background: #F9FAFB;
+  border-radius: 10px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+  box-sizing: border-box;
+}
+
+.key-enterprise-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.key-enterprise-name-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.key-enterprise-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  font-family: Inter, 'PingFang SC', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 112px; /* Figma: company name container width (layout_EL2FH5) */
+}
+
+.key-enterprise-tag {
+  background: #EFF6FF;
+  color: #155DFC;
+  font-size: 12px;
+  font-family: Inter, 'PingFang SC', sans-serif;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.key-enterprise-sub {
+  font-size: 12px;
+  font-family: Inter, 'PingFang SC', sans-serif;
+  color: #6A7282;
+  line-height: 1.33;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.key-enterprise-arrow {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
 .assistant-images {
   display: flex;
   gap: 12px;
