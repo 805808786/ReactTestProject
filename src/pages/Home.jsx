@@ -62,7 +62,10 @@ export default function Home() {
           <AssistantCard onClick={() => setIsChatOpen(true)} />
           <EnterpriseOverview />
         </div>
-        <div id="section-1"><FocusScene /></div>
+        <div id="section-1">
+          <Special115X />
+          <FocusScene />
+        </div>
         <div id="section-2"><FocusEnterprise /></div>
         <div id="section-3"><DataContribution /></div>
         <div id="section-4"><PolicyMatching /></div>
@@ -213,6 +216,106 @@ function EnterpriseOverview() {
   )
 }
 
+function Special115X() {
+  return (
+    <section className="card special-115x-card" style={{ marginBottom: '16px' }}>
+      <div className="card-header">
+        <div className="card-header-left">
+          <div className="special-badge">115X</div>
+          <span className="card-title">拱墅115X专题</span>
+        </div>
+      </div>
+
+      <div className="special-section">
+        <h3 className="special-title">“1” 人工智能（集成电路）核心产业集群</h3>
+        <div className="special-main-card">
+          <div className="special-main-left">
+            <span className="special-label">人工智能场景</span>
+            <div className="special-value">14,331<span className="unit">家</span></div>
+          </div>
+          <div className="special-main-right">
+            <span className="special-label">今日新增</span>
+            <div className="special-change green-text">+73<span className="unit">家</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="special-section">
+        <h3 className="special-title">“1” 生物医药与医疗器械（合成生物）支柱产业</h3>
+        <div className="special-main-card">
+          <div className="special-main-left">
+            <span className="special-label">生物医药与医疗器械场景</span>
+            <div className="special-value">14,331<span className="unit">家</span></div>
+          </div>
+          <div className="special-main-right">
+            <span className="special-label">今日新增</span>
+            <div className="special-change green-text">+73<span className="unit">家</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="special-section">
+        <h3 className="special-title">“5” 个新兴未来产业集群</h3>
+        <div className="special-grid-2">
+          <div className="special-sub-card">
+            <span className="special-label">高端通用设备</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small green-text">今日+12</div>
+          </div>
+          <div className="special-sub-card">
+            <span className="special-label">新能源装备</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small green-text">今日+12</div>
+          </div>
+        </div>
+        <div className="special-grid-3">
+          <div className="special-sub-card">
+            <span className="special-label">新材料</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small red-text">今日-12</div>
+          </div>
+          <div className="special-sub-card">
+            <span className="special-label">低空经济</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small red-text">今日-12</div>
+          </div>
+          <div className="special-sub-card">
+            <span className="special-label">光电科技</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small red-text">今日-12</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="special-section">
+        <h3 className="special-title">“X” 未来新增的潜力产业集群</h3>
+        <div className="special-grid-4">
+          <div className="special-sub-card">
+            <span className="special-label">智能终端</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small blue-text">今日+12</div>
+          </div>
+          <div className="special-sub-card">
+            <span className="special-label">网络通信</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small blue-text">今日+12</div>
+          </div>
+          <div className="special-sub-card">
+            <span className="special-label">智能网联汽...</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small blue-text">今日+12</div>
+          </div>
+          <div className="special-sub-card">
+            <span className="special-label">现代纺织...</span>
+            <div className="special-value-small">3,245<span className="unit">家</span></div>
+            <div className="special-change-small blue-text">今日+12</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function FocusScene() {
   const navigate = useNavigate()
   return (
@@ -275,10 +378,14 @@ function FocusScene() {
   )
 }
 
-const KEY_ENTERPRISES = [
-  { id: 1, name: '科技创新有限公司', type: '头部企业', info: '营收 5.2亿 · 高新技术企业' },
-  { id: 2, name: '智能制造股份公司', type: '腰部企业', info: '营收 2.8亿 · 制造业转型升级' },
-]
+import enterpriseDataJson from '../json/enterprise.json'
+
+const KEY_ENTERPRISES = enterpriseDataJson.map((item, index) => ({
+  id: item?.['基本信息']?.data?.enterpriseId || index,
+  name: item?.['基本信息']?.data?.enterpriseName || '',
+  type: item?.['基本信息']?.data?.categoryName || '',
+  info: item?.['基本信息']?.data?.reason || ''
+}))
 
 function FocusEnterprise() {
   const navigate = useNavigate()

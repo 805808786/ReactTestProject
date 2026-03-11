@@ -1008,3 +1008,131 @@
   border: 2px dashed rgba(255, 255, 255, 0.3);
   display: block;
 }
+
+/* Special 115X */
+.special-badge {
+  background: #155DFC;
+  color: white;
+  width: 38px;
+  height: 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.special-section {
+  margin-bottom: 24px;
+}
+.special-section:last-child {
+  margin-bottom: 0;
+}
+
+.special-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.special-main-card {
+  background: #F4F8FF;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.special-main-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.special-main-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.special-label {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.special-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a56ff;
+  line-height: 1;
+}
+
+.special-value .unit {
+  font-size: 14px;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+.special-change {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.special-change .unit {
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+.special-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.special-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.special-grid-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.special-sub-card {
+  background: #F4F8FF;
+  border-radius: 10px;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.special-value-small {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a56ff;
+  line-height: 1.1;
+}
+
+.special-value-small .unit {
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 2px;
+}
+
+.special-change-small {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.red-text { color: #fb2c36; }
