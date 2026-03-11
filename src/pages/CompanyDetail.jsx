@@ -56,6 +56,12 @@ import iconNavFinance from '../assets/icon-cd-nav-finance.svg';
 import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
+import enterpriseDataJson from '../json/enterprise.json';
+
+const getCompanyData = (id) => {
+  if (!id) return enterpriseDataJson[0] || {};
+  return enterpriseDataJson.find(item => String(item?.['基本信息']?.data?.enterpriseId) === String(id)) || enterpriseDataJson[0] || {};
+};
 
 /* ===================== Mock 数据 ===================== */
 const MOCK_COMPANY = {
@@ -63,7 +69,7 @@ const MOCK_COMPANY = {
   2: { name: '智能制造股份公司', type: '腰部企业', industry: '高端制造业' },
 };
 
-const DEFAULT_COMPANY = { name: '杭州数智科技有限公司', type: '头部企业', industry: '软件和信息技术服务业' };
+const DEFAULT_COMPANY = { name: '', type: '', industry: '' };
 
 const TABS = [
   { key: 'data', label: '企业数据', icon: iconTabData },
@@ -95,7 +101,14 @@ export default function CompanyDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('data');
-  const company = MOCK_COMPANY[Number(id)] || DEFAULT_COMPANY;
+  const companyData = getCompanyData(id);
+  const basicInfo = companyData?.['基本信息']?.data || {};
+
+  const company = {
+    name: basicInfo.enterpriseName || '',
+    type: basicInfo.categoryName || '优质企业',
+    industry: basicInfo.industrialTrack || ''
+  };
 
   const handleTabChange = (key) => {
     setActiveTab(key);
@@ -149,6 +162,94 @@ function EnterpriseDataTab() {
   const [expandedAddress, setExpandedAddress] = useState(null);
   const sectionRefs = useRef({});
 
+  // 提取股权穿透相关数据
+  const { id } = useParams();
+  const companyData = getCompanyData(id);
+  const basicInfo = companyData?.['基本信息']?.data || {};
+  const equityData = companyData?.['股权穿透']?.data || {};
+  const legalRepresentative = equityData.legalRepresentative || '';
+  const shareholders = equityData.shareholders || [];
+  const companyBranchs = equityData.companyBranchs || [];
+
+  // 获取招投标数据
+  const bidRecords = companyData?.['招投标']?.data || [];
+
+  // 获取企业需求数据
+  const demandRecords = companyData?.['企业需求']?.data || [];
+
+  // 获取政策兑现数据
+  const policySummary = companyData?.['企业政策兑现-标题']?.data || {};
+  const policyRecords = companyData?.['企业政策兑现']?.data || [];
+
+  // 获取企业人才数据
+  const talentRecords = companyData?.['企业人才']?.data || [];
+
+  // 获取当前阶段痛点数据
+  const painRecords = companyData?.['当前阶段痛点']?.data || [];
+
+  // 获取负面因素数据
+  const negativeRecords = companyData?.['负面因素']?.data || [];
+
+  // 获取标签数据并分组
+  const allTagsRaw = companyData?.['标签']?.data || [];
+  const tagGroupsMap = allTagsRaw.reduce((acc, curr) => {
+    const cat = curr.tagCategoryName || '其他';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(curr.tagName);
+    return acc;
+  }, {});
+  const enterpriseTags = Object.entries(tagGroupsMap).map(([cat, tags]) => ({ cat, tags }));
+  const enterpriseFlatTags = allTagsRaw.map(t => t.tagName);
+
+  // 获取上下游数据
+  const streamData = companyData?.['商业模型-上下游关系']?.data || [];
+  const upstreamData = streamData.find(item => item.title === '上游分析')?.describeContent || [];
+  const downstreamData = streamData.find(item => item.title === '下游分析')?.describeContent || [];
+
+  // 获取核心竞争力数据
+  const coreCompetitivenessRecords = companyData?.['商业模式-核心竞争力']?.data || [];
+
+  // 获取盈利模式数据
+  const profitModelRecords = companyData?.['商业模式-盈利模式']?.data || [];
+
+  // 获取商业模式总结数据
+  const businessModelSummary = companyData?.['商业模式-总结']?.data?.content || '';
+
+  // 获取软件著作权数据
+  const copyrightRecords = companyData?.['软件著作权']?.data || [];
+
+  // 获取专利信息数据
+  const patentRecords = companyData?.['专利信息']?.data || [];
+
+  // 获取服务与产品数据
+  const serviceRecords = companyData?.['服务与产品']?.data || [];
+
+  // 获取税收趋势数据
+  const taxTrendRaw = companyData?.['税收趋势']?.data?.nameNumberList || [];
+  const taxTrendData = taxTrendRaw.map(item => ({
+    month: item.name.replace('月', ''),
+    val1: parseFloat(item.num1) || 0,
+    val2: parseFloat(item.num2) || 0
+  }));
+
+  const maxVal = Math.max(...taxTrendData.map(d => Math.max(d.val1, d.val2)), 1);
+  const getY = (val) => 150 - (val / maxVal) * 130;
+
+  const generateDynamicPath = (data, key) => {
+    if (data.length === 0) return '';
+    const stepX = 286 / (data.length - 1);
+    let d = `M 24 ${getY(data[0][key])}`;
+    for (let i = 0; i < data.length - 1; i++) {
+      const currX = 24 + i * stepX;
+      const currY = getY(data[i][key]);
+      const nextX = 24 + (idx => (idx + 1) * stepX)(i);
+      const nextY = getY(data[i + 1][key]);
+      const cpX = (currX + nextX) / 2;
+      d += ` C ${cpX} ${currY}, ${cpX} ${nextY}, ${nextX} ${nextY}`;
+    }
+    return d;
+  };
+
   const scrollToSection = (key) => {
     const el = sectionRefs.current[key];
     if (el) {
@@ -162,8 +263,6 @@ function EnterpriseDataTab() {
           top: elementPosition - headerOffset - 12,
           behavior: 'smooth'
         });
-      } else {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
   };
@@ -219,7 +318,7 @@ function EnterpriseDataTab() {
             <img src={iconAwardOrange} alt="等级" width={20} height={20} />
             <div className="cd-rank-banner-text">
               <span className="cd-rank-banner-label">企业层级</span>
-              <span className="cd-rank-banner-value">头部企业</span>
+              <span className="cd-rank-banner-value">{basicInfo.categoryName || '重点企业'}</span>
             </div>
           </div>
           <img src={iconInfoOrange} alt="说明" width={16} height={16} className="cd-rank-banner-info-icon" />
@@ -230,18 +329,13 @@ function EnterpriseDataTab() {
           <div className="cd-tag-section-title">企业通用标签</div>
           {!labelExpanded ? (
             <div className="cd-tag-flat-list">
-              {['高新技术企业', '专精特新', '重点关注', '优质企业', '人工智能', '数据服务', '技术驱动', '创新型'].map(tag => (
+              {enterpriseFlatTags.length > 0 ? enterpriseFlatTags.map(tag => (
                 <span key={tag} className="cd-tag cd-tag--blue">{tag}</span>
-              ))}
+              )) : <span className="cd-no-data-small">暂无标签</span>}
             </div>
           ) : (
             <div className="cd-tag-categories">
-              {[
-                { cat: '官方', tags: ['高新技术企业', '专精特新'] },
-                { cat: '管理', tags: ['重点关注', '优质企业'] },
-                { cat: '行业', tags: ['人工智能', '数据服务'] },
-                { cat: '企业', tags: ['技术驱动', '创新型'] },
-              ].map(({ cat, tags }) => (
+              {enterpriseTags.length > 0 ? enterpriseTags.map(({ cat, tags }) => (
                 <div key={cat} className="cd-tag-category-row">
                   <span className="cd-tag-cat-name">{cat}</span>
                   <div className="cd-tag-list">
@@ -250,7 +344,7 @@ function EnterpriseDataTab() {
                     ))}
                   </div>
                 </div>
-              ))}
+              )) : <div className="cd-no-data-small">暂无分类标签</div>}
             </div>
           )}
           <button className="cd-tag-toggle-btn" onClick={() => setLabelExpanded(!labelExpanded)}>
@@ -260,7 +354,7 @@ function EnterpriseDataTab() {
         </div>
 
         {/* 数商专有标签 */}
-        <div className="cd-tag-section cd-tag-section--purple">
+        {/* <div className="cd-tag-section cd-tag-section--purple">
           <div className="cd-tag-section-title cd-tag-section-title--purple">数商专有标签</div>
           {!labelExpanded2 ? (
             <div className="cd-tag-flat-list">
@@ -291,30 +385,30 @@ function EnterpriseDataTab() {
             <img src={labelExpanded2 ? iconChevronUpPurple : iconChevronDownPurple} alt="" width={12} height={12} />
             <span>{labelExpanded2 ? '收起' : '展开'}</span>
           </button>
-        </div>
+        </div> */}
 
         {/* 基本字段 */}
         <div className="cd-info-grid">
           <div className="cd-info-item">
             <img src={iconCalendarGray} alt="" width={14} height={14} className="cd-info-prefix-icon" />
             <span className="cd-info-label">注册时间：</span>
-            <span className="cd-info-value">2018-03-15</span>
+            <span className="cd-info-value">{basicInfo.establishmentDate || '-'}</span>
           </div>
           <div className="cd-info-item">
             <img src={iconDollarGray} alt="" width={14} height={14} className="cd-info-prefix-icon" />
             <span className="cd-info-label">注册资本：</span>
-            <span className="cd-info-value"><strong>5000万元</strong></span>
+            <span className="cd-info-value"><strong>{basicInfo.registeredCapital || '-'}</strong></span>
           </div>
           <div className="cd-info-item cd-info-item--full">
             <img src={iconTagGray} alt="" width={14} height={14} className="cd-info-prefix-icon" />
             <span className="cd-info-label">产业分类：</span>
-            <span className="cd-info-value">软件和信息技术服务业</span>
+            <span className="cd-info-value">{basicInfo.industrialTrack || '-'}</span>
           </div>
           {[
-            { key: 'reg', label: '注册地：', value: '拱墅区祥符街道', detail: '浙江省杭州市拱墅区祥符街道花园岗街88号1幢' },
-            { key: 'biz', label: '经营地：', value: '拱墅区祥符街道', detail: '浙江省杭州市拱墅区祥符街道花园岗街88号1幢' },
-            { key: 'tax', label: '税源地：', value: '拱墅区祥符街道', detail: '浙江省杭州市拱墅区祥符街道花园岗街88号1幢' },
-            { key: 'stat', label: '统计地：', value: '拱墅区祥符街道', detail: '浙江省杭州市拱墅区祥符街道花园岗街88号1幢' },
+            { key: 'reg', label: '注册地：', value: basicInfo.registeredAddress || '-', detail: basicInfo.registeredAddress || '-' },
+            { key: 'biz', label: '经营地：', value: basicInfo.businessAddress || '-', detail: basicInfo.businessAddress || '-' },
+            { key: 'tax', label: '税源地：', value: basicInfo.taxSourceLocation || '-', detail: basicInfo.taxSourceLocation || '-' },
+            { key: 'stat', label: '统计地：', value: basicInfo.street || '-', detail: basicInfo.street || '-' },
           ].map(({ key, label, value, detail }) => (
             <div key={key} className="cd-info-address-group">
               <div className="cd-info-item cd-info-item--full cd-info-item--with-link">
@@ -333,7 +427,7 @@ function EnterpriseDataTab() {
               )}
             </div>
           ))}
-          <div className="cd-info-item cd-info-item--full cd-info-item--nolabel-icon">
+          {/* <div className="cd-info-item cd-info-item--full cd-info-item--nolabel-icon">
             <span className="cd-info-label">数商产业：</span>
             <div className="cd-info-tags">
               <span className="cd-tag cd-tag--solid-pink">数据应用企业</span>
@@ -345,13 +439,13 @@ function EnterpriseDataTab() {
             <span className="cd-info-value">租赁</span>
             <span className="cd-info-label" style={{ marginLeft: 16 }}>租赁日期：</span>
             <span className="cd-info-value">2023-01-01</span>
-          </div>
+          </div> */}
         </div>
 
         {/* 企业介绍 */}
         <div className="cd-intro-block">
           <div className="cd-intro-title">企业介绍</div>
-          <p className="cd-intro-text">专注于企业数据智能分析和大数据应用服务，为政府和企业提供数据驱动的决策支持系统。</p>
+          <p className="cd-intro-text">{basicInfo.enterpriseIntroduction || '暂无企业介绍。'}</p>
         </div>
       </div>
 
@@ -362,17 +456,12 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">服务与产品</span>
         </div>
         <div className="cd-product-list">
-          {[
-            { name: '企业数据分析平台', type: 'SaaS产品' },
-            { name: '智能决策系统', type: '解决方案' },
-            { name: '数据可视化服务', type: '技术服务' },
-            { name: 'AI智能客服', type: 'SaaS产品' },
-          ].map((p) => (
-            <div key={p.name} className="cd-product-item-new">
-              <span className="cd-product-name-new">{p.name}</span>
-              <span className="cd-product-tag-new">{p.type}</span>
+          {serviceRecords.length > 0 ? serviceRecords.map((p, idx) => (
+            <div key={idx} className="cd-product-item-new">
+              <span className="cd-product-name-new">{p.serviceName}</span>
+              <span className="cd-product-tag-new">{p.category}</span>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无服务与产品记录</div>}
         </div>
       </div>
 
@@ -383,27 +472,23 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">专利信息</span>
         </div>
         <div className="cd-patent-list">
-          {[
-            { title: '基于机器学习的企业风险预测方法', pub: 'CN202110345678.9', cat: 'G06Q', date: '2021-03-28' },
-            { title: '企业数据智能分析系统', pub: 'CN202010234567.8', cat: 'G06F', date: '2020-09-15' },
-            { title: '多维数据可视化展示方法及装置', pub: 'CN201910123456.7', cat: 'G06T', date: '2019-06-20' },
-          ].map((item) => (
-            <div key={item.pub} className="cd-patent-card">
-              <div className="cd-patent-name">{item.title}</div>
+          {patentRecords.length > 0 ? patentRecords.map((item, idx) => (
+            <div key={idx} className="cd-patent-card">
+              <div className="cd-patent-name">{item.applicantName}</div>
               <div className="cd-patent-infos">
                 <div className="cd-patent-info-row">
                   <span className="cd-patent-info-label">公布号：</span>
-                  <span className="cd-patent-info-value">{item.pub}</span>
+                  <span className="cd-patent-info-value">{item.pubNumber}</span>
                   <span className="cd-patent-info-label" style={{ marginLeft: 24 }}>分类：</span>
-                  <span className="cd-patent-info-value">{item.cat}</span>
+                  <span className="cd-patent-info-value">{item.patType}</span>
                 </div>
                 <div className="cd-patent-info-row">
                   <span className="cd-patent-info-label">申请日期：</span>
-                  <span className="cd-patent-info-value">{item.date}</span>
+                  <span className="cd-patent-info-value">{item.appDate}</span>
                 </div>
               </div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无专利信息记录</div>}
         </div>
       </div>
 
@@ -414,27 +499,23 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">软件著作权</span>
         </div>
         <div className="cd-copyright-list">
-          {[
-            { title: '企业数据分析平台软件V1.0', reg: '2021SR0123456', ver: 'V1.0', date: '2021-05-18' },
-            { title: '智能决策支持系统V2.0', reg: '2022SR0234567', ver: 'V2.0', date: '2022-08-25' },
-            { title: '数据可视化引擎V1.5', reg: '2023SR0345678', ver: 'V1.5', date: '2023-03-12' },
-          ].map((item) => (
-            <div key={item.reg} className="cd-copyright-card">
-              <div className="cd-copyright-name">{item.title}</div>
+          {copyrightRecords.length > 0 ? copyrightRecords.map((item, idx) => (
+            <div key={idx} className="cd-copyright-card">
+              <div className="cd-copyright-name">{item.fullName}</div>
               <div className="cd-copyright-infos">
                 <div className="cd-copyright-info-row">
                   <span className="cd-copyright-info-label">登记号：</span>
-                  <span className="cd-copyright-info-value">{item.reg}</span>
+                  <span className="cd-copyright-info-value">{item.regNum}</span>
                   <span className="cd-copyright-info-label" style={{ marginLeft: 24 }}>版本：</span>
-                  <span className="cd-copyright-info-value">{item.ver}</span>
+                  <span className="cd-copyright-info-value">{item.version}</span>
                 </div>
                 <div className="cd-copyright-info-row">
                   <span className="cd-copyright-info-label">登记日期：</span>
-                  <span className="cd-copyright-info-value">{item.date}</span>
+                  <span className="cd-copyright-info-value">{item.regDate}</span>
                 </div>
               </div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无软件著作权记录</div>}
         </div>
       </div>
 
@@ -445,35 +526,27 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">商业模式</span>
         </div>
         <div className="cd-model-intro-card">
-          以SaaS订阅和定制化解决方案为主要盈利模式，通过技术创新和数据资产积累建立核心竞争力。
+          {businessModelSummary || '以技术创新和数据资产积累建立核心竞争力。'}
         </div>
 
         <div className="cd-model-sub-section">
           <div className="cd-model-sub-title">盈利模式</div>
-          {[
-            { name: 'SaaS订阅服务', desc: '提供按年订阅的企业数据分析平台，包含基础版、专业版、企业版三种套餐，年费从5万到50万不等。' },
-            { name: '定制化解决方案', desc: '为大型企业和政府机构提供定制化的数据分析和决策支持系统，项目金额通常在100万-500万。' },
-            { name: '技术服务', desc: '提供数据咨询、系统集成、技术培训等增值服务，占总收入的20%左右。' },
-          ].map((m) => (
-            <div key={m.name} className="cd-model-card cd-model-card--green">
-              <div className="cd-model-card-name cd-model-card-name--green">{m.name}</div>
-              <div className="cd-model-card-desc">{m.desc}</div>
+          {profitModelRecords.length > 0 ? profitModelRecords.map((m, idx) => (
+            <div key={idx} className="cd-model-card cd-model-card--green">
+              <div className="cd-model-card-name cd-model-card-name--green">{m.title}</div>
+              <div className="cd-model-card-desc">{m.describeContent?.[0] || ''}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无盈利模式数据</div>}
         </div>
 
         <div className="cd-model-sub-section">
           <div className="cd-model-sub-title">核心竞争力</div>
-          {[
-            { name: '技术领先', desc: '拥有自主研发的AI算法和数据处理引擎，处理速度比行业平均水平快3倍。' },
-            { name: '数据资产', desc: '积累了超过10万家企业的多维数据，建立了完善的企业画像和风险评估模型。' },
-            { name: '行业经验', desc: '服务过50+政府机构和200+大型企业，深刻理解客户需求和业务场景。' },
-          ].map((m) => (
-            <div key={m.name} className="cd-model-card cd-model-card--blue">
-              <div className="cd-model-card-name cd-model-card-name--blue">{m.name}</div>
-              <div className="cd-model-card-desc">{m.desc}</div>
+          {coreCompetitivenessRecords.length > 0 ? coreCompetitivenessRecords.map((m, idx) => (
+            <div key={idx} className="cd-model-card cd-model-card--blue">
+              <div className="cd-model-card-name cd-model-card-name--blue">{m.title}</div>
+              <div className="cd-model-card-desc">{m.describeContent?.[0] || ''}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无核心竞争力数据</div>}
         </div>
 
         <div className="cd-model-sub-section">
@@ -482,18 +555,17 @@ function EnterpriseDataTab() {
             <div className="cd-model-stream-card cd-model-stream-card--orange">
               <div className="cd-model-stream-title cd-model-stream-title--orange">上游企业类型</div>
               <div className="cd-model-stream-list">
-                <span>• 云服务提供商</span>
-                <span>• 数据源供应商</span>
-                <span>• AI算法服务商</span>
+                {upstreamData.length > 0 ? upstreamData.map((text, i) => (
+                  <span key={i}>• {text}</span>
+                )) : <span>暂无数据</span>}
               </div>
             </div>
             <div className="cd-model-stream-card cd-model-stream-card--cyan">
               <div className="cd-model-stream-title cd-model-stream-title--cyan">下游企业类型</div>
               <div className="cd-model-stream-list">
-                <span>• 政府机构</span>
-                <span>• 大型企业</span>
-                <span>• 金融机构</span>
-                <span>• 产业园区</span>
+                {downstreamData.length > 0 ? downstreamData.map((text, i) => (
+                  <span key={i}>• {text}</span>
+                )) : <span>暂无数据</span>}
               </div>
             </div>
           </div>
@@ -507,18 +579,14 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">负面因素</span>
         </div>
         <div className="cd-negative-list-new">
-          {[
-            { type: '市场竞争', title: '同业竞争加剧', desc: '数据分析赛道涌入大量竞争者，部分大厂推出免费或低价产品，对公司定价策略形成压力。' },
-            { type: '技术风险', title: '技术迭代压力', desc: 'AI技术快速发展，需要持续投入研发以保持技术领先，研发成本占比较高。' },
-          ].map((item) => (
-            <div key={item.title} className="cd-negative-card-new">
+          {negativeRecords.length > 0 ? negativeRecords.map((item, idx) => (
+            <div key={idx} className="cd-negative-card-new">
               <div className="cd-negative-title-row">
-                <span className="cd-negative-tag-new">{item.type}</span>
                 <span className="cd-negative-name-new">{item.title}</span>
               </div>
-              <div className="cd-negative-desc-new">{item.desc}</div>
+              <div className="cd-negative-desc-new">{item.describeContent?.[0] || ''}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无负面因素</div>}
         </div>
       </div>
 
@@ -529,16 +597,12 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">当前阶段痛点</span>
         </div>
         <div className="cd-pain-list-new">
-          {[
-            { title: '人才招聘难', desc: '高端AI人才竞争激烈，招聘成本高且人员流动性大，影响项目交付和技术积累加工。' },
-            { title: '客户获取成本高', desc: '政企客户决策周期长，销售成本高，需要投入大量资源进行市场拓展和客户关系维护。' },
-            { title: '数据安全合规', desc: '数据安全和隐私保护要求越来越高，需要持续投入建设安全体系和获取相关资质认证。' },
-          ].map((item) => (
-            <div key={item.title} className="cd-pain-card-new">
+          {painRecords.length > 0 ? painRecords.map((item, idx) => (
+            <div key={idx} className="cd-pain-card-new">
               <div className="cd-pain-name-new">{item.title}</div>
-              <div className="cd-pain-desc-new">{item.desc}</div>
+              <div className="cd-pain-desc-new">{item.describeContent?.[0] || ''}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无痛点数据</div>}
         </div>
       </div>
 
@@ -549,20 +613,16 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">企业人才</span>
         </div>
         <div className="cd-talent-list-new">
-          {[
-            { initial: '张', name: '张伟', nationality: '中国', level: '市级：E类' },
-            { initial: '李', name: '李明', nationality: '中国', level: '区级：C类' },
-            { initial: '王', name: '王芳', nationality: '中国', level: '市级：E类' },
-          ].map((talent) => (
-            <div key={talent.name} className="cd-talent-card-new">
-              <div className="cd-talent-avatar-new">{talent.initial}</div>
+          {talentRecords.length > 0 ? talentRecords.map((talent, idx) => (
+            <div key={idx} className="cd-talent-card-new">
+              <div className="cd-talent-avatar-new">{(talent.name || '').substring(0, 1)}</div>
               <div className="cd-talent-info-new">
                 <div className="cd-talent-name-new">{talent.name}</div>
                 <div className="cd-talent-nation-new">{talent.nationality}</div>
               </div>
-              <div className="cd-talent-tag-new">{talent.level}</div>
+              <div className="cd-talent-tag-new">{talent.talentLevel}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无人才数据</div>}
         </div>
       </div>
 
@@ -575,20 +635,23 @@ function EnterpriseDataTab() {
         <div className="cd-tax-line-chart-wrap">
           <svg viewBox="0 0 320 170" width="100%" height="100%">
             {/* Y轴网格及标签 */}
-            {[0, 25, 50, 75, 100].map(val => {
-              const y = 150 - val * 1.3;
+            {[0, 0.25, 0.5, 0.75, 1].map(ratio => {
+              const val = (maxVal * ratio).toFixed(0);
+              const y = getY(maxVal * ratio);
               return (
-                <g key={`y-${val}`}>
+                <g key={`y-${ratio}`}>
                   <line x1="24" y1={y} x2="310" y2={y} stroke="#F3F4F6" strokeWidth="1" strokeDasharray="3 3" />
                   <line x1="20" y1={y} x2="24" y2={y} stroke="#9CA3AF" strokeWidth="1" />
-                  <text x="16" y={y + 3} fontSize="10" fill="#9CA3AF" textAnchor="end">{val}</text>
+                  <text x="16" y={y + 3} fontSize="8" fill="#9CA3AF" textAnchor="end">
+                    {val > 10000 ? (val / 10000).toFixed(1) + '万' : val}
+                  </text>
                 </g>
               );
             })}
 
             {/* X轴网格及标签 */}
-            {TAX_TREND_DATA.map((item, idx) => {
-              const xPos = 24 + idx * (286 / (TAX_TREND_DATA.length - 1));
+            {taxTrendData.map((item, idx) => {
+              const xPos = 24 + idx * (286 / (taxTrendData.length - 1));
               return (
                 <g key={`x-${idx}`}>
                   <line x1={xPos} y1="20" x2={xPos} y2="150" stroke="#F3F4F6" strokeWidth="1" strokeDasharray="3 3" />
@@ -602,18 +665,18 @@ function EnterpriseDataTab() {
             <line x1="24" y1="20" x2="24" y2="150" stroke="#6B7280" strokeWidth="1" />
             <line x1="24" y1="150" x2="310" y2="150" stroke="#6B7280" strokeWidth="1" />
 
-            {/* 蓝色趋势线 */}
+            {/* 蓝色趋势线 (num1) */}
             <path 
-              d={generateSmoothPath(TAX_TREND_DATA, 'blue')}
+              d={generateDynamicPath(taxTrendData, 'val1')}
               fill="none" 
               stroke="#3B82F6" 
               strokeWidth="2.5" 
               strokeLinecap="round" 
             />
             
-            {/* 绿色趋势线 */}
+            {/* 绿色趋势线 (num2) */}
             <path 
-              d={generateSmoothPath(TAX_TREND_DATA, 'green')}
+              d={generateDynamicPath(taxTrendData, 'val2')}
               fill="none" 
               stroke="#00E88E" 
               strokeWidth="2.5" 
@@ -630,27 +693,18 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">企业政策兑现</span>
         </div>
         <div className="cd-policy-summary-banner">
-          2024-04-01至2026-03-09，已兑现拱墅区10类的12项政策，共计兑现<span className="cd-hl-purple">158.98万元</span>
+          {policySummary.redemptionCycle}，已兑现拱墅区{policySummary.redemptionTotalType}类的{policySummary.redemptionTotalCount}项政策，共计兑现<span className="cd-hl-purple">{policySummary.paymentAmount}</span>
         </div>
         <div className="cd-policy-list-new">
-          {[
-            { name: '高新技术企业研发补助', date: '2024-05-15', amount: '50万' },
-            { name: '数字经济发展专项资金', date: '2024-08-20', amount: '30.5万' },
-            { name: '人才引进补贴', date: '2024-10-12', amount: '25.8万' },
-            { name: '技术创新奖励', date: '2025-01-08', amount: '18.3万' },
-            { name: '专利资助', date: '2025-02-25', amount: '12.5万' },
-            { name: '软件著作权补助', date: '2024-06-30', amount: '8.9万' },
-            { name: '小微企业扶持资金', date: '2024-11-18', amount: '6.2万' },
-            { name: '产业升级奖励', date: '2024-09-05', amount: '6.78万' },
-          ].map((item) => (
-            <div key={item.name} className="cd-policy-card-new">
+          {policyRecords.length > 0 ? policyRecords.map((item, idx) => (
+            <div key={idx} className="cd-policy-card-new">
               <div className="cd-policy-left-new">
-                <div className="cd-policy-name-new">{item.name}</div>
-                <div className="cd-policy-date-new">{item.date}</div>
+                <div className="cd-policy-name-new">{item.policyName}</div>
+                <div className="cd-policy-date-new">{(item.paymentDate || '').split(' ')[0]}</div>
               </div>
-              <div className="cd-policy-amount-new">{item.amount}</div>
+              <div className="cd-policy-amount-new">{item.paymentAmount || item.paymentTotalAmount || '-'}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无政策兑现记录</div>}
         </div>
       </div>
 
@@ -661,23 +715,18 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">企业需求</span>
         </div>
         <div className="cd-demand-list-new">
-          {[
-            { title: '希望获得更多研发资金支持', type: '资金需求', status: 'done' },
-            { title: '需要高端AI人才引进政策支持', type: '人才需求', status: 'done' },
-            { title: '申请数据中心建设用地', type: '场地需求', status: 'pending' },
-            { title: '寻求政府数据开放合作机会', type: '业务需求', status: 'done' },
-          ].map((item, idx) => (
+          {demandRecords.length > 0 ? demandRecords.map((item, idx) => (
             <div key={idx} className="cd-demand-card-new">
               <div className="cd-demand-info-new">
-                <div className="cd-demand-name-new">{item.title}</div>
-                <div className="cd-demand-type-new">{item.type}</div>
+                <div className="cd-demand-name-new">{item.demandName}</div>
+                <div className="cd-demand-type-new">{item.demandType}</div>
               </div>
               <img 
-                src={item.status === 'done' ? iconCheckGreen : iconClockOrange} 
+                src={item.dataStatus === '1' ? iconCheckGreen : iconClockOrange} 
                 alt="" width={20} height={20} 
               />
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无企业需求</div>}
         </div>
       </div>
 
@@ -719,41 +768,37 @@ function EnterpriseDataTab() {
           <span className="cd-section-title cd-section-title--dark">招投标</span>
         </div>
         <div className="cd-bid-list-new">
-          {[
-            { name: '杭州市政府企业数据分析平台建设项目', date: '2024-08-15', city: '杭州市', type: '中标公告', amount: '380万', agent: '杭州数智科技有限公司', inviter: '杭州市经济和信息化局' },
-            { name: '拱墅区产业大数据可视化系统', date: '2024-11-20', city: '杭州市', type: '中标公告', amount: '220万', agent: '杭州数智科技有限公司', inviter: '拱墅区经济和信息化局' },
-            { name: '企业风险监测预警平台采购', date: '2025-01-10', city: '杭州市', type: '招标公告', amount: '预算500万', agent: '-', inviter: '杭州市市场监督管理局' },
-          ].map((item, idx) => (
+          {bidRecords.length > 0 ? bidRecords.map((item, idx) => (
             <div key={idx} className="cd-bid-card-new">
-              <div className="cd-bid-name-new">{item.name}</div>
+              <div className="cd-bid-name-new">{item.title}</div>
               <div className="cd-bid-grid-new">
                 <div className="cd-bid-row-new">
                   <span className="cd-bid-label-new">发布日期：</span>
-                  <span className="cd-bid-value-new">{item.date}</span>
+                  <span className="cd-bid-value-new">{item.dateTime || '-'}</span>
                 </div>
                 <div className="cd-bid-row-new">
                   <span className="cd-bid-label-new">地市：</span>
-                  <span className="cd-bid-value-new">{item.city}</span>
+                  <span className="cd-bid-value-new">{item.city || '-'}</span>
                 </div>
                 <div className="cd-bid-row-new">
                   <span className="cd-bid-label-new">公告类型：</span>
-                  <span className="cd-bid-value-new">{item.type}</span>
+                  <span className="cd-bid-value-new">{item.noticeTypeSub || '-'}</span>
                 </div>
                 <div className="cd-bid-row-new">
                   <span className="cd-bid-label-new">涉及金额：</span>
-                  <span className="cd-bid-value-new">{item.amount}</span>
+                  <span className="cd-bid-value-new">{item.involvingMoney || '-'}</span>
                 </div>
               </div>
               <div className="cd-bid-row-new">
                 <span className="cd-bid-label-new">中标机构：</span>
-                <span className="cd-bid-value-new">{item.agent}</span>
+                <span className="cd-bid-value-new">{item.bidWin || '-'}</span>
               </div>
               <div className="cd-bid-row-new">
                 <span className="cd-bid-label-new">招标人：</span>
-                <span className="cd-bid-value-new">{item.inviter}</span>
+                <span className="cd-bid-value-new">{item.purchaser || '-'}</span>
               </div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无招投标信息</div>}
         </div>
       </div>
 
@@ -766,42 +811,37 @@ function EnterpriseDataTab() {
         
         <div className="cd-equity-sub-section">
           <div className="cd-equity-sub-title">法定代表人</div>
-          <div className="cd-legal-btn-new">张伟</div>
+          <div className="cd-legal-btn-new">{legalRepresentative || '暂无'}</div>
         </div>
 
         <div className="cd-equity-sub-section">
           <div className="cd-equity-sub-title">股东结构</div>
           <div className="cd-shareholder-list-new">
-            {[
-              { name: '张伟', ratio: '35%' },
-              { name: '李明', ratio: '25%' },
-              { name: '腾讯投资', ratio: '20%' },
-              { name: '高瓴创投', ratio: '15%' },
-              { name: '员工持股平台', ratio: '5%' },
-            ].map((item, idx) => (
+            {shareholders.length > 0 ? shareholders.map((item, idx) => (
               <div key={idx} className="cd-shareholder-card-new">
-                <div className="cd-shareholder-name-new">{item.name}</div>
-                <div className="cd-shareholder-ratio-new">{item.ratio}</div>
+                <div className="cd-shareholder-name-new">{item.shareholderName}</div>
+                <div className="cd-shareholder-ratio-new">{(Number(item.holdingRatio) * 100).toFixed(0)}%</div>
               </div>
-            ))}
+            )) : <div className="cd-no-data">暂无股东信息</div>}
           </div>
         </div>
 
         <div className="cd-equity-sub-section">
           <div className="cd-equity-sub-title">分支机构</div>
           <div className="cd-branch-list-new">
-            <div className="cd-branch-item-new">• 杭州数智科技有限公司北京分公司</div>
-            <div className="cd-branch-item-new">• 杭州数智科技有限公司上海分公司</div>
+            {companyBranchs.length > 0 ? companyBranchs.map((item, idx) => (
+              <div key={idx} className="cd-branch-item-new">• {item.branchName}</div>
+            )) : <div className="cd-no-data">暂无分支机构</div>}
           </div>
         </div>
 
-        <div className="cd-equity-sub-section">
+        {/* <div className="cd-equity-sub-section">
           <div className="cd-equity-sub-title">子公司</div>
           <div className="cd-sub-list-new">
             <div className="cd-sub-item-new">• 杭州数智数据服务有限公司</div>
             <div className="cd-sub-item-new">• 杭州智云科技有限公司</div>
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* 底部间距 */}
@@ -811,89 +851,67 @@ function EnterpriseDataTab() {
 }
 
 /* ===================== 服务矩阵 Tab ===================== */
-const SERVICE_MATRIX_DATA = [
-  {
-    level: '省级',
-    dept: '浙江省经济和信息化厅',
-    room: '数字经济处',
-    func: '推动数字经济发展',
-    policy: '浙江省数字经济促进条例',
-    service: '数字经济企业认定、专项资金申报',
-  },
-  {
-    level: '市级',
-    dept: '杭州市经济和信息化局',
-    room: '软件和信息服务业处',
-    func: '促进软件产业发展',
-    policy: '杭州市软件产业发展政策',
-    service: '软件企业认定、研发补助申报',
-  },
-  {
-    level: '区级',
-    dept: '拱墅区经济和信息化局',
-    room: '产业发展科',
-    func: '推动区域产业升级',
-    policy: '拱墅区产业扶持政策',
-    service: '产业项目审批、政策兑现',
-  },
-  {
-    level: '街道',
-    dept: '祥符街道办事处',
-    room: '经济发展办',
-    func: '服务辖区企业',
-    policy: '街道企业服务工作方案',
-    service: '企业走访、诉求收集、政策宣讲',
-  },
+const serviceMatrixSources = [
+  { key: '服务矩阵-省级层面', level: '省级' },
+  { key: '服务矩阵-市级层面', level: '市级' },
+  { key: '服务矩阵-区级层面', level: '区级' },
+  { key: '服务矩阵-街道层面', level: '街道' }
 ];
 
-const TAX_TREND_DATA = [
-  { month: '01', blue: 0, green: 0 },
-  { month: '02', blue: 36, green: 26 },
-  { month: '03', blue: 52, green: 38 },
-  { month: '04', blue: 60, green: 45 },
-  { month: '05', blue: 63, green: 58 },
-  { month: '06', blue: 71, green: 67 },
-  { month: '07', blue: 78, green: 75 },
-  { month: '08', blue: 80, green: 82 },
-  { month: '09', blue: 80, green: 88 },
-  { month: '10', blue: 84, green: 90 },
-  { month: '11', blue: 88, green: 93 },
-  { month: '12', blue: 91, green: 98 },
-  { month: '01', blue: 90, green: 97 },
-  { month: '02', blue: 90, green: 97 },
-  { month: '03', blue: 88, green: 100 },
-];
+const TAX_TREND_DATA = []; // Deprecated, using dynamic data inside component
 
-const generateSmoothPath = (data, key) => {
-  if (data.length === 0) return '';
-  const startX = 24;
-  const startY = 150 - data[0][key] * 1.3;
-  let d = `M ${startX} ${startY}`;
-  
-  const stepX = 286 / (data.length - 1);
-  for (let i = 0; i < data.length - 1; i++) {
-    const currX = startX + i * stepX;
-    const currY = 150 - data[i][key] * 1.3;
-    const nextX = startX + (i + 1) * stepX;
-    const nextY = 150 - data[i + 1][key] * 1.3;
-    const cpX = (currX + nextX) / 2;
-    d += ` C ${cpX} ${currY}, ${cpX} ${nextY}, ${nextX} ${nextY}`;
-  }
-  return d;
-};
+const generateSmoothPath = () => ""; // Deprecated
 
 
 function ServiceMatrixTab() {
+  const { id } = useParams();
+  const companyData = getCompanyData(id);
+
+  const SERVICE_MATRIX_DATA = companyData ? (() => {
+    const data = [];
+    serviceMatrixSources.forEach(source => {
+      const levelData = companyData?.[source.key]?.data || [];
+      levelData.forEach(deptItem => {
+        deptItem.data?.forEach(roomItem => {
+          roomItem.detailContent?.forEach(detail => {
+            let func = '', policy = '', service = '';
+            detail.content?.forEach(text => {
+              const funcMatch = text.match(/职能依据：(.*?)(?:\n|$)/);
+              const policyMatch = text.match(/政策依据：(.*?)(?:\n|$)/);
+              const serviceMatch = text.match(/服务内容：(.*?)(?:\n|$)/);
+              
+              if (funcMatch) func = funcMatch[1].trim();
+              if (policyMatch) policy = policyMatch[1].trim();
+              if (serviceMatch) service = serviceMatch[1].trim();
+            });
+
+            data.push({
+              level: source.level,
+              dept: detail.title || '',
+              room: roomItem.oneContent || '',
+              orgDept: deptItem.name || '',
+              func,
+              policy,
+              service
+            });
+          });
+        });
+      });
+    });
+    return data;
+  })() : [];
+
   const [levelFilter, setLevelFilter] = useState('');
   const [deptFilter, setDeptFilter] = useState('');
   const [levelOpen, setLevelOpen] = useState(false);
   const [deptOpen, setDeptOpen] = useState(false);
 
   const levels = ['省级', '市级', '区级', '街道'];
-  const depts = ['省级部门', '市级部门', '区级部门', '街道部门'];
+  const depts = Array.from(new Set(SERVICE_MATRIX_DATA.map(item => item.orgDept).filter(Boolean)));
 
   const filtered = SERVICE_MATRIX_DATA.filter(item => {
     if (levelFilter && item.level !== levelFilter) return false;
+    if (deptFilter && item.orgDept !== deptFilter) return false;
     return true;
   });
 
@@ -956,11 +974,11 @@ function ServiceMatrixTab() {
             <div className="cd-sm-card-header">
               <div className="cd-sm-level-badges">
                 <span className="cd-sm-level-badge">{item.level}</span>
-                <span className="cd-sm-dept-name">{item.dept}</span>
+                <span className="cd-sm-dept-name">{item.orgDept}</span>
               </div>
               <div className="cd-sm-room-row">
                 <span className="cd-sm-room-label">科室</span>
-                <span className="cd-sm-room-name">{item.room}</span>
+                <span className="cd-sm-room-name">{item.room} / {item.dept}</span>
               </div>
             </div>
             <div className="cd-sm-card-body">
@@ -1255,23 +1273,6 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
 }
 
 /* ===================== 全生命周期 Tab ===================== */
-const LIFECYCLE_DATA = [
-  { date: '2018-03-15', type: '工商注册', title: '公司成立', desc: '杭州数智科技有限公司在拱墅区市场监管局登记注册' },
-  { date: '2018-06-20', type: '融资', title: '天使轮融资', desc: '获得500万天使轮融资' },
-  { date: '2019-05-10', type: '资质认证', title: '高新技术企业认定', desc: '通过高新技术企业认定' },
-  { date: '2019-11-15', type: '融资', title: 'Pre-A轮融资', desc: '获红杉资本中国2000万Pre-A轮融资' },
-  { date: '2021-03-28', type: '知识产权', title: '专利申请', desc: '申请发明专利《基于机器学习的企业风险预测方法》' },
-  { date: '2021-05-18', type: '知识产权', title: '软件著作权登记', desc: '获得企业数据分析平台软件著作权' },
-  { date: '2021-05-28', type: '融资', title: 'A轮融资', desc: '获经纬中国、IDG资本联合投资5000万A轮融资' },
-  { date: '2022-08-25', type: '知识产权', title: '软件著作权登记', desc: '获得智能决策支持系统软件著作权' },
-  { date: '2023-09-10', type: '融资', title: 'B轮融资', desc: '获腾讯投资、高瓴创投联合投资1.2亿B轮融资' },
-  { date: '2024-05-15', type: '政策兑现', title: '获政府补助', desc: '获得高新技术企业研发补助50万元' },
-  { date: '2024-06-20', type: '工商变更', title: '新设分公司', desc: '在上海设立分公司' },
-  { date: '2024-08-15', type: '招投标', title: '中标政府项目', desc: '中标杭州市政府企业数据分析平台建设项目' },
-  { date: '2025-12-15', type: '工商变更', title: '注册资本变更', desc: '注册资本由3000万增至5000万' },
-  { date: '2026-03-05', type: '政府服务', title: '企业走访', desc: '街道领导走访企业，了解发展情况' },
-];
-
 const TYPE_COLORS = {
   '工商注册': '#155DFC',
   '融资': '#008236',
@@ -1284,13 +1285,37 @@ const TYPE_COLORS = {
 };
 
 function LifecycleTab() {
+  const { id } = useParams();
+  const companyData = getCompanyData(id);
+
+  const LIFECYCLE_DATA = companyData ? (() => {
+    const lifecycle1 = companyData['生命周期1']?.data || [];
+    const lifecycle2 = companyData['生命周期2']?.data || [];
+
+    const lcTypeMap = {};
+    lifecycle1.forEach(item => {
+      const match = item.name.match(/^(.*?)(?:\(\d+\))?$/);
+      if (match) lcTypeMap[item.value] = match[1];
+    });
+
+    return lifecycle2.map(item => ({
+      date: item.dataTime || '',
+      type: lcTypeMap[item.type] || String(item.type),
+      title: item.typeName || '',
+      desc: item.content || ''
+    }));
+  })() : [];
+
   const [typeFilter, setTypeFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
   const [typeOpen, setTypeOpen] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
 
-  const types = ['工商注册', '融资', '资质认证', '知识产权', '政策兑现', '工商变更', '招投标', '政府服务'];
-  const dateRanges = ['2018年', '2019年', '2021年', '2022年', '2023年', '2024年', '2025年', '2026年'];
+  const types = Array.from(new Set(LIFECYCLE_DATA.map(item => item.type).filter(Boolean)));
+  const dateRanges = Array.from(new Set(LIFECYCLE_DATA.map(item => {
+    const year = (item.date || '').substring(0, 4);
+    return year ? `${year}年` : '';
+  }).filter(Boolean))).sort((a, b) => parseInt(a) - parseInt(b));
 
   const filtered = LIFECYCLE_DATA.filter(item => {
     if (typeFilter && item.type !== typeFilter) return false;
