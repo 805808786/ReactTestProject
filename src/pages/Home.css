@@ -1908,3 +1908,209 @@
 .no-border {
   border-bottom: none !important;
 }
+
+/* ===== Home PolicyCard (second card under policy tab) ===== */
+.home-policy-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  padding-bottom: 12px;
+}
+
+.home-policy-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.home-policy-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.home-policy-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.43;
+}
+
+.home-policy-match-info {
+  font-size: 12px;
+  color: #6A7282;
+  line-height: 1.33;
+}
+
+.home-policy-rate-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+  width: 46px;
+}
+
+.home-policy-rate-value {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.43;
+  text-align: right;
+}
+
+.home-policy-rate-label {
+  font-size: 12px;
+  color: #6A7282;
+  line-height: 1.33;
+  text-align: right;
+}
+
+.home-policy-progress-track {
+  height: 6px;
+  background: #F3F4F6;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.home-policy-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.home-policy-enterprise-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid #F3F4F6;
+  padding-top: 16px;
+}
+
+.home-policy-section-header {
+  height: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.home-policy-section-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.33;
+}
+
+.home-policy-enterprise-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 13px 13px 1px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #FFFFFF;
+}
+
+.home-policy-enterprise-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.home-policy-enterprise-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.home-policy-enterprise-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #101828;
+  line-height: 1.43;
+}
+
+.home-policy-enterprise-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 16px;
+}
+
+.home-policy-enterprise-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.33;
+  white-space: nowrap;
+}
+
+.home-policy-enterprise-progress {
+  font-size: 12px;
+  color: #6A7282;
+  line-height: 1.33;
+}
+
+.home-policy-enterprise-amount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #155DFC;
+  line-height: 1.43;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.home-policy-advice-row {
+  background: #EFF6FF;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.home-policy-advice-text {
+  font-size: 12px;
+  color: #364153;
+  line-height: 1.5;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-policy-newpolicy-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid #F3F4F6;
+  background: linear-gradient(135deg, #FAF5FF 0%, #EFF6FF 100%);
+  border-radius: 0 0 14px 14px;
+  padding: 16px 16px 16px;
+  margin: 12px -24px -16px;
+}
+
+.home-policy-newpolicy-card {
+  padding: 12px;
+  background: #FFFFFF;
+  border: 1px solid #E9D4FF;
+  border-radius: 10px;
+}
+
+.home-policy-newpolicy-text {
+  font-size: 12px;
+  color: #364153;
+  line-height: 1.63;
+  display: block;
+}

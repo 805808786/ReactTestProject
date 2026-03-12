@@ -704,92 +704,123 @@ function DataContribution() {
   )
 }
 
-import iconPolicyDoc from '../assets/icon-policy-doc.svg'
-import iconPolicyEnterprise from '../assets/icon-policy-enterprise.svg'
-import iconPolicyNewPolicy from '../assets/icon-policy-newpolicy.svg'
+const FIRST_POLICY = {
+  id: 1,
+  name: '高新技术企业研发补贴',
+  matchedCount: 1234,
+  implementedCount: 856,
+  implementationRate: 69.4,
+  enterprises: [
+    {
+      id: 1,
+      name: '科技创新有限公司',
+      applyStatus: { label: '已申报', type: 'applied' },
+      progressStatus: '审核中',
+      amount: '50万',
+      advice: '补充研发人员名单和项目验收报告',
+    },
+  ],
+  newPolicySuggestion: '建议针对小微高新企业推出梯度化补贴政策，降低申报门槛',
+}
 
 function PolicyMatching() {
   const navigate = useNavigate()
+  const policy = FIRST_POLICY
+  const rateColor = policy.implementationRate >= 80 ? '#00A63E' : policy.implementationRate >= 60 ? '#155DFC' : '#D08700'
+  const progressColor = policy.implementationRate >= 80 ? '#00C950' : policy.implementationRate >= 60 ? '#155DFC' : '#D08700'
+  const ent = policy.enterprises[0]
+  const statusStyle =
+    ent.applyStatus.type === 'applied'
+      ? { background: '#EFF6FF', color: '#155DFC' }
+      : ent.applyStatus.type === 'done'
+      ? { background: '#F0FDF4', color: '#00A63E' }
+      : { background: '#FEFCE8', color: '#D08700' }
+
   return (
     <>
-      {/* 政策细节卡片 */}
       <section className="card focus-scene-view">
-        <div className="policy-detail-top">
-          <div className="policy-detail-header">
-            <div className="policy-icon-wrapper">
-              <img src={iconPolicyDoc} alt="doc" />
-            </div>
-            <div className="policy-title-info">
-              <div className="policy-main-title">高新技术企业研发补贴</div>
-              <div className="policy-sub-stat">匹配 1234 家 · 已实施 856 家</div>
-            </div>
-            <div className="policy-percentage-box">
-              <div className="percentage-value">69.4%</div>
-              <div className="percentage-label">实施率</div>
-            </div>
-          </div>
-          <div className="policy-progress-bar-wrap">
-            <div className="policy-progress-fill" style={{ width: '69.4%' }}></div>
-          </div>
-        </div>
-      </section>
-
-      {/* 企业施策建议与进展 */}
-      <section className="card focus-scene-view sub-card">
         <div className="card-header">
           <div className="card-header-left">
-            <div className="title-icon advice-icon-bg">
-              <img src={iconPolicyEnterprise} alt="enterprise" />
+            <div className="title-icon policy-icon-bg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
             </div>
-            <span className="card-title">企业施策建议与进展</span>
+            <span className="card-title">政策匹配</span>
           </div>
         </div>
 
-        <div className="policy-advice-list">
-          <div className="advice-enterprise-item">
-            <div className="advice-item-top">
-              <div className="advice-ent-name">科技创新有限公司</div>
-              <div className="advice-ent-value">50万</div>
-            </div>
-            <div className="advice-tags">
-              <span className="advice-tag-tag blue-tag">已申报</span>
-              <span className="advice-tag-status">审核中</span>
-            </div>
-            <div className="advice-notice-bar blue-notice">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              <span>补充研发人员名单和项目验收报告</span>
+        <div className="policy-summary-row">
+          <div className="summary-left">
+            <div className="summary-info">
+              <span className="summary-label">匹配企业数</span>
+              <div className="summary-value blue-text">678<small>家</small></div>
             </div>
           </div>
+          <div className="summary-right">
+            <button onClick={() => navigate('/policy-list')} className="view-all blue-text">查看全部 →</button>
+          </div>
+        </div>
 
-          <div className="advice-enterprise-item">
-            <div className="advice-item-top">
-              <div className="advice-ent-name">智能科技股份</div>
-              <div className="advice-ent-value">80万</div>
-            </div>
-            <div className="advice-tags">
-              <span className="advice-tag-tag yellow-tag">待申报</span>
-              <span className="advice-tag-status">材料准备中</span>
-            </div>
-            <div className="advice-notice-bar yellow-notice">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-              <span>建议尽快提交申报材料，本期申报截止3月15日</span>
-            </div>
+        <div className="policy-progress-box">
+          <div className="progress-header">
+            <span className="progress-title">政策实施进度</span>
+            <span className="progress-badge">进度 85%</span>
+          </div>
+          <div className="progress-bar-container">
+            <div className="progress-bar-fill" style={{ width: '85%' }}></div>
           </div>
         </div>
       </section>
 
-      {/* 新政策建议 */}
-      <section className="card focus-scene-view sub-card new-policy-card-bg">
-        <div className="card-header no-border">
-          <div className="card-header-left">
-            <div className="title-icon new-policy-icon-bg">
-              <img src={iconPolicyNewPolicy} alt="new" />
+      <section className="card focus-scene-view sub-card">
+        {/* 政策标题区 */}
+        <div className="home-policy-header" onClick={() => navigate('/policy-list')}>
+          <div className="home-policy-title-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6A7282" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,marginTop:2}}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <div className="home-policy-title-group">
+              <span className="home-policy-name">{policy.name}</span>
+              <span className="home-policy-match-info">匹配 {policy.matchedCount.toLocaleString()} 家 · 已实施 {policy.implementedCount.toLocaleString()} 家</span>
             </div>
-            <span className="card-title">新政策建议</span>
+          </div>
+          <div className="home-policy-rate-group">
+            <span className="home-policy-rate-value" style={{ color: rateColor }}>{policy.implementationRate}%</span>
+            <span className="home-policy-rate-label">实施率</span>
           </div>
         </div>
-        <div className="new-policy-content-box">
-          建议针对小微高新企业推出梯度化补贴政策，降低申报门槛
+
+        {/* 进度条 */}
+        <div className="home-policy-progress-track">
+          <div className="home-policy-progress-fill" style={{ width: `${policy.implementationRate}%`, background: progressColor }} />
+        </div>
+
+        {/* 企业施策建议与进展 */}
+        <div className="home-policy-enterprise-section">
+          <div className="home-policy-section-header">
+            <span className="home-policy-section-title">企业施策建议与进展</span>
+          </div>
+          <div className="home-policy-enterprise-item">
+            <div className="home-policy-enterprise-top">
+              <div className="home-policy-enterprise-left">
+                <span className="home-policy-enterprise-name">{ent.name}</span>
+                <div className="home-policy-enterprise-status-row">
+                  <span className="home-policy-enterprise-badge" style={statusStyle}>{ent.applyStatus.label}</span>
+                  <span className="home-policy-enterprise-progress">{ent.progressStatus}</span>
+                </div>
+              </div>
+              <span className="home-policy-enterprise-amount">{ent.amount}</span>
+            </div>
+            <div className="home-policy-advice-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0}}><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span className="home-policy-advice-text">{ent.advice}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 新政策建议 */}
+        <div className="home-policy-newpolicy-section">
+          <span className="home-policy-section-title">新政策建议</span>
+          <div className="home-policy-newpolicy-card">
+            <span className="home-policy-newpolicy-text">{policy.newPolicySuggestion}</span>
+          </div>
         </div>
       </section>
     </>
