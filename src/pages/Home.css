@@ -385,6 +385,17 @@
   color: #1777FF;
 }
 
+.view-all {
+  font-size: 12px;
+  color: #155dfc;
+  text-decoration: none;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* Focus Scene */
 .scene-stat-row {
   display: flex;
