@@ -187,7 +187,7 @@ function EnterpriseCard({ enterprise }) {
 export default function SceneEnterprise() {
   const navigate = useNavigate();
   const location = useLocation();
-  const sceneName = location.state?.sceneName || '数商企业';
+  const sceneName = location.state?.sceneName || '人工智能企业';
 
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
