@@ -1194,7 +1194,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  overflow: hidden;
+}
+
+.key-focus-fire-bg img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
 
 .key-focus-title {

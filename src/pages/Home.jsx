@@ -16,6 +16,7 @@ import chevronRightIcon from '../assets/chevron-right.svg'
 import starIcon from '../assets/icon-dc-star.svg'
 import enterpriseDataJson from '../json/enterprise.json'
 import SparklesIcon from '../assets/Sparkles.svg'
+import FireGif from '../assets/Fire.gif'
 import ZapIcon from '../assets/Zap.svg'
 import MessageCircleIcon from '../assets/MessageCircle.svg'
 import iconKeyEnterpriseChevron from '../assets/icon-key-enterprise-chevron-right.svg'
@@ -112,16 +113,15 @@ function KeyFocus() {
     <section className="key-focus-section">
       <div className="key-focus-header">
         <div className="key-focus-header-left">
-          <div className="key-focus-fire-bg">🔥</div>
+          <div className="key-focus-fire-bg"><img src={FireGif} alt="fire" /></div>
           <span className="key-focus-title">当前关注</span>
         </div>
-        <img src={chevronRightIcon} alt="more" className="key-focus-header-more" onClick={() => navigate('/enterprise-list')} />
       </div>
       
       <div className="key-focus-main-card">
         <div className="key-focus-scene-header">
           <span className="key-focus-scene-name">人工智能企业筛选场景</span>
-          <div className="scene-desc-badge">场景说明</div>
+          <div className="scene-desc-badge" onClick={() => navigate('/scene-description/1')}>场景说明</div>
         </div>
 
         <div className="key-focus-stats-row">
@@ -135,7 +135,7 @@ function KeyFocus() {
               <span className="sub-val">今日<span className="plus">+3</span></span>
             </div>
           </div>
-          <div className="key-focus-stat-card">
+          <div className="key-focus-stat-card"  onClick={() => navigate('/scene-enterprise-dynamic')}>
             <div className="stat-card-title">
               <span>人工智能动态</span>
               <span className="stat-arrow">→</span>
@@ -147,7 +147,9 @@ function KeyFocus() {
           </div>
         </div>
 
-        <div className="key-focus-companies-section">
+       
+      </div>
+       <div className="key-focus-companies-section">
           <div className="companies-header">
             <img src={starIcon} alt="star" />
             <span>重点企业</span>
@@ -171,7 +173,6 @@ function KeyFocus() {
             ))}
           </div>
         </div>
-      </div>
     </section>
   )
 }
@@ -222,7 +223,7 @@ function EnterpriseOverview() {
         <Link to="/calendar" className="overview-date" style={{ textDecoration: 'none' }}>{displayDate}</Link>
       </div>
 
-      <div className="overview-main-card">
+      <div className="overview-main-card" onClick={()=>navigate('/calendar')}>
         <div className="overview-main-left">
           <img src={overviewMainIcon} alt="icon" className="overview-main-img" />
           <div className="overview-main-info">
@@ -424,7 +425,7 @@ function FocusScene() {
             </div>
           </div>
 
-          <div className="metric-item">
+          <div className="metric-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
             <div className="metric-top">
               <span className="metric-label">数商场景动态</span>
               <span className="metric-arrow">→</span>
