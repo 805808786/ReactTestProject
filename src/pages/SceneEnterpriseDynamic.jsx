@@ -323,7 +323,7 @@ export default function SceneEnterpriseDynamic() {
           <button className="sed-back-btn" onClick={() => navigate(-1)} aria-label="返回">
             <img src={iconBackWhite} alt="返回" width={36} height={32} />
           </button>
-          <span className="sed-header-title">数商企业场景动态</span>
+          <span className="sed-header-title">人工智能场景动态</span>
         </div>
 
         {/* 搜索行 */}
