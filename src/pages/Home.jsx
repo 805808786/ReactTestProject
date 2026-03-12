@@ -164,7 +164,7 @@ function KeyFocus() {
                 <div className="company-item-left">
                   <span className="company-name-text">{item.name}</span>
                   <span className={`level-tag ${idx === 0 ? 'level-top' : 'level-waist'}`}>
-                    {idx === 0 ? '头部' : '腰部'}
+                    {idx === 0 ? '头部' : '潜力'}
                   </span>
                   <span className="visit-status-tag">已走访</span>
                 </div>
@@ -447,7 +447,7 @@ const KEY_ENTERPRISES = enterpriseDataJson.map((item, index) => ({
   name: item?.['基本信息']?.data?.enterpriseName || '',
   type: item?.['基本信息']?.data?.categoryName || '',
   info: item?.['基本信息']?.data?.reason || '',
-  level: item?.['基本信息']?.data?.level || (index === 0 ? '头部' : '腰部'), // Assuming level can be derived or is in data
+  level: item?.['基本信息']?.data?.level || (index === 0 ? '头部' : '潜力'), // Assuming level can be derived or is in data
   visited: item?.['基本信息']?.data?.visited || (index % 2 === 0) // Assuming visited status
 }))
 
@@ -538,7 +538,7 @@ function FocusEnterprise() {
               <div className="key-enterprise-name-row">
                 <span className="key-enterprise-name">{item.name}</span>
                 <span className={`level-tag ${idx === 0 ? 'level-top' : 'level-waist'}`}>
-                  {idx === 0 ? '头部' : '腰部'}
+                  {idx === 0 ? '头部' : '潜力'}
                 </span>
                 <span className="visit-status-tag">已走访</span>
               </div>
