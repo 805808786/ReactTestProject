@@ -137,7 +137,7 @@ function KeyFocus() {
           </div>
           <div className="key-focus-stat-card"  onClick={() => navigate('/scene-enterprise-dynamic')}>
             <div className="stat-card-title">
-              <span>人工智能动态</span>
+              <span>人工智能场景动态</span>
               <span className="stat-arrow">→</span>
             </div>
             <div className="stat-card-value">
@@ -411,7 +411,7 @@ function FocusScene() {
           <span className="featured-title">人工智能企业筛选场景</span>
           <span className="scene-tag" onClick={() => navigate('/scene-description/1')} style={{ cursor: 'pointer' }}>场景说明</span>
         </div>
-        <p className="featured-desc">数据商业化企业专项筛选</p>
+        <p className="featured-desc">人工智能企业专项筛选</p>
 
         <div className="metrics-grid">
           <div className="metric-item" onClick={() => navigate('/scene-enterprise')} style={{ cursor: 'pointer' }}>
@@ -427,7 +427,7 @@ function FocusScene() {
 
           <div className="metric-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
             <div className="metric-top">
-              <span className="metric-label">数商场景动态</span>
+              <span className="metric-label">人工智能场景动态</span>
               <span className="metric-arrow">→</span>
             </div>
             <div className="metric-bottom">
