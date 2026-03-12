@@ -59,16 +59,19 @@ export default function Home() {
       <TabBar tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
       <div className="content">
         <div id="section-0">
-          
+           <AssistantCard onClick={() => setIsChatOpen(true)} />
           <EnterpriseOverview />
+           <KeyFocus />
         </div>
+        
         <div id="section-1">
           <Special115X />
-          <FocusScene />
+          <div id="section-2"><FocusEnterprise /></div>
+          
         </div>
-        <KeyFocus />
-        <AssistantCard onClick={() => setIsChatOpen(true)} />
-        <div id="section-2"><FocusEnterprise /></div>
+       <FocusScene />
+       
+        
         <div id="section-3"><DataContribution /></div>
         <div id="section-4"><PolicyMatching /></div>
       </div>
