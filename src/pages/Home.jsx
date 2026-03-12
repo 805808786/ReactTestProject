@@ -59,13 +59,15 @@ export default function Home() {
       <TabBar tabs={tabs} activeTab={activeTab} onTabChange={handleTabChange} />
       <div className="content">
         <div id="section-0">
-          <AssistantCard onClick={() => setIsChatOpen(true)} />
+          
           <EnterpriseOverview />
         </div>
         <div id="section-1">
           <Special115X />
           <FocusScene />
         </div>
+        <KeyFocus />
+        <AssistantCard onClick={() => setIsChatOpen(true)} />
         <div id="section-2"><FocusEnterprise /></div>
         <div id="section-3"><DataContribution /></div>
         <div id="section-4"><PolicyMatching /></div>
@@ -73,6 +75,51 @@ export default function Home() {
       
       <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
+  )
+}
+
+import chevronRightIcon from '../assets/chevron-right.svg'
+
+function KeyFocus() {
+  const navigate = useNavigate()
+  // 展示json里所有的数据
+  const focusList = enterpriseDataJson.map((item, index) => ({
+    id: item?.['基本信息']?.data?.enterpriseId || index,
+    name: item?.['基本信息']?.data?.enterpriseName || ''
+  }))
+
+  return (
+    <section className="key-focus-section">
+      <div className="key-focus-header">
+        <span className="key-focus-title">🔥重点关注</span>
+      </div>
+      
+      <div className="key-focus-content">
+        {/* 上方紫色卡片 */}
+        <div className="key-focus-top-card">
+          <div className="scene-badge">人工智能场景</div>
+        </div>
+
+        {/* 下方蓝色卡片 - 企业列表 */}
+        <div className="key-focus-list-card">
+          {focusList.map((item) => (
+            <div 
+              key={item.id} 
+              className="key-focus-item"
+              onClick={() => navigate(`/company-detail/${item.id}`)}
+            >
+              <div className="status-tag">已走访</div>
+              <span className="company-name">{item.name}</span>
+            </div>
+          ))}
+
+          <div className="key-focus-more" onClick={() => navigate('/enterprise-list')}>
+            <span>查看更多(8)</span>
+            <img src={chevronRightIcon} alt="more" />
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -108,9 +155,12 @@ function formatDateCN(date) {
   return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, '0')}月${String(date.getDate()).padStart(2, '0')}日`
 }
 
+import overviewMainIcon from '../assets/overview-main-icon.png'
+import chartLineUpIcon from '../assets/chart-line-up.svg'
+import detailsArrowIcon from '../assets/details-arrow.svg'
+
 function EnterpriseOverview() {
   const navigate = useNavigate()
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { enterpriseData, loading, fetchEnterpriseData } = useEnterpriseStore()
 
   // eslint-disable-next-line react-hooks/purity
@@ -128,90 +178,56 @@ function EnterpriseOverview() {
     : formatDateCN(today)
 
   return (
-    <section className="card">
-      <div className="card-header">
-        <span className="card-title">企业总览</span>
-        <div className="card-header-right">
-          <span className="card-date">{displayDate}</span>
-          <Link to="/calendar" className="calendar-tag" style={{ textDecoration: 'none' }}>日历视图</Link>
-        </div>
+    <section className="overview-section">
+      <div className="overview-header">
+        <span className="overview-title">企业总览</span>
+        <Link to="/calendar" className="overview-date" style={{ textDecoration: 'none' }}>{displayDate}</Link>
       </div>
 
-      <div className="overview-main">
-        <div className="overview-left">
-          <div className="overview-icon">
-            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-              <rect width="60" height="60" rx="10" fill="#E6F0FF" />
-              <rect x="10" y="20" width="40" height="30" rx="2" fill="#B3D4FF" />
-              <rect x="18" y="10" width="24" height="40" rx="2" fill="#5B9EFF" />
-              <rect x="22" y="14" width="6" height="6" fill="white" opacity="0.8" />
-              <rect x="32" y="14" width="6" height="6" fill="white" opacity="0.8" />
-              <rect x="22" y="24" width="6" height="6" fill="white" opacity="0.8" />
-              <rect x="32" y="24" width="6" height="6" fill="white" opacity="0.8" />
-              <rect x="25" y="38" width="10" height="12" fill="#3A7FD5" />
-              <rect x="5" y="28" width="15" height="22" rx="1" fill="#7BB8FF" />
-              <rect x="8" y="32" width="4" height="4" fill="white" opacity="0.7" />
-              <rect x="8" y="40" width="4" height="4" fill="white" opacity="0.7" />
-            </svg>
-          </div>
-          <div className="overview-info">
-            <div className="info-label">
-              企业总数
-              <span className="info-icon" onClick={() => setIsDialogOpen(true)}>ⓘ</span>
-            </div>
-            <div className="info-count">
-              {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '--')}
-              <span className="info-unit">家</span>
+      <div className="overview-main-card">
+        <div className="overview-main-left">
+          <img src={overviewMainIcon} alt="icon" className="overview-main-img" />
+          <div className="overview-main-info">
+            <div className="overview-label">企业总数</div>
+            <div className="overview-count">
+              {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '139,987')}
+              <span className="overview-unit">家</span>
             </div>
           </div>
         </div>
-        <div className="overview-right">
-          <button onClick={() => navigate('/enterprise-list')} className="view-all overview-view-all-btn">查看全部 →</button>
-        </div>
-      </div>
-
-      <div className="overview-change-container">
-        <div className="change-card change-green">
-          <div className="change-left-content">
-            <div className="change-title">总增量（较昨日）</div>
-            <div className="change-number">
-              {loading ? '--' : (changeNum !== undefined && changeNum !== null ? `${changeNum > 0 ? '+' : ''}${changeNum}` : '--')}
-              <span className="change-unit">家</span>
-            </div>
-          </div>
-        </div>
-        <div className="change-card change-gradient">
-          <div className="change-header">
-            <span className="tag-trend">🔥 变化趋势</span>
-            <div className="action-button">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M14.6666 4.66666L8.99992 10.3333L5.66659 6.99999L1.33325 11.3333" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M10.6667 4.66666H14.6667V8.66666" stroke="white" strokeWidth="1.33333" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              <span>查看详细变化</span>
-              <span className="arrow-icon">›</span>
-            </div>
-          </div>
-          <div className="change-list">
-            <div className="change-item">
-              <span className="dot">1</span>
-              <span className="item-text">工商信息新注册/新注销企业变化</span>
-            </div>
-            <div className="change-item">
-              <span className="dot">2</span>
-              <span className="item-text">商务社区走访新入驻企业</span>
-            </div>
+        <div className="overview-divider"></div>
+        <div className="overview-main-right">
+          <div className="overview-label">企业变化(较昨日)</div>
+          <div className="overview-change">
+            {loading ? '--' : (changeNum !== undefined && changeNum !== null ? `${changeNum > 0 ? '+' : ''}${changeNum}` : '+5')}
+            <span className="overview-unit">家</span>
           </div>
         </div>
       </div>
 
-      <Dialog 
-        isOpen={isDialogOpen} 
-        onClose={() => setIsDialogOpen(false)}
-        title="认定规则"
-        content={`一、企业须在拱墅区依法注册
-二、企业实际经营地或纳税地在拱墅区`}
-      />
+      <div className="overview-detail-card">
+        <div className="overview-detail-item">
+          <div className="detail-dot dot-green"></div>
+          <div className="detail-content">
+            <span className="detail-label">工商信息新注册</span>
+            <span className="detail-value text-green">+10家</span>
+          </div>
+        </div>
+        <div className="overview-detail-item">
+          <div className="detail-dot dot-red"></div>
+          <div className="detail-content">
+            <span className="detail-label">新注销企业变化</span>
+            <span className="detail-value text-red">-5家</span>
+          </div>
+        </div>
+        <div className="overview-detail-footer">
+          <div className="detail-action-btn" onClick={() => navigate('/enterprise-list')}>
+            <img src={chartLineUpIcon} alt="chart" />
+            <span>查看详细变化</span>
+            <img src={detailsArrowIcon} alt="arrow" />
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
@@ -568,40 +584,24 @@ import MessageCircleIcon from '../assets/MessageCircle.svg'
 import iconKeyEnterpriseChevron from '../assets/icon-key-enterprise-chevron-right.svg'
 import iconKeyEnterpriseChevronItem from '../assets/icon-key-enterprise-chevron-right2.svg'
 
+import assistantAvatar from '../assets/assistant-avatar.svg'
+import assistantArrow from '../assets/assistant-arrow.svg'
+
 function AssistantCard({ onClick }) {
   return (
     <div className="assistant-card" onClick={onClick} style={{ cursor: 'pointer' }}>
-      <div className="assistant-header">
-        <div className="assistant-icon">
-          <img src={SparklesIcon} alt="Sparkles" width="28" height="28" />
-        </div>
-        <div className="assistant-info">
-          <div className="assistant-title-row">
-            <span className="assistant-title">野企小助手</span>
-            <div className="assistant-arrow">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </div>
+      <div className="assistant-card-inner">
+        <div className="assistant-left">
+          <div className="assistant-avatar">
+            <img src={assistantAvatar} alt="Avatar" />
           </div>
-          <div className="assistant-subtitle">24小时在线 · 即时响应</div>
+          <div className="assistant-text">
+            <div className="assistant-title">墅企小助手</div>
+            <div className="assistant-subtitle"> 24小时在线· 即时响应</div>
+          </div>
         </div>
-      </div>
-      <div className="assistant-buttons">
-        <button className="assistant-btn">
-          <img src={ZapIcon} alt="Zap" width="16" height="16" style={{ marginRight: '6px' }} />
-          智能问答
-        </button>
-        <button className="assistant-btn">
-          <img src={MessageCircleIcon} alt="Message" width="16" height="16" style={{ marginRight: '6px' }} />
-          数据查询
-        </button>
-      </div>
-      <div className="assistant-footer">
-        <div className="assistant-service">已为您服务 1,234 次</div>
-        <div className="assistant-status-pill">
-          <div className="status-indicator online"></div>
-          <span style={{color: 'white', marginLeft: '6px'}}>在线</span>
+        <div className="assistant-right">
+          <img src={assistantArrow} alt="Arrow" />
         </div>
       </div>
     </div>
