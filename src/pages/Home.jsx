@@ -531,8 +531,8 @@ const SCENE_DATA = [
   {
     id: 1,
     name: '人工智能企业筛选场景',
-    description: '数据商业化企业专项筛选',
-    enterprises: 21943,
+    description: '人工智能企业筛选',
+    enterprises: 2042,
     dynamics: 32,
     todayEnterprises: 3,
     todayDynamics: 3,
@@ -540,67 +540,68 @@ const SCENE_DATA = [
   {
     id: 2,
     name: '党建企业专题场景',
-    description: '数据商业化企业专项筛选',
-    enterprises: 21943,
-    dynamics: 32,
-    todayEnterprises: 3,
-    todayDynamics: 3,
+    description: '党建企业专项筛选',
+    enterprises: 18765,
+    dynamics: 28,
+    todayEnterprises: 2,
+    todayDynamics: 1,
   },
   {
     id: 3,
-    name: '115X专题场景',
-    description: '数据商业化企业专项筛选',
-    enterprises: 21943,
-    dynamics: 32,
-    todayEnterprises: 3,
-    todayDynamics: 3,
-  },
-  {
-    id: 4,
-    name: '人工智能企业筛选场景',
-    description: '数据商业化企业专项筛选',
-    enterprises: 21943,
-    dynamics: 32,
-    todayEnterprises: 3,
-    todayDynamics: 3,
-  },
-  {
-    id: 5,
     name: '高成长企业专题场景',
-    description: '数据商业化企业专项筛选',
+    description: '高成长企业专项筛选',
     enterprises: 15432,
     dynamics: 45,
     todayEnterprises: 5,
     todayDynamics: 4,
   },
   {
-    id: 6,
+    id: 4,
     name: '出海企业专题场景',
-    description: '数据商业化企业专项筛选',
+    description: '出海企业专项筛选',
     enterprises: 12098,
     dynamics: 23,
     todayEnterprises: 1,
     todayDynamics: 2,
   },
   {
-    id: 7,
+    id: 5,
     name: '跨境电商专题场景',
-    description: '数据商业化企业专项筛选',
+    description: '跨境电商专项筛选',
     enterprises: 9876,
     dynamics: 19,
     todayEnterprises: 3,
     todayDynamics: 1,
   },
   {
-    id: 8,
+    id: 6,
     name: '先进制造专题场景',
-    description: '数据商业化企业专项筛选',
+    description: '先进制造专项筛选',
     enterprises: 14567,
     dynamics: 31,
     todayEnterprises: 2,
     todayDynamics: 3,
-  }
+  },
+  {
+    id: 7,
+    name: '绿色低碳专题场景',
+    description: '绿色低碳专项筛选',
+    enterprises: 11234,
+    dynamics: 26,
+    todayEnterprises: 4,
+    todayDynamics: 2,
+  },
+  {
+    id: 8,
+    name: '数字经济专题场景',
+    description: '数字经济专项筛选',
+    enterprises: 17890,
+    dynamics: 38,
+    todayEnterprises: 3,
+    todayDynamics: 5,
+  },
 ];
+
 
 function FocusScene() {
   const navigate = useNavigate()
@@ -610,9 +611,9 @@ function FocusScene() {
         <div className="card-header-left">
           <div className="title-icon scene-icon-bg">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="9" stroke="#9810FA" strokeWidth="2"/>
-              <circle cx="12" cy="12" r="5" stroke="#9810FA" strokeWidth="2"/>
-              <circle cx="12" cy="12" r="2" fill="#9810FA"/>
+              <circle cx="12" cy="12" r="9" stroke="#9810FA" strokeWidth="2" />
+              <circle cx="12" cy="12" r="5" stroke="#9810FA" strokeWidth="2" />
+              <circle cx="12" cy="12" r="2" fill="#9810FA" />
             </svg>
           </div>
           <span className="card-title">场景雷达</span>
@@ -653,7 +654,7 @@ function FocusScene() {
               </div>
               <div className="scene-metric-box" onClick={() => navigate('/scene-enterprise-dynamic')}>
                 <div className="metric-row-top">
-                  <span className="metric-name">数商场景动态</span>
+                  <span className="metric-name">{scene.description}</span>
                   <span className="metric-arrow">→</span>
                 </div>
                 <div className="metric-row-bottom">
