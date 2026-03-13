@@ -25,6 +25,9 @@ import iconKeyEnterpriseChevronItem from '../assets/icon-key-enterprise-chevron-
 import assistantAvatar from '../assets/assistant-avatar.svg'
 import assistantArrow from '../assets/assistant-arrow.svg'
 
+import iconSearchInput from '../assets/icon-search-input.svg'
+import iconSceneCalendar from '../assets/icon-scene-calendar.svg'
+
 const bottomTabs = [
   { label: '首页', icon: homeIcon },
   { label: '墅企专题', icon: special115xIcon },
@@ -617,6 +620,29 @@ function FocusScene() {
             </svg>
           </div>
           <span className="card-title">场景雷达</span>
+        </div>
+      </div>
+
+      <div className="home-search-row">
+        <div className="home-search-bar">
+          <img src={iconSearchInput} alt="icon" className="search-icon" />
+          <input type="text" placeholder="搜索场景名称" className="search-input" />
+        </div>
+        <button className="home-calendar-btn" onClick={() => navigate('/scene-calendar')}>场景日历</button>
+      </div>
+
+      <div className="home-stats-row">
+        <div className="home-stat-card outline">
+          <div className="stat-label">场景总数</div>
+          <div className="stat-value">8</div>
+        </div>
+        <div className="home-stat-card solid">
+          <div className="stat-label">企业总数</div>
+          <div className="stat-value">3,372</div>
+        </div>
+        <div className="home-stat-card solid">
+          <div className="stat-label">场景动态</div>
+          <div className="stat-value">670</div>
         </div>
       </div>
 
