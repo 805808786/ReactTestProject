@@ -175,8 +175,8 @@ function KeyFocus() {
               <span className="item-arrow blue-text">→</span>
             </div>
             <div className="item-footer">
-              <span className="item-value blue-text">156<small>家</small></span>
-              <span className="item-sub-label blue-text">今日+3</span>
+              <span className="item-value blue-text">7<small>家</small></span>
+              <span className="item-sub-label blue-text">今日+2</span>
             </div>
           </div>
         </div>
@@ -750,8 +750,8 @@ function FocusEnterprise() {
               <span className="item-arrow blue-text">→</span>
             </div>
             <div className="item-footer">
-              <span className="item-value blue-text">156<small>家</small></span>
-              <span className="item-sub-label blue-text">今日+3</span>
+              <span className="item-value blue-text">7<small>家</small></span>
+              <span className="item-sub-label blue-text">今日+2</span>
             </div>
           </div>
         </div>
