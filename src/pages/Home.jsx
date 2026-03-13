@@ -527,6 +527,81 @@ function Special115X() {
 }
 
 
+const SCENE_DATA = [
+  {
+    id: 1,
+    name: '人工智能企业筛选场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 21943,
+    dynamics: 32,
+    todayEnterprises: 3,
+    todayDynamics: 3,
+  },
+  {
+    id: 2,
+    name: '党建企业专题场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 21943,
+    dynamics: 32,
+    todayEnterprises: 3,
+    todayDynamics: 3,
+  },
+  {
+    id: 3,
+    name: '115X专题场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 21943,
+    dynamics: 32,
+    todayEnterprises: 3,
+    todayDynamics: 3,
+  },
+  {
+    id: 4,
+    name: '人工智能企业筛选场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 21943,
+    dynamics: 32,
+    todayEnterprises: 3,
+    todayDynamics: 3,
+  },
+  {
+    id: 5,
+    name: '高成长企业专题场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 15432,
+    dynamics: 45,
+    todayEnterprises: 5,
+    todayDynamics: 4,
+  },
+  {
+    id: 6,
+    name: '出海企业专题场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 12098,
+    dynamics: 23,
+    todayEnterprises: 1,
+    todayDynamics: 2,
+  },
+  {
+    id: 7,
+    name: '跨境电商专题场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 9876,
+    dynamics: 19,
+    todayEnterprises: 3,
+    todayDynamics: 1,
+  },
+  {
+    id: 8,
+    name: '先进制造专题场景',
+    description: '数据商业化企业专项筛选',
+    enterprises: 14567,
+    dynamics: 31,
+    todayEnterprises: 2,
+    todayDynamics: 3,
+  }
+];
+
 function FocusScene() {
   const navigate = useNavigate()
   return (
@@ -534,56 +609,61 @@ function FocusScene() {
       <div className="card-header">
         <div className="card-header-left">
           <div className="title-icon scene-icon-bg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9810FA" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <circle cx="12" cy="12" r="6" />
-              <circle cx="12" cy="12" r="2" />
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="9" stroke="#9810FA" strokeWidth="2"/>
+              <circle cx="12" cy="12" r="5" stroke="#9810FA" strokeWidth="2"/>
+              <circle cx="12" cy="12" r="2" fill="#9810FA"/>
             </svg>
           </div>
-          <span className="card-title">关注场景</span>
+          <span className="card-title">场景雷达</span>
         </div>
       </div>
 
-      <div className="scene-stat-row">
-        <div className="stat-left">
-          <div className="stat-label-small">专题场景</div>
-          <div className="stat-value-large">8个</div>
+      <div className="scene-summary-card" onClick={() => navigate('/scene-radar')}>
+        <div className="summary-left">
+          <div className="summary-label">场景雷达</div>
+          <div className="summary-value">8<small>个</small></div>
         </div>
-        <div className="stat-right">
-          <button onClick={() => navigate('/scene-radar')} className="view-all">查看全部 →</button>
+        <div className="summary-right">
+          <span className="view-all-link">查看全部 →</span>
         </div>
       </div>
 
-      <div className="scene-featured-box">
-        <div className="featured-header">
-          <span className="featured-title">人工智能企业筛选场景</span>
-          <span className="scene-tag" onClick={() => navigate('/scene-description/1')} style={{ cursor: 'pointer' }}>场景说明</span>
-        </div>
-        <p className="featured-desc">人工智能企业专项筛选</p>
-
-        <div className="metrics-grid">
-          <div className="metric-item" onClick={() => navigate('/scene-enterprise')} style={{ cursor: 'pointer' }}>
-            <div className="metric-top">
-              <span className="metric-label">人工智能企业</span>
-              <span className="metric-arrow">→</span>
+      <div className="scene-list-container">
+        {SCENE_DATA.map((scene) => (
+          <div className="scene-item-card" key={scene.id}>
+            <div className="scene-item-header">
+              <div className="scene-item-title-box">
+                <h3 className="scene-item-title">{scene.name}</h3>
+                <span className="scene-item-badge" onClick={() => navigate(`/scene-description/${scene.id}`)}>场景说明</span>
+              </div>
+              <p className="scene-item-desc">{scene.description}</p>
             </div>
-            <div className="metric-bottom">
-              <span className="metric-value">21,943<small>家</small></span>
-              <span className="metric-today">今日+3</span>
+
+            <div className="scene-item-metrics">
+              <div className="scene-metric-box" onClick={() => navigate('/scene-enterprise')}>
+                <div className="metric-row-top">
+                  <span className="metric-name">人工智能企业</span>
+                  <span className="metric-arrow">→</span>
+                </div>
+                <div className="metric-row-bottom">
+                  <span className="metric-val">{scene.enterprises.toLocaleString()}<small>家</small></span>
+                  <span className="metric-delta">今日+{scene.todayEnterprises}</span>
+                </div>
+              </div>
+              <div className="scene-metric-box" onClick={() => navigate('/scene-enterprise-dynamic')}>
+                <div className="metric-row-top">
+                  <span className="metric-name">数商场景动态</span>
+                  <span className="metric-arrow">→</span>
+                </div>
+                <div className="metric-row-bottom">
+                  <span className="metric-val">{scene.dynamics}<small>条</small></span>
+                  <span className="metric-delta">今日+{scene.todayDynamics}</span>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className="metric-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
-            <div className="metric-top">
-              <span className="metric-label">人工智能场景动态</span>
-              <span className="metric-arrow">→</span>
-            </div>
-            <div className="metric-bottom">
-              <span className="metric-value">32<small>条</small></span>
-              <span className="metric-today">今日+3</span>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   )
