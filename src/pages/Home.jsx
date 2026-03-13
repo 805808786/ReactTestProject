@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 import Dialog from '../components/Dialog'
@@ -12,6 +12,7 @@ import enterpriseIcon from '../assets/tabs/icons/enterprise.svg'
 import dataIcon from '../assets/tabs/icons/data.svg'
 import policyIcon from '../assets/tabs/icons/policy.svg'
 import icon115 from '../assets/special-115x/115-badge-icon.svg'
+import icon296 from '../assets/special-115x/icon-special-296.svg'
 import chevronRightIcon from '../assets/chevron-right.svg'
 import starIcon from '../assets/icon-dc-star.svg'
 import enterpriseDataJson from '../json/enterprise.json'
@@ -26,7 +27,7 @@ import assistantArrow from '../assets/assistant-arrow.svg'
 
 const bottomTabs = [
   { label: '首页', icon: homeIcon },
-  { label: '115X专题', icon: special115xIcon },
+  { label: '墅企专题', icon: special115xIcon },
   { label: '场景雷达', icon: radarIcon },
   { label: '关注企业', icon: enterpriseIcon },
   { label: '数据贡献', icon: dataIcon },
@@ -43,7 +44,7 @@ export default function Home() {
       case 0:
         return (
           <>
-            
+
             <EnterpriseOverview />
             <AssistantCard onClick={() => setIsChatOpen(true)} />
             <KeyFocus />
@@ -70,11 +71,11 @@ export default function Home() {
       <div className="content bottom-nav-content">
         {renderContent()}
       </div>
-      
+
       <div className="bottom-nav">
         {bottomTabs.map((tab, index) => (
-          <div 
-            key={tab.label} 
+          <div
+            key={tab.label}
             className={`bottom-nav-item ${activeBottomTab === index ? 'active' : ''}`}
             onClick={() => setActiveBottomTab(index)}
           >
@@ -117,7 +118,7 @@ function KeyFocus() {
           <span className="key-focus-title">当前关注</span>
         </div>
       </div>
-      
+
       <div className="key-focus-main-card">
         <div className="key-focus-scene-header">
           <span className="key-focus-scene-name">人工智能企业筛选场景</span>
@@ -135,7 +136,7 @@ function KeyFocus() {
               <span className="sub-val">今日<span className="plus">+3</span></span>
             </div>
           </div>
-          <div className="key-focus-stat-card"  onClick={() => navigate('/scene-enterprise-dynamic')}>
+          <div className="key-focus-stat-card" onClick={() => navigate('/scene-enterprise-dynamic')}>
             <div className="stat-card-title">
               <span>人工智能场景动态</span>
               <span className="stat-arrow">→</span>
@@ -147,32 +148,54 @@ function KeyFocus() {
           </div>
         </div>
 
-       
+
       </div>
-       <div className="key-focus-companies-section">
-          <div className="companies-header">
-            <img src={starIcon} alt="star" />
-            <span>重点企业</span>
+      <div className="key-focus-companies-section">
+        <div className="companies-header">
+          <img src={starIcon} alt="star" />
+          <span>重点企业</span>
+        </div>
+        <div className="enterprise-row">
+          <div className="enterprise-item blue-bg" onClick={() => navigate('/planned-visits')} style={{ cursor: 'pointer' }}>
+            <div className="item-header">
+              <span className="item-label">拟走访企业</span>
+              <span className="item-arrow blue-text">→</span>
+            </div>
+            <div className="item-footer">
+              <span className="item-value blue-text">2<small>家</small></span>
+              <span className="item-sub-label blue-text">今日走访：1家</span>
+            </div>
           </div>
-          <div className="companies-list">
-            {focusList.map((item, idx) => (
-              <div 
-                key={item.id} 
-                className="company-item-row"
-                onClick={() => navigate(`/company-detail/${item.id}`)}
-              >
-                <div className="company-item-left">
-                  <span className="company-name-text">{item.name}</span>
-                  <span className={`level-tag ${idx === 0 ? 'level-top' : 'level-waist'}`}>
-                    {idx === 0 ? '头部' : '潜力'}
-                  </span>
-                  <span className="visit-status-tag">已走访</span>
-                </div>
-                <img src={chevronRightIcon} alt="arrow" />
-              </div>
-            ))}
+          <div className="enterprise-item blue-bg" onClick={() => navigate('/enterprise-dynamic')} style={{ cursor: 'pointer' }}>
+            <div className="item-header">
+              <span className="item-label">企业走访动态</span>
+              <span className="item-arrow blue-text">→</span>
+            </div>
+            <div className="item-footer">
+              <span className="item-value blue-text">156<small>家</small></span>
+              <span className="item-sub-label blue-text">今日+3</span>
+            </div>
           </div>
         </div>
+        <div className="companies-list">
+          {focusList.map((item, idx) => (
+            <div
+              key={item.id}
+              className="company-item-row"
+              onClick={() => navigate(`/company-detail/${item.id}`)}
+            >
+              <div className="company-item-left">
+                <span className="company-name-text">{item.name}</span>
+                <span className={`level-tag ${idx === 0 ? 'level-top' : 'level-waist'}`}>
+                  {idx === 0 ? '头部' : '潜力'}
+                </span>
+                <span className="visit-status-tag">已走访</span>
+              </div>
+              <img src={chevronRightIcon} alt="arrow" />
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
@@ -223,7 +246,7 @@ function EnterpriseOverview() {
         <Link to="/calendar" className="overview-date" style={{ textDecoration: 'none' }}>{displayDate}</Link>
       </div>
 
-      <div className="overview-main-card" onClick={()=>navigate('/calendar')}>
+      <div className="overview-main-card" onClick={() => navigate('/calendar')}>
         <div className="overview-main-left">
           <img src={overviewMainIcon} alt="icon" className="overview-main-img" />
           <div className="overview-main-info">
@@ -245,7 +268,7 @@ function EnterpriseOverview() {
       </div>
 
       <div className="overview-daily-changes">
-        <div className="daily-changes-title">每<br/>日<br/>变<br/>化</div>
+        <div className="daily-changes-title">每<br />日<br />变<br />化</div>
         <div className="daily-changes-list">
           <div className="daily-change-item">
             <div className="daily-change-left">
@@ -275,114 +298,239 @@ function EnterpriseOverview() {
 }
 
 function Special115X() {
+  const [activeSubTab, setActiveSubTab] = useState(0)
+  const ref115 = useRef(null)
+  const ref296 = useRef(null)
+
+  const scrollToSection = (index) => {
+    setActiveSubTab(index)
+    const target = index === 0 ? ref115 : ref296
+    if (target.current) {
+      target.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   return (
-    <section className="special-115x-view">
-      {/* 头部标题区域 */}
-      <div className="special-header-card">
-        <div className="special-badge-box">
-          <img src={icon115} alt="115 badge" />
+    <div className="special-themes-container">
+      {/* 顶部切换 Tab - Sticky */}
+      <div className="special-sub-tabs">
+        <div
+          className={`sub-tab-item ${activeSubTab === 0 ? 'active' : ''}`}
+          onClick={() => scrollToSection(0)}
+        >
+          <span>115X专题</span>
+          {activeSubTab === 0 && <div className="sub-tab-line" />}
         </div>
-        <h2 className="special-main-title">拱墅115X专题</h2>
-      </div>
-
-      {/* “1” 人工智能 */}
-      <div className="special-cluster-group">
-        <div className="cluster-title">“1”人工智能（集成电路）核心产业集群</div>
-        <div className="cluster-metric-card blue-metric">
-          <div className="metric-left">
-            <div className="metric-name">人工智能场景</div>
-            <div className="metric-total">14,331<small>家</small></div>
-          </div>
-          <div className="metric-right">
-            <div className="metric-change-label">今日新增</div>
-            <div className="metric-change-value">+73<small>家</small></div>
-          </div>
+        <div
+          className={`sub-tab-item ${activeSubTab === 1 ? 'active' : ''}`}
+          onClick={() => scrollToSection(1)}
+        >
+          <span>296X专题</span>
+          {activeSubTab === 1 && <div className="sub-tab-line" />}
         </div>
       </div>
 
-      {/* “1” 生物医药 */}
-      <div className="special-cluster-group">
-        <div className="cluster-title">“1”生物医药与医疗器械（合成生物）支柱产业</div>
-        <div className="cluster-metric-card blue-metric">
-          <div className="metric-left">
-            <div className="metric-name">生物医药与医疗器械场景</div>
-            <div className="metric-total">14,331<small>家</small></div>
+      <div className="special-themes-content">
+        {/* 115X 专题模块 */}
+        <section className="special-115x-view" ref={ref115}>
+          <div className="special-header-card">
+            <div className="special-badge-box">
+              <img src={icon115} alt="115 badge" />
+            </div>
+            <h2 className="special-main-title">拱墅特色115X专题</h2>
           </div>
-          <div className="metric-right">
-            <div className="metric-change-label">今日新增</div>
-            <div className="metric-change-value">+73<small>家</small></div>
-          </div>
-        </div>
-      </div>
 
-      {/* “5” 新兴未来 */}
-      <div className="special-cluster-group">
-        <div className="cluster-title">“5”个新兴未来产业集群</div>
-        <div className="cluster-grid-row">
-          <div className="cluster-sub-card">
-            <div className="sub-card-name">高端通用设备</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today up">今日+12</div>
+          <div className="special-cluster-group">
+            <div className="cluster-title">“1”人工智能（集成电路）核心产业集群</div>
+            <div className="cluster-metric-card blue-metric">
+              <div className="metric-left">
+                <div className="metric-name">人工智能场景</div>
+                <div className="metric-total">14,331<small>家</small></div>
+              </div>
+              <div className="metric-right">
+                <div className="metric-change-label">今日新增</div>
+                <div className="metric-change-value">+73<small>家</small></div>
+              </div>
+            </div>
           </div>
-          <div className="cluster-sub-card">
-            <div className="sub-card-name">新能源装备</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today up">今日+12</div>
-          </div>
-        </div>
-        <div className="cluster-grid-row">
-          <div className="cluster-sub-card">
-            <div className="sub-card-name">新材料</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today down">今日-12</div>
-          </div>
-          <div className="cluster-sub-card">
-            <div className="sub-card-name">低空经济</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today down">今日-12</div>
-          </div>
-          <div className="cluster-sub-card">
-            <div className="sub-card-name">光电科技</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today down">今日-12</div>
-          </div>
-        </div>
-      </div>
 
-      {/* “X” 潜力产业 */}
-      <div className="special-cluster-group">
-        <div className="cluster-title">“X”未来新增的潜力产业集群</div>
-        <div className="cluster-grid-row wrap">
-          <div className="cluster-sub-card mini">
-            <div className="sub-card-name">智能终端</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today">今日+12</div>
+          <div className="special-cluster-group">
+            <div className="cluster-title">“1”生物医药与医疗器械（合成生物）支柱产业</div>
+            <div className="cluster-metric-card blue-metric">
+              <div className="metric-left">
+                <div className="metric-name">生物医药与医疗器械场景</div>
+                <div className="metric-total">14,331<small>家</small></div>
+              </div>
+              <div className="metric-right">
+                <div className="metric-change-label">今日新增</div>
+                <div className="metric-change-value">+73<small>家</small></div>
+              </div>
+            </div>
           </div>
-          <div className="cluster-sub-card mini">
-            <div className="sub-card-name">网络通信</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today">今日+12</div>
+
+          <div className="special-cluster-group">
+            <div className="cluster-title">“5”个新兴未来产业集群</div>
+            <div className="cluster-grid-row">
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">高端通用设备</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today up">今日+12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">新能源装备</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today up">今日+12</div>
+              </div>
+            </div>
+            <div className="cluster-grid-row" style={{ marginTop: '8px' }}>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">新材料</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">低空经济</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">光电科技</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+            </div>
           </div>
-          <div className="cluster-sub-card mini">
-            <div className="sub-card-name">智能网联汽..</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today">今日+12</div>
+
+          <div className="special-cluster-group">
+            <div className="cluster-title">“X”未来新增的潜力产业集群</div>
+            <div className="cluster-grid-row wrap">
+              <div className="cluster-sub-card mini">
+                <div className="sub-card-name">智能终端</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today">今日+12</div>
+              </div>
+              <div className="cluster-sub-card mini">
+                <div className="sub-card-name">网络通信</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today">今日+12</div>
+              </div>
+              <div className="cluster-sub-card mini">
+                <div className="sub-card-name">智能网联汽..</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today">今日+12</div>
+              </div>
+              <div className="cluster-sub-card mini">
+                <div className="sub-card-name">现代纺织与服装</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today">今日+12</div>
+              </div>
+            </div>
           </div>
-          <div className="cluster-sub-card mini">
-            <div className="sub-card-name">智能网联汽..</div>
-            <div className="sub-card-total">3,245<small>家</small></div>
-            <div className="sub-card-today">今日+12</div>
+        </section>
+
+        {/* 296X 专题模块 */}
+        <section className="special-115x-view" ref={ref296} style={{ marginTop: '16px' }}>
+          <div className="special-header-card">
+            <div className="special-badge-box">
+              <img src={icon296} alt="296 badge" />
+            </div>
+            <h2 className="special-main-title">拱墅特色296X专题</h2>
           </div>
-        </div>
+
+          <div className="special-cluster-group">
+            <div className="cluster-title">“2”打造2个万亿级产业集群</div>
+            <div className="cluster-metric-card blue-metric">
+              <div className="metric-left">
+                <div className="metric-name">人工智能场景</div>
+                <div className="metric-total">14,331<small>家</small></div>
+              </div>
+              <div className="metric-right">
+                <div className="metric-change-label">今日新增</div>
+                <div className="metric-change-value">+73<small>家</small></div>
+              </div>
+            </div>
+            <div className="cluster-metric-card blue-metric" style={{ marginTop: '8px' }}>
+              <div className="metric-left">
+                <div className="metric-name">视觉智能场景</div>
+                <div className="metric-total">14,331<small>家</small></div>
+              </div>
+              <div className="metric-right">
+                <div className="metric-change-label">今日新增</div>
+                <div className="metric-change-value">+73<small>家</small></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="special-cluster-group">
+            <div className="cluster-title">“9”提升9个千亿级产业集群</div>
+            <div className="cluster-grid-row">
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">集成电路</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today up">今日+12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">生物医药与企业</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today up">今日+12</div>
+              </div>
+            </div>
+            <div className="cluster-grid-row" style={{ marginTop: '8px' }}>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">网络通信</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">智能网联汽车</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">新能源装备</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+            </div>
+            <div className="cluster-grid-row" style={{ marginTop: '8px' }}>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">新材料</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">高端通用设备</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+              <div className="cluster-sub-card">
+                <div className="sub-card-name">现代纺织与服装</div>
+                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-today down">今日-12</div>
+              </div>
+            </div>
+            <div className="cluster-metric-card blue-metric" style={{ marginTop: '8px' }}>
+              <div className="metric-left">
+                <div className="metric-name">智能机器人</div>
+                <div className="metric-total">14,331<small>家</small></div>
+              </div>
+              <div className="metric-right">
+                <div className="metric-change-label">今日新增</div>
+                <div className="metric-change-value">+73<small>家</small></div>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </section>
+    </div>
   )
 }
+
 
 function FocusScene() {
   const navigate = useNavigate()
   return (
-      <section className="card focus-scene-view">
+    <section className="card focus-scene-view">
       <div className="card-header">
         <div className="card-header-left">
           <div className="title-icon scene-icon-bg">
@@ -458,7 +606,7 @@ function FocusEnterprise() {
       <div className="card-header">
         <div className="card-header-left">
           <div className="title-icon enterprise-icon-bg">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E17100" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E17100" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
           </div>
           <span className="card-title">关注企业</span>
         </div>
@@ -663,7 +811,7 @@ function DataContribution() {
         <div className="card-header">
           <div className="card-header-left">
             <div className="title-icon contribution-icon-bg">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>
             </div>
             <span className="card-title">数据贡献</span>
           </div>
@@ -734,8 +882,8 @@ function PolicyMatching() {
     ent.applyStatus.type === 'applied'
       ? { background: '#EFF6FF', color: '#155DFC' }
       : ent.applyStatus.type === 'done'
-      ? { background: '#F0FDF4', color: '#00A63E' }
-      : { background: '#FEFCE8', color: '#D08700' }
+        ? { background: '#F0FDF4', color: '#00A63E' }
+        : { background: '#FEFCE8', color: '#D08700' }
 
   return (
     <>
@@ -743,7 +891,7 @@ function PolicyMatching() {
         <div className="card-header">
           <div className="card-header-left">
             <div className="title-icon policy-icon-bg">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
             </div>
             <span className="card-title">政策匹配</span>
           </div>
@@ -776,7 +924,7 @@ function PolicyMatching() {
         {/* 政策标题区 */}
         <div className="home-policy-header" onClick={() => navigate('/policy-list')}>
           <div className="home-policy-title-row">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6A7282" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0,marginTop:2}}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6A7282" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0, marginTop: 2 }}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
             <div className="home-policy-title-group">
               <span className="home-policy-name">{policy.name}</span>
               <span className="home-policy-match-info">匹配 {policy.matchedCount.toLocaleString()} 家 · 已实施 {policy.implementedCount.toLocaleString()} 家</span>
@@ -810,7 +958,7 @@ function PolicyMatching() {
               <span className="home-policy-enterprise-amount">{ent.amount}</span>
             </div>
             <div className="home-policy-advice-row">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{flexShrink:0}}><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155DFC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="12" cy="12" r="10" /><polyline points="12 8 12 12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>
               <span className="home-policy-advice-text">{ent.advice}</span>
             </div>
           </div>
