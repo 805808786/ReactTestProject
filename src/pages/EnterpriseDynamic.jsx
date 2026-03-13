@@ -5,15 +5,41 @@ import InfiniteList from './components/InfiniteList';
 import iconVisitBack from '../assets/icon-visit-back.svg';
 import iconVisitSearch from '../assets/icon-visit-search.svg';
 import iconCaretDown from '../assets/icon-caret-down-small.svg';
+import iconEdLink from '../assets/icon-ed-link.svg';
 import './EnterpriseDynamic.css';
 
 /* ===================== Mock 数据 ===================== */
 const DEPARTMENTS = ['经济发展局', '商务局', '工信局', '市场监管局', '科技局'];
 const DATE_RANGES = ['今日', '近一周', '近一月', '近三月', '近半年'];
 
+const MOCK_VISITS = [
+  {
+    id: 1, month: '2026年3月', date: '2026年3月4号',
+    title: '玖壹叁陆零医学科技（杭州）有限公司',
+    visitor: '鲍一飞',
+    sources: ['杭州发布', '拱墅发布', '西湖之声', '杭州本地宝', '新浪新闻速递'],
+    dept: '经济发展局',
+  },
+  {
+    id: 2, month: '2026年3月', date: '2026年3月4号',
+    title: '浙江扬厉医药技术有限公司',
+    visitor: '鲍一飞',
+    sources: ['杭州发布', '拱墅发布'],
+    dept: '商务局',
+  },
+  {
+    id: 3, month: '2026年3月', date: '2026年3月5号',
+    title: '浙江数字科技集团股份有限公司',
+    visitor: '张三',
+    sources: ['经济日报', '浙江新闻'],
+    dept: '工信局',
+  },
+];
+
+const PAGE_SIZE = 10;
+
 /* ===================== 日期筛选辅助 ===================== */
 function parseVisitDate(dateStr) {
-  // 解析 "2026年3月4号" 格式
   const m = dateStr.match(/(\d+)年(\d+)月(\d+)号/);
   if (!m) return null;
   return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
@@ -34,104 +60,6 @@ function isDateInRange(dateStr, range) {
     default: return false;
   }
 }
-
-const MOCK_VISITS = [
-  // 2026年3月
-  {
-    id: 1, month: '2026年3月', date: '2026年3月4号',
-    startTime: '下午 3:00', endTime: '下午 4:30',
-    title: '杭州禾迈电力电子股份有限公司走访全过程记录',
-    dept: '经济发展局',
-  },
-  {
-    id: 2, month: '2026年3月', date: '2026年3月4号',
-    startTime: '下午 3:00', endTime: '下午 4:30',
-    title: '去杭州市惠民服务有限公司走访调研',
-    dept: '商务局',
-  },
-  {
-    id: 3, month: '2026年3月', date: '2026年3月5号',
-    startTime: '上午 9:00', endTime: '上午 10:30',
-    title: '浙江数字科技集团股份有限公司调研交流',
-    dept: '工信局',
-  },
-  {
-    id: 4, month: '2026年3月', date: '2026年3月6号',
-    startTime: '下午 2:00', endTime: '下午 3:30',
-    title: '杭州新能源科技有限公司走访座谈会议记录',
-    dept: '科技局',
-  },
-  {
-    id: 5, month: '2026年3月', date: '2026年3月7号',
-    startTime: '上午 10:00', endTime: '上午 11:30',
-    title: '浙江生物医药科技有限公司专题调研',
-    dept: '市场监管局',
-  },
-  {
-    id: 6, month: '2026年3月', date: '2026年3月8号',
-    startTime: '下午 4:00', endTime: '下午 5:30',
-    title: '杭州智联互联网有限公司走访调研记录',
-    dept: '经济发展局',
-  },
-  // 2026年2月
-  {
-    id: 7, month: '2026年2月', date: '2026年2月4号',
-    startTime: '下午 3:00', endTime: '下午 4:30',
-    title: '杭州高端装备制造有限公司走访全过程记录',
-    dept: '工信局',
-  },
-  {
-    id: 8, month: '2026年2月', date: '2026年2月5号',
-    startTime: '上午 9:00', endTime: '上午 10:30',
-    title: '浙江数商平台运营有限公司调研座谈',
-    dept: '商务局',
-  },
-  {
-    id: 9, month: '2026年2月', date: '2026年2月6号',
-    startTime: '下午 2:00', endTime: '下午 3:30',
-    title: '杭州元宇宙技术有限公司走访调研记录',
-    dept: '科技局',
-  },
-  {
-    id: 10, month: '2026年2月', date: '2026年2月7号',
-    startTime: '下午 4:00', endTime: '下午 5:30',
-    title: '浙江出海跨境贸易有限公司走访全程记录',
-    dept: '经济发展局',
-  },
-  {
-    id: 11, month: '2026年2月', date: '2026年2月8号',
-    startTime: '上午 10:00', endTime: '上午 11:30',
-    title: '杭州拱墅先进制造有限公司专题调研记录',
-    dept: '市场监管局',
-  },
-  // 2026年1月
-  {
-    id: 12, month: '2026年1月', date: '2026年1月6号',
-    startTime: '下午 2:00', endTime: '下午 3:30',
-    title: '浙江绿色低碳科技有限公司走访调研',
-    dept: '科技局',
-  },
-  {
-    id: 13, month: '2026年1月', date: '2026年1月7号',
-    startTime: '上午 9:00', endTime: '上午 10:30',
-    title: '杭州新能源科技有限公司走访全过程记录',
-    dept: '工信局',
-  },
-  {
-    id: 14, month: '2026年1月', date: '2026年1月8号',
-    startTime: '下午 4:00', endTime: '下午 5:30',
-    title: '浙江人工智能科技有限公司调研座谈',
-    dept: '经济发展局',
-  },
-  {
-    id: 15, month: '2026年1月', date: '2026年1月9号',
-    startTime: '上午 10:00', endTime: '上午 11:30',
-    title: '杭州软件信息服务有限公司走访记录',
-    dept: '商务局',
-  },
-];
-
-const PAGE_SIZE = 10;
 
 /* ===================== 按月分组并扁平化 ===================== */
 function groupAndFlatten(visits) {
@@ -183,18 +111,19 @@ function MonthHeader({ month, isFirstMonth }) {
 /* ===================== 走访记录卡片 ===================== */
 function VisitCard({ item }) {
   const navigate = useNavigate();
-  const { id, date, startTime, endTime, title } = item;
+  const { id, date, title, visitor, sources = [] } = item;
 
   const handleClick = () => {
     navigate(`/enterprise-dynamic-detail/${id}`, {
       state: {
         visitData: {
           title,
-          dateTime: `${date} ${startTime}至${endTime}`,
+          dateTime: date,
+          visitor: `走访领导：${visitor}`,
+          meetingPlace: title,
           summary: '走访大纲: 聚焦企业发展情况，探讨通过政策路径，推动企业价值化与业务拓展。',
           participants: '参加人员： 陆文婷、王建群、郭李飞、金江锋、高琰',
           meetingTime: `会议时间： ${date}`,
-          meetingPlace: `会议地点：${title.replace(/走访.*/, '').trim()}`,
           mainContent: '会议主要内容：',
           contentParagraphs: [
             '一、走访情况\n详细记录本次走访的主要内容和企业反馈情况。',
@@ -203,7 +132,7 @@ function VisitCard({ item }) {
           relatedCompanies: [
             {
               id: 1,
-              name: title.replace(/走访.*/, '').trim() || title,
+              name: title,
               industry: '软件和信息技术服务业',
               legalPerson: '张伟',
               status: '存续',
@@ -215,16 +144,21 @@ function VisitCard({ item }) {
   };
 
   return (
-    <div className="ed-card" onClick={handleClick} style={{ cursor: 'pointer' }}>
-      <div className="ed-card-content">
-        <div className="ed-card-date">{date}</div>
-        <div className="ed-card-row">
-          <div className="ed-time-col">
-            <span className="ed-time-start">{startTime}</span>
-            <span className="ed-time-end">{endTime}</span>
-          </div>
-          <div className="ed-separator" />
+    <div className="ed-card" onClick={handleClick}>
+      <div className="ed-card-date">{date}</div>
+      <div className="ed-card-main">
+        <div className="ed-card-timeline-line" />
+        <div className="ed-card-info">
           <div className="ed-card-title">{title}</div>
+          <div className="ed-card-visitor">走访领导：{visitor}</div>
+          <div className="ed-card-tags">
+            {sources.map((s, idx) => (
+              <div key={idx} className="ed-card-tag">
+                <img src={iconEdLink} alt="" width={16} height={16} />
+                <span>{s}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

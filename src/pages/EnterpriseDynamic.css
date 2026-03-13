@@ -102,16 +102,18 @@
 
 /* ===== 筛选区域 ===== */
 .ed-filter-area {
-  background: #FFFFFF;
-  padding: 12px 16px 0px;
+  background: #F9FAFB; /* 确保背景色统一 */
+  padding: 16px 16px 4px;
   flex-shrink: 0;
 }
 
 .ed-filter-row {
   display: flex;
+  background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 14px;
   overflow: hidden;
+  height: 48px;
 }
 
 .ed-filter-btn {
@@ -120,16 +122,15 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 12px 8px;
+  padding: 0 8px;
   background: #FFFFFF;
   border: none;
   cursor: pointer;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.9);
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-family: 'Alibaba PuHuiTi', sans-serif;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   transition: background 0.15s;
-  min-width: 0;
 }
 
 .ed-filter-btn:last-child {
@@ -137,29 +138,22 @@
 }
 
 .ed-filter-btn--active {
-  color: #0052D9;
-  background: #EFF6FF;
-  font-weight: 500;
+  color: #155DFC !important;
+  background: #EFF6FF !important;
 }
 
 .ed-filter-btn-text {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.5714;
 }
 
 .ed-filter-caret {
-  width: 16px;
-  height: 16px;
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
-  opacity: 0.6;
-  transition: transform 0.15s;
-}
-
-.ed-filter-caret--active {
-  transform: rotate(180deg);
   opacity: 1;
+  transition: transform 0.15s;
 }
 
 /* ===== 列表区域覆盖样式 ===== */
@@ -181,11 +175,9 @@
 
 /* ===== 月份标题 ===== */
 .ed-month-header {
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  font-family: 'PingFang SC', sans-serif;
   font-size: 18px;
   font-weight: 500;
-  line-height: 1.5556;
-  letter-spacing: -0.0244em;
   color: #0A0A0A;
   padding-bottom: 12px;
 }
@@ -199,71 +191,87 @@
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 14px;
-  box-sizing: border-box;
-}
-
-.ed-card-content {
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.ed-card:active {
+  transform: scale(0.98);
 }
 
 .ed-card-date {
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  font-family: 'PingFang SC', sans-serif;
   font-size: 16px;
-  font-weight: 500;
-  line-height: 1.75;
-  letter-spacing: -0.0275em;
+  font-weight: 400;
   color: #0A0A0A;
+  line-height: 1.75;
 }
 
-.ed-card-row {
+.ed-card-main {
   display: flex;
-  align-items: center;
-  gap: 23px;
+  gap: 15px;
+  align-items: flex-start;
 }
 
-.ed-time-col {
+.ed-card-timeline-line {
+  width: 2px;
+  min-height: 120px;
+  background: #155DFC;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.ed-card-info {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.ed-time-start {
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1.3333;
-  color: #000000;
-}
-
-.ed-time-end {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1.3333;
-  color: #8C8C8C;
-}
-
-.ed-separator {
-  width: 0;
-  height: 28px;
-  border-left: 2px solid #155DFC;
-  flex-shrink: 0;
+  gap: 10px;
+  flex: 1;
 }
 
 .ed-card-title {
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
   color: #000000;
-  flex: 1;
-  min-width: 0;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.ed-card-visitor {
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.ed-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 5px;
+}
+
+.ed-card-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: #EFF6FF;
+  border: 1px solid #BEDBFF;
+  border-radius: 10px;
+  color: #155DFC;
+  font-family: 'Alibaba PuHuiTi', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.ed-card-tag span {
+  white-space: nowrap;
 }
