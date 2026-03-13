@@ -14,28 +14,86 @@ const DATE_RANGES = ['今日', '近一周', '近一月', '近三月', '近半年
 
 const MOCK_VISITS = [
   {
-    id: 1, month: '2026年3月', date: '2026年3月4号',
-    title: '玖壹叁陆零医学科技（杭州）有限公司',
-    visitor: '鲍一飞',
-    sources: ['杭州发布', '拱墅发布', '西湖之声', '杭州本地宝', '新浪新闻速递'],
-    dept: '经济发展局',
+    id: 7,
+    month: '2026年3月',
+    date: '2026年3月12号',
+    title: '杭州轴承集团有限公司',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655957901&idx=1&sn=aa7399d607af20bbc5fa79adc35d5a46' },
+      { name: '石桥发布', url: 'https://mp.weixin.qq.com/s?__biz=MzkxMDM3ODA2Mg==&mid=2247575059&idx=1&sn=ff9183980607d2b768f23688a67e13fa' }
+    ],
+    dept: '',
   },
   {
-    id: 2, month: '2026年3月', date: '2026年3月4号',
-    title: '浙江扬厉医药技术有限公司',
-    visitor: '鲍一飞',
-    sources: ['杭州发布', '拱墅发布'],
-    dept: '商务局',
+    id: 6,
+    month: '2026年3月',
+    date: '2026年3月12号',
+    title: '杭叉集团股份有限公司',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655957901&idx=1&sn=aa7399d607af20bbc5fa79adc35d5a46' },
+      { name: '石桥发布', url: 'https://mp.weixin.qq.com/s?__biz=MzkxMDM3ODA2Mg==&mid=2247575059&idx=1&sn=ff9183980607d2b768f23688a67e13fa' }
+    ],
+    dept: '',
   },
   {
-    id: 3, month: '2026年3月', date: '2026年3月5号',
-    title: '浙江数字科技集团股份有限公司',
-    visitor: '张三',
-    sources: ['经济日报', '浙江新闻'],
-    dept: '工信局',
+    id: 5,
+    month: '2026年2月',
+    date: '2026年2月24号',
+    title: '杭州中美华东制药有限公司',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655955672&idx=1&sn=53962bcf105c25d2f3f896f5f0668d3e' }
+    ],
+    dept: '',
   },
+  {
+    id: 4,
+    month: '2026年2月',
+    date: '2026年2月24号',
+    title: '杭州禾迈电力电子股份有限公司',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655955672&idx=1&sn=53962bcf105c25d2f3f896f5f0668d3e' }
+    ],
+    dept: '',
+  },
+  {
+    id: 3,
+    month: '2026年2月',
+    date: '2026年2月9号',
+    title: '杭州昆泰磁悬浮技术有限公司',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655954154&idx=1&sn=20d078ae0ebc4d30dd32ade54e443844' }
+    ],
+    dept: '',
+  },
+  {
+    id: 2,
+    month: '2026年2月',
+    date: '2026年2月9号',
+    title: '杭州惠耳听力技术设备有限公司',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655954154&idx=1&sn=20d078ae0ebc4d30dd32ade54e443844' },
+      { name: '东新发布', url: 'https://mp.weixin.qq.com/s?__biz=Mzk0NzM4MjgxMg==&mid=2247847894&idx=1&sn=98b0caaf335d27d1bf21114bb09c6484' }
+    ],
+    dept: '',
+  },
+  {
+    id: 1,
+    month: '2026年2月',
+    date: '2026年2月9号',
+    title: '杭开集团',
+    visitor: '敖煜新',
+    sources: [
+      { name: '拱墅发布', url: 'https://mp.weixin.qq.com/s?__biz=MjM5OTUyNzY0NA==&mid=2655954154&idx=1&sn=20d078ae0ebc4d30dd32ade54e443844' }
+    ],
+    dept: '',
+  }
 ];
-
 const PAGE_SIZE = 10;
 
 /* ===================== 日期筛选辅助 ===================== */
@@ -144,7 +202,7 @@ function VisitCard({ item }) {
   };
 
   return (
-    <div className="ed-card" onClick={handleClick}>
+    <div className="ed-card">
       <div className="ed-card-date">{date}</div>
       <div className="ed-card-main">
         <div className="ed-card-timeline-line" />
@@ -153,10 +211,13 @@ function VisitCard({ item }) {
           <div className="ed-card-visitor">走访领导：{visitor}</div>
           <div className="ed-card-tags">
             {sources.map((s, idx) => (
-              <div key={idx} className="ed-card-tag">
-                <img src={iconEdLink} alt="" width={16} height={16} />
-                <span>{s}</span>
-              </div>
+              // 点击之后防止继续页面跳转
+              <a href={s.url} target="_blank" rel="noopener noreferrer" key={idx} onClick={(e) => e.stopPropagation()}>
+                <div key={idx} className="ed-card-tag">
+                  <img src={iconEdLink} alt="" width={16} height={16} />
+                  <span>{s.name}</span>
+                </div>
+              </a>
             ))}
           </div>
         </div>
@@ -237,6 +298,7 @@ export default function EnterpriseDynamic() {
     setRefreshing(false);
   }, [getFiltered]);
 
+
   const handleFilterToggle = (key) => {
     setActiveFilter(prev => prev === key ? null : key);
   };
@@ -293,9 +355,10 @@ export default function EnterpriseDynamic() {
 
         {/* 走访动态列表 */}
         <InfiniteList
+          key="dynamic-list"
           items={displayedItems}
           renderItem={renderItem}
-          onLoadMore={handleLoadMore}
+          // onLoadMore={handleLoadMore}
           onRefresh={handleRefresh}
           hasMore={hasMore}
           loading={loading}
