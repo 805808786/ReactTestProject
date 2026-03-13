@@ -4,8 +4,8 @@ import SparklesIcon from '../assets/Sparkles.svg'
 import './ChatModal.css'
 
 const initialMessages = [
-//   { id: 1, type: 'bot', text: '您好！我是墅企小助手，有什么可以帮助您的吗？', time: '13:56' },
-//   { id: 2, type: 'user', text: '浙江云鹭科技有限公司是省科小企业吗？？', time: '13:56' },
+  //   { id: 1, type: 'bot', text: '您好！我是墅企小助手，有什么可以帮助您的吗？', time: '13:56' },
+  //   { id: 2, type: 'user', text: '浙江云鹭科技有限公司是省科小企业吗？？', time: '13:56' },
 ]
 
 export default function ChatModal({ isOpen, onClose }) {
@@ -21,9 +21,16 @@ export default function ChatModal({ isOpen, onClose }) {
     }
     return []
   })
+  const [chatId, setChatId] = useState(() => {
+    return localStorage.getItem('chat_id') || ''
+  })
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef(null)
+
+  const generateRandomId = () => {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -58,6 +65,14 @@ export default function ChatModal({ isOpen, onClose }) {
   const handleSend = async () => {
     if (!inputValue.trim()) return
 
+    // 获取当前 chatId，若不存在则生成并持久化
+    let currentChatId = chatId
+    if (!currentChatId) {
+      currentChatId = generateRandomId()
+      setChatId(currentChatId)
+      localStorage.setItem('chat_id', currentChatId)
+    }
+
     const currentInput = inputValue
     const now = new Date()
     const timeString = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
@@ -89,10 +104,21 @@ export default function ChatModal({ isOpen, onClose }) {
           'Authorization': 'Bearer fastgpt-fpxpLb7XwNCk0l61rpOfhZIa775gqV0MgGNolunhzQf3KlfKTIMWpvRCJsXhwApeY'
         },
         body: JSON.stringify({
-          chatId: 'i2mwaJBLpJR0Aogud2Fig',
+          chatId: currentChatId,
           model: 'deepseek-chat',
           messages: [{ role: 'user', content: currentInput }],
-          stream: true
+          stream: true,
+          "variables": {
+            "internet": false,
+            "knowledge": true,
+            "enterpriseData": false,
+            "knowledgeList": [
+              "2001109186508312577"
+            ],
+            "model": "deepseek-chat",
+            "url": "",
+            "tenantCodes": []
+          }
         })
       })
 
@@ -114,7 +140,7 @@ export default function ChatModal({ isOpen, onClose }) {
           buffer += decoder.decode(value, { stream: true })
           const lines = buffer.split('\n')
           buffer = lines.pop() || ''
-          
+
           for (const line of lines) {
             const trimmedLine = line.trim()
             if (trimmedLine.startsWith('data: ')) {
@@ -125,7 +151,7 @@ export default function ChatModal({ isOpen, onClose }) {
                 const content = data.choices?.[0]?.delta?.content || ''
                 if (content) {
                   botText += content
-                  setMessages(prev => prev.map(msg => 
+                  setMessages(prev => prev.map(msg =>
                     msg.id === botMsgId ? { ...msg, text: botText } : msg
                   ))
                 }
@@ -190,7 +216,7 @@ export default function ChatModal({ isOpen, onClose }) {
                   <Bot size={20} color="#155DFC" strokeWidth={1.5} />
                 </div>
               )}
-              
+
               <div className="msg-content-wrapper">
                 <div className="msg-bubble">
                   {msg.text}
@@ -232,7 +258,7 @@ export default function ChatModal({ isOpen, onClose }) {
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <button 
+            <button
               className={`send-btn ${inputValue.trim() ? 'active' : ''}`}
               onClick={handleSend}
             >
