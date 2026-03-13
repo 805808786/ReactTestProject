@@ -212,8 +212,8 @@ function VisitCard({ item }) {
           <div className="ed-card-tags">
             {sources.map((s, idx) => (
               // 点击之后防止继续页面跳转
-              <a href={s.url} target="_blank" rel="noopener noreferrer" key={idx} onClick={(e) => e.stopPropagation()}>
-                <div key={idx} className="ed-card-tag">
+              <a key={idx} href={s.url} target="_blank" rel="noopener noreferrer" key={idx} onClick={(e) => e.stopPropagation()}>
+                <div  className="ed-card-tag">
                   <img src={iconEdLink} alt="" width={16} height={16} />
                   <span>{s.name}</span>
                 </div>
@@ -358,7 +358,7 @@ export default function EnterpriseDynamic() {
           key="dynamic-list"
           items={displayedItems}
           renderItem={renderItem}
-          // onLoadMore={handleLoadMore}
+          onLoadMore={handleLoadMore}
           onRefresh={handleRefresh}
           hasMore={hasMore}
           loading={loading}
