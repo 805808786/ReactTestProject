@@ -219,7 +219,7 @@ export default function ChatModal({ isOpen, onClose }) {
 
               <div className="msg-content-wrapper">
                 <div className="msg-bubble">
-                  {msg.text}
+                  {msg.text.replace(/<br\s*\/?>/gi, '\n')}
                 </div>
                 <div className="msg-time">{msg.time}</div>
               </div>
