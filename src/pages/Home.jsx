@@ -273,33 +273,31 @@ function EnterpriseOverview() {
       <div className="overview-daily-changes">
         <div className="daily-changes-title">每<br />日<br />变<br />化</div>
         <div className="daily-changes-list">
-          <div className="daily-change-item">
-            <div className="daily-change-left">
-              <span className="dot dot-green"></span>
-              <span className="change-label">工商信息新注册/迁入企业</span>
-            </div>
-            <span className="change-value text-green">
-              {loading ? '--' : (enterpriseData?.statistics?.registered !== undefined ? `+${enterpriseData.statistics.registered}家` : '+50家')}
-            </span>
-          </div>
-          <div className="daily-change-item">
-            <div className="daily-change-left">
-              <span className="dot dot-red"></span>
-              <span className="change-label">工商信息新注销/吊销企业</span>
-            </div>
-            <span className="change-value text-red">
-              {loading ? '--' : (enterpriseData?.statistics?.cancelled !== undefined ? `-${enterpriseData.statistics.cancelled}家` : '-48家')}
-            </span>
-          </div>
-          <div className="daily-change-item">
-            <div className="daily-change-left">
-              <span className="dot dot-green"></span>
-              <span className="change-label">扫楼跑企新增企业</span>
-            </div>
-            <span className="change-value text-green">
-              {loading ? '--' : (enterpriseData?.statistics?.other !== undefined ? `${enterpriseData.statistics.other}家` : '3家')}
-            </span>
-          </div>
+          {(() => {
+            const stats = enterpriseData?.statistics || {};
+            const changeItems = [
+              { label: '拱墅区新设企业', value: stats.newNum || 0, type: 'pos' },
+              { label: '拱墅区区外新迁入企业', value: stats.newMoveInNum || 0, type: 'pos' },
+              { label: '拱墅区区内企业注销或吊销', value: stats.cancelNum || 0, type: 'neg' },
+              { label: '因其他原因导致企业数量变化', value: stats.otherNum || 0, type: (stats.otherNum || 0) >= 0 ? 'pos' : 'neg' },
+            ];
+
+            if (loading) {
+              return <div className="daily-change-item"><span className="change-label">加载中...</span></div>;
+            }
+
+            return changeItems.map((item, idx) => (
+              <div className="daily-change-item" key={idx}>
+                <div className="daily-change-left">
+                  <span className={`dot ${item.type === 'pos' ? 'dot-green' : 'dot-red'}`}></span>
+                  <span className="change-label">{item.label}</span>
+                </div>
+                <span className={`change-value ${item.type === 'pos' ? 'text-green' : 'text-red'}`}>
+                  {item.type === 'pos' ? '+' : ''}{item.type === 'neg' ? '-' : ''}{Math.abs(item.value)}家
+                </span>
+              </div>
+            ));
+          })()}
         </div>
       </div>
     </section>
