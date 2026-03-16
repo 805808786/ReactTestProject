@@ -4,6 +4,7 @@ import axios from 'axios'
 if (!globalThis.__axiosRequest) {
   const instance = axios.create({
     baseURL: 'https://sjch5.gongshu.gov.cn/pbdm-api',
+    // baseURL: 'http://192.168.10.229:9081',
     timeout: 10000,
     headers: {
       'Content-Type': 'application/json',
