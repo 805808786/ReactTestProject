@@ -278,21 +278,27 @@ function EnterpriseOverview() {
               <span className="dot dot-green"></span>
               <span className="change-label">工商信息新注册/迁入企业</span>
             </div>
-            <span className="change-value text-green">+50家</span>
+            <span className="change-value text-green">
+              {loading ? '--' : (enterpriseData?.statistics?.registered !== undefined ? `+${enterpriseData.statistics.registered}家` : '+50家')}
+            </span>
           </div>
           <div className="daily-change-item">
             <div className="daily-change-left">
               <span className="dot dot-red"></span>
               <span className="change-label">工商信息新注销/吊销企业</span>
             </div>
-            <span className="change-value text-red">-48家</span>
+            <span className="change-value text-red">
+              {loading ? '--' : (enterpriseData?.statistics?.cancelled !== undefined ? `-${enterpriseData.statistics.cancelled}家` : '-48家')}
+            </span>
           </div>
           <div className="daily-change-item">
             <div className="daily-change-left">
               <span className="dot dot-green"></span>
               <span className="change-label">扫楼跑企新增企业</span>
             </div>
-            <span className="change-value text-green">3家</span>
+            <span className="change-value text-green">
+              {loading ? '--' : (enterpriseData?.statistics?.other !== undefined ? `${enterpriseData.statistics.other}家` : '3家')}
+            </span>
           </div>
         </div>
       </div>
