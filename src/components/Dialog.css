@@ -28,27 +28,27 @@
 .dialog-content {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 20px; /* Updated from 8px to match Figma 60:1903 */
   padding: 32px 24px 0px;
 }
 
 /* Dialog Title - Figma specs: PingFang SC, 600, 18px, center aligned, 90% black */
 .dialog-title {
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 1.4444;
+  font-family: 'MiSans', sans-serif; /* Updated from PingFang SC to match Figma 60:1904 */
+  font-weight: 630;
+  font-size: 20px;
+  line-height: 1.3;
   text-align: center;
   color: rgba(0, 0, 0, 0.9);
 }
 
 /* Dialog Descriptions - Figma specs: Alibaba PuHuiTi, 400, 16px, center aligned, 60% black */
 .dialog-descriptions {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Alibaba PuHuiTi', sans-serif;
   font-weight: 400;
   font-size: 16px;
-  line-height: 1.5;
-  text-align: center;
+  line-height: 1.3125; /* Updated to match Figma 60:1905 */
+  text-align: left; /* Updated from center to match Figma 60:1905 */
   color: rgba(0, 0, 0, 0.6);
   white-space: pre-line;
 }

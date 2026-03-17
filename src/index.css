@@ -1,9 +1,23 @@
+@font-face {
+  font-family: 'MiSans-Thin';
+  src: url('/MiSans-Thin.ttf') format('truetype');
+  font-weight: 250;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MiSans-Medium';
+  src: url('/MiSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
 }
 
 :root {
-  font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: 'MiSans-Medium', 'MiSans-Thin', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #1a1a1a;

@@ -5,19 +5,20 @@ import Dialog from '../components/Dialog'
 import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
 
-import homeIcon from '../assets/tabs/icons/home.svg'
-import special115xIcon from '../assets/tabs/icons/special-115x.svg'
-import radarIcon from '../assets/tabs/icons/radar.svg'
-import enterpriseIcon from '../assets/tabs/icons/enterprise.svg'
-import dataIcon from '../assets/tabs/icons/data.svg'
-import policyIcon from '../assets/tabs/icons/policy.svg'
+import keyFocusIcon from '../assets/tabs/redesign/key-focus.svg'
+import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
+import homeBtnIcon from '../assets/tabs/redesign/home-btn.svg'
+import dataContributionIcon from '../assets/tabs/redesign/data-contribution.svg'
+import policyMatchingIcon from '../assets/tabs/redesign/policy-matching.svg'
 import icon115 from '../assets/special-115x/115-badge-icon.svg'
 import icon296 from '../assets/special-115x/icon-special-296.svg'
 import chevronRightIcon from '../assets/chevron-right.svg'
 import starIcon from '../assets/icon-dc-star.svg'
 import enterpriseDataJson from '../json/enterprise.json'
 import SparklesIcon from '../assets/Sparkles.svg'
-import FireGif from '../assets/Fire.gif'
+import iconAi from '../assets/key-focus-redesign/icon-ai.svg'
+import iconKeyEnt from '../assets/key-focus-redesign/icon-key-ent.svg'
+import iconChevronList from '../assets/key-focus-redesign/icon-chevron-list.svg'
 import ZapIcon from '../assets/Zap.svg'
 import MessageCircleIcon from '../assets/MessageCircle.svg'
 import iconKeyEnterpriseChevron from '../assets/icon-key-enterprise-chevron-right.svg'
@@ -25,40 +26,40 @@ import iconKeyEnterpriseChevronItem from '../assets/icon-key-enterprise-chevron-
 import assistantAvatar from '../assets/assistant-avatar.svg'
 import assistantArrow from '../assets/assistant-arrow.svg'
 
+import iconTrendUp from '../assets/overview-redesign/icon-trend-up.svg'
 import iconSearchInput from '../assets/icon-search-input.svg'
 import iconSceneCalendar from '../assets/icon-scene-calendar.svg'
+import iconHelpOutline from '../assets/overview-redesign/icon-help-outline.svg'
 
 const bottomTabs = [
-  { label: '首页', icon: homeIcon },
-  { label: '墅企专题', icon: special115xIcon },
-  { label: '场景雷达', icon: radarIcon },
-  { label: '关注企业', icon: enterpriseIcon },
-  { label: '数据贡献', icon: dataIcon },
-  { label: '政策匹配', icon: policyIcon },
+  { label: '重点关注', icon: keyFocusIcon, logicCase: 3 },
+  { label: '墅企专题', icon: specialThemesIcon, logicCase: 1 },
+  { label: '首页', icon: homeBtnIcon, logicCase: 0, isCenter: true },
+  { label: '数据贡献', icon: dataContributionIcon, logicCase: 4 },
+  { label: '政策匹配', icon: policyMatchingIcon, logicCase: 5 },
 ]
 
 export default function Home() {
-  const [activeBottomTab, setActiveBottomTab] = useState(0)
+  const [activeBottomTab, setActiveBottomTab] = useState(2) // 首页默认为视觉第3项 (index 2)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const navigate = useNavigate()
 
   const renderContent = () => {
-    switch (activeBottomTab) {
+    const tab = bottomTabs[activeBottomTab];
+    switch (tab?.logicCase) {
       case 0:
         return (
           <>
 
-            <EnterpriseOverview />
             <AssistantCard onClick={() => setIsChatOpen(true)} />
+            <EnterpriseOverview />
             <KeyFocus />
           </>
         )
       case 1:
         return <Special115X />
-      case 2:
-        return <FocusScene />
       case 3:
-        return <FocusEnterprise />
+        return <KeyFocus />
       case 4:
         return <DataContribution />
       case 5:
@@ -76,14 +77,23 @@ export default function Home() {
       </div>
 
       <div className="bottom-nav">
+        {/* 背景切槽装饰 */}
+        <div className="bottom-nav-mask">
+          <div className="mask-notch"></div>
+        </div>
+
         {bottomTabs.map((tab, index) => (
           <div
             key={tab.label}
-            className={`bottom-nav-item ${activeBottomTab === index ? 'active' : ''}`}
+            className={`bottom-nav-item ${activeBottomTab === index ? 'active' : ''} ${tab.isCenter ? 'center-item' : ''}`}
             onClick={() => setActiveBottomTab(index)}
           >
             <div className="bottom-nav-icon">
-              <img src={tab.icon} alt={tab.label} />
+              <img
+                src={tab.icon}
+                alt={tab.label}
+                className={tab.isCenter ? 'center-icon' : 'tab-icon'}
+              />
             </div>
             <span className="bottom-nav-label">{tab.label}</span>
           </div>
@@ -92,7 +102,7 @@ export default function Home() {
 
       <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
-      {activeBottomTab !== 0 && (
+      {bottomTabs[activeBottomTab]?.logicCase !== 0 && (
         <div className="floating-assistant-btn" onClick={() => setIsChatOpen(true)}>
           <div className="floating-btn-inner">
             <img src={SparklesIcon} alt="assistant" />
@@ -107,96 +117,115 @@ export default function Home() {
 
 function KeyFocus() {
   const navigate = useNavigate()
-  // 展示json里前3家数据
-  const focusList = enterpriseDataJson.slice(0, 3).map((item, index) => ({
-    id: item?.['基本信息']?.data?.enterpriseId || index,
-    name: item?.['基本信息']?.data?.enterpriseName || ''
-  }))
+
+  // Enterprise list data
+  const enterprises = [
+    { id: 1, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
+    { id: 2, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
+    { id: 3, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
+    { id: 4, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
+    { id: 5, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' }
+  ]
 
   return (
-    <section className="key-focus-section">
-      <div className="key-focus-header">
-        <div className="key-focus-header-left">
-          <div className="key-focus-fire-bg"><img src={FireGif} alt="fire" /></div>
-          <span className="key-focus-title">当前关注</span>
-        </div>
-      </div>
-
-      <div className="key-focus-main-card">
-        <div className="key-focus-scene-header">
-          <span className="key-focus-scene-name">人工智能企业筛选场景</span>
-          <div className="scene-desc-badge" onClick={() => navigate('/scene-description/1')}>场景说明</div>
+    <section className="key-focus-v2">
+      <div className="kf-card-v2">
+        <div className="kf-header-v2">
+          <div className="kf-title-v2">当前重点关注</div>
         </div>
 
-        <div className="key-focus-stats-row">
-          <div className="key-focus-stat-card" onClick={() => navigate('/scene-enterprise')}>
-            <div className="stat-card-title">
-              <span>人工智能企业</span>
-              <span className="stat-arrow">→</span>
-            </div>
-            <div className="stat-card-value">
-              <span className="main-val">21,943<small>家</small></span>
-              <span className="sub-val">今日<span className="plus">+3</span></span>
-            </div>
-          </div>
-          <div className="key-focus-stat-card" onClick={() => navigate('/scene-enterprise-dynamic')}>
-            <div className="stat-card-title">
-              <span>人工智能场景动态</span>
-              <span className="stat-arrow">→</span>
-            </div>
-            <div className="stat-card-value">
-              <span className="main-val">32<small>条</small></span>
-              <span className="sub-val">今日<span className="plus">+3</span></span>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-      <div className="key-focus-companies-section">
-        <div className="companies-header">
-          <img src={starIcon} alt="star" />
-          <span>重点企业</span>
-        </div>
-        <div className="enterprise-row">
-          <div className="enterprise-item blue-bg" onClick={() => navigate('/planned-visits')} style={{ cursor: 'pointer' }}>
-            <div className="item-header">
-              <span className="item-label">拟走访企业</span>
-              <span className="item-arrow blue-text">→</span>
-            </div>
-            <div className="item-footer">
-              <span className="item-value blue-text">2<small>家</small></span>
-              <span className="item-sub-label blue-text">今日走访：1家</span>
-            </div>
-          </div>
-          <div className="enterprise-item blue-bg" onClick={() => navigate('/enterprise-dynamic')} style={{ cursor: 'pointer' }}>
-            <div className="item-header">
-              <span className="item-label">企业走访动态</span>
-              <span className="item-arrow blue-text">→</span>
-            </div>
-            <div className="item-footer">
-              <span className="item-value blue-text">7<small>家</small></span>
-              <span className="item-sub-label blue-text">今日+2</span>
-            </div>
-          </div>
-        </div>
-        <div className="companies-list">
-          {focusList.map((item, idx) => (
-            <div
-              key={item.id}
-              className="company-item-row"
-              onClick={() => navigate(`/company-detail/${item.id}`)}
-            >
-              <div className="company-item-left">
-                <span className="company-name-text">{item.name}</span>
-                <span className={`level-tag ${idx === 0 ? 'level-top' : 'level-waist'}`}>
-                  {idx === 0 ? '头部' : '潜力'}
-                </span>
-                <span className="visit-status-tag">已走访</span>
+        <div className="kf-content-stack">
+          {/* AI Section */}
+          <div className="kf-section-box ai-box">
+            <div className="kf-section-header">
+              <div className="kf-section-title-grp">
+                <div className="kf-section-icon-bg purple-bg">
+                  <img src={iconAi} alt="AI" />
+                </div>
+                <span className="kf-section-name purple-text">人工智能</span>
               </div>
-              <img src={chevronRightIcon} alt="arrow" />
+              <div className="kf-tag-badge purple-badge" onClick={() => navigate('/scene-description/1')}>
+                场景说明
+              </div>
             </div>
-          ))}
+            <div className="kf-stats-grid">
+              <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise')}>
+                <div className="kf-stat-label">人工智能企业</div>
+                <div className="kf-stat-value-row">
+                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-unit">家</span>
+                  <div className="kf-today-badge green-badge">
+                    <span className="kf-dot green-dot"></span>
+                    <span className="kf-today-text">今日 +3</span>
+                  </div>
+                </div>
+              </div>
+              <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
+                <div className="kf-stat-label">场景动态</div>
+                <div className="kf-stat-value-row">
+                  <span className="kf-stat-num">500</span>
+                  <span className="kf-stat-unit">条</span>
+                  <div className="kf-today-badge green-badge">
+                    <span className="kf-dot green-dot"></span>
+                    <span className="kf-today-text">今日 +3</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Key Enterprise Section */}
+          <div className="kf-section-box key-ent-box">
+            <div className="kf-section-header">
+              <div className="kf-section-title-grp">
+                <div className="kf-section-icon-bg blue-bg">
+                  <img src={iconKeyEnt} alt="KeyEnt" />
+                </div>
+                <span className="kf-section-name blue-text">重点企业</span>
+              </div>
+              <div className="kf-tag-badge blue-badge" onClick={() => navigate('/planned-visits')}>
+                重点企业说明
+              </div>
+            </div>
+            <div className="kf-stats-grid">
+              <div className="kf-stat-item" onClick={() => navigate('/planned-visits')}>
+                <div className="kf-stat-label">拟走访企业</div>
+                <div className="kf-stat-value-row">
+                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-unit">家</span>
+                  <div className="kf-today-badge green-badge">
+                    <span className="kf-dot green-dot"></span>
+                    <span className="kf-today-text">今日 3</span>
+                  </div>
+                </div>
+              </div>
+              <div className="kf-stat-item" onClick={() => navigate('/enterprise-dynamic')}>
+                <div className="kf-stat-label">已走访企业</div>
+                <div className="kf-stat-value-row">
+                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-unit">家</span>
+                  <div className="kf-today-badge green-badge">
+                    <span className="kf-dot green-dot"></span>
+                    <span className="kf-today-text">今日 +3</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Enterprise List */}
+          <div className="kf-ent-list">
+            {enterprises.map((ent) => (
+              <div key={ent.id} className="kf-ent-item" onClick={() => navigate(`/company-detail/${ent.id}`)}>
+                <div className="kf-ent-info">
+                  <span className="kf-ent-name">{ent.name}</span>
+                  <span className="kf-ent-tag head-tag">{ent.tag1}</span>
+                  <span className="kf-ent-tag visit-tag">{ent.tag2}</span>
+                </div>
+                <img src={iconChevronList} alt="chevron" className="kf-chevron" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -206,11 +235,8 @@ function KeyFocus() {
 function Header() {
   return (
     <div className="header">
-      <div className="header-bg" />
-      <div className="header-content">
-        <div className="header-title">墅企瞭望台</div>
-        <div className="header-subtitle">24*7 超能经济干部</div>
-      </div>
+      <h1 className="header-title">墅企瞭望台</h1>
+      <p className="header-subtitle">7*24 超能经济干部</p>
     </div>
   )
 }
@@ -220,12 +246,9 @@ function formatDateCN(date) {
   return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, '0')}月${String(date.getDate()).padStart(2, '0')}日`
 }
 
-import overviewMainIcon from '../assets/overview-main-icon.png'
-import chartLineUpIcon from '../assets/chart-line-up.svg'
-import detailsArrowIcon from '../assets/details-arrow.svg'
-
 function EnterpriseOverview() {
   const navigate = useNavigate()
+  const [isHelpDialogOpen, setIsHelpDialogOpen] = useState(false)
   const { enterpriseData, loading, fetchEnterpriseData } = useEnterpriseStore()
 
   // eslint-disable-next-line react-hooks/purity
@@ -239,72 +262,83 @@ function EnterpriseOverview() {
   const todayTotal = enterpriseData?.todayTotal
   const changeNum = enterpriseData?.changeNum
   const displayDate = enterpriseData?.changeDate
-    ? formatDateCN(new Date(enterpriseData.changeDate))
-    : formatDateCN(today)
+    ? new Date(enterpriseData.changeDate).toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')
+    : today.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '.')
+
+  const stats = enterpriseData?.statistics || {};
+  const newAndMoveIn = (stats.newNum || 0) + (stats.newMoveInNum || 0);
 
   return (
-    <section className="overview-section">
-      <div className="overview-header">
-        <span className="overview-title">企业总览</span>
-        <Link to="/calendar" className="overview-date" style={{ textDecoration: 'none' }}>{displayDate}</Link>
-      </div>
+    <section className="overview-section-v2">
+      <div className="overview-container-v2">
+        <div className="overview-left-v2" onClick={() => navigate('/calendar')}>
+          {/* Header row: Title & Date */}
+          <div className="overview-header-v2">
+            <span className="overview-title-v2">
+              企业总览
+              <img 
+                src={iconHelpOutline} 
+                alt="help" 
+                className="overview-help-icon" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsHelpDialogOpen(true);
+                }}
+              />
+            </span>
+            <Link to="/calendar" className="overview-date-v2" style={{ textDecoration: 'none' }}>{displayDate}</Link>
+          </div>
 
-      <div className="overview-main-card" onClick={() => navigate('/calendar')}>
-        <div className="overview-main-left">
-          <img src={overviewMainIcon} alt="icon" className="overview-main-img" />
-          <div className="overview-main-info">
-            <div className="overview-label">企业总数</div>
-            <div className="overview-count">
-              {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '139,987')}
-              <span className="overview-unit">家</span>
+          {/* Main Stats: Total Number */}
+          <div className="overview-main-stats-v2">
+            <div className="overview-total-v2">
+              <span className="total-num-v2">
+                {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '139,987')}
+              </span>
+              <span className="total-unit-v2">家</span>
             </div>
           </div>
-        </div>
-        <div className="overview-divider"></div>
-        <div className="overview-main-right">
-          <div className="overview-label">企业变化(较昨日)</div>
-          <div className="overview-change">
-            {loading ? '--' : (changeNum !== undefined && changeNum !== null ? `${changeNum > 0 ? '+' : ''}${changeNum}` : '+5')}
-            <span className="overview-unit">家</span>
-          </div>
-        </div>
-      </div>
 
-      <div className="overview-daily-changes">
-        <div className="daily-changes-title">每<br />日<br />变<br />化</div>
-        <div className="daily-changes-list">
-          <div className="daily-change-item">
-            <div className="daily-change-left">
-              <span className="dot dot-green"></span>
-              <span className="change-label">工商信息新注册/迁入企业</span>
+          {/* Trend Badge */}
+          <div className="overview-trend-v2">
+            <div className="trend-badge-v2">
+              <img src={iconTrendUp} alt="up" className="trend-icon-v2" />
+              <span className="trend-text-v2">较昨日 {loading ? '--' : (changeNum >= 0 ? `+${changeNum}` : changeNum)}</span>
             </div>
-            <span className="change-value text-green">
-              {loading ? '--' : (enterpriseData?.statistics?.registered !== undefined ? `+${enterpriseData.statistics.registered}家` : '+50家')}
-            </span>
           </div>
-          <div className="daily-change-item">
-            <div className="daily-change-left">
-              <span className="dot dot-red"></span>
-              <span className="change-label">工商信息新注销/吊销企业</span>
+        </div>
+
+        {/* Right side: Daily Changes */}
+        <div className="overview-right-v2">
+          <div className="daily-changes-card-v2">
+            <div className="daily-title-v2">每日变化</div>
+            <div className="daily-list-v2">
+              <div className="daily-item-v2">
+                <span className="daily-label-v2">新注册/迁入</span>
+                <span className="daily-value-v2 pos">+{loading ? '--' : newAndMoveIn}</span>
+              </div>
+              <div className="daily-item-v2">
+                <span className="daily-label-v2">注销/吊销</span>
+                <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 48)}</span>
+              </div>
+              <div className="daily-item-v2">
+                <span className="daily-label-v2">其他</span>
+                <span className="daily-value-v2 other-val">+{loading ? '--' : (stats.otherNum || 3)}</span>
+              </div>
             </div>
-            <span className="change-value text-red">
-              {loading ? '--' : (enterpriseData?.statistics?.cancelled !== undefined ? `-${enterpriseData.statistics.cancelled}家` : '-48家')}
-            </span>
-          </div>
-          <div className="daily-change-item">
-            <div className="daily-change-left">
-              <span className="dot dot-green"></span>
-              <span className="change-label">扫楼跑企新增企业</span>
-            </div>
-            <span className="change-value text-green">
-              {loading ? '--' : (enterpriseData?.statistics?.other !== undefined ? `${enterpriseData.statistics.other}家` : '3家')}
-            </span>
           </div>
         </div>
       </div>
+      <Dialog 
+        isOpen={isHelpDialogOpen} 
+        onClose={() => setIsHelpDialogOpen(false)}
+        title="拱墅区企业定义"
+        content={`企业须满足以下其一：\n\n1、在册企业\n住所（注册地址）在拱墅区行政区域内（即含有“拱墅”“下城”，或拱墅区下属街道、楼宇、道路名称的）\n\n2、在地不在册企业\n住所不在上述范围，但经营场所符合上述条件`}
+      />
     </section>
   )
 }
+
 
 function Special115X() {
   const [activeSubTab, setActiveSubTab] = useState(0)
@@ -1090,31 +1124,21 @@ function PolicyMatching() {
 }
 
 
+import assistantAvatarNew from '../assets/overview-redesign/assistant-avatar-new.png'
+import iconAsstSearch from '../assets/overview-redesign/icon-asst-search.svg'
+
 function AssistantCard({ onClick }) {
   return (
-    <div className="assistant-card" onClick={onClick} style={{ cursor: 'pointer' }}>
-      <div className="assistant-card-inner">
-        <div className="assistant-left">
-          <div className="assistant-top-row">
-            <div className="assistant-avatar">
-              <img src={SparklesIcon} alt="Avatar" />
-            </div>
-            <div className="assistant-title">墅企小助手</div>
-          </div>
-          <div className="assistant-bottom-row">
-            <div className="assistant-tag">
-              <img src={ZapIcon} alt="Zap" />
-              <span>即时响应</span>
-            </div>
-            <div className="assistant-tag">
-              <img src={MessageCircleIcon} alt="Msg" />
-              <span>24小时在线</span>
-            </div>
-          </div>
+    <div className="assistant-card" onClick={onClick}>
+      <div className="assistant-card-content">
+        <div className="assistant-main-title">墅企小助手</div>
+        <div className="assistant-search-bar">
+          <img src={iconAsstSearch} alt="icon" className="asst-search-icon" />
+          <span className="asst-search-placeholder">墅企瞭望 · 一问知企 · 即时响应</span>
         </div>
-        <div className="assistant-right">
-          <img src={assistantArrow} alt="Arrow" />
-        </div>
+      </div>
+      <div className="assistant-avatar-box">
+        <img src={assistantAvatarNew} alt="avatar" />
       </div>
     </div>
   )
