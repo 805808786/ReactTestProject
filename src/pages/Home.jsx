@@ -276,10 +276,10 @@ function EnterpriseOverview() {
           <div className="overview-header-v2">
             <span className="overview-title-v2">
               企业总览
-              <img 
-                src={iconHelpOutline} 
-                alt="help" 
-                className="overview-help-icon" 
+              <img
+                src={iconHelpOutline}
+                alt="help"
+                className="overview-help-icon"
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsHelpDialogOpen(true);
@@ -329,8 +329,8 @@ function EnterpriseOverview() {
           </div>
         </div>
       </div>
-      <Dialog 
-        isOpen={isHelpDialogOpen} 
+      <Dialog
+        isOpen={isHelpDialogOpen}
         onClose={() => setIsHelpDialogOpen(false)}
         title="拱墅区企业定义"
         content={`企业须满足以下其一：\n\n1、在册企业\n住所（注册地址）在拱墅区行政区域内（即含有“拱墅”“下城”，或拱墅区下属街道、楼宇、道路名称的）\n\n2、在地不在册企业\n住所不在上述范围，但经营场所符合上述条件`}
@@ -977,7 +977,7 @@ function DataContribution() {
         </div>
 
         <div className="contribution-grid">
-          <div className="contribution-item blue-bg">
+          <div className="contribution-item blue-bg2">
             <div className="item-label">参与部门</div>
             <div className="item-value blue-text">12</div>
           </div>
