@@ -153,7 +153,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  /* background: url('../assets/container.png') no-repeat center top / 100% 100%; */
   background-attachment: fixed;
   padding: 12px 16px 0;
   margin-bottom: -10px; /* 控制它下面的距离，也可以不设，由于 section card 原本有 margin-top: 12px */
