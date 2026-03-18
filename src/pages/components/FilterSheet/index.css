@@ -68,7 +68,8 @@
   padding: 8px 16px;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   font-size: 14px;
   color: #4A5565;
   cursor: pointer;

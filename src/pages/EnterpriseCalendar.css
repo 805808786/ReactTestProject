@@ -6,7 +6,8 @@
 .ec-container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(180deg, #F9FAFB 0%, #ECF6FF 100%);
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -311,7 +312,16 @@
 
 .ec-tl-block--blue {
   background: #EFF6FF;
-  padding: 8px 8px 0;
+  padding: 8px;
+}
+
+.ec-tl-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ec-tl-block.half {
+  flex: 1;
 }
 
 .ec-tl-block--orange {
@@ -353,6 +363,15 @@
   line-height: normal;
   letter-spacing: -0.44px;
   color: #155DFC;
+}
+
+.ec-tl-count.small {
+  font-size: 14px;
+}
+
+.ec-tl-count-row.small {
+  height: auto;
+  gap: 6px;
 }
 
 .ec-tl-delta {

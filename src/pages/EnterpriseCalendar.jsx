@@ -375,6 +375,28 @@ export default function EnterpriseCalendar() {
                     </div>
                   </div>
 
+                  {/* 新增：在册企业 与 在地不在册企业 */}
+                  <div className="ec-tl-row">
+                    <div className="ec-tl-block ec-tl-block--blue half">
+                      <span className="ec-tl-label">在册企业</span>
+                      <div className="ec-tl-count-row small">
+                        <span className="ec-tl-count small">{Number(item.registerNum || totalCount).toLocaleString()}家</span>
+                        <span className={`ec-tl-delta ${(item.registerChangeNum || 0) >= 0 ? 'ec-tl-delta--pos' : 'ec-tl-delta--neg'}`}>
+                          {(item.registerChangeNum || 0) >= 0 ? '+' : ''}{item.registerChangeNum || 0}家
+                        </span>
+                      </div>
+                    </div>
+                    <div className="ec-tl-block ec-tl-block--blue half">
+                      <span className="ec-tl-label">在地不在册企业</span>
+                      <div className="ec-tl-count-row small">
+                        <span className="ec-tl-count small">{Number(item.localUnregisterNum || totalCount).toLocaleString()}家</span>
+                        <span className={`ec-tl-delta ${(item.localUnregisterChangeNum || 0) >= 0 ? 'ec-tl-delta--pos' : 'ec-tl-delta--neg'}`}>
+                          {(item.localUnregisterChangeNum || 0) >= 0 ? '+' : ''}{item.localUnregisterChangeNum || 0}家
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* 变化原因区块 */}
                   <div className="ec-tl-block ec-tl-block--orange">
                     <span className="ec-tl-label">变化原因</span>

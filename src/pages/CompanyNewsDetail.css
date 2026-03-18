@@ -5,7 +5,8 @@
   height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   overflow: hidden;
 }
@@ -216,7 +217,8 @@
   flex-direction: column;
   gap: 8px;
   padding: 12px;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   border-radius: 8px;
 }
 
