@@ -5,7 +5,7 @@ import Dialog from '../components/Dialog'
 import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
 
-import keyFocusIcon from '../assets/tabs/redesign/key-focus.svg'
+import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
 import homeBtnIcon from '../assets/tabs/redesign/home-btn.svg'
 import dataContributionIcon from '../assets/tabs/redesign/data-contribution.svg'
@@ -32,8 +32,8 @@ import iconSceneCalendar from '../assets/icon-scene-calendar.svg'
 import iconHelpOutline from '../assets/overview-redesign/icon-help-outline.svg'
 
 const bottomTabs = [
-  { label: '重点关注', icon: keyFocusIcon, logicCase: 3 },
   { label: '墅企专题', icon: specialThemesIcon, logicCase: 1 },
+  { label: '场景雷达', icon: sceneRadarIcon, logicCase: 3 },
   { label: '首页', icon: homeBtnIcon, logicCase: 0, isCenter: true },
   { label: '数据贡献', icon: dataContributionIcon, logicCase: 4 },
   { label: '政策匹配', icon: policyMatchingIcon, logicCase: 5 },
@@ -59,7 +59,7 @@ export default function Home() {
       case 1:
         return <Special115X />
       case 3:
-        return <KeyFocus />
+        return <FocusScene />
       case 4:
         return <DataContribution />
       case 5:
@@ -118,14 +118,13 @@ export default function Home() {
 function KeyFocus() {
   const navigate = useNavigate()
 
-  // Enterprise list data
-  const enterprises = [
-    { id: 1, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
-    { id: 2, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
-    { id: 3, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
-    { id: 4, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' },
-    { id: 5, name: '科技创新有限公司', tag1: '头部', tag2: '拟走访' }
-  ]
+  // Enterprise list data from JSON (Top 9)
+  const enterprises = enterpriseDataJson.slice(0, 9).map((item, index) => ({
+    id: item?.['基本信息']?.data?.enterpriseId || index,
+    name: item?.['基本信息']?.data?.enterpriseName || '',
+    tag1: (item?.['基本信息']?.data?.categoryName || '重点').replace('企业', ''),
+    tag2: '拟走访'
+  }))
 
   return (
     <section className="key-focus-v2">
@@ -271,59 +270,59 @@ function EnterpriseOverview() {
   return (
     <section className="overview-section-v2">
       <div className="overview-container-v2">
-        <div className="overview-left-v2" onClick={() => navigate('/calendar')}>
-          {/* Header row: Title & Date */}
-          <div className="overview-header-v2">
-            <span className="overview-title-v2">
-              企业总览
-              <img
-                src={iconHelpOutline}
-                alt="help"
-                className="overview-help-icon"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsHelpDialogOpen(true);
-                }}
-              />
-            </span>
+        <div className="overview-header-v2">
+          <span className="overview-title-v2">企业总览</span>
+          <div className="overview-header-right-v2">
             <Link to="/calendar" className="overview-date-v2" style={{ textDecoration: 'none' }}>{displayDate}</Link>
-          </div>
-
-          {/* Main Stats: Total Number */}
-          <div className="overview-main-stats-v2">
-            <div className="overview-total-v2">
-              <span className="total-num-v2">
-                {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '139,987')}
-              </span>
-              <span className="total-unit-v2">家</span>
-            </div>
-          </div>
-
-          {/* Trend Badge */}
-          <div className="overview-trend-v2">
-            <div className="trend-badge-v2">
-              <img src={iconTrendUp} alt="up" className="trend-icon-v2" />
-              <span className="trend-text-v2">较昨日 {loading ? '--' : (changeNum >= 0 ? `+${changeNum}` : changeNum)}</span>
-            </div>
+            <button
+              className="overview-help-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsHelpDialogOpen(true);
+              }}
+            >
+              企业说明
+            </button>
           </div>
         </div>
 
-        {/* Right side: Daily Changes */}
-        <div className="overview-right-v2">
-          <div className="daily-changes-card-v2">
-            <div className="daily-title-v2">每日变化</div>
-            <div className="daily-list-v2">
-              <div className="daily-item-v2">
-                <span className="daily-label-v2">新注册/迁入</span>
-                <span className="daily-value-v2 pos">+{loading ? '--' : newAndMoveIn}</span>
+        <div className="overview-content-v2">
+          <div className="overview-left-v2" title="查看日历详情" onClick={() => navigate('/calendar')}>
+            {/* Main Stats: Total Number */}
+            <div className="overview-main-stats-v2">
+              <div className="overview-total-v2">
+                <span className="total-num-v2">
+                  {loading ? '--' : (todayTotal !== undefined && todayTotal !== null ? Number(todayTotal).toLocaleString() : '139,987')}
+                </span>
+                <span className="total-unit-v2">家</span>
               </div>
-              <div className="daily-item-v2">
-                <span className="daily-label-v2">注销/吊销</span>
-                <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 48)}</span>
+            </div>
+
+            {/* Trend Badge */}
+            <div className="overview-trend-v2">
+              <div className="trend-badge-v2">
+                <img src={iconTrendUp} alt="up" className="trend-icon-v2" />
+                <span className="trend-text-v2">较昨日 {loading ? '--' : (changeNum >= 0 ? `+${changeNum}` : changeNum)}</span>
               </div>
-              <div className="daily-item-v2">
-                <span className="daily-label-v2">其他</span>
-                <span className="daily-value-v2 other-val">+{loading ? '--' : (stats.otherNum || 3)}</span>
+            </div>
+          </div>
+
+          <div className="overview-right-v2">
+            <div className="daily-changes-card-v2">
+              <div className="daily-title-v2">每日变化</div>
+              <div className="daily-list-v2">
+                <div className="daily-item-v2">
+                  <span className="daily-label-v2">新注册/迁入</span>
+                  <span className="daily-value-v2 pos">+{loading ? '--' : (newAndMoveIn || 0)}</span>
+                </div>
+                <div className="daily-item-v2">
+                  <span className="daily-label-v2">注销/吊销</span>
+                  <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 0)}</span>
+                </div>
+                <div className="daily-item-v2">
+                  <span className="daily-label-v2">其他</span>
+                  <span className="daily-value-v2 other-val">+{loading ? '--' : (stats.otherNum || 0)}</span>
+                </div>
               </div>
             </div>
           </div>

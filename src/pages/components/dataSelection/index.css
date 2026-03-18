@@ -5,7 +5,8 @@
 
 .ds-wrap {
   width: 100%;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   border-radius: 10px;
   padding: 8px 0;
   user-select: none;

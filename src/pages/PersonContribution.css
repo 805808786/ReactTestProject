@@ -8,7 +8,8 @@
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
 }
 
@@ -314,7 +315,8 @@
 
 /* 内容区（灰色背景） */
 .pc-record-content {
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   border-radius: 10px;
   padding: 12px 12px 0;
   position: relative;
@@ -411,7 +413,8 @@
 
 /* ===== 评价按钮区 ===== */
 .pc-eval-section {
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   border-top: 1px solid #F3F4F6;
   padding: 13px 12px 0;
   height: 61px;

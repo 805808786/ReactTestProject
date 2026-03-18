@@ -8,7 +8,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
 }
 
@@ -208,7 +209,8 @@
 
 /* ===== 企业列表 ===== */
 .sd-company-list {
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   border-radius: 10px;
   padding: 12px 12px 0;
   display: flex;

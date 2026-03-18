@@ -5,7 +5,8 @@
   height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   overflow: hidden;
 }
@@ -256,7 +257,8 @@
   align-items: center;
   gap: 8px;
   padding: 4px 0 4px 12px;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   border-radius: 4px;
   margin-bottom: 12px;
 }

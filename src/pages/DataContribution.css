@@ -8,7 +8,8 @@
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
 }
 
@@ -243,7 +244,8 @@
 /* ===== 展开内容体 ===== */
 .dc-dept-body {
   padding: 0 16px 16px;
-  background: #F9FAFB;
+  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   gap: 8px;
