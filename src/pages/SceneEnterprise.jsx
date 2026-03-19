@@ -40,11 +40,25 @@ function FilterButton({ label, active, count, onClick }) {
 
 /* ===================== 企业卡片 ===================== */
 function EnterpriseCard({ enterprise }) {
-  const { enterpriseName, enterpriseLogo, tags, categoryName, isFirst } = enterprise;
+  const {
+    enterpriseName,
+    enterpriseLogo,
+    tags,
+    categoryName,
+    isFirst,
+    unifiedCreditCode,
+    legalRepresentative,
+    registeredCapital,
+    establishmentDate,
+    businessStatus,
+    registeredAddress
+  } = enterprise;
   // 从 tags 数组中提取 tagName
   const tagNames = tags ? tags.map(tag => tag.tagName) : [];
   const visibleTags = tagNames.slice(0, 2);
   const extraCount = tagNames.length - 2;
+
+  const isActive = businessStatus === '存续' || businessStatus === '在业';
 
   return (
     <div key={enterprise.enterpriseId} className={`se-card${isFirst ? ' se-card--first' : ''}`}>
@@ -76,25 +90,42 @@ function EnterpriseCard({ enterprise }) {
 
       {/* 详情信息 */}
       <div className="se-card-detail">
-        {/* 企业 ID */}
+        {/* 统一社会信用代码 */}
         <div className="se-info-row">
           <div className="se-info-item se-info-item--wide">
-            <span className="se-info-label">企业 ID：</span>
-            <span className="se-info-value">{enterprise.enterpriseId || '-'}</span>
+            <span className="se-info-label">统一社会信用代码：</span>
+            <span className="se-info-value">{unifiedCreditCode || '-'}</span>
           </div>
         </div>
-        {/* 注册地址 */}
+        {/* 法定代表人 + 注册资本 */}
         <div className="se-info-row">
-          <div className="se-info-item se-info-item--wide">
-            <span className="se-info-label">注册地址：</span>
-            <span className="se-info-value se-address">{enterprise.registeredAddress || '-'}</span>
+          <div className="se-info-item">
+            <span className="se-info-label">法定代表人：</span>
+            <span className="se-info-value">{legalRepresentative || '-'}</span>
+          </div>
+          <div className="se-info-item">
+            <span className="se-info-label">注册资本：</span>
+            <span className="se-info-value">{registeredCapital || '-'}</span>
           </div>
         </div>
-        {/* 所属街道 */}
+        {/* 注册日期 + 经营状态 */}
+        <div className="se-info-row">
+          <div className="se-info-item">
+            <span className="se-info-label">注册日期：</span>
+            <span className="se-info-value">{establishmentDate || '-'}</span>
+          </div>
+          <div className="se-info-item">
+            <span className="se-info-label">经营状态：</span>
+            <span className={`se-info-value se-status${isActive ? ' se-status--active' : (businessStatus ? ' se-status--closed' : '')}`}>
+              {businessStatus || '-'}
+            </span>
+          </div>
+        </div>
+        {/* 企业地址 */}
         <div className="se-info-row">
           <div className="se-info-item se-info-item--wide">
-            <span className="se-info-label">所属街道：</span>
-            <span className="se-info-value">{enterprise.street || '-'}</span>
+            <span className="se-info-label">企业地址：</span>
+            <span className="se-info-value se-address">{registeredAddress || '-'}</span>
           </div>
         </div>
       </div>
@@ -153,6 +184,9 @@ export default function SceneEnterprise() {
   const [filteredTotal, setFilteredTotal] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // 内容区域滚动位置
+  const contentRef = useRef(null);
+
   // API 数据
   const [enterpriseTags, setEnterpriseTags] = useState([]);
   const [enterpriseSecondTags, setEnterpriseSecondTags] = useState([]);
@@ -166,7 +200,7 @@ export default function SceneEnterprise() {
   useEffect(() => {
     enterpriseSecondTagsRef.current = enterpriseSecondTags;
   }, [enterpriseSecondTags]);
-  
+
   // 使用ref存储最新的筛选条件
   const filtersRef = useRef({
     enterpriseSizeFilter,
@@ -306,22 +340,35 @@ export default function SceneEnterprise() {
   useEffect(() => {
     if (currentTag) {
       setCurrentPage(1);
-      fetchEnterprises(1, true);
+      setLoading(true);
+      setDisplayedItems([]); // 清空当前列表，确保 InfiniteList 能显示并置顶 Loading 状态
+      // 滚动到顶部
+      if (contentRef.current) {
+        contentRef.current.scrollTop = 0;
+        // 同时重置 InfiniteList 的滚动容器
+        const ilContainer = contentRef.current.querySelector('.il-container');
+        if (ilContainer) {
+          ilContainer.scrollTop = 0;
+        }
+      }
+      fetchEnterprises(1, true).finally(() => {
+        setLoading(false);
+      });
     }
-  }, [currentTag, debouncedSearch, enterpriseSizeFilter, streetFilter, tagFilter]);
+  }, [currentTag, debouncedSearch, enterpriseSizeFilter, streetFilter, tagFilter, fetchEnterprises]);
 
   const handleLoadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     setLoading(true);
     await fetchEnterprises(currentPage + 1);
     setLoading(false);
-  }, [loading, hasMore, currentPage]);
+  }, [loading, hasMore, currentPage, fetchEnterprises]);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchEnterprises(1, true);
     setRefreshing(false);
-  }, []);
+  }, [fetchEnterprises]);
 
 
   return (
@@ -393,7 +440,7 @@ export default function SceneEnterprise() {
       </PageHeader>
 
       {/* ===== 主体区域 ===== */}
-      <div className="se-body">
+      <div className="se-body" ref={contentRef}>
         {apiLoading ? (
           // 加载中状态
           <div className="se-loading-container">
