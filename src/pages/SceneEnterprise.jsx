@@ -16,84 +16,8 @@ import './SceneEnterprise.css';
 /* ===================== Mock 数据 ===================== */
 const STREETS = ['米市巷街道', '湖墅街道', '小河街道', '和睦街道', '拱宸桥街道', '大关街道', '上塘街道', '祥符街道', '康桥街道', '半山街道', '天水街道', '武林街道', '长庆街道', '潮鸣街道', '朝晖街道', '文晖街道', '东新街道', '石桥街道'];
 const ENTERPRISE_SIZES = ['微型', '小型', '中型', '大型'];
-const TAGS = ['高新技术企业', '国家重点企业', '瞪羚企业', '独角兽企业', '规模以上', '上市企业', '专精特新小巨人', '科技型中小企业'];
 
-const BUSINESS_STATUSES = ['存续', '注销', '存续', '存续', '存续', '迁出', '存续', '存续', '注销', '存续'];
-const COMPANY_NAMES = [
-  '杭州新能源科技有限公司', '浙江数字科技集团股份有限公司', '杭州智联互联网有限公司',
-  '浙江绿色低碳科技有限公司', '杭州拱墅先进制造有限公司', '浙江出海跨境贸易有限公司',
-  '杭州元宇宙技术有限公司', '浙江数商平台运营有限公司', '杭州高端装备制造有限公司',
-  '浙江生物医药科技有限公司', '杭州软件信息服务有限公司', '浙江现代商贸有限公司',
-  '杭州新材料研究有限公司', '浙江人工智能科技有限公司', '杭州文化创意有限公司',
-  '浙江供应链管理有限公司', '杭州金融科技有限公司', '浙江新零售运营有限公司',
-  '杭州医疗健康科技有限公司', '浙江智慧农业有限公司',
-];
-const LEGAL_REPS = ['赵敏', '李伟', '王芳', '张磊', '陈静', '刘阳', '黄志', '吴华', '周洁', '徐明'];
-const CAPITAL_VALUES = ['2000万元', '5000万元', '1亿元', '3000万元', '8000万元', '500万元', '1.5亿元', '4000万元', '6000万元', '2.5亿元'];
-const ADDRESSES = [
-  '浙江省杭州市拱墅区城市发展大厦1幢603室(自主申报)',
-  '浙江省杭州市拱墅区丰潭路508号科技园B幢3楼',
-  '浙江省杭州市拱墅区上塘路1288号创业大厦8楼',
-  '浙江省杭州市拱墅区湖墅南路98号拱宸商业综合体5楼',
-  '浙江省杭州市拱墅区莫干山路199号东方文化园区2幢201室',
-];
-const TAG_LISTS = [
-  ['高新技术企业', '专精特新小巨人'],
-  ['国家重点企业', '瞪羚企业'],
-  ['高新技术企业', '规模以上'],
-  ['科技型中小企业'],
-  ['独角兽企业', '上市企业'],
-  ['高新技术企业'],
-  ['专精特新小巨人', '规模以上'],
-  ['瞪羚企业'],
-];
-const CAPITAL_RANGE_MAP = ['100万以下', '100-500万', '500-1000万', '1000-5000万', '5000万以上'];
 
-function generateEnterprises(count = 50) {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i + 1,
-    name: COMPANY_NAMES[i % COMPANY_NAMES.length],
-    creditCode: `9133010${String(i + 1).padStart(2, '0')}MA2CCXKC${String(i + 10).padStart(2, '0')}`,
-    legalRep: LEGAL_REPS[i % LEGAL_REPS.length],
-    capital: CAPITAL_VALUES[i % CAPITAL_VALUES.length],
-    capitalRange: CAPITAL_RANGE_MAP[i % CAPITAL_RANGE_MAP.length],
-    regDate: `202${Math.floor(i / 10) % 3 + 4}-${String((i % 12) + 1).padStart(2, '0')}-${String((i % 20) + 1).padStart(2, '0')}`,
-    status: BUSINESS_STATUSES[i % BUSINESS_STATUSES.length],
-    address: ADDRESSES[i % ADDRESSES.length],
-    tags: TAG_LISTS[i % TAG_LISTS.length],
-    street: STREETS[i % STREETS.length],
-  }));
-}
-
-const ALL_ENTERPRISES = generateEnterprises(50);
-const PAGE_SIZE = 10;
-
-const STATS = {
-  total: 2042,
-  top: 50,
-  middle: 388,
-  potential: 957,
-  other: 647,
-};
-
-const STATS_CRITERIA = {
-  top: {
-    title: '核心企业（分类标准）',
-    content: `已入选市级“296X"先进制造业集群或拱墅区发改局、区科技经信局梳理的规模以上工业和服务业企业名单，具备行业引领与示范效应的企业。`,
-  },
-  middle: {
-    title: '重点企业（分类标准）',
-    content: `符合市级“115X"先进制造业集群发展方向，且属于拱墅区重点企业，但尚未进入市级“296X"集群、拱墅区发改局、区科技经信局梳理出的规模以上工业和服务业企业名单。`,
-  },
-  potential: {
-    title: '潜力企业（分类标准）',
-    content: `符合拱墅区“115X"先进制造业集群发展方向，具备较强成长性与发展潜力，但暂未取得相关荣誉资质的企业。`,
-  },
-  other: {
-    title: '后备企业（分类标准）',
-    content: `符合拱墅区“115X"先进制造业集群发展方向，但当前活跃度较低的企业。`,
-  },
-};
 
 /* ===================== 工具函数 ===================== */
 function formatDateDisplay(str) {
@@ -108,7 +32,7 @@ function FilterButton({ label, active, count, onClick }) {
     <button className={`se-filter-btn${active ? ' se-filter-btn--active' : ''}`} onClick={onClick}>
       <span>{label}{count > 0 ? `(${count})` : ''}</span>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fill-opacity="0.9" />
+        <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9" />
       </svg>
     </button>
   );
@@ -242,6 +166,22 @@ export default function SceneEnterprise() {
   useEffect(() => {
     enterpriseSecondTagsRef.current = enterpriseSecondTags;
   }, [enterpriseSecondTags]);
+  
+  // 使用ref存储最新的筛选条件
+  const filtersRef = useRef({
+    enterpriseSizeFilter,
+    streetFilter,
+    tagFilter,
+    debouncedSearch
+  });
+  useEffect(() => {
+    filtersRef.current = {
+      enterpriseSizeFilter,
+      streetFilter,
+      tagFilter,
+      debouncedSearch
+    };
+  }, [enterpriseSizeFilter, streetFilter, tagFilter, debouncedSearch]);
 
   // 搜索防抖
   useEffect(() => {
@@ -252,7 +192,7 @@ export default function SceneEnterprise() {
     return () => clearTimeout(debounceTimer.current);
   }, [searchText]);
 
-  // 获取企业标签数据
+  // 获取企业数据
   useEffect(() => {
     const loadEnterpriseTags = async () => {
       setApiLoading(true);
@@ -303,6 +243,8 @@ export default function SceneEnterprise() {
   const fetchEnterprises = useCallback(async (pageIndex = 1, isRefresh = false) => {
     if (!currentTag) return;
 
+    const { enterpriseSizeFilter, streetFilter, tagFilter, debouncedSearch } = filtersRef.current;
+
     // 处理企业规模参数，将选项映射为对应的数值
     const enterpriseSize = enterpriseSizeFilter.length > 0 ? {
       '微型': 1,
@@ -325,17 +267,19 @@ export default function SceneEnterprise() {
     const secondTag = tagFilter.length > 0 ? tagFilter[0] : undefined;
 
     try {
+
       const response = await searchEnterpriseByTag({
         pageIndex,
-        pageSize: 8,
-        selectDate: confirmedDate || new Date().toISOString().split('T')[0],
+        pageSize: 20,
+        selectDate: confirmedDate || new Date(Date.now() - 86400000).toISOString().split('T')[0],
         sceneName,
         firstTag: currentTag.firstTag,
         firstTagId: currentTag.firstTagId,
         enterpriseSize,
         street,
         secondTag,
-        secondTagId
+        secondTagId,
+        keyword: debouncedSearch
       });
 
       const data = response.data || [];
@@ -356,26 +300,28 @@ export default function SceneEnterprise() {
     } catch (error) {
       console.error('Error fetching enterprises:', error);
     }
-  }, [sceneName, currentTag, confirmedDate, enterpriseSizeFilter, streetFilter, tagFilter]);
+  }, [sceneName, currentTag, confirmedDate]);
 
-  // 初始化 / 标签变化时重置列表
+  // 统一处理筛选条件和搜索文本变化
   useEffect(() => {
-    setCurrentPage(1);
-    fetchEnterprises(1, true);
-  }, [currentTag, fetchEnterprises]);
+    if (currentTag) {
+      setCurrentPage(1);
+      fetchEnterprises(1, true);
+    }
+  }, [currentTag, debouncedSearch, enterpriseSizeFilter, streetFilter, tagFilter]);
 
   const handleLoadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     setLoading(true);
     await fetchEnterprises(currentPage + 1);
     setLoading(false);
-  }, [loading, hasMore, currentPage, fetchEnterprises]);
+  }, [loading, hasMore, currentPage]);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     await fetchEnterprises(1, true);
     setRefreshing(false);
-  }, [fetchEnterprises]);
+  }, []);
 
 
   return (

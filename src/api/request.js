@@ -5,7 +5,7 @@ if (!globalThis.__axiosRequest) {
   const instance = axios.create({
     baseURL: 'https://sjch5.gongshu.gov.cn/pbdm-api',
     // baseURL: 'http://192.168.10.229:9081',
-    timeout: 10000,
+    timeout: 30000,
     headers: {
       'Content-Type': 'application/json',
       'YICALL-SECRET-KEY': 'CQ2Fgiaux3Ml9qoO'
