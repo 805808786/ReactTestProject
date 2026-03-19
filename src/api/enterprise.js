@@ -45,3 +45,13 @@ export const searchEnterpriseByTag = (date) => {
 export const selectEnterpriseSecondTag = ({ firstTag, firstTagId, sceneName, selectDate }) => {
   return request.post('/backend/sceneRadar/selectEnterpriseSecondTag', { firstTag, firstTagId, sceneName, selectDate })
 }
+
+/**
+ * 获取业务时间的数据统计信息
+ * @param {object} params
+ * @param {string} params.selectDate - 选择日期，格式 YYYY-MM-DD
+ * @param {string} params.sceneName - 场景名称，如 "人工智能"
+ */
+export const getDataCountInfo = ({ selectDate, sceneName }) => {
+  return request.post('/backend/sceneRadar/dataCountInfo', { selectDate, sceneName })
+}

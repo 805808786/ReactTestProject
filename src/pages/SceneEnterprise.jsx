@@ -4,7 +4,7 @@ import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
 import DateSelection from './components/dataSelection/index';
 import PageHeader from '../components/PageHeader';
-import { selectEnterpriseFirstTag, searchEnterpriseByTag, selectEnterpriseSecondTag } from '../api/enterprise';
+import { selectEnterpriseFirstTag, searchEnterpriseByTag, selectEnterpriseSecondTag, getDataCountInfo } from '../api/enterprise';
 import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconSceneDynamic from '../assets/icon-scene-dynamic.svg';
@@ -150,6 +150,26 @@ export default function SceneEnterprise() {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [pendingDate, setPendingDate] = useState(null);
   const [confirmedDate, setConfirmedDate] = useState(null);
+  const [dateInfoData, setDateInfoData] = useState(null);
+
+  useEffect(() => {
+    const fetchDateInfo = async () => {
+      const todayStr = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      const queryDate = pendingDate || confirmedDate || todayStr;
+      try {
+        const response = await getDataCountInfo({ selectDate: queryDate, sceneName });
+        if (response && response.data) {
+          setDateInfoData(response.data);
+        } else {
+          setDateInfoData(null);
+        }
+      } catch (error) {
+        console.error('Error fetching date info:', error);
+        setDateInfoData(null);
+      }
+    };
+    fetchDateInfo();
+  }, [pendingDate, confirmedDate, sceneName]);
 
   const handleCalendarOpen = useCallback(() => {
     setPendingDate(confirmedDate);
@@ -371,6 +391,7 @@ export default function SceneEnterprise() {
     setRefreshing(false);
   }, [fetchEnterprises]);
 
+  console.log(dateInfoData)
 
   return (
     <div className="se-container">
@@ -550,46 +571,71 @@ export default function SceneEnterprise() {
             />
 
             {/* 已选日期信息 */}
-            {pendingDate && (
+            {dateInfoData && (
               <div className="se-cal-info">
-                <div className="se-cal-info-date">{formatDateDisplay(pendingDate)}</div>
-
-                {/* 企业总数卡片 */}
-                <div className="se-cal-card se-cal-card--blue">
-                  <div className="se-cal-card-label">企业总数</div>
-                  <div className="se-cal-card-row">
-                    <span className="se-cal-card-value">18,767家</span>
-                    <span className="se-cal-card-delta se-cal-card-delta--neg">-13家</span>
-                  </div>
-                </div>
-
-                {/* 变化原因卡片 */}
-                <div className="se-cal-card se-cal-card--orange">
-                  <div className="se-cal-card-label">变化原因</div>
-                  <div className="se-cal-card-list">
-                    <div className="se-cal-card-list-item">
-                      <span className="se-cal-card-list-idx">1.</span>
-                      <span className="se-cal-card-list-txt">工商信息新注册/新注销企业变化</span>
+                {/* 头部：已选择日期 + 企业总数 */}
+                <div>
+                  <div className="se-cal-header-row">
+                    <div className="se-cal-header-left">
+                      <span className="se-cal-header-label">已选择</span>
                     </div>
-                    <div className="se-cal-card-list-item">
-                      <span className="se-cal-card-list-idx">2.</span>
-                      <span className="se-cal-card-list-txt">商务社区走访新入驻企业</span>
+                    <div className="se-cal-header-right">
+                      <span className="se-cal-header-label">企业总数</span>
+                    </div>
+                  </div>
+                  <div className="se-cal-header-row">
+                    <div className="se-cal-header-left">
+                      <span className="se-cal-header-date">{dateInfoData.dateStr || formatDateDisplay(pendingDate)}</span>
+                    </div>
+                    <div className="se-cal-header-right">
+                      <span className="se-cal-header-total">{dateInfoData.count}</span>
+                      <span className="se-cal-header-delta" style={{ color: dateInfoData.differenceType == 'positive' ? '#0AA34E' : '#52C41A' }}>
+                        {dateInfoData.difference}
+                      </span>
                     </div>
                   </div>
                 </div>
 
-                {/* 标签变化卡片 */}
-                <div className="se-cal-card se-cal-card--purple">
-                  <div className="se-cal-card-label">标签变化</div>
-                  <div className="se-cal-card-tag-row">
-                    <span className="se-cal-badge se-cal-badge--blue">新增</span>
-                    <div className="se-cal-tag-info">
-                      <span className="se-cal-tag-title">跨境供应链服务</span>
-                      <span className="se-cal-tag-dot"> · </span>
-                      <span className="se-cal-tag-desc">新增为出海企业 · 跨境物流</span>
+                {/* 变化原因 */}
+                {dateInfoData.changeReason && dateInfoData.changeReason.length > 0 && (
+                  <div className="se-cal-section">
+                    <div className="se-cal-section-title se-cal-section-title--orange">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M13.2691 7.37285C13.2691 8.93716 12.6477 10.4374 11.5416 11.5435C10.4354 12.6497 8.93521 13.2711 7.3709 13.2711C5.80659 13.2711 4.30635 12.6497 3.20021 11.5435C2.09408 10.4374 1.47266 8.93716 1.47266 7.37285C1.47266 5.80854 2.09408 4.3083 3.20021 3.20216C4.30635 2.09603 5.80659 1.47461 7.3709 1.47461C8.93521 1.47461 10.4354 2.09603 11.5416 3.20216C12.6477 4.3083 13.2691 5.80854 13.2691 7.37285ZM8.10818 4.42373C8.10818 4.61927 8.0305 4.8068 7.89223 4.94506C7.75396 5.08333 7.56643 5.16101 7.3709 5.16101C7.17536 5.16101 6.98783 5.08333 6.84956 4.94506C6.71129 4.8068 6.63362 4.61927 6.63362 4.42373C6.63362 4.22819 6.71129 4.04066 6.84956 3.90239C6.98783 3.76413 7.17536 3.68645 7.3709 3.68645C7.56643 3.68645 7.75396 3.76413 7.89223 3.90239C8.0305 4.04066 8.10818 4.22819 8.10818 4.42373ZM6.63362 6.63557C6.43808 6.63557 6.25055 6.71325 6.11228 6.85151C5.97401 6.98978 5.89634 7.17731 5.89634 7.37285C5.89634 7.56839 5.97401 7.75592 6.11228 7.89418C6.25055 8.03245 6.43808 8.11013 6.63362 8.11013V10.322C6.63362 10.5175 6.71129 10.705 6.84956 10.8433C6.98783 10.9816 7.17536 11.0592 7.3709 11.0592H8.10818C8.30371 11.0592 8.49124 10.9816 8.62951 10.8433C8.76778 10.705 8.84546 10.5175 8.84546 10.322C8.84546 10.1264 8.76778 9.9389 8.62951 9.80063C8.49124 9.66237 8.30371 9.58469 8.10818 9.58469V7.37285C8.10818 7.17731 8.0305 6.98978 7.89223 6.85151C7.75396 6.71325 7.56643 6.63557 7.3709 6.63557H6.63362Z" fill="#FF6900" />
+                      </svg>
+                      <span>变化原因</span>
+                    </div>
+                    <div className="se-cal-section-desc">
+                      <div>{dateInfoData.changeReason}</div>
                     </div>
                   </div>
-                </div>
+                )}
+
+                {/* 标签变化 */}
+                {dateInfoData.tagChangeList && dateInfoData.tagChangeList.length > 0 && (
+                  <div className="se-cal-section">
+                    <div className="se-cal-section-title se-cal-section-title--purple">
+                      <div className="se-cal-title-left">
+                        <svg className="se-cal-icon" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.36-.36.59-.86.59-1.41s-.23-1.06-.59-1.41zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
+                        </svg>
+                        <span>标签变化</span>
+                      </div>
+                      <div className="se-cal-title-right">{dateInfoData.tagChangeCount || dateInfoData.tagChangeList.length} 项</div>
+                    </div>
+
+                    <div className="se-cal-tag-list">
+                      {dateInfoData.tagChangeList.map((tag, idx) => (
+                        <div className="se-cal-tag-item" key={idx}>
+                          <span className={`se-cal-badge ${tag.dataType === '新增' ? 'se-cal-badge--green' : 'se-cal-badge--blue'}`}>
+                            {tag.dataType}
+                          </span>
+                          <span className="se-cal-tag-text">{tag.tagName} · {tag.tagDefinition}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
