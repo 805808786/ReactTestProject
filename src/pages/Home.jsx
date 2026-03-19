@@ -320,7 +320,7 @@ function EnterpriseOverview() {
                   <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
-                  <span className="daily-label-v2">其他</span>
+                  <span className="daily-label-v2">第三方平台核准</span>
                   <span className="daily-value-v2 other-val">+{loading ? '--' : (stats.otherNum || 0)}</span>
                 </div>
               </div>

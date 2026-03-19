@@ -353,7 +353,7 @@ export default function EnterpriseCalendar() {
             if (item.otherNum !== 0 && item.otherNum !== undefined) {
               const isOtherPos = item.otherNum > 0;
               dynamicReasons.push({
-                text: '因其他原因导致企业数量变化',
+                text: '第三方企业数据服务平台核准数据',
                 delta: `${isOtherPos ? '+' : ''}${item.otherNum}家`,
                 deltaPositive: isOtherPos
               });
@@ -495,7 +495,7 @@ export default function EnterpriseCalendar() {
                         if (changeDateData?.newMoveInEnterprisesNum > 0) sheetReasons.push({ text: '拱墅区区外新迁入企业', val: `+${changeDateData.newMoveInEnterprisesNum}` });
                         if (changeDateData?.cancelEnterprisesNum > 0) sheetReasons.push({ text: '拱墅区区内企业注销或吊销', val: `-${changeDateData.cancelEnterprisesNum}` });
                         if (changeDateData?.otherNum !== 0 && changeDateData?.otherNum !== undefined) {
-                          sheetReasons.push({ text: '因其他原因导致企业数量变化', val: `${changeDateData.otherNum > 0 ? '+' : ''}${changeDateData.otherNum}` });
+                          sheetReasons.push({ text: '第三方企业数据服务平台核准数据', val: `${changeDateData.otherNum > 0 ? '+' : ''}${changeDateData.otherNum}` });
                         }
 
                         return sheetReasons.length > 0 ? sheetReasons.map((r, ri) => (

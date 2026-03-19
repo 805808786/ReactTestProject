@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
 import DateSelection from './components/dataSelection/index';
+import PageHeader from '../components/PageHeader';
+import { selectEnterpriseFirstTag, searchEnterpriseByTag, selectEnterpriseSecondTag } from '../api/enterprise';
 import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconSceneDynamic from '../assets/icon-scene-dynamic.svg';
@@ -12,8 +14,8 @@ import iconStatInfo from '../assets/icon-stat-info.svg';
 import './SceneEnterprise.css';
 
 /* ===================== Mock 数据 ===================== */
-const STREETS = ['小河街道', '拱宸桥街道', '湖墅街道', '米市巷街道', '大关街道', '和睦街道', '康桥街道', '上塘街道', '祥符街道', '石桥街道'];
-const CAPITALS = ['100万以下', '100-500万', '500-1000万', '1000-5000万', '5000万以上'];
+const STREETS = ['米市巷街道', '湖墅街道', '小河街道', '和睦街道', '拱宸桥街道', '大关街道', '上塘街道', '祥符街道', '康桥街道', '半山街道', '天水街道', '武林街道', '长庆街道', '潮鸣街道', '朝晖街道', '文晖街道', '东新街道', '石桥街道'];
+const ENTERPRISE_SIZES = ['微型', '小型', '中型', '大型'];
 const TAGS = ['高新技术企业', '国家重点企业', '瞪羚企业', '独角兽企业', '规模以上', '上市企业', '专精特新小巨人', '科技型中小企业'];
 
 const BUSINESS_STATUSES = ['存续', '注销', '存续', '存续', '存续', '迁出', '存续', '存续', '注销', '存续'];
@@ -87,7 +89,7 @@ const STATS_CRITERIA = {
     title: '潜力企业（分类标准）',
     content: `符合拱墅区“115X"先进制造业集群发展方向，具备较强成长性与发展潜力，但暂未取得相关荣誉资质的企业。`,
   },
-  other:  {
+  other: {
     title: '后备企业（分类标准）',
     content: `符合拱墅区“115X"先进制造业集群发展方向，但当前活跃度较低的企业。`,
   },
@@ -105,8 +107,8 @@ function FilterButton({ label, active, count, onClick }) {
   return (
     <button className={`se-filter-btn${active ? ' se-filter-btn--active' : ''}`} onClick={onClick}>
       <span>{label}{count > 0 ? `(${count})` : ''}</span>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <path d="M3 4.5L6 7.5L9 4.5" stroke={active ? '#0052D9' : 'rgba(0,0,0,0.6)'} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fill-opacity="0.9" />
       </svg>
     </button>
   );
@@ -114,22 +116,30 @@ function FilterButton({ label, active, count, onClick }) {
 
 /* ===================== 企业卡片 ===================== */
 function EnterpriseCard({ enterprise }) {
-  const { name, creditCode, legalRep, capital, regDate, status, address, tags, isFirst } = enterprise;
-  const visibleTags = tags.slice(0, 2);
-  const extraCount = tags.length - 2;
-  const isActive = status === '存续';
+  const { enterpriseName, enterpriseLogo, tags, categoryName, isFirst } = enterprise;
+  // 从 tags 数组中提取 tagName
+  const tagNames = tags ? tags.map(tag => tag.tagName) : [];
+  const visibleTags = tagNames.slice(0, 2);
+  const extraCount = tagNames.length - 2;
 
   return (
-    <div className={`se-card${isFirst ? ' se-card--first' : ''}`}>
+    <div key={enterprise.enterpriseId} className={`se-card${isFirst ? ' se-card--first' : ''}`}>
       {/* 顶部：图标 + 公司名 + 标签 + 查看详情 */}
       <div className="se-card-top">
         <div className="se-card-left">
-          <img src={iconCompany} alt="企业" className="se-company-icon" />
+          <img
+            src={enterpriseLogo || iconCompany}
+            alt="企业"
+            className="se-company-icon"
+          />
           <div className="se-company-info">
-            <div className="se-company-name">{name}</div>
+            <div className="se-company-name">{enterpriseName}</div>
+            {categoryName && (
+              <div className="se-company-category">{categoryName}</div>
+            )}
             <div className="se-tags">
-              {visibleTags.map(tag => (
-                <span key={tag} className="se-tag">{tag}</span>
+              {visibleTags.map((tag, index) => (
+                <span key={index} className="se-tag">{tag}</span>
               ))}
               {extraCount > 0 && (
                 <span className="se-tag se-tag--extra">+{extraCount}</span>
@@ -142,40 +152,25 @@ function EnterpriseCard({ enterprise }) {
 
       {/* 详情信息 */}
       <div className="se-card-detail">
-        {/* 统一社会信用代码 */}
+        {/* 企业 ID */}
         <div className="se-info-row">
           <div className="se-info-item se-info-item--wide">
-            <span className="se-info-label">统一社会信用代码：</span>
-            <span className="se-info-value">{creditCode}</span>
+            <span className="se-info-label">企业 ID：</span>
+            <span className="se-info-value">{enterprise.enterpriseId || '-'}</span>
           </div>
         </div>
-        {/* 法定代表人 + 注册资本 */}
-        <div className="se-info-row">
-          <div className="se-info-item">
-            <span className="se-info-label">法定代表人:</span>
-            <span className="se-info-value">{legalRep}</span>
-          </div>
-          <div className="se-info-item">
-            <span className="se-info-label">注册资本:</span>
-            <span className="se-info-value">{capital}</span>
-          </div>
-        </div>
-        {/* 注册日期 + 经营状态 */}
-        <div className="se-info-row">
-          <div className="se-info-item">
-            <span className="se-info-label">注册日期:</span>
-            <span className="se-info-value">{regDate}</span>
-          </div>
-          <div className="se-info-item">
-            <span className="se-info-label">经营状态：</span>
-            <span className={`se-info-value se-status${isActive ? ' se-status--active' : ' se-status--closed'}`}>{status}</span>
-          </div>
-        </div>
-        {/* 企业地址 */}
+        {/* 注册地址 */}
         <div className="se-info-row">
           <div className="se-info-item se-info-item--wide">
-            <span className="se-info-label">企业地址：</span>
-            <span className="se-info-value se-address">{address}</span>
+            <span className="se-info-label">注册地址：</span>
+            <span className="se-info-value se-address">{enterprise.registeredAddress || '-'}</span>
+          </div>
+        </div>
+        {/* 所属街道 */}
+        <div className="se-info-row">
+          <div className="se-info-item se-info-item--wide">
+            <span className="se-info-label">所属街道：</span>
+            <span className="se-info-value">{enterprise.street || '-'}</span>
           </div>
         </div>
       </div>
@@ -187,7 +182,7 @@ function EnterpriseCard({ enterprise }) {
 export default function SceneEnterprise() {
   const navigate = useNavigate();
   const location = useLocation();
-  const sceneName = location.state?.sceneName || '人工智能企业';
+  const sceneName = location.state?.sceneName || '人工智能';
 
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -211,11 +206,16 @@ export default function SceneEnterprise() {
   const handleCalendarConfirm = useCallback(() => {
     setConfirmedDate(pendingDate);
     setCalendarOpen(false);
+    // 清空筛选条件
+    setStreetFilter([]);
+    setEnterpriseSizeFilter([]);
+    setTagFilter([]);
+    setActiveFilter(null);
   }, [pendingDate]);
 
   // 筛选状态
   const [streetFilter, setStreetFilter] = useState([]);
-  const [capitalFilter, setCapitalFilter] = useState([]);
+  const [enterpriseSizeFilter, setEnterpriseSizeFilter] = useState([]);
   const [tagFilter, setTagFilter] = useState([]);
 
   // 当前展开的筛选器
@@ -227,6 +227,21 @@ export default function SceneEnterprise() {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [filteredTotal, setFilteredTotal] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // API 数据
+  const [enterpriseTags, setEnterpriseTags] = useState([]);
+  const [enterpriseSecondTags, setEnterpriseSecondTags] = useState([]);
+  const [apiLoading, setApiLoading] = useState(true);
+
+  // 当前选择的标签
+  const [currentTag, setCurrentTag] = useState(null);
+
+  // 使用ref存储最新的二级标签数据
+  const enterpriseSecondTagsRef = useRef(enterpriseSecondTags);
+  useEffect(() => {
+    enterpriseSecondTagsRef.current = enterpriseSecondTags;
+  }, [enterpriseSecondTags]);
 
   // 搜索防抖
   useEffect(() => {
@@ -237,66 +252,136 @@ export default function SceneEnterprise() {
     return () => clearTimeout(debounceTimer.current);
   }, [searchText]);
 
-  // 计算过滤后的全部数据
-  const getFiltered = useCallback(() => {
-    return ALL_ENTERPRISES.filter(e => {
-      const matchSearch = !debouncedSearch ||
-        e.name.includes(debouncedSearch) ||
-        e.creditCode.includes(debouncedSearch);
-      const matchStreet = streetFilter.length === 0 || streetFilter.includes(e.street);
-      const matchCapital = capitalFilter.length === 0 || capitalFilter.includes(e.capitalRange);
-      const matchTag = tagFilter.length === 0 || tagFilter.some(t => e.tags.includes(t));
-      return matchSearch && matchStreet && matchCapital && matchTag;
-    });
-  }, [debouncedSearch, streetFilter, capitalFilter, tagFilter]);
-
-  // 初始化 / 筛选变化时重置列表
+  // 获取企业标签数据
   useEffect(() => {
-    const filtered = getFiltered();
-    setFilteredTotal(filtered.length);
-    const page = filtered.slice(0, PAGE_SIZE);
-    setDisplayedItems(page.map((item, i) => ({ ...item, isFirst: i === 0 })));
-    setHasMore(filtered.length > PAGE_SIZE);
-  }, [getFiltered]);
+    const loadEnterpriseTags = async () => {
+      setApiLoading(true);
+      try {
+        const response = await selectEnterpriseFirstTag({ sceneName, pageLevel: 1 });
+        const tags = response.data || [];
+        setEnterpriseTags(tags);
+        // 设置默认标签为第一个 item
+        if (tags.length > 0) {
+          setCurrentTag({
+            firstTag: tags[0].firstTag,
+            firstTagId: tags[0].firstTagId
+          });
+        }
+      } catch (error) {
+        console.error('Error loading enterprise tags:', error);
+      } finally {
+        setApiLoading(false);
+      }
+    };
+
+    loadEnterpriseTags();
+  }, [sceneName]);
+
+  // 获取企业二级标签数据
+  useEffect(() => {
+    if (!currentTag) return;
+
+    const loadEnterpriseSecondTags = async () => {
+      try {
+        const response = await selectEnterpriseSecondTag({
+          firstTag: currentTag.firstTag,
+          firstTagId: currentTag.firstTagId,
+          sceneName,
+          selectDate: confirmedDate || new Date().toISOString().split('T')[0]
+        });
+        const secondTags = response.data || [];
+        setEnterpriseSecondTags(secondTags);
+      } catch (error) {
+        console.error('Error loading enterprise second tags:', error);
+      }
+    };
+
+    loadEnterpriseSecondTags();
+  }, [currentTag, sceneName, confirmedDate]);
+
+  // 获取企业列表数据
+  const fetchEnterprises = useCallback(async (pageIndex = 1, isRefresh = false) => {
+    if (!currentTag) return;
+
+    // 处理企业规模参数，将选项映射为对应的数值
+    const enterpriseSize = enterpriseSizeFilter.length > 0 ? {
+      '微型': 1,
+      '小型': 2,
+      '中型': 3,
+      '大型': 4
+    }[enterpriseSizeFilter[0]] : undefined;
+
+    // 处理所属街道参数
+    const street = streetFilter.length > 0 ? streetFilter[0] : undefined;
+
+    // 处理重点标签参数，将选项映射为对应的secondTagId
+    const secondTagId = tagFilter.length > 0 ? {
+      ...enterpriseSecondTagsRef.current.reduce((acc, tag) => {
+        acc[tag.secondTag] = tag.secondTagId;
+        return acc;
+      }, {})
+    }[tagFilter[0]] : undefined;
+
+    const secondTag = tagFilter.length > 0 ? tagFilter[0] : undefined;
+
+    try {
+      const response = await searchEnterpriseByTag({
+        pageIndex,
+        pageSize: 8,
+        selectDate: confirmedDate || new Date().toISOString().split('T')[0],
+        sceneName,
+        firstTag: currentTag.firstTag,
+        firstTagId: currentTag.firstTagId,
+        enterpriseSize,
+        street,
+        secondTag,
+        secondTagId
+      });
+
+      const data = response.data || [];
+      const total = response.totalCount || 0;
+
+      if (isRefresh) {
+        setDisplayedItems(data.map((item, i) => ({ ...item, isFirst: i === 0 })));
+      } else {
+        setDisplayedItems(prev => [
+          ...prev,
+          ...data.map((item, i) => ({ ...item, isFirst: prev.length === 0 && i === 0 })),
+        ]);
+      }
+
+      setFilteredTotal(total);
+      setHasMore(displayedItems.length + data.length < total);
+      setCurrentPage(pageIndex);
+    } catch (error) {
+      console.error('Error fetching enterprises:', error);
+    }
+  }, [sceneName, currentTag, confirmedDate, enterpriseSizeFilter, streetFilter, tagFilter]);
+
+  // 初始化 / 标签变化时重置列表
+  useEffect(() => {
+    setCurrentPage(1);
+    fetchEnterprises(1, true);
+  }, [currentTag, fetchEnterprises]);
 
   const handleLoadMore = useCallback(async () => {
     if (loading || !hasMore) return;
     setLoading(true);
-    await new Promise(r => setTimeout(r, 600));
-    const filtered = getFiltered();
-    const nextPage = filtered.slice(displayedItems.length, displayedItems.length + PAGE_SIZE);
-    if (nextPage.length > 0) {
-      setDisplayedItems(prev => [
-        ...prev,
-        ...nextPage.map((item, i) => ({ ...item, isFirst: prev.length === 0 && i === 0 })),
-      ]);
-    }
-    setHasMore(displayedItems.length + nextPage.length < filtered.length);
+    await fetchEnterprises(currentPage + 1);
     setLoading(false);
-  }, [loading, hasMore, displayedItems.length, getFiltered]);
+  }, [loading, hasMore, currentPage, fetchEnterprises]);
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
-    await new Promise(r => setTimeout(r, 800));
-    const filtered = getFiltered();
-    setFilteredTotal(filtered.length);
-    const page = filtered.slice(0, PAGE_SIZE);
-    setDisplayedItems(page.map((item, i) => ({ ...item, isFirst: i === 0 })));
-    setHasMore(filtered.length > PAGE_SIZE);
+    await fetchEnterprises(1, true);
     setRefreshing(false);
-  }, [getFiltered]);
+  }, [fetchEnterprises]);
+
 
   return (
     <div className="se-container">
       {/* ===== 头部 ===== */}
-      <div className="se-header">
-        <div className="se-header-top">
-          <button className="se-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="se-header-title">{sceneName}</span>
-        </div>
-
+      <PageHeader title={`${sceneName}场景`}>
         {/* 搜索行 */}
         <div className="se-search-row">
           <div className="se-search-bar">
@@ -309,109 +394,122 @@ export default function SceneEnterprise() {
             />
           </div>
           <button className="se-calendar-btn" onClick={handleCalendarOpen}>
-              企业日历
+            企业日历
           </button>
         </div>
 
         {/* 统计数据 */}
         <div className="se-stats-area">
-          <div className="se-stat-card se-stat-card--primary">
-            <div className="se-stat-label">全部</div>
-            <div className="se-stat-value">{STATS.total.toLocaleString()}</div>
-          </div>
-          <div className="se-stat-card">
-            <div className="se-stat-label se-stat-label--with-icon">
-              核心企业
-              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('top')} aria-label="核心企业统计标准">
-                <img src={iconStatInfo} alt="" width={10} height={10} />
-              </button>
-            </div>
-            <div className="se-stat-value">{STATS.top}</div>
-          </div>
-          <div className="se-stat-card">
-            <div className="se-stat-label se-stat-label--with-icon">
-              重点企业
-              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('middle')} aria-label="重点企业统计标准">
-                <img src={iconStatInfo} alt="" width={10} height={10} />
-              </button>
-            </div>
-            <div className="se-stat-value">{STATS.middle}</div>
-          </div>
-          <div className="se-stat-card">
-            <div className="se-stat-label se-stat-label--with-icon">
-              潜力企业
-              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('potential')} aria-label="潜力企业统计标准">
-                <img src={iconStatInfo} alt="" width={10} height={10} />
-              </button>
-            </div>
-            <div className="se-stat-value">{STATS.potential}</div>
-          </div>
-          <div className="se-stat-card">
-            <div className="se-stat-label se-stat-label--with-icon">
-              后备企业
-              <button className="se-stat-info-btn" onClick={() => setCriteriaPopup('other')} aria-label="后备企业统计标准">
-                <img src={iconStatInfo} alt="" width={10} height={10} />
-              </button>
-            </div>
-            <div className="se-stat-value">{STATS.other}</div>
-          </div>
+          {apiLoading ? (
+            // 加载中状态
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className={`se-stat-card${index === 0 ? ' se-stat-card--primary' : ''}`}>
+                <div className="se-stat-label">{index === 0 ? '全部' : ['核心企业', '重点企业', '潜力企业', '后备企业'][index - 1]}</div>
+                <div className="se-stat-value">加载中...</div>
+              </div>
+            ))
+          ) : enterpriseTags.length > 0 ? (
+            // 使用 API 数据
+            enterpriseTags.map((item, index) => (
+              <div
+                key={index}
+                className={`se-stat-card ${currentTag.firstTagId === item.firstTagId ? ' se-stat-card--primary' : ''}`}
+                onClick={() => {
+                  setCurrentTag({ firstTag: item.firstTag, firstTagId: item.firstTagId });
+                  // 清空筛选条件
+                  setStreetFilter([]);
+                  setEnterpriseSizeFilter([]);
+                  setTagFilter([]);
+                  setActiveFilter(null);
+                }}
+              >
+                <div className={`se-stat-label${index > 0 ? ' se-stat-label--with-icon' : ''}`}>
+                  {item.firstTag}
+                  {item.tooltip && (
+                    <button
+                      className="se-stat-info-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCriteriaPopup(item);
+                      }}
+                      aria-label={`${item.firstTag || ['核心企业', '重点企业', '潜力企业', '后备企业'][index - 1]}统计标准`}
+                    >
+                      <img src={iconStatInfo} alt="" width={10} height={10} style={{ filter: currentTag.firstTagId === item.firstTagId ? 'brightness(0) invert(1)' : 'brightness(0) saturate(100%) invert(17%) sepia(89%) saturate(2710%) hue-rotate(217deg) brightness(98%) contrast(100%)' }} />
+                    </button>
+                  )}
+                </div>
+                <div className="se-stat-value">{item.enterpriseCount || 0}</div>
+              </div>
+            ))
+          ) : <></>
+          }
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 主体区域 ===== */}
       <div className="se-body">
-        {/* 场景动态 + 筛选区域 */}
-        <div className="se-dynamic-filter-area">
-          {/* 场景动态横幅 */}
-          <div className="se-scene-dynamic" onClick={() => navigate('/scene-enterprise-dynamic')} style={{ cursor: 'pointer' }}>
-            <div className="se-dynamic-left">
-              <img src={iconSceneDynamic} alt="场景动态" className="se-dynamic-icon" />
-              <span className="se-dynamic-title">场景动态</span>
+        {apiLoading ? (
+          // 加载中状态
+          <div className="se-loading-container">
+            <div className="se-loading-spinner"></div>
+            <div className="se-loading-text">加载中...</div>
+          </div>
+        ) : (
+          <>
+            {/* 场景动态 + 筛选区域 */}
+            <div className="se-dynamic-filter-area">
+              {/* 场景动态横幅 */}
+              {/* <div className="se-scene-dynamic" onClick={() => navigate('/scene-enterprise-dynamic')} style={{ cursor: 'pointer' }}>
+                <div className="se-dynamic-left">
+                  <img src={iconSceneDynamic} alt="场景动态" className="se-dynamic-icon" />
+                  <span className="se-dynamic-title">场景动态</span>
+                </div>
+                <span className="se-dynamic-desc">您有5条新的场景动态，请查阅！</span>
+                <span className="se-dynamic-arrow">→</span>
+              </div> */}
+
+              {/* 筛选器行 */}
+              <div className="se-filter-row">
+                <FilterButton
+                  label="所属街道"
+                  active={activeFilter === 'street' || streetFilter.length > 0}
+                  count={streetFilter.length}
+                  onClick={() => setActiveFilter(activeFilter === 'street' ? null : 'street')}
+                />
+                <FilterButton
+                  label="企业规模"
+                  active={activeFilter === 'enterpriseSize' || enterpriseSizeFilter.length > 0}
+                  count={enterpriseSizeFilter.length}
+                  onClick={() => setActiveFilter(activeFilter === 'enterpriseSize' ? null : 'enterpriseSize')}
+                />
+                <FilterButton
+                  label="重点标签"
+                  active={activeFilter === 'tag' || tagFilter.length > 0}
+                  count={tagFilter.length}
+                  onClick={() => setActiveFilter(activeFilter === 'tag' ? null : 'tag')}
+                />
+              </div>
+
+              {/* 筛选汇总 */}
+              <div className="se-filter-summary">
+                <span className="se-filter-label">筛选企业：</span>
+                <span className="se-filter-count">{filteredTotal.toLocaleString()}家</span>
+              </div>
             </div>
-            <span className="se-dynamic-desc">您有5条新的场景动态，请查阅！</span>
-            <span className="se-dynamic-arrow">→</span>
-          </div>
 
-          {/* 筛选器行 */}
-          <div className="se-filter-row">
-            <FilterButton
-              label="所属街道"
-              active={activeFilter === 'street' || streetFilter.length > 0}
-              count={streetFilter.length}
-              onClick={() => setActiveFilter(activeFilter === 'street' ? null : 'street')}
+            {/* ===== 企业列表 ===== */}
+            <InfiniteList
+              items={displayedItems}
+              renderItem={(item) => <EnterpriseCard enterprise={item} />}
+              onLoadMore={handleLoadMore}
+              onRefresh={handleRefresh}
+              hasMore={hasMore}
+              loading={loading}
+              refreshing={refreshing}
+              endText="已显示全部企业"
             />
-            <FilterButton
-              label="注册资本"
-              active={activeFilter === 'capital' || capitalFilter.length > 0}
-              count={capitalFilter.length}
-              onClick={() => setActiveFilter(activeFilter === 'capital' ? null : 'capital')}
-            />
-            <FilterButton
-              label="重点标签"
-              active={activeFilter === 'tag' || tagFilter.length > 0}
-              count={tagFilter.length}
-              onClick={() => setActiveFilter(activeFilter === 'tag' ? null : 'tag')}
-            />
-          </div>
-
-          {/* 筛选汇总 */}
-          <div className="se-filter-summary">
-            <span className="se-filter-label">筛选企业：</span>
-            <span className="se-filter-count">{filteredTotal.toLocaleString()}家</span>
-          </div>
-        </div>
-
-        {/* ===== 企业列表 ===== */}
-        <InfiniteList
-          items={displayedItems}
-          renderItem={(item) => <EnterpriseCard enterprise={item} />}
-          onLoadMore={handleLoadMore}
-          onRefresh={handleRefresh}
-          hasMore={hasMore}
-          loading={loading}
-          refreshing={refreshing}
-          endText="已显示全部企业"
-        />
+          </>
+        )}
       </div>
 
       {/* ===== 筛选底部弹框 ===== */}
@@ -422,25 +520,25 @@ export default function SceneEnterprise() {
         onChange={setStreetFilter}
         onClose={() => setActiveFilter(null)}
         open={activeFilter === 'street'}
-        multiple
+        multiple={false}
       />
       <FilterSheet
-        title="注册资本"
-        options={CAPITALS}
-        value={capitalFilter}
-        onChange={setCapitalFilter}
+        title="企业规模"
+        options={ENTERPRISE_SIZES}
+        value={enterpriseSizeFilter}
+        onChange={setEnterpriseSizeFilter}
         onClose={() => setActiveFilter(null)}
-        open={activeFilter === 'capital'}
-        multiple
+        open={activeFilter === 'enterpriseSize'}
+        multiple={false}
       />
       <FilterSheet
         title="重点标签"
-        options={TAGS}
+        options={enterpriseSecondTags.map(tag => tag.secondTag)}
         value={tagFilter}
         onChange={setTagFilter}
         onClose={() => setActiveFilter(null)}
         open={activeFilter === 'tag'}
-        multiple
+        multiple={false}
       />
 
       {/* ===== 日历底部弹框 ===== */}
@@ -515,8 +613,16 @@ export default function SceneEnterprise() {
         <div className="se-criteria-overlay" onClick={() => setCriteriaPopup(null)}>
           <div className="se-criteria-dialog" onClick={e => e.stopPropagation()}>
             <div className="se-criteria-content">
-              <div className="se-criteria-title">{STATS_CRITERIA[criteriaPopup].title}</div>
-              <div className="se-criteria-text">{STATS_CRITERIA[criteriaPopup].content}</div>
+              {typeof criteriaPopup.tooltip === 'string' && criteriaPopup.tooltip.includes('<div') ? (
+                // 显示 tooltip 内容
+                <div dangerouslySetInnerHTML={{ __html: criteriaPopup.tooltip }} />
+              ) : (
+                // 显示默认统计标准
+                <>
+                  <div className="se-criteria-title">{`${criteriaPopup?.firstTag}（分类标准）`}</div>
+                  <div className="se-criteria-text">{criteriaPopup?.tooltip || ''}</div>
+                </>
+              )}
             </div>
             <div className="se-criteria-footer">
               <button className="se-criteria-close-btn" onClick={() => setCriteriaPopup(null)}>关闭</button>

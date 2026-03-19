@@ -5,7 +5,7 @@ import request from './request';
  * @param {string} date - 日期字符串 'YYYY-MM-DD'
  */
 export function getByChangeDate(date) {
-  return request.post('/backend/dataEnterpriseChange/getByChangeDate', { date });
+  return request.post('/backend/dataEnterpriseChange/getByChangeDate', { date }).data;
 }
 
 /**
@@ -13,7 +13,7 @@ export function getByChangeDate(date) {
  * @param {string} date - 日期字符串 'YYYY-MM-DD'
  */
 export function getStatisticsByChangeDateType(date) {
-  return request.post('/backend/dataEnterpriseChange/getStatisticsByChangeDateType', { date });
+  return request.post('/backend/dataEnterpriseChange/getStatisticsByChangeDateType', { date }).data;
 }
 /**
  * 获取企业变化趋势数据
@@ -21,12 +21,12 @@ export function getStatisticsByChangeDateType(date) {
  * @param {string} endDate - 结束时间 'YYYY-MM-DD'
  */
 export function getChangeByTime(startDate, endDate) {
-  return request.post('/backend/dataEnterpriseChange/getChangeByTime', { startDate, endDate });
+  return request.post('/backend/dataEnterpriseChange/getChangeByTime', { startDate, endDate }).data;
 }
 /**
  * 分页获取企业变化列表数据
  * @param {Object} params - { currentPage, pageSize, startDate, endDate }
  */
 export function queryEnterpriseByTime(params) {
-  return request.post('/backend/dataEnterpriseChange/queryEnterpriseByTime', params);
+  return request.post('/backend/dataEnterpriseChange/queryEnterpriseByTime', params).data;
 }

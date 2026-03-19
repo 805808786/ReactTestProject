@@ -15,9 +15,8 @@ if (!globalThis.__axiosRequest) {
   instance.interceptors.response.use(
     (response) => {
       const { data } = response
-      console.log(data);
-      if (data.code === 200 || data.code === 0 || data.success === true) {
-        return data.data !== undefined ? data.data : data
+      if (data.code === 200 || data.code === 2000 || data.code === 0 || data.success === true) {
+        return data
       }
       return Promise.reject(new Error(data.message || data.msg || '请求失败'))
     },

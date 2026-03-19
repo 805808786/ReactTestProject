@@ -1,0 +1,74 @@
+/* ===== 通用页面头部 ===== */
+.page-header {
+  /* background: linear-gradient(135deg, #155DFC 0%, #3979F0 50%, #1447E6 100%); */
+  padding: 16px 16px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 底部城市天际线背景图（76px 高，带蓝色半透明遮罩） */
+.page-header::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 76px;
+  background: url('../assets/header-bg-3979f0.png') center bottom / cover no-repeat;
+  z-index: 0;
+}
+
+/* 顶部：返回 + 标题 */
+.page-header__top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  position: relative;
+  z-index: 2;
+}
+
+.page-header__back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.page-header__back:active {
+  opacity: 0.7;
+}
+
+.page-header__back img {
+  width: 36px;
+  height: 32px;
+}
+
+.page-header__title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* 额外内容区（搜索栏、统计卡片等） */
+.page-header__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
