@@ -178,7 +178,7 @@ export default function SceneEnterprise() {
 
   // 列表数据
   const [displayedItems, setDisplayedItems] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false); // 初始为 false，防止 InfiniteList 首次挂载时误触发上拉加载
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [filteredTotal, setFilteredTotal] = useState(0);
@@ -342,6 +342,7 @@ export default function SceneEnterprise() {
       setCurrentPage(1);
       setLoading(true);
       setDisplayedItems([]); // 清空当前列表，确保 InfiniteList 能显示并置顶 Loading 状态
+      setHasMore(false); // 重置 hasMore，防止 InfiniteList 误触到底部加载
       // 滚动到顶部
       if (contentRef.current) {
         contentRef.current.scrollTop = 0;
