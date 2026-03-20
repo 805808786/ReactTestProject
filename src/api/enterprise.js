@@ -173,3 +173,139 @@ export const getSslmEnterprisesById = ({ enterpriseId, isOriginalDate = true, bu
     platform
   })
 }
+
+/**
+ * 获取企业人才数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} [params.type='4'] - 类型，固定值为"4"
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getEnterpriseTalent = ({ enterpriseId, isOriginalDate = true, type = '4', platform = 1 }) => {
+  return dataStorageRequest.post('/tianDaoJinKe/selectListByName', {
+    enterpriseId,
+    isOriginalDate,
+    type,
+    platform
+  })
+}
+
+/**
+ * 获取企业税收趋势数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {string} params.enterpriseName - 企业名称
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const selectListBuildingTrends = ({ enterpriseId, enterpriseName, platform = 1 }) => {
+  return dataStorageRequest.post('/building/selectListBuildingTrends', {
+    enterpriseId,
+    enterpriseName,
+    platform
+  })
+}
+
+/**
+ * 获取企业政策兑现标题
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const queryPolicyRedemptionTotal = ({ enterpriseId, isOriginalDate = true, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/queryPolicyRedemptionTotal', {
+    enterpriseId,
+    isOriginalDate,
+    platform
+  })
+}
+
+/**
+ * 获取企业政策兑现列表
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=10] - 每页数量
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const queryPolicyRedemptionPage = ({ enterpriseId, isOriginalDate = true, pageIndex = 1, pageSize = 10, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/queryPolicyRedemptionPage', {
+    enterpriseId,
+    isOriginalDate,
+    pageIndex,
+    pageSize,
+    platform
+  })
+}
+
+/**
+ * 获取企业需求数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.pageSize=9999] - 每页数量
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const modelPredictionDemand = ({ enterpriseId, isOriginalDate = true, pageSize = 9999, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/modelPredictionDemand', {
+    enterpriseId,
+    isOriginalDate,
+    pageSize,
+    platform
+  })
+}
+
+/**
+ * 获取企业融资数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=10] - 每页数量
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getFinancingInfo = ({ enterpriseId, isOriginalDate = true, pageIndex = 1, pageSize = 10, platform = 1 }) => {
+  return dataStorageRequest.post('/business/community/financingList', {
+    enterpriseId,
+    isOriginalDate,
+    pageIndex,
+    pageSize,
+    platform
+  })
+}
+
+/**
+ * 获取企业招投标数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=10] - 每页数量
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getBidInfo = ({ enterpriseId, isOriginalDate = true, pageIndex = 1, pageSize = 10, platform = 1 }) => {
+  return dataStorageRequest.post('/business/community/bidList', {
+    enterpriseId,
+    isOriginalDate,
+    pageIndex,
+    pageSize,
+    platform
+  })
+}
+
+/**
+ * 获取企业股权穿透信息
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getEnterpriseEquityPenetrationInfo = ({ enterpriseId, isOriginalDate = true, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/getEnterpriseEquityPenetrationInfo', {
+    enterpriseId,
+    isOriginalDate,
+    platform
+  })
+}

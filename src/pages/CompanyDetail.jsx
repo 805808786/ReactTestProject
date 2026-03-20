@@ -57,7 +57,7 @@ import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
 import enterpriseDataJson from '../json/enterprise.json';
-import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById } from '../api/enterprise';
+import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo } from '../api/enterprise';
 
 const getCompanyData = (id) => {
   if (!id) return enterpriseDataJson[0] || {};
@@ -131,9 +131,8 @@ export default function CompanyDetail() {
       });
   }, [id]);
 
-  // 优先使用 API 数据，未加载完成时使用 JSON 兜底
-  const companyData = getCompanyData(id);
-  const basicInfo = apiBasicInfo ?? companyData?.['基本信息']?.data ?? {};
+  // 只使用 API 数据
+  const basicInfo = apiBasicInfo || {};
 
   const company = {
     name: basicInfo.enterpriseName || '',
@@ -198,11 +197,20 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [profitModelRecords, setProfitModelRecords] = useState([]);
   const [coreCompetitivenessRecords, setCoreCompetitivenessRecords] = useState([]);
   const [streamData, setStreamData] = useState([]);
+  const [negativeRecords, setNegativeRecords] = useState([]);
+  const [painRecords, setPainRecords] = useState([]);
+  const [talentRecords, setTalentRecords] = useState([]);
+  const [taxTrendData, setTaxTrendData] = useState([]);
+  const [policySummary, setPolicySummary] = useState({});
+  const [policyRecords, setPolicyRecords] = useState([]);
+  const [demandRecords, setDemandRecords] = useState([]);
+  const [financingRecords, setFinancingRecords] = useState([]);
+  const [bidRecords, setBidRecords] = useState([]);
+  const [equityData, setEquityData] = useState({});
   const sectionRefs = useRef({});
 
   // 提取股权穿透相关数据
   const { id } = useParams();
-  const companyData = getCompanyData(id);
 
   // 从 API 获取企业服务与产品数据
   useEffect(() => {
@@ -297,34 +305,156 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       });
   }, [id]);
 
-  // 企业基本信息优先使用 API 数据，未加载完成时用 JSON 兜底
-  const basicInfo = apiBasicInfo ?? companyData?.['基本信息']?.data ?? {};
-  const equityData = companyData?.['股权穿透']?.data || {};
+  // 从 API 获取企业负面因素
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesById({ enterpriseId: id, businessType: 3 })
+      .then((res) => {
+        setNegativeRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业负面因素失败:', err);
+        setNegativeRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业当前阶段痛点
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesById({ enterpriseId: id, businessType: 4 })
+      .then((res) => {
+        setPainRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业当前阶段痛点失败:', err);
+        setPainRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业人才数据
+  useEffect(() => {
+    if (!id) return;
+    getEnterpriseTalent({ enterpriseId: id })
+      .then((res) => {
+        setTalentRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业人才数据失败:', err);
+        setTalentRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业税收趋势数据
+  useEffect(() => {
+    const enterpriseName = apiBasicInfo?.enterpriseName;
+    if (!id || !enterpriseName) return;
+    selectListBuildingTrends({ enterpriseId: id, enterpriseName: enterpriseName })
+      .then((res) => {
+        // 处理税收趋势数据，确保格式正确
+        const taxTrendRaw = res.data?.nameNumberList || [];
+        const formattedTaxTrendData = taxTrendRaw.map(item => ({
+          month: item.name?.replace('月', '') || '',
+          val1: parseFloat(item.num1) || 0,
+          val2: parseFloat(item.num2) || 0
+        }));
+        setTaxTrendData(formattedTaxTrendData);
+      })
+      .catch((err) => {
+        console.error('获取企业税收趋势数据失败:', err);
+        setTaxTrendData([]);
+      });
+  }, [id, apiBasicInfo]);
+
+  // 从 API 获取企业政策兑现标题
+  useEffect(() => {
+    if (!id) return;
+    queryPolicyRedemptionTotal({ enterpriseId: id })
+      .then((res) => {
+        setPolicySummary(res.data || {});
+      })
+      .catch((err) => {
+        console.error('获取企业政策兑现标题失败:', err);
+        setPolicySummary({});
+      });
+  }, [id]);
+
+  // 从 API 获取企业政策兑现列表
+  useEffect(() => {
+    if (!id) return;
+    queryPolicyRedemptionPage({ enterpriseId: id })
+      .then((res) => {
+        setPolicyRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业政策兑现列表失败:', err);
+        setPolicyRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业需求数据
+  useEffect(() => {
+    if (!id) return;
+    modelPredictionDemand({ enterpriseId: id })
+      .then((res) => {
+        setDemandRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业需求数据失败:', err);
+        setDemandRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业融资数据
+  useEffect(() => {
+    if (!id) return;
+    getFinancingInfo({ enterpriseId: id })
+      .then((res) => {
+        setFinancingRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业融资数据失败:', err);
+        setFinancingRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业招投标数据
+  useEffect(() => {
+    if (!id) return;
+    getBidInfo({ enterpriseId: id })
+      .then((res) => {
+        setBidRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业招投标数据失败:', err);
+        setBidRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业股权穿透信息
+  useEffect(() => {
+    if (!id) return;
+    getEnterpriseEquityPenetrationInfo({ enterpriseId: id })
+      .then((res) => {
+        setEquityData(res.data || {});
+      })
+      .catch((err) => {
+        console.error('获取企业股权穿透信息失败:', err);
+        setEquityData({});
+      });
+  }, [id]);
+
+  // 只使用 API 数据
+  const basicInfo = apiBasicInfo || {};
   const legalRepresentative = equityData.legalRepresentative || '';
   const shareholders = equityData.shareholders || [];
   const companyBranchs = equityData.companyBranchs || [];
 
-  // 获取招投标数据
-  const bidRecords = companyData?.['招投标']?.data || [];
 
-  // 获取企业需求数据
-  const demandRecords = companyData?.['企业需求']?.data || [];
 
-  // 获取政策兑现数据
-  const policySummary = companyData?.['企业政策兑现-标题']?.data || {};
-  const policyRecords = companyData?.['企业政策兑现']?.data || [];
 
-  // 获取企业人才数据
-  const talentRecords = companyData?.['企业人才']?.data || [];
-
-  // 获取当前阶段痛点数据
-  const painRecords = companyData?.['当前阶段痛点']?.data || [];
-
-  // 获取负面因素数据
-  const negativeRecords = companyData?.['负面因素']?.data || [];
 
   // 获取标签数据并分组
-  const allTagsRaw = apiTagsInfo || [];
+  const allTagsRaw = apiTagsInfo?.tags || [];
   const tagGroupsMap = allTagsRaw.reduce((acc, curr) => {
     const cat = curr.tagCategoryName || '其他';
     if (!acc[cat]) acc[cat] = [];
@@ -337,20 +467,6 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   // 获取上下游数据
   const upstreamData = streamData.find(item => item.title === '上游分析')?.describeContent || [];
   const downstreamData = streamData.find(item => item.title === '下游分析')?.describeContent || [];
-
-
-
-
-
-
-
-  // 获取税收趋势数据
-  const taxTrendRaw = companyData?.['税收趋势']?.data?.nameNumberList || [];
-  const taxTrendData = taxTrendRaw.map(item => ({
-    month: item.name.replace('月', ''),
-    val1: parseFloat(item.num1) || 0,
-    val2: parseFloat(item.num2) || 0
-  }));
 
   const maxVal = Math.max(...taxTrendData.map(d => Math.max(d.val1, d.val2)), 1);
   const getY = (val) => 150 - (val / maxVal) * 130;
@@ -857,27 +973,22 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
           <span className="cd-section-title cd-section-title--dark">融资</span>
         </div>
         <div className="cd-finance-list-new">
-          {[
-            { round: '天使轮', amount: '500万', date: '2018-06-20', investors: '某天使投资人' },
-            { round: 'Pre-A轮', amount: '2000万', date: '2019-11-15', investors: '红杉资本中国' },
-            { round: 'A轮', amount: '5000万', date: '2021-05-28', investors: '经纬中国、IDG资本' },
-            { round: 'B轮', amount: '1.2亿', date: '2023-09-10', investors: '腾讯投资、高瓴创投' },
-          ].map((item) => (
-            <div key={item.round} className="cd-finance-card-new">
+          {financingRecords.length > 0 ? financingRecords.map((item, idx) => (
+            <div key={idx} className="cd-finance-card-new">
               <div className="cd-finance-top-new">
-                <span className="cd-finance-round-new">{item.round}</span>
-                <span className="cd-finance-amount-new">{item.amount}</span>
+                <span className="cd-finance-round-new">{item.round || '未知轮次'}</span>
+                <span className="cd-finance-amount-new">{item.amount || '-'}</span>
               </div>
               <div className="cd-finance-row-new">
                 <span className="cd-finance-label-new">披露日期：</span>
-                <span className="cd-finance-value-new">{item.date}</span>
+                <span className="cd-finance-value-new">{item.date || '-'}</span>
               </div>
               <div className="cd-finance-row-new">
                 <span className="cd-finance-label-new">投资方：</span>
-                <span className="cd-finance-value-new">{item.investors}</span>
+                <span className="cd-finance-value-new">{item.investors || '-'}</span>
               </div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无融资数据</div>}
         </div>
       </div>
 
@@ -985,41 +1096,9 @@ const generateSmoothPath = () => ""; // Deprecated
 
 function ServiceMatrixTab() {
   const { id } = useParams();
-  const companyData = getCompanyData(id);
 
-  const SERVICE_MATRIX_DATA = companyData ? (() => {
-    const data = [];
-    serviceMatrixSources.forEach(source => {
-      const levelData = companyData?.[source.key]?.data || [];
-      levelData.forEach(deptItem => {
-        deptItem.data?.forEach(roomItem => {
-          roomItem.detailContent?.forEach(detail => {
-            let func = '', policy = '', service = '';
-            detail.content?.forEach(text => {
-              const funcMatch = text.match(/职能依据：(.*?)(?:\n|$)/);
-              const policyMatch = text.match(/政策依据：(.*?)(?:\n|$)/);
-              const serviceMatch = text.match(/服务内容：(.*?)(?:\n|$)/);
-              
-              if (funcMatch) func = funcMatch[1].trim();
-              if (policyMatch) policy = policyMatch[1].trim();
-              if (serviceMatch) service = serviceMatch[1].trim();
-            });
-
-            data.push({
-              level: source.level,
-              dept: detail.title || '',
-              room: roomItem.oneContent || '',
-              orgDept: deptItem.name || '',
-              func,
-              policy,
-              service
-            });
-          });
-        });
-      });
-    });
-    return data;
-  })() : [];
+  // 服务矩阵数据，暂时为空，后续可从API获取
+  const SERVICE_MATRIX_DATA = [];
 
   const [levelFilter, setLevelFilter] = useState('');
   const [deptFilter, setDeptFilter] = useState('');
