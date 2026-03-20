@@ -1860,7 +1860,8 @@ function LifecycleTab() {
   }, [id, enterpriseName, lifecycleTypes]);
 
   const types = Array.from(new Set(lifecycleData.map(item => item.type).filter(Boolean)));
-  const dateRanges = Array.from(new Set(lifecycleData.map(item => {
+  const filteredByType = typeFilter ? lifecycleData.filter(item => item.type === typeFilter) : lifecycleData;
+  const dateRanges = Array.from(new Set(filteredByType.map(item => {
     const year = (item.date || '').substring(0, 4);
     return year ? `${year}年` : '';
   }).filter(Boolean))).sort((a, b) => parseInt(a) - parseInt(b));
@@ -1896,12 +1897,12 @@ function LifecycleTab() {
           </button>
           {typeOpen && (
             <div className="cd-sm-dropdown" style={{ width: '100%', left: 0 }}>
-              <div className="cd-sm-dropdown-item" onClick={() => { setTypeFilter(''); setTypeOpen(false); }}>全部</div>
+              <div className="cd-sm-dropdown-item" onClick={() => { setTypeFilter(''); setDateFilter(''); setTypeOpen(false); }}>全部</div>
               {types.map(t => (
                 <div
                   key={t}
                   className={`cd-sm-dropdown-item${typeFilter === t ? ' cd-sm-dropdown-item--active' : ''}`}
-                  onClick={() => { setTypeFilter(t); setTypeOpen(false); }}
+                  onClick={() => { setTypeFilter(t); setDateFilter(''); setTypeOpen(false); }}
                 >
                   {t}
                 </div>
