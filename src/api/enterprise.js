@@ -58,7 +58,24 @@ export const getDataCountInfo = ({ selectDate, sceneName }) => {
 }
 
 /**
- * 获取企业基本信息（含标签）
+ * 获取企业基本信息
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string|null} [params.communityCode=null] - 社区编码
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getSslmEnterprisesInfoById = ({ enterpriseId, isOriginalDate = true, communityCode = null, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/getSslmEnterprisesInfoById', {
+    enterpriseId,
+    isOriginalDate,
+    communityCode,
+    platform
+  })
+}
+
+/**
+ * 获取企业标签信息
  * @param {object} params
  * @param {string} params.enterpriseId - 企业 ID
  * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
@@ -70,6 +87,55 @@ export const getSslmEnterprisesTagListById = ({ enterpriseId, isOriginalDate = t
     enterpriseId,
     isOriginalDate,
     communityCode,
+    platform
+  })
+}
+
+/**
+ * 获取企业服务与产品数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.pageSize=9999] - 每页数量
+ * @param {string|null} [params.communityCode=null] - 社区编码
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const dataService = ({ enterpriseId, isOriginalDate = true, pageSize = 9999, communityCode = null, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/dataService', {
+    enterpriseId,
+    isOriginalDate,
+    pageSize,
+    communityCode,
+    platform
+  })
+}
+
+/**
+ * 获取企业专利信息
+ * @param {object} params
+ * @param {string} params.name - 企业名称
+ * @param {string} [params.type='2'] - 类型，固定值为"2"
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const selectListByName = ({ name, type = '2', platform = 1 }) => {
+  return dataStorageRequest.post('/tianDaoJinKe/selectListByName', {
+    name,
+    type,
+    platform
+  })
+}
+
+/**
+ * 获取企业软件著作权信息
+ * @param {object} params
+ * @param {string} params.name - 企业名称
+ * @param {string} [params.type='3'] - 类型，固定值为"3"
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const selectCopyrightListByName = ({ name, type = '3', platform = 1 }) => {
+  return dataStorageRequest.post('/tianDaoJinKe/selectListByName', {
+    name,
+    type,
     platform
   })
 }

@@ -7,6 +7,7 @@ export default defineConfig({
   base: '/lwt/',
   plugins: [react()],
   server: {
+    port: 8080,
     proxy: {
       '/backend': {
         target: 'https://test-api.yicall.com',

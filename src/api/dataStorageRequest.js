@@ -8,6 +8,7 @@ if (!globalThis.__axiosDataStorageRequest) {
     timeout: 30000,
     headers: {
       'Content-Type': 'application/json',
+      'AuthToken': 'CQ2Fgiaux3Ml9qoO'
     }
   })
 

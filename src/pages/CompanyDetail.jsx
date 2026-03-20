@@ -57,7 +57,7 @@ import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
 import enterpriseDataJson from '../json/enterprise.json';
-import { getSslmEnterprisesTagListById } from '../api/enterprise';
+import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName } from '../api/enterprise';
 
 const getCompanyData = (id) => {
   if (!id) return enterpriseDataJson[0] || {};
@@ -103,17 +103,31 @@ export default function CompanyDetail() {
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('data');
   const [apiBasicInfo, setApiBasicInfo] = useState(null);
+  const [apiTagsInfo, setApiTagsInfo] = useState(null);
 
   // 从 API 获取企业基本信息
   useEffect(() => {
     if (!id) return;
-    getSslmEnterprisesTagListById({ enterpriseId: id })
+    getSslmEnterprisesInfoById({ enterpriseId: id })
       .then((res) => {
         setApiBasicInfo(res.data || {});
       })
       .catch((err) => {
         console.error('获取企业基本信息失败:', err);
         setApiBasicInfo({});
+      });
+  }, [id]);
+
+  // 从 API 获取企业标签信息
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesTagListById({ enterpriseId: id })
+      .then((res) => {
+        setApiTagsInfo(res.data || {});
+      })
+      .catch((err) => {
+        console.error('获取企业标签信息失败:', err);
+        setApiTagsInfo({});
       });
   }, [id]);
 
@@ -161,7 +175,7 @@ export default function CompanyDetail() {
 
       {/* ===== 内容区域 ===== */}
       <div className="cd-body">
-        {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} />}
+        {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} apiTagsInfo={apiTagsInfo} />}
         {activeTab === 'service-matrix' && <ServiceMatrixTab />}
         {activeTab === 'enterprise-service' && <EnterpriseServiceTab />}
         {activeTab === 'dynamic' && <EnterpriseDynamicTab navigate={navigate} companyId={id} />}
@@ -172,16 +186,61 @@ export default function CompanyDetail() {
 }
 
 /* ===================== 企业数据 Tab ===================== */
-function EnterpriseDataTab({ apiBasicInfo }) {
+function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [navExpanded, setNavExpanded] = useState(false);
   const [labelExpanded, setLabelExpanded] = useState(true);
   const [labelExpanded2, setLabelExpanded2] = useState(true);
   const [expandedAddress, setExpandedAddress] = useState(null);
+  const [serviceRecords, setServiceRecords] = useState([]);
+  const [patentRecords, setPatentRecords] = useState([]);
+  const [copyrightRecords, setCopyrightRecords] = useState([]);
   const sectionRefs = useRef({});
 
   // 提取股权穿透相关数据
   const { id } = useParams();
   const companyData = getCompanyData(id);
+
+  // 从 API 获取企业服务与产品数据
+  useEffect(() => {
+    if (!id) return;
+    dataService({ enterpriseId: id })
+      .then((res) => {
+        setServiceRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业服务与产品数据失败:', err);
+        setServiceRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业专利信息
+  useEffect(() => {
+    const enterpriseName = apiBasicInfo?.enterpriseName;
+    if (!enterpriseName) return;
+    selectListByName({ name: enterpriseName })
+      .then((res) => {
+        setPatentRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业专利信息失败:', err);
+        setPatentRecords([]);
+      });
+  }, [apiBasicInfo]);
+
+  // 从 API 获取企业软件著作权信息
+  useEffect(() => {
+    const enterpriseName = apiBasicInfo?.enterpriseName;
+    if (!enterpriseName) return;
+    selectCopyrightListByName({ name: enterpriseName })
+      .then((res) => {
+        setCopyrightRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业软件著作权信息失败:', err);
+        setCopyrightRecords([]);
+      });
+  }, [apiBasicInfo]);
+
   // 企业基本信息优先使用 API 数据，未加载完成时用 JSON 兜底
   const basicInfo = apiBasicInfo ?? companyData?.['基本信息']?.data ?? {};
   const equityData = companyData?.['股权穿透']?.data || {};
@@ -209,7 +268,7 @@ function EnterpriseDataTab({ apiBasicInfo }) {
   const negativeRecords = companyData?.['负面因素']?.data || [];
 
   // 获取标签数据并分组
-  const allTagsRaw = companyData?.['标签']?.data || [];
+  const allTagsRaw = apiTagsInfo || [];
   const tagGroupsMap = allTagsRaw.reduce((acc, curr) => {
     const cat = curr.tagCategoryName || '其他';
     if (!acc[cat]) acc[cat] = [];
@@ -233,14 +292,11 @@ function EnterpriseDataTab({ apiBasicInfo }) {
   // 获取商业模式总结数据
   const businessModelSummary = companyData?.['商业模式-总结']?.data?.content || '';
 
-  // 获取软件著作权数据
-  const copyrightRecords = companyData?.['软件著作权']?.data || [];
 
-  // 获取专利信息数据
-  const patentRecords = companyData?.['专利信息']?.data || [];
 
-  // 获取服务与产品数据
-  const serviceRecords = companyData?.['服务与产品']?.data || [];
+
+
+
 
   // 获取税收趋势数据
   const taxTrendRaw = companyData?.['税收趋势']?.data?.nameNumberList || [];
