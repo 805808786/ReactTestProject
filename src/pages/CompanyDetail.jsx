@@ -1741,7 +1741,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
         {/* 企业风险 */}
         <div className="cd-section-card cd-dynamic-card" ref={el => sectionRefs.current['risks'] = el} data-key="risks">
           <div className="cd-section-header">
-            <img src={iconNavNegative} alt="企业风险" width={20} height={20} style={{ filter: 'brightness(0)' }} />
+            <img src={iconNavNegative} alt="企业风险" width={20} height={20} />
             <span className="cd-section-title">企业风险</span>
           </div>
           <div className="cd-risk-list">
