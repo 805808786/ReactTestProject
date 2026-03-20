@@ -57,7 +57,7 @@ import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
 import enterpriseDataJson from '../json/enterprise.json';
-import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName } from '../api/enterprise';
+import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById } from '../api/enterprise';
 
 const getCompanyData = (id) => {
   if (!id) return enterpriseDataJson[0] || {};
@@ -194,6 +194,10 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [serviceRecords, setServiceRecords] = useState([]);
   const [patentRecords, setPatentRecords] = useState([]);
   const [copyrightRecords, setCopyrightRecords] = useState([]);
+  const [businessModelSummary, setBusinessModelSummary] = useState('');
+  const [profitModelRecords, setProfitModelRecords] = useState([]);
+  const [coreCompetitivenessRecords, setCoreCompetitivenessRecords] = useState([]);
+  const [streamData, setStreamData] = useState([]);
   const sectionRefs = useRef({});
 
   // 提取股权穿透相关数据
@@ -241,6 +245,58 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       });
   }, [apiBasicInfo]);
 
+  // 从 API 获取企业商业模式总结
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesInfoEntityById({ enterpriseId: id })
+      .then((res) => {
+        setBusinessModelSummary(res.data?.content || '');
+      })
+      .catch((err) => {
+        console.error('获取企业商业模式总结失败:', err);
+        setBusinessModelSummary('');
+      });
+  }, [id]);
+
+  // 从 API 获取企业盈利模式
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesById({ enterpriseId: id, businessType: 1 })
+      .then((res) => {
+        setProfitModelRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业盈利模式失败:', err);
+        setProfitModelRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业核心竞争力
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesById({ enterpriseId: id, businessType: 2 })
+      .then((res) => {
+        setCoreCompetitivenessRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业核心竞争力失败:', err);
+        setCoreCompetitivenessRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业上下游关系
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesById({ enterpriseId: id, businessType: 5 })
+      .then((res) => {
+        setStreamData(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业上下游关系失败:', err);
+        setStreamData([]);
+      });
+  }, [id]);
+
   // 企业基本信息优先使用 API 数据，未加载完成时用 JSON 兜底
   const basicInfo = apiBasicInfo ?? companyData?.['基本信息']?.data ?? {};
   const equityData = companyData?.['股权穿透']?.data || {};
@@ -279,18 +335,8 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const enterpriseFlatTags = allTagsRaw.map(t => t.tagName);
 
   // 获取上下游数据
-  const streamData = companyData?.['商业模型-上下游关系']?.data || [];
   const upstreamData = streamData.find(item => item.title === '上游分析')?.describeContent || [];
   const downstreamData = streamData.find(item => item.title === '下游分析')?.describeContent || [];
-
-  // 获取核心竞争力数据
-  const coreCompetitivenessRecords = companyData?.['商业模式-核心竞争力']?.data || [];
-
-  // 获取盈利模式数据
-  const profitModelRecords = companyData?.['商业模式-盈利模式']?.data || [];
-
-  // 获取商业模式总结数据
-  const businessModelSummary = companyData?.['商业模式-总结']?.data?.content || '';
 
 
 

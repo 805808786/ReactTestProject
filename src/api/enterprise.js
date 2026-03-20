@@ -139,3 +139,37 @@ export const selectCopyrightListByName = ({ name, type = '3', platform = 1 }) =>
     platform
   })
 }
+
+/**
+ * 获取企业商业模式总结
+ * @param {object} params
+ * @param {number} [params.type=2] - 类型，固定值为2
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getSslmEnterprisesInfoEntityById = ({ type = 2, enterpriseId, isOriginalDate = true, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/getSslmEnterprisesInfoEntityById', {
+    type,
+    enterpriseId,
+    isOriginalDate,
+    platform
+  })
+}
+
+/**
+ * 获取企业商业模式详情（盈利模式、核心竞争力、上下游关系）
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} params.businessType - 业务类型：1-盈利模式，2-核心竞争力，5-上下游关系
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getSslmEnterprisesById = ({ enterpriseId, isOriginalDate = true, businessType, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/getSslmEnterprisesById', {
+    enterpriseId,
+    isOriginalDate,
+    businessType,
+    platform
+  })
+}
