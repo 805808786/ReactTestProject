@@ -199,6 +199,7 @@ export default function CompanyDetail() {
 /* ===================== 企业数据 Tab ===================== */
 function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [navExpanded, setNavExpanded] = useState(false);
+  const [collapsedSections, setCollapsedSections] = useState({});
   const [labelExpanded, setLabelExpanded] = useState(true);
   const [labelExpanded2, setLabelExpanded2] = useState(true);
   const [expandedAddress, setExpandedAddress] = useState(null);
@@ -544,12 +545,31 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
         const elementPosition = elementRect.top - containerRect.top + container.scrollTop;
 
         container.scrollTo({
-          top: elementPosition - quickNavHeight - 12,
+          top: elementPosition - quickNavHeight - 10,
           behavior: 'smooth'
         });
       }
     }
   };
+
+  const toggleSectionCollapsed = (key) => {
+    setCollapsedSections((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
+  const renderSectionToggle = (key) => (
+    <button
+      type="button"
+      className="cd-section-toggle"
+      onClick={() => toggleSectionCollapsed(key)}
+      aria-expanded={!collapsedSections[key]}
+    >
+      <span>{collapsedSections[key] ? '\u5c55\u5f00' : '\u6536\u8d77'}</span>
+      <img src={collapsedSections[key] ? iconChevronDown : iconChevronUp} alt="" width={16} height={16} />
+    </button>
+  );
 
   return (
     <div className="cd-data-tab">
@@ -590,10 +610,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 企业基本信息 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['basic'] = el}>
+      <div className={`cd-section-card${collapsedSections.basic ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['basic'] = el}>
         <div className="cd-section-header">
           <img src={iconBuilding2} alt="基本信息" width={20} height={20} />
           <span className="cd-section-title">企业基本信息</span>
+          {renderSectionToggle('basic')}
         </div>
 
         {/* 企业层级 */}
@@ -730,10 +751,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 服务与产品 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['product'] = el}>
+      <div className={`cd-section-card${collapsedSections.product ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['product'] = el}>
         <div className="cd-section-header">
           <img src={iconServiceGreen} alt="服务产品" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">服务与产品</span>
+          {renderSectionToggle('product')}
         </div>
         <div className="cd-product-list">
           {serviceRecords.length > 0 ? serviceRecords.map((p, idx) => (
@@ -746,10 +768,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 专利信息 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['patent'] = el}>
+      <div className={`cd-section-card${collapsedSections.patent ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['patent'] = el}>
         <div className="cd-section-header">
           <img src={iconAwardOrange} alt="专利" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">专利信息</span>
+          {renderSectionToggle('patent')}
         </div>
         <div className="cd-patent-list">
           {patentRecords.length > 0 ? patentRecords.map((item, idx) => (
@@ -773,10 +796,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 软件著作权 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['copyright'] = el}>
+      <div className={`cd-section-card${collapsedSections.copyright ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['copyright'] = el}>
         <div className="cd-section-header">
           <img src={iconCopyrightPurple} alt="著作权" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">软件著作权</span>
+          {renderSectionToggle('copyright')}
         </div>
         <div className="cd-copyright-list">
           {copyrightRecords.length > 0 ? copyrightRecords.map((item, idx) => (
@@ -800,10 +824,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 商业模式 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['model'] = el}>
+      <div className={`cd-section-card${collapsedSections.model ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['model'] = el}>
         <div className="cd-section-header">
           <img src={iconModelPurple} alt="商业模式" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">商业模式</span>
+          {renderSectionToggle('model')}
         </div>
         <div className="cd-model-intro-card">
           {businessModelSummary || '以技术创新和数据资产积累建立核心竞争力。'}
@@ -853,10 +878,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 负面因素 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['negative'] = el}>
+      <div className={`cd-section-card${collapsedSections.negative ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['negative'] = el}>
         <div className="cd-section-header">
           <img src={iconAlertRed} alt="负面因素" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">负面因素</span>
+          {renderSectionToggle('negative')}
         </div>
         <div className="cd-negative-list-new">
           {negativeRecords.length > 0 ? negativeRecords.map((item, idx) => (
@@ -872,10 +898,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 当前阶段痛点 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['pain'] = el}>
+      <div className={`cd-section-card${collapsedSections.pain ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['pain'] = el}>
         <div className="cd-section-header">
           <img src={iconLightbulbOrange} alt="痛点" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">当前阶段痛点</span>
+          {renderSectionToggle('pain')}
         </div>
         <div className="cd-pain-list-new">
           {painRecords.length > 0 ? painRecords.map((item, idx) => (
@@ -888,10 +915,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 企业人才 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['talent'] = el}>
+      <div className={`cd-section-card${collapsedSections.talent ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['talent'] = el}>
         <div className="cd-section-header">
           <img src={iconUsersBlue} alt="人才" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">企业人才</span>
+          {renderSectionToggle('talent')}
         </div>
         <div className="cd-talent-list-new">
           {talentRecords.length > 0 ? talentRecords.map((talent, idx) => (
@@ -908,10 +936,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 税收趋势 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['tax'] = el}>
+      <div className={`cd-section-card${collapsedSections.tax ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['tax'] = el}>
         <div className="cd-section-header">
           <img src={iconTrendingGreen} alt="税收" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">税收趋势</span>
+          {renderSectionToggle('tax')}
         </div>
         <div className="cd-tax-line-chart-wrap">
           <svg viewBox="0 0 320 170" width="100%" height="100%">
@@ -968,10 +997,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 企业政策兑现 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['policy'] = el}>
+      <div className={`cd-section-card${collapsedSections.policy ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['policy'] = el}>
         <div className="cd-section-header">
           <img src={iconPolicyPurple} alt="政策" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">企业政策兑现</span>
+          {renderSectionToggle('policy')}
         </div>
         <div className="cd-policy-summary-banner">
           {policySummary.redemptionCycle}，已兑现拱墅区{policySummary.redemptionTotalType}类的{policySummary.redemptionTotalCount}项政策，共计兑现<span className="cd-hl-purple">{policySummary.paymentAmount}</span>
@@ -990,10 +1020,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 企业需求 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['demand'] = el}>
+      <div className={`cd-section-card${collapsedSections.demand ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['demand'] = el}>
         <div className="cd-section-header">
           <img src={iconDemandOrange} alt="需求" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">企业需求</span>
+          {renderSectionToggle('demand')}
         </div>
         <div className="cd-demand-list-new">
           {demandRecords.length > 0 ? demandRecords.map((item, idx) => (
@@ -1012,25 +1043,26 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 融资 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['finance'] = el}>
+      <div className={`cd-section-card${collapsedSections.finance ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['finance'] = el}>
         <div className="cd-section-header">
           <img src={iconDollarGreen} alt="融资" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">融资</span>
+          {renderSectionToggle('finance')}
         </div>
         <div className="cd-finance-list-new">
           {financingRecords.length > 0 ? financingRecords.map((item, idx) => (
             <div key={idx} className="cd-finance-card-new">
               <div className="cd-finance-top-new">
-                <span className="cd-finance-round-new">{item.round || '未知轮次'}</span>
-                <span className="cd-finance-amount-new">{item.amount || '-'}</span>
+                <span className="cd-finance-round-new">{item.name || '未知轮次'}</span>
+                <span className="cd-finance-amount-new">{item.financingMoney || '-'}</span>
               </div>
               <div className="cd-finance-row-new">
                 <span className="cd-finance-label-new">披露日期：</span>
-                <span className="cd-finance-value-new">{item.date || '-'}</span>
+                <span className="cd-finance-value-new">{item.disclosureDate || '-'}</span>
               </div>
               <div className="cd-finance-row-new">
                 <span className="cd-finance-label-new">投资方：</span>
-                <span className="cd-finance-value-new">{item.investors || '-'}</span>
+                <span className="cd-finance-value-new">{item.financing || '-'}</span>
               </div>
             </div>
           )) : <div className="cd-no-data">暂无融资数据</div>}
@@ -1038,10 +1070,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 招投标 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['bid'] = el}>
+      <div className={`cd-section-card${collapsedSections.bid ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['bid'] = el}>
         <div className="cd-section-header">
           <img src={iconBagBlue} alt="招投标" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">招投标</span>
+          {renderSectionToggle('bid')}
         </div>
         <div className="cd-bid-list-new">
           {bidRecords.length > 0 ? bidRecords.map((item, idx) => (
@@ -1079,10 +1112,11 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 股权穿透图 */}
-      <div className="cd-section-card" ref={el => sectionRefs.current['equity'] = el}>
+      <div className={`cd-section-card${collapsedSections.equity ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['equity'] = el}>
         <div className="cd-section-header">
           <img src={iconEquityPurple} alt="股权" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">股权穿透图</span>
+          {renderSectionToggle('equity')}
         </div>
 
         <div className="cd-equity-sub-section">

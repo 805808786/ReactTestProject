@@ -133,7 +133,7 @@
   border-radius: 12px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  margin: 12px 16px 0;
+  margin: 0 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -143,6 +143,30 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.cd-section-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  border: none;
+  background: transparent;
+  color: #155DFC;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cd-section-card--collapsed {
+  gap: 0;
+}
+
+.cd-section-card--collapsed> :not(.cd-section-header) {
+  display: none;
 }
 
 .cd-section-header--inline {
@@ -162,9 +186,9 @@
   top: 0;
   z-index: 100;
   background-attachment: fixed;
-  padding: 12px 16px 0;
+  padding: 12px 16px ;
   margin-bottom: 0;
-  background: fixed;
+  background: #F9FAFB;
   /* 控制它下面的距离，也可以不设，由于 section card 原本有 margin-top: 12px */
 }
 
@@ -882,6 +906,8 @@
   font-size: 15px;
   font-weight: 500;
   color: #374151;
+  max-width: 300px;
+
 }
 
 .cd-policy-date-new {
@@ -949,15 +975,16 @@
 }
 
 .cd-finance-round-new {
-  font-size: 15px;
-  font-weight: bold;
-  color: #059669;
+  color: #0D542B;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.15px;
 }
 
 .cd-finance-amount-new {
-  font-size: 15px;
-  font-weight: bold;
-  color: #059669;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00A63E;
 }
 
 .cd-finance-row-new {
@@ -967,11 +994,11 @@
 
 .cd-finance-label-new {
   color: #6B7280;
-  width: 70px;
+  /* width: 70px; */
 }
 
 .cd-finance-value-new {
-  color: #374151;
+  color: #4A5565;
   flex: 1;
 }
 
