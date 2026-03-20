@@ -322,7 +322,19 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
     if (!id) return;
     getSslmEnterprisesById({ enterpriseId: id, businessType: 3 })
       .then((res) => {
-        setNegativeRecords(res.data || []);
+        let list = res.data || [];
+        let newList = []
+        list.map(s => {
+          (s.riskFactors || []).map(x => {
+            newList = [...newList, {
+              title: s.title,
+              describeContent: s.describeContent,
+              content: x.content,
+              subTitle: x.title,
+            }]
+          })
+        })
+        setNegativeRecords(newList);
       })
       .catch((err) => {
         console.error('获取企业负面因素失败:', err);
@@ -521,12 +533,18 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
     if (el) {
       const container = document.querySelector('.cd-body');
       if (container) {
-        // 计算目标元素相对于容器的偏移量
-        // offsetTop 是相对于父元素的，这里需要确保准确
-        const headerOffset = 0;
-        const elementPosition = el.offsetTop;
+        // 获取快速导航栏的高度
+        const quickNav = document.querySelector('.cd-quick-nav-wrapper');
+        const quickNavHeight = quickNav ? quickNav.offsetHeight : 0;
+
+        // 使用 getBoundingClientRect() 获取元素相对于视口的位置
+        // 然后计算相对于容器的位置
+        const containerRect = container.getBoundingClientRect();
+        const elementRect = el.getBoundingClientRect();
+        const elementPosition = elementRect.top - containerRect.top + container.scrollTop;
+
         container.scrollTo({
-          top: elementPosition - headerOffset - 12,
+          top: elementPosition - quickNavHeight - 12,
           behavior: 'smooth'
         });
       }
@@ -845,8 +863,9 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
             <div key={idx} className="cd-negative-card-new">
               <div className="cd-negative-title-row">
                 <span className="cd-negative-name-new">{item.title}</span>
+                <span className="cd-negative-subname-new">{item.subTitle}</span>
               </div>
-              <div className="cd-negative-desc-new">{item.describeContent?.[0] || ''}</div>
+              <div className="cd-negative-desc-new">{item.content || ''}</div>
             </div>
           )) : <div className="cd-no-data">暂无负面因素</div>}
         </div>
@@ -1140,9 +1159,9 @@ function ServiceMatrixTab() {
   // 从 API 获取服务矩阵数据
   useEffect(() => {
     if (!id) return;
-    
+
     setLoading(true);
-    
+
     // 定义所有层级
     const levels = ['省级层面', '市级层面', '区级层面', '街道层面'];
     const levelMapReverse = {
@@ -1151,7 +1170,7 @@ function ServiceMatrixTab() {
       '区级层面': '区级',
       '街道层面': '街道'
     };
-    
+
     // 为每个层级获取数据
     Promise.all(
       levels.map(level => {
@@ -1167,7 +1186,7 @@ function ServiceMatrixTab() {
                     const funcMatch = text.match(/职能依据：(.*?)(?:\n|$)/);
                     const policyMatch = text.match(/政策依据：(.*?)(?:\n|$)/);
                     const serviceMatch = text.match(/服务内容：(.*?)(?:\n|$)/);
-                    
+
                     if (funcMatch) func = funcMatch[1].trim();
                     if (policyMatch) policy = policyMatch[1].trim();
                     if (serviceMatch) service = serviceMatch[1].trim();
@@ -1208,7 +1227,16 @@ function ServiceMatrixTab() {
   }, [id]);
 
   const levels = ['省级', '市级', '区级', '街道'];
-  const depts = Array.from(new Set(serviceMatrixData.map(item => item.orgDept).filter(Boolean)));
+
+  // 根据当前选中的层级过滤部门数据
+  const filteredDepts = Array.from(
+    new Set(
+      allServiceMatrixData
+        .filter(item => !levelFilter || item.level === levelFilter)
+        .map(item => item.orgDept)
+        .filter(Boolean)
+    )
+  );
 
   const filtered = serviceMatrixData.filter(item => {
     if (levelFilter && item.level !== levelFilter) return false;
@@ -1221,7 +1249,7 @@ function ServiceMatrixTab() {
     setLevelFilter(level);
     setDeptFilter('');
     setLevelOpen(false);
-    
+
     // 模拟加载延迟
     setTimeout(() => {
       setServiceMatrixData(allServiceMatrixData);
@@ -1234,7 +1262,7 @@ function ServiceMatrixTab() {
     setLevelFilter('');
     setDeptFilter('');
     setLevelOpen(false);
-    
+
     // 模拟加载延迟
     setTimeout(() => {
       setServiceMatrixData(allServiceMatrixData);
@@ -1280,7 +1308,7 @@ function ServiceMatrixTab() {
           {deptOpen && (
             <div className="cd-sm-dropdown">
               <div className="cd-sm-dropdown-item" onClick={() => { setDeptFilter(''); setDeptOpen(false); }}>全部</div>
-              {depts.map(d => (
+              {filteredDepts.map(d => (
                 <div
                   key={d}
                   className={`cd-sm-dropdown-item${deptFilter === d ? ' cd-sm-dropdown-item--active' : ''}`}

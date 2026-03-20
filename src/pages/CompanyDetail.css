@@ -5,7 +5,7 @@
   height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background: #F9FAFB;
   background-attachment: fixed;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   overflow: hidden;
@@ -125,8 +125,6 @@
 .cd-body {
   flex: 1;
   overflow-y: auto;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
-  background-attachment: fixed;
 }
 
 /* ===== 通用 section 卡片 ===== */
@@ -163,10 +161,10 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  /* background: url('../assets/container.png') no-repeat center top / 100% 100%; */
   background-attachment: fixed;
   padding: 12px 16px 0;
-  margin-bottom: -10px;
+  margin-bottom: 0;
+  background: fixed;
   /* 控制它下面的距离，也可以不设，由于 section card 原本有 margin-top: 12px */
 }
 
@@ -496,9 +494,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
-  border-radius: 12px;
+  border-radius: 10px;
+  background: #F9FAFB;
 }
 
 .cd-product-name-new {
@@ -735,9 +733,22 @@
 }
 
 .cd-negative-name-new {
-  font-size: 15px;
-  font-weight: bold;
-  color: #881337;
+  display: flex;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #FFC9C9;
+  color: #9F0712;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.cd-negative-subname-new {
+  color: #82181A;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.15px;
 }
 
 .cd-negative-desc-new {
@@ -821,8 +832,8 @@
 
 .cd-talent-tag-new {
   font-size: 13px;
-  color: #2563EB;
-  background: #DBEAFE;
+  color: #193CB8;
+  background: #BEDBFF;
   padding: 4px 12px;
   border-radius: 6px;
 }
@@ -862,9 +873,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 12px;
+  background: #F9FAFB;
 }
 
 .cd-policy-name-new {
@@ -897,9 +908,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 12px;
+  background: #F9FAFB;
 }
 
 .cd-demand-name-new {
@@ -1066,11 +1077,11 @@
 
 .cd-branch-item-new {
   padding: 12px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 8px;
   font-size: 13px;
   color: #4B5563;
+  background: #F9FAFB;
 }
 
 .cd-sub-item-new {
@@ -1866,6 +1877,11 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
