@@ -1658,7 +1658,6 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
         <div className="cd-sub-tabs-card">
           {[
             { key: 'changes', label: '企业变更' },
-            // { key: 'news', label: '企业资讯' },
             { key: 'risks', label: '企业风险' },
           ].map((tab) => (
             <button
