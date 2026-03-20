@@ -1555,6 +1555,11 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
   const [enterpriseName, setEnterpriseName] = useState('');
   const [loading, setLoading] = useState(true);
   const sectionRefs = useRef({});
+  const subTabsWrapperRef = useRef(null);
+
+  const getSubTabOffset = useCallback(() => (
+    subTabsWrapperRef.current?.offsetHeight || 0
+  ), []);
 
   // 从 API 获取企业基本信息，获取企业名称
   useEffect(() => {
@@ -1602,6 +1607,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
   useEffect(() => {
     const rootEl = document.querySelector('.cd-body');
     if (!rootEl) return;
+    const offset = getSubTabOffset();
 
     const observer = new IntersectionObserver((entries) => {
       // 遍历所有交叉项，找到正在相交的最大一个，或者简单点谁进入了就选谁
@@ -1612,7 +1618,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
       });
     }, {
       root: rootEl,
-      rootMargin: '-80px 0px -60% 0px', // 在靠上的位置时触发高亮
+      rootMargin: `-${offset + 8}px 0px -60% 0px`, // 在靠上的位置时触发高亮
       threshold: 0
     });
 
@@ -1621,7 +1627,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [getSubTabOffset]);
 
   const scrollToTab = (key) => {
     setSubTab(key);
@@ -1632,7 +1638,8 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
       const rootRect = rootEl.getBoundingClientRect();
       const elRect = el.getBoundingClientRect();
       // 减去 60px 左右的悬浮 Tab 高度偏移量
-      const offsetTop = elRect.top - rootRect.top + rootEl.scrollTop - 60;
+      const stickyOffset = getSubTabOffset();
+      const offsetTop = elRect.top - rootRect.top + rootEl.scrollTop - stickyOffset - 10;
       rootEl.scrollTo({ top: offsetTop, behavior: 'smooth' });
     }
   };
@@ -1654,7 +1661,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
   return (
     <div className="cd-dynamic-tab">
       {/* 顶部吸顶 Tabs */}
-      <div className="cd-sub-tabs-wrapper">
+      <div className="cd-sub-tabs-wrapper" ref={subTabsWrapperRef}>
         <div className="cd-sub-tabs-card">
           {[
             { key: 'changes', label: '企业变更' },
