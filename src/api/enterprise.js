@@ -309,3 +309,136 @@ export const getEnterpriseEquityPenetrationInfo = ({ enterpriseId, isOriginalDat
     platform
   })
 }
+
+/**
+ * 获取企业服务矩阵数据
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} [params.type='1'] - 类型，固定值为"1"
+ * @param {string} params.level - 层级，如"省级层面"、"市级层面"、"区级层面"、"街道层面"
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const serviceMatrixList = ({ enterpriseId, isOriginalDate = true, type = '1', level, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/serviceMatrixList', {
+    enterpriseId,
+    isOriginalDate,
+    type,
+    level,
+    platform
+  })
+}
+
+/**
+ * 获取企业走访记录
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} params.enterpriseName - 企业名称
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=999] - 每页数量
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const selectEnterpriseVisitsList = ({ enterpriseId, isOriginalDate = true, enterpriseName, pageIndex = 1, pageSize = 999, platform = 1 }) => {
+  return dataStorageRequest.post('/business/community/selectEnterpriseVisitsList', {
+    enterpriseId,
+    isOriginalDate,
+    enterpriseName,
+    pageIndex,
+    pageSize,
+    platform
+  })
+}
+
+/**
+ * 获取企业诉求
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=10] - 每页数量
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getBusinessCommunityEnterpriseAppealPage = ({ enterpriseId, isOriginalDate = true, pageIndex = 1, pageSize = 10, platform = 1 }) => {
+  return dataStorageRequest.post('/business/community/getBusinessCommunityEnterpriseAppealPage', {
+    enterpriseId,
+    isOriginalDate,
+    pageIndex,
+    pageSize,
+    platform
+  })
+}
+
+/**
+ * 获取企业变更数据
+ * @param {object} params
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=10] - 每页数量
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} params.enterpriseName - 企业名称
+ */
+export const getBusinessCommunityEnterpriseNewsPage = ({ pageIndex = 1, pageSize = 10, enterpriseId, isOriginalDate = true, enterpriseName }) => {
+  return dataStorageRequest.post('/business/community/getBusinessCommunityEnterpriseNewsPage', {
+    pageIndex,
+    pageSize,
+    enterpriseId,
+    isOriginalDate,
+    enterpriseName
+  })
+}
+
+/**
+ * 获取企业风险数据
+ * @param {object} params
+ * @param {number} [params.pageIndex=1] - 页码
+ * @param {number} [params.pageSize=10] - 每页数量
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} params.enterpriseName - 企业名称
+ */
+export const getManageRiskEarlyWarningPage = ({ pageIndex = 1, pageSize = 10, enterpriseId, isOriginalDate = true, enterpriseName }) => {
+  return dataStorageRequest.post('/business/community/getManageRiskEarlyWarningPage', {
+    pageIndex,
+    pageSize,
+    enterpriseId,
+    isOriginalDate,
+    enterpriseName
+  })
+}
+
+/**
+ * 获取生命周期模块定义
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} params.enterpriseName - 企业名称
+ */
+export const enterpriseDynamicArchivesCount = ({ enterpriseId, isOriginalDate = true, enterpriseName }) => {
+  return dataStorageRequest.post('/business/community/enterpriseDynamicArchivesCount', {
+    enterpriseId,
+    isOriginalDate,
+    enterpriseName
+  })
+}
+
+/**
+ * 获取生命周期集合数据
+ * @param {object} params
+ * @param {string} params.frontendId - 前端组件ID
+ * @param {string} params.type - 类型
+ * @param {number} [params.pageLevel=1] - 页面层级
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string} params.enterpriseName - 企业名称
+ */
+export const enterpriseDynamicArchivesList = ({ frontendId, type, pageLevel = 1, enterpriseId, isOriginalDate = true, enterpriseName }) => {
+  return dataStorageRequest.post('/business/community/enterpriseDynamicArchivesList', {
+    frontendId,
+    type,
+    pageLevel,
+    enterpriseId,
+    isOriginalDate,
+    enterpriseName
+  })
+}

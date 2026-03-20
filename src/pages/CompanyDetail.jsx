@@ -57,7 +57,7 @@ import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
 import enterpriseDataJson from '../json/enterprise.json';
-import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo } from '../api/enterprise';
+import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo, serviceMatrixList, selectEnterpriseVisitsList, getBusinessCommunityEnterpriseAppealPage, getBusinessCommunityEnterpriseNewsPage, getManageRiskEarlyWarningPage, enterpriseDynamicArchivesCount, enterpriseDynamicArchivesList } from '../api/enterprise';
 
 const getCompanyData = (id) => {
   if (!id) return enterpriseDataJson[0] || {};
@@ -104,6 +104,7 @@ export default function CompanyDetail() {
   const [activeTab, setActiveTab] = useState('data');
   const [apiBasicInfo, setApiBasicInfo] = useState(null);
   const [apiTagsInfo, setApiTagsInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // 从 API 获取企业基本信息
   useEffect(() => {
@@ -111,10 +112,12 @@ export default function CompanyDetail() {
     getSslmEnterprisesInfoById({ enterpriseId: id })
       .then((res) => {
         setApiBasicInfo(res.data || {});
+        setLoading(false);
       })
       .catch((err) => {
         console.error('获取企业基本信息失败:', err);
         setApiBasicInfo({});
+        setLoading(false);
       });
   }, [id]);
 
@@ -123,7 +126,7 @@ export default function CompanyDetail() {
     if (!id) return;
     getSslmEnterprisesTagListById({ enterpriseId: id })
       .then((res) => {
-        setApiTagsInfo(res.data || {});
+        setApiTagsInfo({ tags: res.data || [] } || {});
       })
       .catch((err) => {
         console.error('获取企业标签信息失败:', err);
@@ -146,40 +149,49 @@ export default function CompanyDetail() {
 
   return (
     <div className="cd-container">
-      {/* ===== 头部 ===== */}
-      <div className="cd-header">
-        <div className="cd-header-top">
-          <button className="cd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="cd-company-name">{company.name}</span>
+      {loading ? (
+        <div className="cd-loading">
+          <div className="cd-loading-spinner"></div>
+          <p className="cd-loading-text">加载中...</p>
         </div>
-        {/* Tab 栏 */}
-        <div className="cd-tab-bar">
-          {TABS.map((tab) => (
-            <button
-              key={tab.key}
-              className={`cd-tab-btn${activeTab === tab.key ? ' cd-tab-btn--active' : ''}`}
-              onClick={() => handleTabChange(tab.key)}
-            >
-              <div className="cd-tab-inner">
-                <img src={tab.icon} alt={tab.label} width={16} height={16} className={activeTab === tab.key ? 'cd-tab-icon--active' : 'cd-tab-icon'} />
-                <span className="cd-tab-text">{tab.label}</span>
-              </div>
-              {activeTab === tab.key && <div className="cd-tab-indicator" />}
-            </button>
-          ))}
-        </div>
-      </div>
+      ) : (
+        <>
+          {/* ===== 头部 ===== */}
+          <div className="cd-header">
+            <div className="cd-header-top">
+              <button className="cd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
+                <img src={iconBack} alt="返回" width={36} height={32} />
+              </button>
+              <span className="cd-company-name">{company.name}</span>
+            </div>
+            {/* Tab 栏 */}
+            <div className="cd-tab-bar">
+              {TABS.map((tab) => (
+                <button
+                  key={tab.key}
+                  className={`cd-tab-btn${activeTab === tab.key ? ' cd-tab-btn--active' : ''}`}
+                  onClick={() => handleTabChange(tab.key)}
+                >
+                  <div className="cd-tab-inner">
+                    <img src={tab.icon} alt={tab.label} width={16} height={16} className={activeTab === tab.key ? 'cd-tab-icon--active' : 'cd-tab-icon'} />
+                    <span className="cd-tab-text">{tab.label}</span>
+                  </div>
+                  {activeTab === tab.key && <div className="cd-tab-indicator" />}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* ===== 内容区域 ===== */}
-      <div className="cd-body">
-        {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} apiTagsInfo={apiTagsInfo} />}
-        {activeTab === 'service-matrix' && <ServiceMatrixTab />}
-        {activeTab === 'enterprise-service' && <EnterpriseServiceTab />}
-        {activeTab === 'dynamic' && <EnterpriseDynamicTab navigate={navigate} companyId={id} />}
-        {activeTab === 'lifecycle' && <LifecycleTab />}
-      </div>
+          {/* ===== 内容区域 ===== */}
+          <div className="cd-body">
+            {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} apiTagsInfo={apiTagsInfo} />}
+            {activeTab === 'service-matrix' && <ServiceMatrixTab />}
+            {activeTab === 'enterprise-service' && <EnterpriseServiceTab />}
+            {activeTab === 'dynamic' && <EnterpriseDynamicTab navigate={navigate} companyId={id} />}
+            {activeTab === 'lifecycle' && <LifecycleTab />}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -455,14 +467,32 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
 
   // 获取标签数据并分组
   const allTagsRaw = apiTagsInfo?.tags || [];
-  const tagGroupsMap = allTagsRaw.reduce((acc, curr) => {
+
+  // 企业通用标签：tagType 4,5,6,7
+  const enterpriseGeneralTags = allTagsRaw.filter(tag => [4, 5, 6, 7].includes(tag.tagType));
+  const generalTagGroupsMap = enterpriseGeneralTags.reduce((acc, curr) => {
     const cat = curr.tagCategoryName || '其他';
     if (!acc[cat]) acc[cat] = [];
-    acc[cat].push(curr.tagName);
+    if (!acc[cat].includes(curr.tagName)) {
+      acc[cat].push(curr.tagName);
+    }
     return acc;
   }, {});
-  const enterpriseTags = Object.entries(tagGroupsMap).map(([cat, tags]) => ({ cat, tags }));
-  const enterpriseFlatTags = allTagsRaw.map(t => t.tagName);
+  const enterpriseTags = Object.entries(generalTagGroupsMap).map(([cat, tags]) => ({ cat, tags }));
+  const enterpriseFlatTags = [...new Set(enterpriseGeneralTags.map(t => t.tagName))];
+
+  // 数商专有标签：tagType 8,9,10,11
+  const dataBusinessTags = allTagsRaw.filter(tag => [8, 9, 10, 11].includes(tag.tagType));
+  const dataBusinessTagGroupsMap = dataBusinessTags.reduce((acc, curr) => {
+    const cat = curr.tagCategoryName || '其他';
+    if (!acc[cat]) acc[cat] = [];
+    if (!acc[cat].includes(curr.tagName)) {
+      acc[cat].push(curr.tagName);
+    }
+    return acc;
+  }, {});
+  const dataBusinessTagGroups = Object.entries(dataBusinessTagGroupsMap).map(([cat, tags]) => ({ cat, tags }));
+  const dataBusinessFlatTags = [...new Set(dataBusinessTags.map(t => t.tagName))];
 
   // 获取上下游数据
   const upstreamData = streamData.find(item => item.title === '上游分析')?.describeContent || [];
@@ -493,7 +523,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       if (container) {
         // 计算目标元素相对于容器的偏移量
         // offsetTop 是相对于父元素的，这里需要确保准确
-        const headerOffset = 0; 
+        const headerOffset = 0;
         const elementPosition = el.offsetTop;
         container.scrollTo({
           top: elementPosition - headerOffset - 12,
@@ -557,7 +587,8 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
               <span className="cd-rank-banner-value">{basicInfo.categoryName || '重点企业'}</span>
             </div>
           </div>
-          <img src={iconInfoOrange} alt="说明" width={16} height={16} className="cd-rank-banner-info-icon" />
+          {/* 先隐藏 */}
+          {/* <img src={iconInfoOrange} alt="说明" width={16} height={16} className="cd-rank-banner-info-icon" /> */}
         </div>
 
         {/* 企业通用标签 */}
@@ -590,22 +621,17 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
         </div>
 
         {/* 数商专有标签 */}
-        {/* <div className="cd-tag-section cd-tag-section--purple">
+        <div className="cd-tag-section cd-tag-section--purple">
           <div className="cd-tag-section-title cd-tag-section-title--purple">数商专有标签</div>
           {!labelExpanded2 ? (
             <div className="cd-tag-flat-list">
-              {['数据应用示范', '数商重点培育', '数据分析', 'AI应用', '数据服务商'].map(tag => (
+              {dataBusinessFlatTags.length > 0 ? dataBusinessFlatTags.map(tag => (
                 <span key={tag} className="cd-tag cd-tag--purple">{tag}</span>
-              ))}
+              )) : <span className="cd-no-data-small">暂无标签</span>}
             </div>
           ) : (
             <div className="cd-tag-categories">
-              {[
-                { cat: '官方', tags: ['数据应用示范'] },
-                { cat: '管理', tags: ['数商重点培育'] },
-                { cat: '行业', tags: ['数据分析', 'AI应用'] },
-                { cat: '企业', tags: ['数据服务商'] },
-              ].map(({ cat, tags }) => (
+              {dataBusinessTagGroups.length > 0 ? dataBusinessTagGroups.map(({ cat, tags }) => (
                 <div key={cat} className="cd-tag-category-row">
                   <span className="cd-tag-cat-name">{cat}</span>
                   <div className="cd-tag-list">
@@ -614,14 +640,14 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
                     ))}
                   </div>
                 </div>
-              ))}
+              )) : <div className="cd-no-data-small">暂无分类标签</div>}
             </div>
           )}
           <button className="cd-tag-toggle-btn cd-tag-toggle-btn--purple" onClick={() => setLabelExpanded2(!labelExpanded2)}>
             <img src={labelExpanded2 ? iconChevronUpPurple : iconChevronDownPurple} alt="" width={12} height={12} />
             <span>{labelExpanded2 ? '收起' : '展开'}</span>
           </button>
-        </div> */}
+        </div>
 
         {/* 基本字段 */}
         <div className="cd-info-grid">
@@ -651,7 +677,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
                 <img src={iconLocation} alt="地址" width={14} height={14} className="cd-info-address-icon" />
                 <span className="cd-info-label">{label}</span>
                 <span className="cd-info-value">{value}</span>
-                <span 
+                <span
                   className="cd-info-link"
                   onClick={() => setExpandedAddress(expandedAddress === key ? null : key)}
                 >
@@ -902,21 +928,21 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
             <line x1="24" y1="150" x2="310" y2="150" stroke="#6B7280" strokeWidth="1" />
 
             {/* 蓝色趋势线 (num1) */}
-            <path 
+            <path
               d={generateDynamicPath(taxTrendData, 'val1')}
-              fill="none" 
-              stroke="#3B82F6" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
+              fill="none"
+              stroke="#3B82F6"
+              strokeWidth="2.5"
+              strokeLinecap="round"
             />
-            
+
             {/* 绿色趋势线 (num2) */}
-            <path 
+            <path
               d={generateDynamicPath(taxTrendData, 'val2')}
-              fill="none" 
-              stroke="#00E88E" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
+              fill="none"
+              stroke="#00E88E"
+              strokeWidth="2.5"
+              strokeLinecap="round"
             />
           </svg>
         </div>
@@ -957,9 +983,9 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
                 <div className="cd-demand-name-new">{item.demandName}</div>
                 <div className="cd-demand-type-new">{item.demandType}</div>
               </div>
-              <img 
-                src={item.dataStatus === '1' ? iconCheckGreen : iconClockOrange} 
-                alt="" width={20} height={20} 
+              <img
+                src={item.dataStatus === '1' ? iconCheckGreen : iconClockOrange}
+                alt="" width={20} height={20}
               />
             </div>
           )) : <div className="cd-no-data">暂无企业需求</div>}
@@ -1039,7 +1065,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
           <img src={iconEquityPurple} alt="股权" width={22} height={22} />
           <span className="cd-section-title cd-section-title--dark">股权穿透图</span>
         </div>
-        
+
         <div className="cd-equity-sub-section">
           <div className="cd-equity-sub-title">法定代表人</div>
           <div className="cd-legal-btn-new">{legalRepresentative || '暂无'}</div>
@@ -1096,23 +1122,125 @@ const generateSmoothPath = () => ""; // Deprecated
 
 function ServiceMatrixTab() {
   const { id } = useParams();
-
-  // 服务矩阵数据，暂时为空，后续可从API获取
-  const SERVICE_MATRIX_DATA = [];
-
+  const [serviceMatrixData, setServiceMatrixData] = useState([]);
+  const [allServiceMatrixData, setAllServiceMatrixData] = useState([]);
   const [levelFilter, setLevelFilter] = useState('');
   const [deptFilter, setDeptFilter] = useState('');
   const [levelOpen, setLevelOpen] = useState(false);
   const [deptOpen, setDeptOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const levelMap = {
+    '省级': '省级层面',
+    '市级': '市级层面',
+    '区级': '区级层面',
+    '街道': '街道层面'
+  };
+
+  // 从 API 获取服务矩阵数据
+  useEffect(() => {
+    if (!id) return;
+    
+    setLoading(true);
+    
+    // 定义所有层级
+    const levels = ['省级层面', '市级层面', '区级层面', '街道层面'];
+    const levelMapReverse = {
+      '省级层面': '省级',
+      '市级层面': '市级',
+      '区级层面': '区级',
+      '街道层面': '街道'
+    };
+    
+    // 为每个层级获取数据
+    Promise.all(
+      levels.map(level => {
+        return serviceMatrixList({ enterpriseId: id, level })
+          .then(res => {
+            const levelData = res.data || [];
+            // 处理数据格式，确保与组件兼容
+            return levelData.map(deptItem => {
+              return deptItem.data?.map(roomItem => {
+                return roomItem.detailContent?.map(detail => {
+                  let func = '', policy = '', service = '';
+                  detail.content?.forEach(text => {
+                    const funcMatch = text.match(/职能依据：(.*?)(?:\n|$)/);
+                    const policyMatch = text.match(/政策依据：(.*?)(?:\n|$)/);
+                    const serviceMatch = text.match(/服务内容：(.*?)(?:\n|$)/);
+                    
+                    if (funcMatch) func = funcMatch[1].trim();
+                    if (policyMatch) policy = policyMatch[1].trim();
+                    if (serviceMatch) service = serviceMatch[1].trim();
+                  });
+
+                  return {
+                    level: levelMapReverse[level],
+                    dept: detail.title || '',
+                    room: roomItem.oneContent || '',
+                    orgDept: deptItem.name || '',
+                    func,
+                    policy,
+                    service
+                  };
+                }) || [];
+              }) || [];
+            }).flat(2);
+          })
+          .catch(err => {
+            console.error(`获取${level}服务矩阵数据失败:`, err);
+            return [];
+          });
+      })
+    )
+      .then(results => {
+        // 合并所有层级的数据
+        const allData = results.flat();
+        setAllServiceMatrixData(allData);
+        setServiceMatrixData(allData);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('获取服务矩阵数据失败:', err);
+        setAllServiceMatrixData([]);
+        setServiceMatrixData([]);
+        setLoading(false);
+      });
+  }, [id]);
 
   const levels = ['省级', '市级', '区级', '街道'];
-  const depts = Array.from(new Set(SERVICE_MATRIX_DATA.map(item => item.orgDept).filter(Boolean)));
+  const depts = Array.from(new Set(serviceMatrixData.map(item => item.orgDept).filter(Boolean)));
 
-  const filtered = SERVICE_MATRIX_DATA.filter(item => {
+  const filtered = serviceMatrixData.filter(item => {
     if (levelFilter && item.level !== levelFilter) return false;
     if (deptFilter && item.orgDept !== deptFilter) return false;
     return true;
   });
+
+  const handleLevelChange = (level) => {
+    setLoading(true);
+    setLevelFilter(level);
+    setDeptFilter('');
+    setLevelOpen(false);
+    
+    // 模拟加载延迟
+    setTimeout(() => {
+      setServiceMatrixData(allServiceMatrixData);
+      setLoading(false);
+    }, 300);
+  };
+
+  const handleClearLevel = () => {
+    setLoading(true);
+    setLevelFilter('');
+    setDeptFilter('');
+    setLevelOpen(false);
+    
+    // 模拟加载延迟
+    setTimeout(() => {
+      setServiceMatrixData(allServiceMatrixData);
+      setLoading(false);
+    }, 300);
+  };
 
   return (
     <div className="cd-sm-tab">
@@ -1128,12 +1256,12 @@ function ServiceMatrixTab() {
           </button>
           {levelOpen && (
             <div className="cd-sm-dropdown">
-              <div className="cd-sm-dropdown-item" onClick={() => { setLevelFilter(''); setLevelOpen(false); }}>全部</div>
+              <div className="cd-sm-dropdown-item" onClick={handleClearLevel}>全部</div>
               {levels.map(l => (
                 <div
                   key={l}
                   className={`cd-sm-dropdown-item${levelFilter === l ? ' cd-sm-dropdown-item--active' : ''}`}
-                  onClick={() => { setLevelFilter(l); setLevelOpen(false); }}
+                  onClick={() => handleLevelChange(l)}
                 >
                   {l}
                 </div>
@@ -1168,34 +1296,43 @@ function ServiceMatrixTab() {
 
       {/* 矩阵卡片列表 */}
       <div className="cd-sm-list">
-        {filtered.map((item, idx) => (
-          <div key={idx} className="cd-sm-card">
-            <div className="cd-sm-card-header">
-              <div className="cd-sm-level-badges">
-                <span className="cd-sm-level-badge">{item.level}</span>
-                <span className="cd-sm-dept-name">{item.orgDept}</span>
-              </div>
-              <div className="cd-sm-room-row">
-                <span className="cd-sm-room-label">科室</span>
-                <span className="cd-sm-room-name">{item.room} / {item.dept}</span>
-              </div>
-            </div>
-            <div className="cd-sm-card-body">
-              <div className="cd-sm-info-row">
-                <span className="cd-sm-info-label">职能依据：</span>
-                {item.func}
-              </div>
-              <div className="cd-sm-info-row">
-                <span className="cd-sm-info-label">政策依据：</span>
-                {item.policy}
-              </div>
-              <div className="cd-sm-info-row">
-                <span className="cd-sm-info-label">服务内容：</span>
-                {item.service}
-              </div>
-            </div>
+        {loading ? (
+          <div className="cd-loading">
+            <div className="cd-loading-spinner"></div>
+            <p className="cd-loading-text">加载中...</p>
           </div>
-        ))}
+        ) : filtered.length > 0 ? (
+          filtered.map((item, idx) => (
+            <div key={idx} className="cd-sm-card">
+              <div className="cd-sm-card-header">
+                <div className="cd-sm-level-badges">
+                  <span className="cd-sm-level-badge">{item.level}</span>
+                  <span className="cd-sm-dept-name">{item.orgDept}</span>
+                </div>
+                <div className="cd-sm-room-row">
+                  <span className="cd-sm-room-label">科室</span>
+                  <span className="cd-sm-room-name">{item.room} / {item.dept}</span>
+                </div>
+              </div>
+              <div className="cd-sm-card-body">
+                <div className="cd-sm-info-row">
+                  <span className="cd-sm-info-label">职能依据：</span>
+                  {item.func}
+                </div>
+                <div className="cd-sm-info-row">
+                  <span className="cd-sm-info-label">政策依据：</span>
+                  {item.policy}
+                </div>
+                <div className="cd-sm-info-row">
+                  <span className="cd-sm-info-label">服务内容：</span>
+                  {item.service}
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="cd-no-data">暂无服务矩阵数据</div>
+        )}
       </div>
       <div style={{ height: 24 }} />
     </div>
@@ -1218,6 +1355,50 @@ const DEMANDS = [
 ];
 
 function EnterpriseServiceTab() {
+  const { id } = useParams();
+  const [visitRecords, setVisitRecords] = useState([]);
+  const [demands, setDemands] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // 从 API 获取走访记录
+  useEffect(() => {
+    if (!id) return;
+    selectEnterpriseVisitsList({ enterpriseId: id, enterpriseName: '' })
+      .then((res) => {
+        setVisitRecords(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取走访记录失败:', err);
+        setVisitRecords([]);
+      });
+  }, [id]);
+
+  // 从 API 获取企业诉求
+  useEffect(() => {
+    if (!id) return;
+    getBusinessCommunityEnterpriseAppealPage({ enterpriseId: id })
+      .then((res) => {
+        setDemands(res.data || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('获取企业诉求失败:', err);
+        setDemands([]);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="cd-es-tab">
+        <div className="cd-loading">
+          <div className="cd-loading-spinner"></div>
+          <p className="cd-loading-text">加载中...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cd-es-tab">
       {/* 走访记录 */}
@@ -1227,19 +1408,19 @@ function EnterpriseServiceTab() {
           <span className="cd-section-title">走访记录</span>
         </div>
         <div className="cd-visit-timeline">
-          {VISIT_RECORDS.map((record, idx) => (
+          {visitRecords.length > 0 ? visitRecords.map((record, idx) => (
             <div key={idx} className="cd-visit-item">
               <div className="cd-visit-timeline-left">
                 <div className="cd-visit-dot" />
-                {idx < VISIT_RECORDS.length - 1 && <div className="cd-visit-line" />}
+                <div className="cd-visit-line" />
               </div>
               <div className="cd-visit-content">
-                <div className="cd-visit-date">{record.date}</div>
-                <div className="cd-visit-desc">{record.desc}</div>
-                <div className="cd-visit-reporter">{record.reporter}</div>
+                <div className="cd-visit-date">{record.gmtCreate || ''}</div>
+                <div className="cd-visit-desc">{record.content || ''}</div>
+                <div className="cd-visit-reporter">上报人：{record.visitName || ''}</div>
               </div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无走访记录</div>}
         </div>
       </div>
 
@@ -1250,20 +1431,20 @@ function EnterpriseServiceTab() {
           <span className="cd-section-title">企业诉求</span>
         </div>
         <div className="cd-demand-list">
-          {DEMANDS.map((item) => (
-            <div key={item.id} className="cd-demand-item">
+          {demands.length > 0 ? demands.map((item, idx) => (
+            <div key={idx} className="cd-demand-item">
               <div className="cd-demand-header">
                 <div className="cd-demand-id-row">
-                  <span className="cd-demand-id">#{item.id}</span>
-                  <span className="cd-demand-date">{item.date}</span>
+                  <span className="cd-demand-id">#{item.id || idx + 1}</span>
+                  <span className="cd-demand-date">{item.recordDate || ''}</span>
                 </div>
-                <span className={`cd-demand-status${item.status === '已解决' ? ' cd-demand-status--done' : ' cd-demand-status--processing'}`}>
+                <span className={`cd-demand-status${item.status === '已解决' || item.status === '已办结' ? ' cd-demand-status--done' : ' cd-demand-status--processing'}`}>
                   {item.status}
                 </span>
               </div>
-              <div className="cd-demand-text">{item.text}</div>
+              <div className="cd-demand-text">{item.enterpriseProblem || ''}</div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无企业诉求</div>}
         </div>
       </div>
       <div style={{ height: 24 }} />
@@ -1307,7 +1488,53 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
   // 保持其中一个默认展开，如风险默认展开第一个
   const [expandedChanges, setExpandedChanges] = useState({ 0: true });
   const [expandedRisks, setExpandedRisks] = useState({ 0: true });
+  const [changes, setChanges] = useState([]);
+  const [risks, setRisks] = useState([]);
+  const [enterpriseName, setEnterpriseName] = useState('');
+  const [loading, setLoading] = useState(true);
   const sectionRefs = useRef({});
+
+  // 从 API 获取企业基本信息，获取企业名称
+  useEffect(() => {
+    if (!companyId) return;
+    getSslmEnterprisesInfoById({ enterpriseId: companyId })
+      .then((res) => {
+        const enterpriseInfo = res.data || {};
+        setEnterpriseName(enterpriseInfo.enterpriseName || '');
+      })
+      .catch((err) => {
+        console.error('获取企业基本信息失败:', err);
+        setEnterpriseName('');
+      });
+  }, [companyId]);
+
+  // 从 API 获取企业变更数据（需要企业名称）
+  useEffect(() => {
+    if (!companyId || !enterpriseName) return;
+    getBusinessCommunityEnterpriseNewsPage({ enterpriseId: companyId, enterpriseName: enterpriseName })
+      .then((res) => {
+        setChanges(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业变更数据失败:', err);
+        setChanges([]);
+      });
+  }, [companyId, enterpriseName]);
+
+  // 从 API 获取企业风险数据（需要企业名称）
+  useEffect(() => {
+    if (!companyId || !enterpriseName) return;
+    getManageRiskEarlyWarningPage({ enterpriseId: companyId, enterpriseName: enterpriseName })
+      .then((res) => {
+        setRisks(res.data || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('获取企业风险数据失败:', err);
+        setRisks([]);
+        setLoading(false);
+      });
+  }, [companyId, enterpriseName]);
 
   // 监听滚动更新高亮Tab
   useEffect(() => {
@@ -1351,6 +1578,17 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
   const toggleChange = (idx) => setExpandedChanges(prev => ({ ...prev, [idx]: !prev[idx] }));
   const toggleRisk = (idx) => setExpandedRisks(prev => ({ ...prev, [idx]: !prev[idx] }));
 
+  if (loading) {
+    return (
+      <div className="cd-dynamic-tab">
+        <div className="cd-loading">
+          <div className="cd-loading-spinner"></div>
+          <p className="cd-loading-text">加载中...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="cd-dynamic-tab">
       {/* 顶部吸顶 Tabs */}
@@ -1358,7 +1596,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
         <div className="cd-sub-tabs-card">
           {[
             { key: 'changes', label: '企业变更' },
-            { key: 'news', label: '企业资讯' },
+            // { key: 'news', label: '企业资讯' },
             { key: 'risks', label: '企业风险' },
           ].map((tab) => (
             <button
@@ -1381,30 +1619,30 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
             <span className="cd-section-title">企业变更</span>
           </div>
           <div className="cd-change-list">
-            {CHANGES.map((item, idx) => (
+            {changes.length > 0 ? changes.map((item, idx) => (
               <div key={idx} className={`cd-change-item${expandedChanges[idx] ? ' cd-change-item--expanded' : ''}`}>
                 <button className="cd-change-toggle" onClick={() => toggleChange(idx)}>
                   <div className="cd-change-toggle-left">
-                    <span className="cd-change-date">{item.date}</span>
-                    <span className="cd-change-badge">{item.type}</span>
+                    <span className="cd-change-date">{item.changeDate || ''}</span>
+                    <span className="cd-change-badge">{item.changeProject || ''}</span>
                   </div>
                   <img src={expandedChanges[idx] ? iconChevronUp : iconChevronDown} alt="展开" width={16} height={16} className="cd-change-icon" />
                 </button>
-                <div className="cd-change-versus">
-                  变更前： <span className="cd-change-versus-val">{item.before}</span> 
-                  <span className="cd-change-versus-arrow">→</span>
-                  变更后： <span className="cd-change-versus-val-after">{item.after}</span>
-                </div>
+
                 {expandedChanges[idx] && (
-                  <div className="cd-change-detail">{item.detail}</div>
+                  <div className="cd-change-versus">
+                    变更前： <span className="cd-change-versus-val">{item.changeAfter || ''}</span>
+                    <span className="cd-change-versus-arrow">→</span>
+                    变更后： <span className="cd-change-versus-val-after">{item.changeBefore || ''}</span>
+                  </div>
                 )}
               </div>
-            ))}
+            )) : <div className="cd-no-data">暂无企业变更记录</div>}
           </div>
         </div>
 
         {/* 企业资讯 */}
-        <div className="cd-section-card cd-dynamic-card" ref={el => sectionRefs.current['news'] = el} data-key="news">
+        {/* <div className="cd-section-card cd-dynamic-card" ref={el => sectionRefs.current['news'] = el} data-key="news">
           <div className="cd-section-header">
             <img src={iconNewsFileText} alt="企业资讯" width={20} height={20} />
             <span className="cd-section-title">企业资讯</span>
@@ -1428,7 +1666,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
               <p className="cd-news-content">{item.content}</p>
               <div className="cd-news-meta">
                 <div className="cd-news-source">
-                  <img src={iconNavInfo} alt="" width={12} height={12} style={{opacity: 0.5}} />
+                  <img src={iconNavInfo} alt="" width={12} height={12} style={{ opacity: 0.5 }} />
                   <span>{item.source}</span>
                 </div>
                 <div className="cd-news-related">
@@ -1437,7 +1675,7 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
               </div>
             </div>
           ))}
-        </div>
+        </div> */}
 
         {/* 企业风险 */}
         <div className="cd-section-card cd-dynamic-card" ref={el => sectionRefs.current['risks'] = el} data-key="risks">
@@ -1446,22 +1684,22 @@ function EnterpriseDynamicTab({ navigate, companyId }) {
             <span className="cd-section-title">企业风险</span>
           </div>
           <div className="cd-risk-list">
-            {RISKS.map((item, idx) => (
+            {risks.length > 0 ? risks.map((item, idx) => (
               <div key={idx} className={`cd-risk-item${expandedRisks[idx] ? ' cd-risk-item--expanded' : ''}`}>
                 <button className="cd-risk-toggle" onClick={() => toggleRisk(idx)}>
                   <div className="cd-risk-toggle-left">
-                    <span className="cd-risk-date-red">{item.date}</span>
-                    <span className="cd-risk-badge-red">{item.title}</span>
-                    <span className="cd-risk-level-orange">{item.level}</span>
+                    <span className="cd-risk-date-red">{item.dateTime || ''}</span>
+                    <span className="cd-risk-badge-red">{item.content || ''}</span>
+                    <span className="cd-risk-level-orange">{item.type || ''}</span>
                   </div>
                   <img src={expandedRisks[idx] ? iconChevronUp : iconChevronDown} alt="展开" width={16} height={16} className="cd-risk-icon" />
                 </button>
-                <div className="cd-risk-main-title">{item.title}</div>
+                <div className="cd-risk-main-title">{item.riskSource || ''}</div>
                 {expandedRisks[idx] && (
-                  <div className="cd-risk-detail">{item.desc}</div>
+                  <div className="cd-risk-detail">{item.warningContent || ''}</div>
                 )}
               </div>
-            ))}
+            )) : <div className="cd-no-data">暂无企业风险记录</div>}
           </div>
         </div>
 
@@ -1485,42 +1723,96 @@ const TYPE_COLORS = {
 
 function LifecycleTab() {
   const { id } = useParams();
-  const companyData = getCompanyData(id);
-
-  const LIFECYCLE_DATA = companyData ? (() => {
-    const lifecycle1 = companyData['生命周期1']?.data || [];
-    const lifecycle2 = companyData['生命周期2']?.data || [];
-
-    const lcTypeMap = {};
-    lifecycle1.forEach(item => {
-      const match = item.name.match(/^(.*?)(?:\(\d+\))?$/);
-      if (match) lcTypeMap[item.value] = match[1];
-    });
-
-    return lifecycle2.map(item => ({
-      date: item.dataTime || '',
-      type: lcTypeMap[item.type] || String(item.type),
-      title: item.typeName || '',
-      desc: item.content || ''
-    }));
-  })() : [];
-
+  const [enterpriseName, setEnterpriseName] = useState('');
+  const [lifecycleTypes, setLifecycleTypes] = useState({});
+  const [lifecycleData, setLifecycleData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [typeFilter, setTypeFilter] = useState('');
   const [dateFilter, setDateFilter] = useState('');
   const [typeOpen, setTypeOpen] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
 
-  const types = Array.from(new Set(LIFECYCLE_DATA.map(item => item.type).filter(Boolean)));
-  const dateRanges = Array.from(new Set(LIFECYCLE_DATA.map(item => {
+  // 从 API 获取企业基本信息，获取企业名称
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesInfoById({ enterpriseId: id })
+      .then((res) => {
+        const enterpriseInfo = res.data || {};
+        setEnterpriseName(enterpriseInfo.enterpriseName || '');
+      })
+      .catch((err) => {
+        console.error('获取企业基本信息失败:', err);
+        setEnterpriseName('');
+      });
+  }, [id]);
+
+  // 从 API 获取生命周期模块定义
+  useEffect(() => {
+    if (!id || !enterpriseName) return;
+    enterpriseDynamicArchivesCount({ enterpriseId: id, enterpriseName: enterpriseName })
+      .then((res) => {
+        const typesData = res.data || [];
+        const typeMap = {};
+        typesData.forEach(item => {
+          typeMap[item.value] = item.name || '';
+        });
+        setLifecycleTypes(typeMap);
+      })
+      .catch((err) => {
+        console.error('获取生命周期模块定义失败:', err);
+        setLifecycleTypes({});
+      });
+  }, [id, enterpriseName]);
+
+  // 从 API 获取生命周期集合数据
+  useEffect(() => {
+    if (!id || !enterpriseName) return;
+    enterpriseDynamicArchivesList({
+      frontendId: 'ybkb0veslr0g',
+      type: '0',
+      enterpriseId: id,
+      enterpriseName: enterpriseName
+    })
+      .then((res) => {
+        const data = res.data || [];
+        const formattedData = data.map(item => ({
+          date: item.dataTime || item.date || '',
+          type: lifecycleTypes[item.type] || String(item.type),
+          title: item.typeName || item.title || '',
+          desc: item.content || item.desc || ''
+        }));
+        setLifecycleData(formattedData);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('获取生命周期集合数据失败:', err);
+        setLifecycleData([]);
+        setLoading(false);
+      });
+  }, [id, enterpriseName, lifecycleTypes]);
+
+  const types = Array.from(new Set(lifecycleData.map(item => item.type).filter(Boolean)));
+  const dateRanges = Array.from(new Set(lifecycleData.map(item => {
     const year = (item.date || '').substring(0, 4);
     return year ? `${year}年` : '';
   }).filter(Boolean))).sort((a, b) => parseInt(a) - parseInt(b));
 
-  const filtered = LIFECYCLE_DATA.filter(item => {
+  const filtered = lifecycleData.filter(item => {
     if (typeFilter && item.type !== typeFilter) return false;
     if (dateFilter && !item.date.startsWith(dateFilter.replace('年', ''))) return false;
     return true;
   });
+
+  if (loading) {
+    return (
+      <div className="cd-lc-tab">
+        <div className="cd-loading">
+          <div className="cd-loading-spinner"></div>
+          <p className="cd-loading-text">加载中...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="cd-lc-tab">
@@ -1549,7 +1841,7 @@ function LifecycleTab() {
             </div>
           )}
         </div>
-        
+
         <div className="cd-lc-filter-divider" />
 
         <div className="cd-lc-filter-wrap">
@@ -1584,7 +1876,7 @@ function LifecycleTab() {
           <span className="cd-section-title">企业全生命周期档案</span>
         </div>
         <div className="cd-lc-timeline">
-          {filtered.map((item, idx) => (
+          {filtered.length > 0 ? filtered.map((item, idx) => (
             <div key={idx} className="cd-lc-item">
               <div className="cd-lc-timeline-left">
                 <div className="cd-lc-dot" />
@@ -1599,7 +1891,7 @@ function LifecycleTab() {
                 <p className="cd-lc-desc">{item.desc}</p>
               </div>
             </div>
-          ))}
+          )) : <div className="cd-no-data">暂无生命周期记录</div>}
         </div>
       </div>
       <div style={{ height: 24 }} />
