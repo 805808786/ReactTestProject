@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import iconBack from '../assets/icon-cd-back.svg';
 import iconTabData from '../assets/icon-cd-tab-data.svg';
@@ -57,6 +57,7 @@ import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
 import enterpriseDataJson from '../json/enterprise.json';
+import { getSslmEnterprisesTagListById } from '../api/enterprise';
 
 const getCompanyData = (id) => {
   if (!id) return enterpriseDataJson[0] || {};
@@ -101,8 +102,24 @@ export default function CompanyDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeTab, setActiveTab] = useState('data');
+  const [apiBasicInfo, setApiBasicInfo] = useState(null);
+
+  // 从 API 获取企业基本信息
+  useEffect(() => {
+    if (!id) return;
+    getSslmEnterprisesTagListById({ enterpriseId: id })
+      .then((res) => {
+        setApiBasicInfo(res.data || {});
+      })
+      .catch((err) => {
+        console.error('获取企业基本信息失败:', err);
+        setApiBasicInfo({});
+      });
+  }, [id]);
+
+  // 优先使用 API 数据，未加载完成时使用 JSON 兜底
   const companyData = getCompanyData(id);
-  const basicInfo = companyData?.['基本信息']?.data || {};
+  const basicInfo = apiBasicInfo ?? companyData?.['基本信息']?.data ?? {};
 
   const company = {
     name: basicInfo.enterpriseName || '',
@@ -144,7 +161,7 @@ export default function CompanyDetail() {
 
       {/* ===== 内容区域 ===== */}
       <div className="cd-body">
-        {activeTab === 'data' && <EnterpriseDataTab />}
+        {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} />}
         {activeTab === 'service-matrix' && <ServiceMatrixTab />}
         {activeTab === 'enterprise-service' && <EnterpriseServiceTab />}
         {activeTab === 'dynamic' && <EnterpriseDynamicTab navigate={navigate} companyId={id} />}
@@ -155,7 +172,7 @@ export default function CompanyDetail() {
 }
 
 /* ===================== 企业数据 Tab ===================== */
-function EnterpriseDataTab() {
+function EnterpriseDataTab({ apiBasicInfo }) {
   const [navExpanded, setNavExpanded] = useState(false);
   const [labelExpanded, setLabelExpanded] = useState(true);
   const [labelExpanded2, setLabelExpanded2] = useState(true);
@@ -165,7 +182,8 @@ function EnterpriseDataTab() {
   // 提取股权穿透相关数据
   const { id } = useParams();
   const companyData = getCompanyData(id);
-  const basicInfo = companyData?.['基本信息']?.data || {};
+  // 企业基本信息优先使用 API 数据，未加载完成时用 JSON 兜底
+  const basicInfo = apiBasicInfo ?? companyData?.['基本信息']?.data ?? {};
   const equityData = companyData?.['股权穿透']?.data || {};
   const legalRepresentative = equityData.legalRepresentative || '';
   const shareholders = equityData.shareholders || [];

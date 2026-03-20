@@ -1,4 +1,5 @@
 import request from './request'
+import dataStorageRequest from './dataStorageRequest'
 
 /**
  * 获取企业变化数据（按日期）
@@ -54,4 +55,21 @@ export const selectEnterpriseSecondTag = ({ firstTag, firstTagId, sceneName, sel
  */
 export const getDataCountInfo = ({ selectDate, sceneName }) => {
   return request.post('/backend/sceneRadar/dataCountInfo', { selectDate, sceneName })
+}
+
+/**
+ * 获取企业基本信息（含标签）
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
+ * @param {string|null} [params.communityCode=null] - 社区编码
+ * @param {number} [params.platform=1] - 平台标识
+ */
+export const getSslmEnterprisesTagListById = ({ enterpriseId, isOriginalDate = true, communityCode = null, platform = 1 }) => {
+  return dataStorageRequest.post('/enterprise/board/getSslmEnterprisesTagListById', {
+    enterpriseId,
+    isOriginalDate,
+    communityCode,
+    platform
+  })
 }

@@ -40,6 +40,7 @@ function FilterButton({ label, active, count, onClick }) {
 
 /* ===================== 企业卡片 ===================== */
 function EnterpriseCard({ enterprise }) {
+  const navigate = useNavigate();
   const {
     enterpriseName,
     enterpriseLogo,
@@ -61,7 +62,7 @@ function EnterpriseCard({ enterprise }) {
   const isActive = businessStatus === '存续' || businessStatus === '在业';
 
   return (
-    <div key={enterprise.enterpriseId} className={`se-card${isFirst ? ' se-card--first' : ''}`}>
+    <div key={enterprise.enterpriseId} className={`se-card`} >
       {/* 顶部：图标 + 公司名 + 标签 + 查看详情 */}
       <div className="se-card-top">
         <div className="se-card-left">
@@ -85,7 +86,7 @@ function EnterpriseCard({ enterprise }) {
             </div>
           </div>
         </div>
-        <span className="se-view-detail">查看详情 →</span>
+        <span className="se-view-detail" onClick={() => navigate(`/company-detail/${enterprise.enterpriseId}`)}>查看详情 →</span>
       </div>
 
       {/* 详情信息 */}

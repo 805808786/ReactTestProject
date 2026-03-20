@@ -354,10 +354,6 @@
   box-sizing: border-box;
 }
 
-.se-card--first {
-  background: #F2F8FF;
-  border-color: #155DFC;
-}
 
 /* 卡片顶部 */
 .se-card-top {
