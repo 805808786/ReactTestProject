@@ -200,8 +200,8 @@ export default function CompanyDetail() {
 function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [navExpanded, setNavExpanded] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState({});
-  const [labelExpanded, setLabelExpanded] = useState(true);
-  const [labelExpanded2, setLabelExpanded2] = useState(true);
+  const [labelExpanded, setLabelExpanded] = useState(false);
+  const [labelExpanded2, setLabelExpanded2] = useState(false);
   const [expandedAddress, setExpandedAddress] = useState(null);
   const [serviceRecords, setServiceRecords] = useState([]);
   const [patentRecords, setPatentRecords] = useState([]);
@@ -633,56 +633,71 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
         {/* 企业通用标签 */}
         <div className="cd-tag-section">
           <div className="cd-tag-section-title">企业通用标签</div>
-          {!labelExpanded ? (
-            <div className="cd-tag-flat-list">
-              {enterpriseFlatTags.length > 0 ? enterpriseFlatTags.map(tag => (
-                <span key={tag} className="cd-tag cd-tag--blue">{tag}</span>
-              )) : <span className="cd-no-data-small">暂无标签</span>}
-            </div>
-          ) : (
-            <div className="cd-tag-categories">
-              {enterpriseTags.length > 0 ? enterpriseTags.map(({ cat, tags }) => (
-                <div key={cat} className="cd-tag-category-row">
-                  <span className="cd-tag-cat-name">{cat}</span>
-                  <div className="cd-tag-list">
-                    {tags.map(tag => (
-                      <span key={tag} className="cd-tag cd-tag--blue">{tag}</span>
-                    ))}
+          <div className="cd-tag-container">
+            {!labelExpanded ? (
+              <div className="cd-tag-flat-list">
+                {enterpriseFlatTags.length > 0 ? (
+                  enterpriseFlatTags.slice(0, 6).map(tag => (
+                    <span key={tag} className="cd-tag cd-tag--blue">{tag}</span>
+                  ))
+                ) : (
+                  <span className="cd-no-data-small">暂无标签</span>
+                )}
+              </div>
+            ) : (
+              <div className="cd-tag-categories">
+                {enterpriseTags.length > 0 ? enterpriseTags.map(({ cat, tags }) => (
+                  <div key={cat} className="cd-tag-category-row">
+                    <span className="cd-tag-cat-name">{cat}</span>
+                    <div className="cd-tag-list">
+                      {tags.map(tag => (
+                        <span key={tag} className="cd-tag cd-tag--blue">{tag}</span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )) : <div className="cd-no-data-small">暂无分类标签</div>}
-            </div>
-          )}
-          
+                )) : <div className="cd-no-data-small">暂无分类标签</div>}
+              </div>
+            )}
+            <button className="cd-tag-toggle-btn" onClick={() => setLabelExpanded(!labelExpanded)}>
+              <img src={labelExpanded ? iconChevronUpBlue : iconChevronDownBlue} alt="" width={12} height={12} />
+              <span>{labelExpanded ? '收起' : '展开'}</span>
+            </button>
+          </div>
         </div>
 
         {/* 数商专有标签 */}
         <div className="cd-tag-section cd-tag-section--purple">
           <div className="cd-tag-section-title cd-tag-section-title--purple">数商专有标签</div>
-          {!labelExpanded2 ? (
-            <div className="cd-tag-flat-list">
-              {dataBusinessFlatTags.length > 0 ? dataBusinessFlatTags.map(tag => (
-                <span key={tag} className="cd-tag cd-tag--purple">{tag}</span>
-              )) : <span className="cd-no-data-small">暂无标签</span>}
-            </div>
-          ) : (
-            <div className="cd-tag-categories">
-              {dataBusinessTagGroups.length > 0 ? dataBusinessTagGroups.map(({ cat, tags }) => (
-                <div key={cat} className="cd-tag-category-row">
-                  <span className="cd-tag-cat-name">{cat}</span>
-                  <div className="cd-tag-list">
-                    {tags.map(tag => (
-                      <span key={tag} className="cd-tag cd-tag--purple">{tag}</span>
-                    ))}
+          <div className="cd-tag-container">
+            {!labelExpanded2 ? (
+              <div className="cd-tag-flat-list">
+                {dataBusinessFlatTags.length > 0 ? (
+                  dataBusinessFlatTags.slice(0, 6).map(tag => (
+                    <span key={tag} className="cd-tag cd-tag--purple">{tag}</span>
+                  ))
+                ) : (
+                  <span className="cd-no-data-small">暂无标签</span>
+                )}
+              </div>
+            ) : (
+              <div className="cd-tag-categories">
+                {dataBusinessTagGroups.length > 0 ? dataBusinessTagGroups.map(({ cat, tags }) => (
+                  <div key={cat} className="cd-tag-category-row">
+                    <span className="cd-tag-cat-name">{cat}</span>
+                    <div className="cd-tag-list">
+                      {tags.map(tag => (
+                        <span key={tag} className="cd-tag cd-tag--purple">{tag}</span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )) : <div className="cd-no-data-small">暂无分类标签</div>}
-            </div>
-          )}
-          <button className="cd-tag-toggle-btn cd-tag-toggle-btn--purple" onClick={() => setLabelExpanded2(!labelExpanded2)}>
-            <img src={labelExpanded2 ? iconChevronUpPurple : iconChevronDownPurple} alt="" width={12} height={12} />
-            <span>{labelExpanded2 ? '收起' : '展开'}</span>
-          </button>
+                )) : <div className="cd-no-data-small">暂无分类标签</div>}
+              </div>
+            )}
+            <button className="cd-tag-toggle-btn cd-tag-toggle-btn--purple" onClick={() => setLabelExpanded2(!labelExpanded2)}>
+              <img src={labelExpanded2 ? iconChevronUpPurple : iconChevronDownPurple} alt="" width={12} height={12} />
+              <span>{labelExpanded2 ? '收起' : '展开'}</span>
+            </button>
+          </div>
         </div>
 
         {/* 基本字段 */}

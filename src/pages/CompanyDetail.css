@@ -303,6 +303,19 @@
   gap: 12px;
 }
 
+.cd-tag-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cd-tag-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .cd-tag-section--purple {
   background: #FAF5FF;
 }
