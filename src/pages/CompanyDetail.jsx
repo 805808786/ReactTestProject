@@ -1415,19 +1415,8 @@ function ServiceMatrixTab() {
 }
 
 /* ===================== 企业服务 Tab ===================== */
-const VISIT_RECORDS = [
-  { date: '2026-03-05', desc: '了解企业近期经营情况和人才需求，协调解决办公场地扩租问题。', reporter: '上报人：祥符街道-王经理' },
-  { date: '2026-02-18', desc: '宣讲2026年产业扶持政策，指导企业申报高新技术企业复审。', reporter: '上报人：区经信局-李主任' },
-  { date: '2026-01-12', desc: '春节前慰问走访，了解企业发展规划和困难诉求。', reporter: '上报人：祥符街道-张书记' },
-  { date: '2025-11-25', desc: '调研企业数据安全合规建设情况，提供相关政策咨询。', reporter: '上报人：区经信局-刘科长' },
-];
 
-const DEMANDS = [
-  { id: 1, date: '2026-02-28', status: '已解决', text: '希望协调解决高端人才落户问题' },
-  { id: 2, date: '2026-01-15', status: '处理中', text: '申请办公场地租金补贴' },
-  { id: 3, date: '2025-12-10', status: '已解决', text: '咨询数据中心建设审批流程' },
-  { id: 4, date: '2025-10-20', status: '已解决', text: '反馈政策申报系统操作复杂' },
-];
+
 
 function EnterpriseServiceTab() {
   const { id } = useParams();
