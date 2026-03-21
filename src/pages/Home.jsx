@@ -4,6 +4,7 @@ import './Home.css'
 import Dialog from '../components/Dialog'
 import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
+import PageHeader from '../components/PageHeader';
 
 import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
@@ -233,10 +234,12 @@ function KeyFocus() {
 
 function Header() {
   return (
-    <div className="header">
+    <PageHeader showBack={false} title={<div className="header">
       <h1 className="header-title">墅企瞭望台</h1>
       <p className="header-subtitle">7*24 超能经济干部</p>
-    </div>
+    </div>}>
+    </PageHeader>
+
   )
 }
 

@@ -212,7 +212,7 @@ function VisitCard({ item }) {
           <div className="ed-card-tags">
             {sources.map((s, idx) => (
               // 点击之后防止继续页面跳转
-              <a key={idx} href={s.url} target="_blank" rel="noopener noreferrer" key={idx} onClick={(e) => e.stopPropagation()}>
+              <a key={idx} href={s.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
                 <div  className="ed-card-tag">
                   <img src={iconEdLink} alt="" width={16} height={16} />
                   <span>{s.name}</span>

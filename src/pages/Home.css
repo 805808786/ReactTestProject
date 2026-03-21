@@ -24,11 +24,10 @@
 /* Header - 1:1 Figma (Node 54:760) */
 .header {
   position: relative;
-  background: #155DFC;
-  padding: 24px 24px 34px;
-  /* Added bottom padding for overlap space */
-  height: 102px;
-  /* Increased height so texts remain visible while card overlaps */
+  /* background: #155DFC; */
+  /* padding: 24px 24px 34px; */
+  padding-bottom: 31px;
+  height: 58px;
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
@@ -1052,7 +1051,7 @@
 
 /* Assistant Card - Redesign V3 (Node 54:767) */
 .assistant-card {
-  margin: -32px 0 0;
+  margin: -18px 0 0;
   background: linear-gradient(135deg, #667EEA 0%, #613EEA 15%, #B693FB 53%);
   border-radius: 16px;
   padding: 0 11px;
