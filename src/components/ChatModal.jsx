@@ -191,7 +191,7 @@ export default function ChatModal({ isOpen, onClose }) {
     <div className="chat-modal-overlay" onClick={onClose}>
       <div className="chat-modal-container" onClick={e => e.stopPropagation()}>
         {/* 头部 */}
-        <div className="chat-header-cm">
+        <div className={`chat-header-cm ${messages.length !== 0 ? 'chat-header-cm-small' : ''}`}>
           {/* 顶部导航栏 */}
           <div className="chat-nav-bar">
             <button className="chat-nav-btn" onClick={onClose}>
@@ -203,15 +203,17 @@ export default function ChatModal({ isOpen, onClose }) {
             </button> */}
           </div>
           {/* 英雄区域 */}
-          <div className="chat-hero-section">
-            <img className="chat-robot-avatar" src={SparklesIcon} alt="robot" />
-            <div className='chat-txt-wrapper'>
-              <div className="chat-hero-greeting">
-                Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
+          {messages.length === 0 && (
+            <div className="chat-hero-section">
+              <img className="chat-robot-avatar" src={SparklesIcon} alt="robot" />
+              <div className='chat-txt-wrapper'>
+                <div className="chat-hero-greeting">
+                  Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
+                </div>
+                <div className="chat-hero-subtitle">为您提供最新的企业资讯</div>
               </div>
-              <div className="chat-hero-subtitle">为您提供最新的企业资讯</div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* 聊天内容区 */}

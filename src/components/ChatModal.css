@@ -62,6 +62,14 @@
   overflow: hidden;
 }
 
+.chat-header-cm-small {
+  min-height: 71px !important;
+  background: url('../assets/header-bg-3979f0.png') center bottom / cover no-repeat;
+
+
+}
+
+
 .chat-nav-bar {
   width: 100%;
   display: flex;
