@@ -2,10 +2,15 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import iconBack from '../assets/icon-cd-back.svg';
 import iconTabData from '../assets/icon-cd-tab-data.svg';
+import iconTabDataActive from '../assets/icon-cd-tab-data-active.svg';
 import iconTabServiceMatrix from '../assets/icon-cd-tab-service-matrix.svg';
 import iconTabEnterpriseService from '../assets/icon-cd-tab-enterprise-service.svg';
 import iconTabDynamic from '../assets/icon-cd-tab-dynamic.svg';
+import iconTabDynamicActive from '../assets/icon-cd-tab-dynamic-active.svg';
 import iconTabLifecycle from '../assets/icon-cd-tab-lifecycle.svg';
+import iconTabLifecycleActive from '../assets/icon-cd-tab-lifecycle-active.svg';
+import iconTabServiceMatrixActive from '../assets/icon-cd-tab-service-matrix-active.svg';
+import iconTabEnterpriseServiceActive from '../assets/icon-cd-tab-enterprise-service-active.svg';
 import iconBuilding2 from '../assets/icon-cd-building2.svg';
 import iconLocation from '../assets/icon-cd-location.svg';
 import iconCalendarGray from '../assets/icon-cd-calendar.svg'; /* 假设此图标本来在 assets */
@@ -73,11 +78,11 @@ const MOCK_COMPANY = {
 const DEFAULT_COMPANY = { name: '', type: '', industry: '' };
 
 const TABS = [
-  { key: 'data', label: '企业数据', icon: iconTabData },
-  { key: 'service-matrix', label: '服务矩阵', icon: iconTabServiceMatrix },
-  { key: 'enterprise-service', label: '企业服务', icon: iconTabEnterpriseService },
-  { key: 'dynamic', label: '企业动态', icon: iconTabDynamic },
-  { key: 'lifecycle', label: '全生命周期', icon: iconTabLifecycle },
+  { key: 'data', label: '企业数据', icon: iconTabData, activeIcon: iconTabDataActive },
+  { key: 'service-matrix', label: '服务矩阵', icon: iconTabServiceMatrix, activeIcon: iconTabServiceMatrixActive },
+  { key: 'enterprise-service', label: '企业服务', icon: iconTabEnterpriseService, activeIcon: iconTabEnterpriseServiceActive },
+  { key: 'dynamic', label: '企业动态', icon: iconTabDynamic, activeIcon: iconTabDynamicActive },
+  { key: 'lifecycle', label: '全生命周期', icon: iconTabLifecycle, activeIcon: iconTabLifecycleActive },
 ];
 
 const QUICK_NAV_ITEMS = [
@@ -173,7 +178,7 @@ export default function CompanyDetail() {
                   onClick={() => handleTabChange(tab.key)}
                 >
                   <div className="cd-tab-inner">
-                    <img src={tab.icon} alt={tab.label} width={16} height={16} className={activeTab === tab.key ? 'cd-tab-icon--active' : 'cd-tab-icon'} />
+                    <img src={activeTab === tab.key ? tab.activeIcon : tab.icon} alt={tab.label} width={16} height={16} className={activeTab === tab.key ? 'cd-tab-icon--active' : 'cd-tab-icon'} />
                     <span className="cd-tab-text">{tab.label}</span>
                   </div>
                   {activeTab === tab.key && <div className="cd-tab-indicator" />}

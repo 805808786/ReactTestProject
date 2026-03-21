@@ -104,7 +104,7 @@
 
 .cd-tab-icon {
   filter: none;
-  opacity: 0.6;
+  /* opacity: 0.6; */
 }
 
 .cd-tab-icon--active {

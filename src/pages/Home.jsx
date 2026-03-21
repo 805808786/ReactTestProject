@@ -107,7 +107,7 @@ export default function Home() {
           <div className="floating-btn-inner">
             <img src={SparklesIcon} alt="assistant" />
           </div>
-          <div className="notification-dot"></div>
+          {/* <div className="notification-dot"></div> */}
         </div>
       )}
     </div>
@@ -1124,6 +1124,7 @@ function PolicyMatching() {
 
 
 import assistantAvatarNew from '../assets/overview-redesign/assistant-avatar-new.png'
+// import SparklesIcon from '../assets/Sparkles.svg'
 import iconAsstSearch from '../assets/overview-redesign/icon-asst-search.svg'
 
 function AssistantCard({ onClick }) {
@@ -1137,7 +1138,7 @@ function AssistantCard({ onClick }) {
         </div>
       </div>
       <div className="assistant-avatar-box">
-        <img src={assistantAvatarNew} alt="avatar" />
+        <img src={SparklesIcon} alt="avatar" />
       </div>
     </div>
   )
