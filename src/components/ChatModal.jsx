@@ -203,7 +203,7 @@ export default function ChatModal({ isOpen, onClose }) {
             </button> */}
           </div>
           {/* 英雄区域 */}
-          {messages.length === 0 && (
+          {messages.length === 0 ? (
             <div className="chat-hero-section">
               <img className="chat-robot-avatar" src={SparklesIcon} alt="robot" />
               <div className='chat-txt-wrapper'>
@@ -213,7 +213,9 @@ export default function ChatModal({ isOpen, onClose }) {
                 <div className="chat-hero-subtitle">为您提供最新的企业资讯</div>
               </div>
             </div>
-          )}
+          ) :
+            <img className="chat-robot-small-avatar" src={SparklesIcon} alt="robot" />
+          }
         </div>
 
         {/* 聊天内容区 */}
