@@ -186,7 +186,7 @@
   top: 0;
   z-index: 100;
   background-attachment: fixed;
-  padding: 12px 16px ;
+  padding: 12px 16px;
   margin-bottom: 0;
   background: #F9FAFB;
   /* 控制它下面的距离，也可以不设，由于 section card 原本有 margin-top: 12px */
@@ -393,7 +393,7 @@
 }
 
 .cd-tag--solid-pink {
-  background: #E838CC;
+  background: linear-gradient(90deg, #AD46FF 0%, #F6339A 100%);
   color: #FFFFFF;
   border: none;
   padding: 4px 10px;
@@ -408,6 +408,13 @@
   gap: 8px;
 }
 
+.cd-dq-info-item{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
 .cd-info-item {
   display: flex;
   align-items: center;
@@ -415,17 +422,17 @@
 }
 
 .cd-info-prefix-icon {
-  margin-right: 4px;
+  /* margin-right: 4px; */
   margin-top: -1px;
 }
 
 .cd-info-item--full {
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .cd-info-item--with-link {
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -441,6 +448,21 @@
   color: #1F2937;
   line-height: 1.5em;
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.cd-info-address-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-info-address-icon {
+  margin-right: 0px;
+  flex-shrink: 0;
 }
 
 .cd-info-link {
@@ -449,7 +471,7 @@
   cursor: pointer;
   flex-shrink: 0;
   font-weight: 500;
-  margin-left: auto;
+  margin-left: 8px;
 }
 
 .cd-info-address-group {
@@ -464,7 +486,7 @@
 
 .cd-info-address-detail {
   padding: 10px 12px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background: #F9FAFB;
   background-attachment: fixed;
   border-radius: 6px;
   font-size: 14px;

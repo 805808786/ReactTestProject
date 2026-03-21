@@ -653,10 +653,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
               )) : <div className="cd-no-data-small">暂无分类标签</div>}
             </div>
           )}
-          <button className="cd-tag-toggle-btn" onClick={() => setLabelExpanded(!labelExpanded)}>
-            <img src={labelExpanded ? iconChevronUpBlue : iconChevronDownBlue} alt="" width={12} height={12} />
-            <span>{labelExpanded ? '收起' : '展开'}</span>
-          </button>
+          
         </div>
 
         {/* 数商专有标签 */}
@@ -706,8 +703,8 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
             <span className="cd-info-value">{basicInfo.industrialTrack || '-'}</span>
           </div>
           {[
-            { key: 'reg', label: '注册地：', value: basicInfo.registeredAddress || '-', detail: basicInfo.registeredAddress || '-' },
-            { key: 'biz', label: '经营地：', value: basicInfo.businessAddress || '-', detail: basicInfo.businessAddress || '-' },
+            { key: 'reg', label: '注册地：', value: basicInfo.street || '-', detail: basicInfo.registeredAddress || '-' },
+            { key: 'biz', label: '经营地：', value: basicInfo.businessAddressStreet || '-', detail: basicInfo.businessAddress || '-' },
             { key: 'tax', label: '税源地：', value: basicInfo.taxSourceLocation || '-', detail: basicInfo.taxSourceLocation || '-' },
             { key: 'stat', label: '统计地：', value: basicInfo.street || '-', detail: basicInfo.street || '-' },
           ].map(({ key, label, value, detail }) => (
@@ -716,31 +713,32 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
                 <img src={iconLocation} alt="地址" width={14} height={14} className="cd-info-address-icon" />
                 <span className="cd-info-label">{label}</span>
                 <span className="cd-info-value">{value}</span>
-                <span
-                  className="cd-info-link"
-                  onClick={() => setExpandedAddress(expandedAddress === key ? null : key)}
-                >
-                  {expandedAddress === key ? '收起' : '查看详情'}
-                </span>
+                {value != detail ?
+                  <span
+                    className="cd-info-link"
+                    onClick={() => setExpandedAddress(expandedAddress === key ? null : key)}
+                  >
+                    {expandedAddress === key ? '收起' : '查看详情'}
+                  </span> : <span></span>}
               </div>
               {expandedAddress === key && (
                 <div className="cd-info-address-detail">{detail}</div>
               )}
             </div>
           ))}
-          {/* <div className="cd-info-item cd-info-item--full cd-info-item--nolabel-icon">
-            <span className="cd-info-label">数商产业：</span>
-            <div className="cd-info-tags">
-              <span className="cd-tag cd-tag--solid-pink">数据应用企业</span>
-              <span className="cd-tag cd-tag--solid-pink">数据分析企业</span>
-            </div>
-          </div>
+          {basicInfo.firstIndustrialClassification &&
+            <div className="cd-info-item cd-info-item--full cd-info-item--nolabel-icon">
+              <span className="cd-info-label">数商产业：</span>
+              <div className="cd-info-tags">
+                <span className="cd-tag cd-tag--solid-pink">{basicInfo.firstIndustrialClassification}</span>
+              </div>
+            </div>}
           <div className="cd-info-item cd-info-item--full cd-info-item--nolabel-icon">
             <span className="cd-info-label">租赁类型：</span>
             <span className="cd-info-value">租赁</span>
             <span className="cd-info-label" style={{ marginLeft: 16 }}>租赁日期：</span>
             <span className="cd-info-value">2023-01-01</span>
-          </div> */}
+          </div>
         </div>
 
         {/* 企业介绍 */}
