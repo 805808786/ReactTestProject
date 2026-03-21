@@ -131,15 +131,38 @@
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  max-width: 480px;
-  height: 84px;
+  max-width: 481px;
+  height: 107px;
   background: transparent;
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-  padding: 0 8px 10px;
+  /* padding: 0 8px 10px; */
   z-index: 1000;
   pointer-events: none;
+}
+
+.bottom-nav-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bottom-nav-bg img {
+  position: absolute;
+  /* 或 relative，根据布局 */
+  bottom: 0;
+  /* 如果是底部背景 */
+  left: 0;
+  /* height: 107px; */
+  width: 100%;
+  height: auto;
+  /* 关键：保持原始比例，不拉伸高度 */
+  display: block;
 }
 
 .bottom-nav-mask {
@@ -148,9 +171,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: white;
+  background: transparent;
   border-radius: 20px 20px 0 0;
-  box-shadow: 0px -4px 20px rgba(0, 0, 0, 0.06);
   z-index: 1;
   pointer-events: auto;
 }
@@ -166,11 +188,11 @@
   /* Wider notch */
   height: 86px;
   /* Taller notch */
-  background: white;
+  background: transparent;
   border-radius: 50% 50% 0 0;
   /* Semi-circle shape */
   z-index: 2;
-  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.02);
+  box-shadow: none;
 }
 
 .bottom-nav-item {
@@ -178,7 +200,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 2px;
   flex: 1;
   cursor: pointer;
@@ -220,8 +242,13 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  margin-top: -35px;
-  margin-bottom: 0px;
+  margin-top: -56px;
+}
+
+@media (max-width: 520px) {
+  .center-item .bottom-nav-icon {
+    margin-top: -40px;
+  }
 }
 
 .center-icon {
@@ -246,9 +273,12 @@
 
 .center-item .bottom-nav-label {
   margin-top: 0;
-  font-family: "MiSans-Medium", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
+  color: #A9BCD4;
+}
+
+.center-item.active .bottom-nav-label {
   color: #613EEA;
 }
 
