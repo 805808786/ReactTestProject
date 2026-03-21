@@ -1925,8 +1925,8 @@
   margin-left: 1.72rem;
   /* 适配 4.4rem 总宽度的布局 */
   bottom: calc(1rem + env(safe-area-inset-bottom));
-  width: 0.52rem;
-  height: 0.52rem;
+  width: 0.45rem;
+  height: 0.45rem;
   z-index: 999;
   cursor: pointer;
   transition: transform 0.2s;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { History, Plus, X, Bot, User, Send } from 'lucide-react'
+import { History, Bot, User, Send } from 'lucide-react'
+import IconBackWhite from '../assets/icon-back-white.svg'
 import SparklesIcon from '../assets/Sparkles.svg'
 import './ChatModal.css'
 
@@ -191,19 +192,25 @@ export default function ChatModal({ isOpen, onClose }) {
       <div className="chat-modal-container" onClick={e => e.stopPropagation()}>
         {/* 头部 */}
         <div className="chat-header-cm">
-          <div className="chat-header-left">
-            <div className="chat-header-icon-box">
-              <img src={SparklesIcon} alt="assistant" width="24" height="24" />
-            </div>
-            <div className="chat-header-info">
-              <div className="chat-title">墅企小助手</div>
-              <div className="chat-subtitle">在线 · 随时为您服务</div>
-            </div>
+          {/* 顶部导航栏 */}
+          <div className="chat-nav-bar">
+            <button className="chat-nav-btn" onClick={onClose}>
+              <img src={IconBackWhite} alt="back" />
+            </button>
+            <div className="chat-nav-title">墅企小助手</div>
+            {/* <button className="chat-nav-btn">
+              <History size={20} color="white" />
+            </button> */}
           </div>
-          <div className="chat-header-actions">
-            {/* <button className="icon-btn"><History size={20} /></button>
-            <button className="icon-btn"><Plus size={22} /></button> */}
-            <button className="icon-btn" onClick={onClose}><X size={22} /></button>
+          {/* 英雄区域 */}
+          <div className="chat-hero-section">
+            <img className="chat-robot-avatar" src={SparklesIcon} alt="robot" />
+            <div className='chat-txt-wrapper'>
+              <div className="chat-hero-greeting">
+                Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
+              </div>
+              <div className="chat-hero-subtitle">为您提供最新的企业资讯</div>
+            </div>
           </div>
         </div>
 
