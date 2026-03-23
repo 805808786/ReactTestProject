@@ -65,7 +65,8 @@
 .chat-header-cm-small {
   min-height: 71px !important;
   background: url('../assets/header-bg-3979f0.png') center bottom / cover no-repeat;
-  overflow: unset
+  overflow: unset;
+  margin-bottom: 16px;
 }
 
 
