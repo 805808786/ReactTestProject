@@ -1,14 +1,15 @@
 import axios from 'axios'
 
-// 使用 globalThis 缓存实例，保证 Vite HMR 热重载时不重复创建和注册
-if (!globalThis.__axiosRequest) {
+// dataStorage 接口专用的 axios 实例
+// 使用 globalThis 缓存实例，保证 Vite HMR 热重载时不重复创建
+if (!globalThis.__axiosDataStorageRequest) {
   const instance = axios.create({
-    baseURL: 'https://sjch5.gongshu.gov.cn/pbdm-api',
-    // baseURL: 'http://192.168.10.229:9081',
+    baseURL: 'https://sjch5.gongshu.gov.cn/dataStorage',
     timeout: 30000,
     headers: {
       'Content-Type': 'application/json',
-      'YICALL-SECRET-KEY': 'CQ2Fgiaux3Ml9qoO'
+      'AuthToken': 'CQ2Fgiaux3Ml9qoO',
+      'Authorization': 'CQ2Fgiaux3Ml9qoO'
     }
   })
 
@@ -25,9 +26,9 @@ if (!globalThis.__axiosRequest) {
     }
   )
 
-  globalThis.__axiosRequest = instance
+  globalThis.__axiosDataStorageRequest = instance
 }
 
-const request = globalThis.__axiosRequest
+const dataStorageRequest = globalThis.__axiosDataStorageRequest
 
-export default request
+export default dataStorageRequest

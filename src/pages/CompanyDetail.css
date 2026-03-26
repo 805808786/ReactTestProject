@@ -5,7 +5,7 @@
   height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background: #F9FAFB;
   background-attachment: fixed;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   overflow: hidden;
@@ -45,6 +45,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.cd-no-data,
+.cd-no-data-small {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4A5565;
+  line-height: 1.333em;
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* ===== Tab 栏 ===== */
@@ -94,7 +104,7 @@
 
 .cd-tab-icon {
   filter: none;
-  opacity: 0.6;
+  /* opacity: 0.6; */
 }
 
 .cd-tab-icon--active {
@@ -115,8 +125,6 @@
 .cd-body {
   flex: 1;
   overflow-y: auto;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
-  background-attachment: fixed;
 }
 
 /* ===== 通用 section 卡片 ===== */
@@ -125,7 +133,7 @@
   border-radius: 12px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  margin: 12px 16px 0;
+  margin: 0 16px 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -135,6 +143,30 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.cd-section-toggle {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  border: none;
+  background: transparent;
+  color: #155DFC;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cd-section-card--collapsed {
+  gap: 0;
+}
+
+.cd-section-card--collapsed> :not(.cd-section-header) {
+  display: none;
 }
 
 .cd-section-header--inline {
@@ -153,10 +185,11 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  /* background: url('../assets/container.png') no-repeat center top / 100% 100%; */
   background-attachment: fixed;
-  padding: 12px 16px 0;
-  margin-bottom: -10px; /* 控制它下面的距离，也可以不设，由于 section card 原本有 margin-top: 12px */
+  padding: 12px 16px;
+  margin-bottom: 0;
+  background: #F9FAFB;
+  /* 控制它下面的距离，也可以不设，由于 section card 原本有 margin-top: 12px */
 }
 
 .cd-quick-nav {
@@ -270,6 +303,19 @@
   gap: 12px;
 }
 
+.cd-tag-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cd-tag-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .cd-tag-section--purple {
   background: #FAF5FF;
 }
@@ -360,7 +406,7 @@
 }
 
 .cd-tag--solid-pink {
-  background: #E838CC;
+  background: linear-gradient(90deg, #AD46FF 0%, #F6339A 100%);
   color: #FFFFFF;
   border: none;
   padding: 4px 10px;
@@ -375,6 +421,13 @@
   gap: 8px;
 }
 
+.cd-dq-info-item{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
 .cd-info-item {
   display: flex;
   align-items: center;
@@ -382,17 +435,17 @@
 }
 
 .cd-info-prefix-icon {
-  margin-right: 4px;
+  /* margin-right: 4px; */
   margin-top: -1px;
 }
 
 .cd-info-item--full {
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .cd-info-item--with-link {
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -408,6 +461,21 @@
   color: #1F2937;
   line-height: 1.5em;
   flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.cd-info-address-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cd-info-address-icon {
+  margin-right: 0px;
+  flex-shrink: 0;
 }
 
 .cd-info-link {
@@ -416,7 +484,7 @@
   cursor: pointer;
   flex-shrink: 0;
   font-weight: 500;
-  margin-left: auto;
+  margin-left: 8px;
 }
 
 .cd-info-address-group {
@@ -431,7 +499,7 @@
 
 .cd-info-address-detail {
   padding: 10px 12px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
+  background: #F9FAFB;
   background-attachment: fixed;
   border-radius: 6px;
   font-size: 14px;
@@ -485,9 +553,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
-  border-radius: 12px;
+  border-radius: 10px;
+  background: #F9FAFB;
 }
 
 .cd-product-name-new {
@@ -724,9 +792,22 @@
 }
 
 .cd-negative-name-new {
-  font-size: 15px;
-  font-weight: bold;
-  color: #881337;
+  display: flex;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: #FFC9C9;
+  color: #9F0712;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.cd-negative-subname-new {
+  color: #82181A;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.15px;
 }
 
 .cd-negative-desc-new {
@@ -810,8 +891,8 @@
 
 .cd-talent-tag-new {
   font-size: 13px;
-  color: #2563EB;
-  background: #DBEAFE;
+  color: #193CB8;
+  background: #BEDBFF;
   padding: 4px 12px;
   border-radius: 6px;
 }
@@ -851,15 +932,17 @@
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 12px;
+  background: #F9FAFB;
 }
 
 .cd-policy-name-new {
   font-size: 15px;
   font-weight: 500;
   color: #374151;
+  max-width: 300px;
+
 }
 
 .cd-policy-date-new {
@@ -886,9 +969,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 12px;
+  background: #F9FAFB;
 }
 
 .cd-demand-name-new {
@@ -927,15 +1010,16 @@
 }
 
 .cd-finance-round-new {
-  font-size: 15px;
-  font-weight: bold;
-  color: #059669;
+  color: #0D542B;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.15px;
 }
 
 .cd-finance-amount-new {
-  font-size: 15px;
-  font-weight: bold;
-  color: #059669;
+  font-size: 14px;
+  font-weight: 600;
+  color: #00A63E;
 }
 
 .cd-finance-row-new {
@@ -945,11 +1029,11 @@
 
 .cd-finance-label-new {
   color: #6B7280;
-  width: 70px;
+  /* width: 70px; */
 }
 
 .cd-finance-value-new {
-  color: #374151;
+  color: #4A5565;
   flex: 1;
 }
 
@@ -975,6 +1059,7 @@
   color: #1F2937;
   line-height: 1.4em;
 }
+
 .cd-bid-grid-new {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1045,7 +1130,8 @@
   color: #6366F1;
 }
 
-.cd-branch-list-new, .cd-sub-list-new {
+.cd-branch-list-new,
+.cd-sub-list-new {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1053,11 +1139,11 @@
 
 .cd-branch-item-new {
   padding: 12px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 8px;
   font-size: 13px;
   color: #4B5563;
+  background: #F9FAFB;
 }
 
 .cd-sub-item-new {
@@ -1280,6 +1366,7 @@
   width: 1px;
   background: #BFDBFE;
   z-index: 1;
+  margin-top: 4px;
 }
 
 .cd-visit-content {
@@ -1320,12 +1407,12 @@
 
 .cd-demand-item {
   padding: 14px 16px;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  background: #F9FAFB;
 }
 
 .cd-demand-header {
@@ -1383,10 +1470,9 @@
   position: sticky;
   top: 0;
   z-index: 90;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
-  padding: 12px 16px 0;
-  margin-bottom: -10px;
+  padding: 12px 16px;
+  background: #F9FAFB;
 }
 
 .cd-sub-tabs-card {
@@ -1396,6 +1482,7 @@
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   height: 48px;
+
 }
 
 .cd-sub-tab-btn {
@@ -1559,7 +1646,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 12px 14px 4px;
+  padding: 12px 14px;
   background: none;
   border: none;
   cursor: pointer;
@@ -1577,7 +1664,7 @@
 }
 
 .cd-change-badge {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: #155DFC;
   background: #E0EBFF;
@@ -1653,23 +1740,23 @@
 
 .cd-risk-date-red {
   font-size: 12px;
-  color: #6B7280;
+  color: #6A7282;
 }
 
 .cd-risk-badge-red {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
-  color: #DC2626;
-  background: #FEE2E2;
+  color: #9F0712;
+  background: #FFC9C9;
   padding: 2px 6px;
   border-radius: 4px;
 }
 
 .cd-risk-level-orange {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   color: #FFFFFF;
-  background: #EA580C;
+  background: #FF6900;
   padding: 2px 6px;
   border-radius: 4px;
 }
@@ -1682,7 +1769,7 @@
   padding: 4px 14px 12px;
   font-size: 14px;
   font-weight: 600;
-  color: #DC2626;
+  color: #82181A;
 }
 
 .cd-risk-detail {
@@ -1821,4 +1908,41 @@
   color: #6B7280;
   margin: 0;
   line-height: 1.5em;
+}
+
+/* ===== 加载动画 ===== */
+.cd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-attachment: fixed;
+}
+
+.cd-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #155DFC;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.cd-loading-text {
+  font-size: 14px;
+  color: #4A5565;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

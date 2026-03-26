@@ -4,10 +4,15 @@ import './Home.css'
 import Dialog from '../components/Dialog'
 import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
+import { useBottomNavStore } from '../store/bottomNavStore'
+import PageHeader from '../components/PageHeader';
 
 import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
 import homeBtnIcon from '../assets/tabs/redesign/home-btn.svg'
+import homeBtnUnactiveIcon from '../assets/tabs/redesign/home-btn-unactive.svg'
+import tabBgIcon from '../assets/tabs/redesign/tab-bg.svg'
+
 import dataContributionIcon from '../assets/tabs/redesign/data-contribution.svg'
 import policyMatchingIcon from '../assets/tabs/redesign/policy-matching.svg'
 import icon115 from '../assets/special-115x/115-badge-icon.svg'
@@ -34,13 +39,13 @@ import iconHelpOutline from '../assets/overview-redesign/icon-help-outline.svg'
 const bottomTabs = [
   { label: '墅企专题', icon: specialThemesIcon, logicCase: 1 },
   { label: '场景雷达', icon: sceneRadarIcon, logicCase: 3 },
-  { label: '首页', icon: homeBtnIcon, logicCase: 0, isCenter: true },
+  { label: '首页', icon: homeBtnIcon, unactiveIcon: homeBtnUnactiveIcon, logicCase: 0, isCenter: true },
   { label: '数据贡献', icon: dataContributionIcon, logicCase: 4 },
   { label: '政策匹配', icon: policyMatchingIcon, logicCase: 5 },
 ]
 
 export default function Home() {
-  const [activeBottomTab, setActiveBottomTab] = useState(2) // 首页默认为视觉第3项 (index 2)
+  const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
   const [isChatOpen, setIsChatOpen] = useState(false)
   const navigate = useNavigate()
 
@@ -77,10 +82,14 @@ export default function Home() {
       </div>
 
       <div className="bottom-nav">
-        {/* 背景切槽装饰 */}
-        <div className="bottom-nav-mask">
-          <div className="mask-notch"></div>
+        {/* 背景图片 */}
+        <div className="bottom-nav-bg">
+          <img src={tabBgIcon} alt="bottom nav background" />
         </div>
+        {/* 背景切槽装饰 */}
+        {/* <div className="bottom-nav-mask">
+          <div className="mask-notch"></div>
+        </div> */}
 
         {bottomTabs.map((tab, index) => (
           <div
@@ -90,7 +99,7 @@ export default function Home() {
           >
             <div className="bottom-nav-icon">
               <img
-                src={tab.icon}
+                src={activeBottomTab !== index && tab.unactiveIcon ? tab.unactiveIcon : tab.icon}
                 alt={tab.label}
                 className={tab.isCenter ? 'center-icon' : 'tab-icon'}
               />
@@ -107,7 +116,7 @@ export default function Home() {
           <div className="floating-btn-inner">
             <img src={SparklesIcon} alt="assistant" />
           </div>
-          <div className="notification-dot"></div>
+          {/* <div className="notification-dot"></div> */}
         </div>
       )}
     </div>
@@ -233,10 +242,12 @@ function KeyFocus() {
 
 function Header() {
   return (
-    <div className="header">
+    <PageHeader showBack={false} title={<div className="header">
       <h1 className="header-title">墅企瞭望台</h1>
       <p className="header-subtitle">7*24 超能经济干部</p>
-    </div>
+    </div>}>
+    </PageHeader>
+
   )
 }
 
@@ -320,7 +331,7 @@ function EnterpriseOverview() {
                   <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
-                  <span className="daily-label-v2">其他</span>
+                  <span className="daily-label-v2">第三方平台核准</span>
                   <span className="daily-value-v2 other-val">+{loading ? '--' : (stats.otherNum || 0)}</span>
                 </div>
               </div>
@@ -1124,6 +1135,7 @@ function PolicyMatching() {
 
 
 import assistantAvatarNew from '../assets/overview-redesign/assistant-avatar-new.png'
+// import SparklesIcon from '../assets/Sparkles.svg'
 import iconAsstSearch from '../assets/overview-redesign/icon-asst-search.svg'
 
 function AssistantCard({ onClick }) {
@@ -1137,7 +1149,7 @@ function AssistantCard({ onClick }) {
         </div>
       </div>
       <div className="assistant-avatar-box">
-        <img src={assistantAvatarNew} alt="avatar" />
+        <img src={SparklesIcon} alt="avatar" />
       </div>
     </div>
   )
