@@ -129,20 +129,30 @@
   white-space: pre-wrap;
 }
 
-.sd-policy-text {
+.sd-policy-title {
   font-family: Inter, sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 19.5px;
   color: #364153;
+  /* margin-bottom: 8px; */
+}
+
+.sd-policies-list {
+  display: flex;
+  flex-direction: column;
+  /* gap: 8px; */
+}
+
+.sd-policy-item {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 19.5px;
+  color: #155DFC;
   text-decoration: none;
   display: block;
   word-break: break-all;
-}
-
-.sd-policy-text:hover {
-  text-decoration: underline;
-  color: #155DFC;
 }
 
 /* 场景描述 */

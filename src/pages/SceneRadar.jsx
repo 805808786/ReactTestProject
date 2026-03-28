@@ -13,15 +13,15 @@ const SCENE_DATA = [
     id: 1,
     name: '人工智能企业筛选场景',
     description: '人工智能企业筛选',
-    enterprises: 2042,
+    enterprises: 6262,
     dynamics: 32,
     todayEnterprises: 3,
     todayDynamics: 3,
   },
   {
     id: 2,
-    name: '党建企业专题场景',
-    description: '党建企业专项筛选',
+    name: '115X专题企业筛选场景',
+    description: '115X专项企业筛选',
     enterprises: 18765,
     dynamics: 28,
     todayEnterprises: 2,
@@ -29,59 +29,107 @@ const SCENE_DATA = [
   },
   {
     id: 3,
-    name: '高成长企业专题场景',
-    description: '高成长企业专项筛选',
-    enterprises: 15432,
+    name: '数据产业专题筛选场景',
+    description: '数据产业专项筛选',
+    enterprises: 21512,
     dynamics: 45,
     todayEnterprises: 5,
     todayDynamics: 4,
   },
   {
     id: 4,
-    name: '出海企业专题场景',
-    description: '出海企业专项筛选',
-    enterprises: 12098,
+    name: '党建企业专题场景',
+    description: '党建企业专项筛选',
+    enterprises: 350,
     dynamics: 23,
     todayEnterprises: 1,
     todayDynamics: 2,
   },
   {
     id: 5,
-    name: '跨境电商专题场景',
-    description: '跨境电商专项筛选',
+    name: '出海企业专题场景',
+    description: '出海企业专项筛选',
     enterprises: 9876,
     dynamics: 19,
     todayEnterprises: 3,
     todayDynamics: 1,
   },
-  {
-    id: 6,
-    name: '先进制造专题场景',
-    description: '先进制造专项筛选',
-    enterprises: 14567,
-    dynamics: 31,
-    todayEnterprises: 2,
-    todayDynamics: 3,
-  },
-  {
-    id: 7,
-    name: '绿色低碳专题场景',
-    description: '绿色低碳专项筛选',
-    enterprises: 11234,
-    dynamics: 26,
-    todayEnterprises: 4,
-    todayDynamics: 2,
-  },
-  {
-    id: 8,
-    name: '数字经济专题场景',
-    description: '数字经济专项筛选',
-    enterprises: 17890,
-    dynamics: 38,
-    todayEnterprises: 3,
-    todayDynamics: 5,
-  },
+
 ];
+// const SCENE_DATA = [
+//   {
+//     id: 1,
+//     name: '人工智能企业筛选场景',
+//     description: '人工智能企业筛选',
+//     enterprises: 2042,
+//     dynamics: 32,
+//     todayEnterprises: 3,
+//     todayDynamics: 3,
+//   },
+//   {
+//     id: 2,
+//     name: '党建企业专题场景',
+//     description: '党建企业专项筛选',
+//     enterprises: 18765,
+//     dynamics: 28,
+//     todayEnterprises: 2,
+//     todayDynamics: 1,
+//   },
+//   {
+//     id: 3,
+//     name: '高成长企业专题场景',
+//     description: '高成长企业专项筛选',
+//     enterprises: 15432,
+//     dynamics: 45,
+//     todayEnterprises: 5,
+//     todayDynamics: 4,
+//   },
+//   {
+//     id: 4,
+//     name: '出海企业专题场景',
+//     description: '出海企业专项筛选',
+//     enterprises: 12098,
+//     dynamics: 23,
+//     todayEnterprises: 1,
+//     todayDynamics: 2,
+//   },
+//   {
+//     id: 5,
+//     name: '跨境电商专题场景',
+//     description: '跨境电商专项筛选',
+//     enterprises: 9876,
+//     dynamics: 19,
+//     todayEnterprises: 3,
+//     todayDynamics: 1,
+//   },
+//   {
+//     id: 6,
+//     name: '先进制造专题场景',
+//     description: '先进制造专项筛选',
+//     enterprises: 14567,
+//     dynamics: 31,
+//     todayEnterprises: 2,
+//     todayDynamics: 3,
+//   },
+//   {
+//     id: 7,
+//     name: '绿色低碳专题场景',
+//     description: '绿色低碳专项筛选',
+//     enterprises: 11234,
+//     dynamics: 26,
+//     todayEnterprises: 4,
+//     todayDynamics: 2,
+//   },
+//   {
+//     id: 8,
+//     name: '数字经济专题场景',
+//     description: '数字经济专项筛选',
+//     enterprises: 17890,
+//     dynamics: 38,
+//     todayEnterprises: 3,
+//     todayDynamics: 5,
+//   },
+// ];
 
 const PAGE_SIZE = 10;
 
@@ -95,14 +143,14 @@ function SceneCard({ scene, onSceneDetail }) {
       {/* 顶部：场景名称 + 场景说明 */}
       <div className="sr-card-header" onClick={() => onSceneDetail(scene)}>
         <div className="sr-card-title">{name}</div>
-        <span
+        {scene.id != 5 && <span
           className="sr-card-badge"
           onClick={(e) => {
             e.stopPropagation();
             navigate(`/scene-description/${id}`, { state: { sceneName: name } });
           }}
           style={{ cursor: 'pointer' }}
-        >场景说明</span>
+        >场景说明</span>}
       </div>
 
       {/* 场景描述 */}
@@ -110,7 +158,7 @@ function SceneCard({ scene, onSceneDetail }) {
 
       {/* 数据指标 */}
       <div className="sr-card-metrics">
-        <div className="sr-metric-item"  onClick={() => onSceneDetail(scene)}>
+        <div className="sr-metric-item" onClick={() => { scene.id == 1 && onSceneDetail(scene) }}>
           <div className="sr-metric-header">
             <span className="sr-metric-label">{name.replace('专题场景', '')}</span>
             <span className="sr-metric-arrow">→</span>
@@ -121,7 +169,7 @@ function SceneCard({ scene, onSceneDetail }) {
           </div>
         </div>
 
-        <div className="sr-metric-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
+        <div className="sr-metric-item" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic') }}>
           <div className="sr-metric-header">
             <span className="sr-metric-label">{name.replace('专题场景', '')}动态</span>
             <span className="sr-metric-arrow">→</span>
@@ -182,9 +230,11 @@ export default function SceneRadar() {
 
   // 计算统计数据
   const stats = {
-    sceneCount: 8,
-    totalEnterprises: SCENE_DATA.reduce((sum, s) => sum + s.enterprises, 0),
-    totalDynamics: SCENE_DATA.reduce((sum, s) => sum + s.dynamics, 0),
+    sceneCount: 5,
+    totalEnterprises: 28124,
+    totalDynamics: 670
+    // totalEnterprises: SCENE_DATA.reduce((sum, s) => sum + s.enterprises, 0),
+    // totalDynamics: SCENE_DATA.reduce((sum, s) => sum + s.dynamics, 0),
   };
 
   // 初始化 / 筛选变化时重置列表

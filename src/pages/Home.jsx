@@ -398,7 +398,7 @@ function Special115X() {
             <div className="cluster-metric-card blue-metric">
               <div className="metric-left">
                 <div className="metric-name">人工智能场景</div>
-                <div className="metric-total">14,331<small>家</small></div>
+                <div className="metric-total">618<small>家</small></div>
               </div>
               <div className="metric-right">
                 <div className="metric-change-label">今日新增</div>
@@ -412,7 +412,7 @@ function Special115X() {
             <div className="cluster-metric-card blue-metric">
               <div className="metric-left">
                 <div className="metric-name">生物医药与医疗器械场景</div>
-                <div className="metric-total">14,331<small>家</small></div>
+                <div className="metric-total">250<small>家</small></div>
               </div>
               <div className="metric-right">
                 <div className="metric-change-label">今日新增</div>
@@ -426,29 +426,29 @@ function Special115X() {
             <div className="cluster-grid-row">
               <div className="cluster-sub-card">
                 <div className="sub-card-name">高端通用设备</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">106<small>家</small></div>
                 <div className="sub-card-today up">今日+12</div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">新能源装备</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">119<small>家</small></div>
                 <div className="sub-card-today up">今日+12</div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: '8px' }}>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">新材料</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">160<small>家</small></div>
                 <div className="sub-card-today down">今日-12</div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">低空经济</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">96<small>家</small></div>
                 <div className="sub-card-today down">今日-12</div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">光电科技</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">288<small>家</small></div>
                 <div className="sub-card-today down">今日-12</div>
               </div>
             </div>
@@ -459,22 +459,22 @@ function Special115X() {
             <div className="cluster-grid-row wrap">
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">智能终端</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">60<small>家</small></div>
                 <div className="sub-card-today">今日+12</div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">网络通信</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">95<small>家</small></div>
                 <div className="sub-card-today">今日+12</div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">智能网联汽..</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">76<small>家</small></div>
                 <div className="sub-card-today">今日+12</div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">现代纺织与服装</div>
-                <div className="sub-card-total">3,245<small>家</small></div>
+                <div className="sub-card-total">284<small>家</small></div>
                 <div className="sub-card-today">今日+12</div>
               </div>
             </div>
@@ -585,15 +585,15 @@ const SCENE_DATA = [
     id: 1,
     name: '人工智能企业筛选场景',
     description: '人工智能企业筛选',
-    enterprises: 2042,
+    enterprises: 6262,
     dynamics: 32,
     todayEnterprises: 3,
     todayDynamics: 3,
   },
   {
     id: 2,
-    name: '党建企业专题场景',
-    description: '党建企业专项筛选',
+    name: '115X专题企业筛选场景',
+    description: '115X专项企业筛选',
     enterprises: 18765,
     dynamics: 28,
     todayEnterprises: 2,
@@ -601,58 +601,32 @@ const SCENE_DATA = [
   },
   {
     id: 3,
-    name: '高成长企业专题场景',
-    description: '高成长企业专项筛选',
-    enterprises: 15432,
+    name: '数据产业专题筛选场景',
+    description: '数据产业专项筛选',
+    enterprises: 21512,
     dynamics: 45,
     todayEnterprises: 5,
     todayDynamics: 4,
   },
   {
     id: 4,
-    name: '出海企业专题场景',
-    description: '出海企业专项筛选',
-    enterprises: 12098,
+    name: '党建企业专题场景',
+    description: '党建企业专项筛选',
+    enterprises: 350,
     dynamics: 23,
     todayEnterprises: 1,
     todayDynamics: 2,
   },
   {
     id: 5,
-    name: '跨境电商专题场景',
-    description: '跨境电商专项筛选',
+    name: '出海企业专题场景',
+    description: '出海企业专项筛选',
     enterprises: 9876,
     dynamics: 19,
     todayEnterprises: 3,
     todayDynamics: 1,
   },
-  {
-    id: 6,
-    name: '先进制造专题场景',
-    description: '先进制造专项筛选',
-    enterprises: 14567,
-    dynamics: 31,
-    todayEnterprises: 2,
-    todayDynamics: 3,
-  },
-  {
-    id: 7,
-    name: '绿色低碳专题场景',
-    description: '绿色低碳专项筛选',
-    enterprises: 11234,
-    dynamics: 26,
-    todayEnterprises: 4,
-    todayDynamics: 2,
-  },
-  {
-    id: 8,
-    name: '数字经济专题场景',
-    description: '数字经济专项筛选',
-    enterprises: 17890,
-    dynamics: 38,
-    todayEnterprises: 3,
-    todayDynamics: 5,
-  },
+  
 ];
 
 
@@ -684,11 +658,11 @@ function FocusScene() {
       <div className="home-stats-row">
         <div className="home-stat-card outline">
           <div className="stat-label">场景总数</div>
-          <div className="stat-value">8</div>
+          <div className="stat-value">5</div>
         </div>
         <div className="home-stat-card solid">
           <div className="stat-label">企业总数</div>
-          <div className="stat-value">3,372</div>
+          <div className="stat-value">28,124</div>
         </div>
         <div className="home-stat-card solid">
           <div className="stat-label">场景动态</div>
@@ -699,7 +673,7 @@ function FocusScene() {
       <div className="scene-summary-card" onClick={() => navigate('/scene-radar')}>
         <div className="summary-left">
           <div className="summary-label">场景雷达</div>
-          <div className="summary-value">8<small>个</small></div>
+          <div className="summary-value">5<small>个</small></div>
         </div>
         <div className="summary-right">
           <span className="view-all-link">查看全部 →</span>
@@ -712,13 +686,13 @@ function FocusScene() {
             <div className="scene-item-header">
               <div className="scene-item-title-box">
                 <h3 className="scene-item-title">{scene.name}</h3>
-                <span className="scene-item-badge" onClick={() => navigate(`/scene-description/${scene.id}`)}>场景说明</span>
+                {scene.id != 5 && <span className="scene-item-badge" onClick={() => navigate(`/scene-description/${scene.id}`)}>场景说明</span>}
               </div>
               <p className="scene-item-desc">{scene.description}</p>
             </div>
 
             <div className="scene-item-metrics">
-              <div className="scene-metric-box" onClick={() => navigate('/scene-enterprise')}>
+              <div className="scene-metric-box" onClick={() =>{scene.id == 1 && navigate('/scene-enterprise')}}>
                 <div className="metric-row-top">
                   <span className="metric-name">人工智能企业</span>
                   <span className="metric-arrow">→</span>
@@ -728,7 +702,7 @@ function FocusScene() {
                   <span className="metric-delta">今日+{scene.todayEnterprises}</span>
                 </div>
               </div>
-              <div className="scene-metric-box" onClick={() => navigate('/scene-enterprise-dynamic')}>
+              <div className="scene-metric-box" onClick={() =>{scene.id == 1 && navigate('/scene-enterprise-dynamic')}}>
                 <div className="metric-row-top">
                   <span className="metric-name">{scene.description}</span>
                   <span className="metric-arrow">→</span>
