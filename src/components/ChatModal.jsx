@@ -280,7 +280,7 @@ export default function ChatModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          {/* 英雄区域 */}
+          {/* 图标区域 */}
           {messages.length === 0 ? (
             <div className="chat-hero-section">
               <img className="chat-robot-avatar" src={SparklesIcon} alt="robot" />
