@@ -124,12 +124,22 @@ export default function ChatModal({ isOpen, onClose }) {
     messagesEndRef.current?.scrollIntoView({ behavior })
   }
 
+  const scrollToTop = (behavior = 'smooth') => {
+    chatBodyRef.current?.scrollTo({ top: 0, behavior })
+  }
+
   useEffect(() => {
     if (isOpen) {
-      // 刚打开时瞬间滚动到底部
-      setTimeout(() => scrollToBottom('auto'), 10)
+      // 根据消息数量决定滚动位置
+      setTimeout(() => {
+        if (messages.length === 0) {
+          scrollToTop('auto')
+        } else {
+          scrollToBottom('auto')
+        }
+      }, 10)
     }
-  }, [isOpen])
+  }, [isOpen, messages.length])
 
   useEffect(() => {
     scrollToBottom('smooth')
