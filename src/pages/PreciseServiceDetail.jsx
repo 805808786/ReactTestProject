@@ -10,49 +10,47 @@ import IconUpBlue from '../assets/icon-up-blue.svg'
 /* ===================== Mock 详情数据 ===================== */
 const MOCK_SERVICE_DATA = {
   1: {
-    companyName: '杭州市惠民服务有限公司',
+    companyName: '杭州橙颂科技有限公司',
     discoverDate: '2026-03-04',
     background:
-      '近3个月税收增长超50%，且税收金额达到30万元。技术研发投入占比达45%，具备快速成长为腰部企业潜力。',
-    serviceDept: '拱墅区科技局',
-    serviceTarget: '杭州市惠民服务有限公司',
-    serviceContent: '"国家高新技术企业"资质申报的全流程辅导与协调服务',
+      '该企业在快速发展阶段，对于项目管理与商务人才有较大需求缺口。',
+    serviceDept: '区人力社保局',
+    serviceTarget: '杭州橙颂科技有限公司',
+    serviceContent: '可为指导企业参与人才政策对接，协助引进和培养AI算法工程师、全栈开发工程师等高端技术人才，优化人才结构。',
     effects: [
-      '助力企业通过认定，实现从数商梯队腰部向头部领军企业的关键跃升。',
-      '企业通过认定后，预计可享年度减税约40万元，并获最高30万元财政奖励。',
+      '助力企业通过招聘所需的关键人才，推动企业更好更快发展',
     ],
   },
 };
 
 const DEFAULT_SERVICE = {
-  companyName: '杭州市惠民服务有限公司',
+  companyName: '杭州橙颂科技有限公司',
   discoverDate: '2026-03-04',
   background:
     '近3个月税收增长超50%，且税收金额达到30万元。技术研发投入占比达45%，具备快速成长为腰部企业潜力。',
   serviceDept: '拱墅区科技局',
-  serviceTarget: '杭州市惠民服务有限公司',
-  serviceContent: '"国家高新技术企业"资质申报的全流程辅导与协调服务',
+  serviceTarget: '杭州橙颂科技有限公司',
+  serviceContent: '可为指导企业参与人才政策对接，协助引进和培养AI算法工程师、全栈开发工程师等高端技术人才，优化人才结构。',
   effects: [
-    '助力企业通过认定，实现从数商梯队腰部向头部领军企业的关键跃升。',
-    '企业通过认定后，预计可享年度减税约40万元，并获最高30万元财政奖励。',
+    '助力企业通过招聘所需的关键人才，推动企业更好更快发展',
   ],
 };
 
 /* ===================== Mock 流程数据 ===================== */
 const MOCK_FLOW_STEPS = [
-  {
-    status: 'done',
-    statusLabel: '已完成',
-    deptName: '拱墅区市监局',
-    timeLabel: '耗时：5分钟',
-    result: '已联系企业并确认需求',
-    handler: '张三',
-    finishTime: '2026年3月31日21:09:16',
-  },
+  // {
+  //   status: 'done',
+  //   statusLabel: '已完成',
+  //   deptName: '拱墅区市监局',
+  //   timeLabel: '耗时：5分钟',
+  //   result: '已联系企业并确认需求',
+  //   handler: '张三',
+  //   finishTime: '2026年3月31日21:09:16',
+  // },
   {
     status: 'processing',
     statusLabel: '办理中',
-    deptName: '拱墅区科技局',
+    deptName: '区人力社保局',
     timeLabel: '持续：2小时5分钟',
     handler: '张三',
   },
@@ -111,11 +109,13 @@ export default function PreciseServiceDetail() {
             <div className="psd-service-box">
               <p className="psd-service-text">
                 {dispatched ? (
-                  <>科技局可为&ldquo;{data.serviceTarget}&rdquo;提供{data.serviceContent}</>
+                  <><span className="psd-service-highlight">{data.serviceDept}</span>
+                    {data.serviceContent}
+                  </>
                 ) : (
                   <>
                     <span className="psd-service-highlight">{data.serviceDept}</span>
-                    可为&ldquo;{data.serviceTarget}&rdquo;提供{data.serviceContent}
+                    {data.serviceContent}
                   </>
                 )}
               </p>
@@ -131,10 +131,11 @@ export default function PreciseServiceDetail() {
                       state: {
                         dispatchData: {
                           companyName: data.companyName,
-                          serviceContent: `为"${data.serviceTarget}"提供${data.serviceContent}`,
+                          serviceContent: data.background,
                           deptName: data.serviceDept,
                           handler: '张三',
                           phone: '13605809007',
+
                         },
                       },
                     })
@@ -154,15 +155,15 @@ export default function PreciseServiceDetail() {
                   onClick={() => setFlowExpanded((v) => !v)}
                 >
                   {flowExpanded ?
-                    <span className="psd-flow-progress">总计流程1/2</span> :
+                    <span className="psd-flow-progress">总计流程0/1</span> :
                     <span className="psd-flow-progress">
                       <div className="psd-step-left">
                         <span
                           className={`psd-step-badge psd-step-badge-processing`}
                         >
-                          1/2
+                          0/1
                         </span>
-                        <span className="psd-step-dept">拱墅区科技局</span>
+                        <span className="psd-step-dept">区人力社保局</span>
                       </div>
                     </span>}
 

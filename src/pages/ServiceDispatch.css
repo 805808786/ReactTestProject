@@ -147,20 +147,28 @@
   line-height: 1.5;
 }
 
+.sd-contact-row-container {
+  border: 1px solid #E5E7EB;
+  background: #FFF;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .sd-contact-row {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  padding: 12px 14px;
+
   gap: 16px;
-  border-radius: 10px;
-  border: 1px solid #E5E7EB;
-  background: #FFF;
+
 }
 
 .sd-contact-item {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 4px;
   flex: 1;
 }

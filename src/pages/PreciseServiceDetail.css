@@ -167,7 +167,7 @@
 .psd-bg-text {
   margin: 0;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
   color: #364153;
   line-height: 1.75;
   letter-spacing: 3px;
@@ -184,7 +184,7 @@
 .psd-service-text {
   margin: 0;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: #364153;
   line-height: 1.75;
 }

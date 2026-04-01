@@ -36,7 +36,7 @@ export default function ServiceDispatch() {
             <div className="sd-service-box">
               <p className="sd-service-text">
                 <span className="sd-service-bold">服务事项：</span>
-                {data.serviceContent}
+                该企业在快速发展阶段，对于项目管理与商务人才有较大需求缺口。
               </p>
             </div>
           </div>
@@ -48,14 +48,23 @@ export default function ServiceDispatch() {
             <h3 className="sd-flow-title">分派流程</h3>
             <div className="sd-flow-separator" />
             <div className="sd-dept-name">{data.deptName}</div>
-            <div className="sd-contact-row">
-              <div className="sd-contact-item">
-                <span className="sd-contact-label">处置人：</span>
-                <span className="sd-contact-value">{data.handler}</span>
+            <div className="sd-contact-row-container">
+              <div className="sd-contact-row">
+                <div className="sd-contact-item">
+                  <span className="sd-contact-label">处置人：</span>
+                  <span className="sd-contact-value">{data.handler}</span>
+                </div>
+                <div className="sd-contact-item">
+                  <span className="sd-contact-label">联系方式：</span>
+                  <span className="sd-contact-value">{data.phone}</span>
+                </div>
               </div>
-              <div className="sd-contact-item">
-                <span className="sd-contact-label">联系方式：</span>
-                <span className="sd-contact-value">{data.phone}</span>
+              <div className="sd-contact-row">
+                <div className="sd-contact-item">
+                  <span className="sd-contact-label">分派依据：</span>
+                  <span className="sd-contact-value">指导企业参与人才政策对接，协助引进和培养AI算法工程师、全栈开发工程师等高端技术人才，优化人才结构。</span>
+                </div>
+
               </div>
             </div>
             <div className="sd-flow-separator" />

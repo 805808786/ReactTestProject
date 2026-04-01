@@ -3,6 +3,7 @@ import iconBack from '../assets/icon-dynamic-back.svg';
 import iconNewspaper from '../assets/icon-dynamic-newspaper.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
+import iconLinkBlue from '../assets/icon-link-blue.svg';
 import './SceneEnterpriseDynamicDetail.css';
 import PageHeader from '../components/PageHeader';
 
@@ -74,60 +75,81 @@ const MOCK_DETAIL_DATA = {
   4: {
     type: '今日推荐',
     category: 'recommend',
-    title: '拱墅科技有限公司',
+    title: '杭州杭钢云计算数据中心有限公司',
     date: '2026-03-01',
     source: '',
-    summary: '该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
+    summary: '杭州杭钢云计算数据中心有限公司是杭钢集团数字经济转型骨干企业。其数据中心（东区）入选国家绿色数据中心，PUE值控制在1.30以下，走在全国前列，利用老厂房改造实现“从炼钢到炼数”的绿色升级。',
+    subSummary: '项目与阿里合作，规划大规模算力设施，已投运数千机柜，支持政务云、信创云等应用，为长三角数字基础设施和AI发展提供坚实支撑，助力高质量发展。',
     paragraphs: [
-      '浙文蓝耘智算(浙江)科技有限公司成立于2024年，位于杭州市拱墅区，注册资本5000万元，专注于数字技术、大数据、人工智能等信息技术服务，并提供计算机软硬件销售与租赁服务。公司是浙江省文化投资集团与科技企业合作设立的智算科技公司，专注于人工智能算力服务、大数据处理及文化数字化解决方案，服务于文化产业智能化升级。',
+      '杭州杭钢云计算数据中心有限公司是杭钢集团旗下国有企业，由金属制造转型为数字经济核心企业，主营第一类增值电信业务、大数据服务及软件开发等，注册资本75898万元。',
     ],
     relatedCompanies: [],
-    link: 'https://baidu.com'
+    link: 'https://biiframe.yicall.com/lwt/#/company-detail/1848243523192745991'
   },
   5: {
     type: '新闻动态',
     category: 'news',
-    title: '拱墅数商产业园正式启动,多家企业入驻',
-    date: '2026-03-01',
-    source: '人民日报',
-    summary: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
-    sourceLink: { label: '杭州发布', url: 'https://www.hangzhou.gov.cn' },
+    title: '区领导带队赴上海开展招商考察活动',
+    date: '2026-04-01',
+    source: '拱墅发布',
+    summary: '3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。',
+    sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/b0XVuLwoycSbCzNnWts1iA' },
     paragraphs: [],
     relatedCompanies: [
       {
         id: 1,
-        name: '杭州市创新科技有限公司',
-        industry: '软件和信息技术服务业',
-        legalPerson: '张伟',
-        status: '存续',
+        name: '行业研究型精品CVC产业投资机构',
+        // industry: '软件和信息技术服务业',
+        // legalPerson: '张伟',
+        // status: '存续',
+      },
+      {
+        id: 2,
+        name: '上海润达医疗',
+        // industry: '软件和信息技术服务业',
+        // legalPerson: '张伟',
+        // status: '存续',
       },
     ],
   },
   6: {
     type: '与我相关',
     category: 'related',
-    title: '敖煜新调研督导物业服务领域信访问题集中治理工作',
-    date: '2026-03-01',
-    source: '人民日报',
-    summary: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    title: '敖煜新赴区信访局接待来访群众',
+    date: '2026-04-01',
+    source: '拱墅发布',
+    summary: '4月1日下午，区委书记敖煜新赴区信访局接待来访群众，面对面倾听诉求，现场协调解决问题。',
+    sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/nFVGrStDCjLzngDZZQWZxw' },
     paragraphs: [],
     relatedDepartments: [
       {
         id: 1,
-        name: '拱墅区区委办公室',
-        street: '拱宸桥街道',
-        legalPerson: '王翔',
+        name: '拱墅区区委办',
+        // street: '拱宸桥街道',
+        // legalPerson: '王翔',
       },
-    ],
-    relatedCompanies: [
       {
-        id: 1,
-        name: '杭州市创新科技有限公司',
-        industry: '软件和信息技术服务业',
-        legalPerson: '张伟',
-        status: '存续',
+        id: 2,
+        name: '拱墅区信访局',
+        // street: '拱宸桥街道',
+        // legalPerson: '王翔',
+      },
+      {
+        id: 3,
+        name: '拱墅区综合行政执法局',
+        // street: '拱宸桥街道',
+        // legalPerson: '王翔',
       },
     ],
+    // relatedCompanies: [
+    //   {
+    //     id: 1,
+    //     name: '杭州市创新科技有限公司',
+    //     industry: '软件和信息技术服务业',
+    //     legalPerson: '张伟',
+    //     status: '存续',
+    //   },
+    // ],
   },
 
 };
@@ -214,7 +236,7 @@ export default function SceneEnterpriseDynamicDetail() {
                 {
                   data.category == 'recommend' && data.link && (
                     <div className="sedd-meta-item">
-                      <a className="sedd-link-text" target="_blank" rel="noopener noreferrer">查看详情 →</a>
+                      <a className="sedd-link-text" href={data.link}>查看企业 →</a>
                     </div>
                   )
                 }
@@ -227,7 +249,18 @@ export default function SceneEnterpriseDynamicDetail() {
 
             {/* 摘要区域 */}
             <div className="sedd-summary-box">
-              <p className="sedd-summary-text">{data.category == 'recommend' ? <span className="sedd-summary--bold">推荐理由：</span> : <span className="sedd-summary--bold">摘要: </span>} {data.summary}</p>
+              <p className="sedd-summary-text">{data.category == 'recommend' ?
+                <span className="sedd-summary--bold">推荐理由：</span> :
+                <span className="sedd-summary--bold">摘要: </span>}
+                {data.summary}
+                {
+                  data.subSummary && (
+                    <>
+                      <br></br>
+                      {data.subSummary}
+                    </>
+                  )
+                }</p>
             </div>
 
             {/* 来源链接按钮 */}
@@ -238,7 +271,9 @@ export default function SceneEnterpriseDynamicDetail() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="sedd-source-link-icon">🔗</span>
+                <span className="sedd-source-link-icon">
+                  <img src={iconLinkBlue} alt="🔗" width={16} height={16} />
+                </span>
                 <span className="sedd-source-link-label">{data.sourceLink.label}</span>
               </a>
             )}
@@ -310,20 +345,19 @@ export default function SceneEnterpriseDynamicDetail() {
                       {/* 左侧：名称 + 基本信息 */}
                       <div className="sedd-company-left">
                         <div className="sedd-company-name">{company.name}</div>
-                        <div className="sedd-company-info">
+                        {company.legalPerson && company.industry && <div className="sedd-company-info">
                           <span className="sedd-company-industry">{company.industry}</span>
                           <span className="sedd-company-dot">•</span>
                           <span className="sedd-company-person">{company.legalPerson}</span>
-                        </div>
+                        </div>}
                       </div>
                       {/* 右侧：状态标签 */}
-                      <div className="sedd-status-badge">{company.status}</div>
+                      {company.status && <div className="sedd-status-badge">{company.status}</div>}
                     </div>
-
                     {/* 查看详情 */}
-                    <div className="sedd-company-detail-row">
+                    {data.category != 'news' && <div className="sedd-company-detail-row">
                       <span className="sedd-company-detail-link">查看详情 →</span>
-                    </div>
+                    </div>}
                   </div>
                 ))}
               </div>

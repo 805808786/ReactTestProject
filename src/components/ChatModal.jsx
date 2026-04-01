@@ -16,9 +16,9 @@ const INITIAL_CARDS = [
     tagText: '今日推荐',
     hasNotification: true,
     dotColor: '#F59E0B',
-    title: '拱墅科技有限公司',
+    title: '杭州杭钢云计算数据中心有限公司',
     subTag: null,
-    description: '该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
+    description: '杭州杭钢云计算数据中心有限公司是杭钢集团数字经济转型骨干企业。其数据中心（东区）入选国家绿色数据中心，PUE值控制在1.30以下，走在全国前列，利用老厂房改造实现“从炼钢到炼数”的绿色升级。',
     timeAgo: '2小时前',
     detailUrl: '/scene-enterprise-dynamic-detail/4',
   },
@@ -27,10 +27,10 @@ const INITIAL_CARDS = [
     category: 'news',
     tagText: '新闻动态',
     hasNotification: true,
-    dotColor: '#3B82F6',
-    title: '拱墅数商产业园正式启动,多家企业入驻',
+    dotColor: '#10BA51',
+    title: '区领导带队赴上海开展招商考察活动',
     subTag: null,
-    description: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    description: '摘3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。',
     timeAgo: '2小时前',
     detailUrl: '/scene-enterprise-dynamic-detail/5',
   },
@@ -40,9 +40,9 @@ const INITIAL_CARDS = [
     tagText: '精准服务',
     hasNotification: false,
     dotColor: null,
-    title: '拱墅科技有限公司',
+    title: '杭州橙颂科技有限公司',
     subTag: { text: '腰部企业' },
-    description: '近3个月税收增长超50%，且税收金额达到30万元。技术研发投入占比达45%，具备快速成长为腰部企业潜力。',
+    description: '该企业在快速发展阶段，对于项目管理与商务人才有较大需求缺口。',
     timeAgo: '2小时前',
     detailUrl: '/precise-service-detail/1',
   },
@@ -52,9 +52,9 @@ const INITIAL_CARDS = [
     tagText: '与我相关',
     hasNotification: false,
     dotColor: '#3B82F6',
-    title: '敖煜新调研督导物业服务领域信访问题...',
+    title: '敖煜新赴区信访局接待来访群众',
     subTag: null,
-    description: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    description: '摘4月1日下午，区委书记敖煜新赴区信访局接待来访群众，面对面倾听诉求，现场协调解决问题。',
     timeAgo: '2小时前',
     detailUrl: '/scene-enterprise-dynamic-detail/6',
   },
@@ -202,7 +202,7 @@ export default function ChatModal({ isOpen, onClose }) {
       if (scrollTop >= 80 && !isCompactRef.current) {
         // 向下滚动超过 80px → 收缩，且不因滚动条消失而反转
         animateToCompact()
-      } else if (scrollTop < 40 && hasScrollbar && isCompactRef.current) {
+      } else if (scrollTop < 10 && hasScrollbar && isCompactRef.current) {
         // 向上滚动 < 40px，且确认仍有滚动条 → 展开
         animateToNormal()
       }
