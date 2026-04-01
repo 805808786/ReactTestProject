@@ -288,7 +288,7 @@ export default function ChatModal({ isOpen, onClose }) {
                 <div className="chat-hero-greeting">
                   Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
                 </div>
-                <div className="chat-hero-subtitle">为您提供最新的企业资讯</div>
+                <div className="chat-hero-subtitle">您有<span className="chat-hero-highlight-red">2</span>条未读消息</div>
               </div>
             </div>
           ) :

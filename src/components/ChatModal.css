@@ -147,20 +147,24 @@
 
 .chat-hero-greeting {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   color: white;
   text-align: center;
 }
 
 .chat-hero-highlight {
   color: #FFD700;
-  font-weight: 600;
+  font-weight: 400;
+}
+
+.chat-hero-highlight-red {
+  color: #D54941;
 }
 
 .chat-hero-subtitle {
   font-size: 18px;
   color: white;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
 }
 
