@@ -12,13 +12,13 @@
   background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   min-height: 100vh;
-  font-family:
+  /* font-family:
     "Noto Sans SC",
     -apple-system,
     BlinkMacSystemFont,
     "PingFang SC",
     "Microsoft YaHei",
-    sans-serif;
+    sans-serif; */
 }
 
 /* Header - 1:1 Figma (Node 54:760) */
