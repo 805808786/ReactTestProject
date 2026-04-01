@@ -308,16 +308,16 @@ export default function ChatModal({ isOpen, onClose }) {
           <div className="chat-hero-section" style={{
             transition: 'all 0.3s ease'
           }}>
-            <img 
-              className="chat-robot-avatar" 
-              src={SparklesIcon} 
-              alt="robot" 
+            <img
+              className="chat-robot-avatar"
+              src={SparklesIcon}
+              alt="robot"
               style={{
                 transform: `translateY(${scrollY > 80 ? '-48px' : '0'})`,
                 transition: 'all 0.3s ease'
               }}
             />
-            {messages.length === 0 && (
+            {(
               <div className='chat-txt-wrapper' style={{
                 opacity: scrollY > 80 ? 0 : 1,
                 transform: `translateY(${scrollY > 80 ? '20px' : '0'})`,

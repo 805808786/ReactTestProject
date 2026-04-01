@@ -1130,6 +1130,7 @@ function AssistantCard({ onClick }) {
       </div>
       <div className="assistant-avatar-box">
         <img src={SparklesIcon} alt="avatar" />
+        <div className="assistant-avatar-box-unread">2</div>
       </div>
     </div>
   )
