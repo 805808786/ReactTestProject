@@ -120,11 +120,11 @@
 
 /* Description */
 .chat-card-desc {
-  font-size: 12px;
+  font-size: 16px;
   color: #364153;
   line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;

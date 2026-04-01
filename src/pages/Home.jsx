@@ -161,7 +161,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise')}>
                 <div className="kf-stat-label">人工智能企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-num">6,180</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
@@ -172,7 +172,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
                 <div className="kf-stat-label">场景动态</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">500</span>
+                  <span className="kf-stat-num">15</span>
                   <span className="kf-stat-unit">条</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>

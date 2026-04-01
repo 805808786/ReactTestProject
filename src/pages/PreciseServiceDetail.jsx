@@ -11,7 +11,7 @@ import IconUpBlue from '../assets/icon-up-blue.svg'
 const MOCK_SERVICE_DATA = {
   1: {
     companyName: '杭州橙颂科技有限公司',
-    discoverDate: '2026-03-04',
+    discoverDate: '2026-04-01',
     background:
       '该企业在快速发展阶段，对于项目管理与商务人才有较大需求缺口。',
     serviceDept: '区人力社保局',

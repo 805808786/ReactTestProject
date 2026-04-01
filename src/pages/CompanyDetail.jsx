@@ -617,7 +617,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
         </div>
 
         {/* 企业层级 */}
-        <div className="cd-rank-banner">
+        {/* <div className="cd-rank-banner">
           <div className="cd-rank-banner-left">
             <img src={iconAwardOrange} alt="等级" width={20} height={20} />
             <div className="cd-rank-banner-text">
@@ -625,9 +625,8 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
               <span className="cd-rank-banner-value">{basicInfo.categoryName || '重点企业'}</span>
             </div>
           </div>
-          {/* 先隐藏 */}
-          {/* <img src={iconInfoOrange} alt="说明" width={16} height={16} className="cd-rank-banner-info-icon" /> */}
-        </div>
+          // <img src={iconInfoOrange} alt="说明" width={16} height={16} className="cd-rank-banner-info-icon" />
+        </div> */}
 
         {/* 企业通用标签 */}
         <div className="cd-tag-section">
