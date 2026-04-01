@@ -585,6 +585,7 @@ const SCENE_DATA = [
     id: 1,
     name: '人工智能企业筛选场景',
     description: '人工智能企业筛选',
+    subName: "人工智能企业动态",
     enterprises: 6262,
     dynamics: 32,
     todayEnterprises: 3,
@@ -594,6 +595,7 @@ const SCENE_DATA = [
     id: 2,
     name: '115X专题企业筛选场景',
     description: '115X专项企业筛选',
+    subName: "115X专项企业动态",
     enterprises: 18765,
     dynamics: 28,
     todayEnterprises: 2,
@@ -603,6 +605,7 @@ const SCENE_DATA = [
     id: 3,
     name: '数据产业专题筛选场景',
     description: '数据产业专项筛选',
+    subName: "数据产业专项动态",
     enterprises: 21512,
     dynamics: 45,
     todayEnterprises: 5,
@@ -612,6 +615,7 @@ const SCENE_DATA = [
     id: 4,
     name: '党建企业专题场景',
     description: '党建企业专项筛选',
+    subName: "党建企业专项动态",
     enterprises: 350,
     dynamics: 23,
     todayEnterprises: 1,
@@ -621,12 +625,13 @@ const SCENE_DATA = [
     id: 5,
     name: '出海企业专题场景',
     description: '出海企业专项筛选',
+    subName: "出海企业专项动态",
     enterprises: 9876,
     dynamics: 19,
     todayEnterprises: 3,
     todayDynamics: 1,
   },
-  
+
 ];
 
 
@@ -692,7 +697,7 @@ function FocusScene() {
             </div>
 
             <div className="scene-item-metrics">
-              <div className="scene-metric-box" onClick={() =>{scene.id == 1 && navigate('/scene-enterprise')}}>
+              <div className="scene-metric-box" onClick={() => { scene.id == 1 && navigate('/scene-enterprise') }}>
                 <div className="metric-row-top">
                   <span className="metric-name">人工智能企业</span>
                   <span className="metric-arrow">→</span>
@@ -702,9 +707,9 @@ function FocusScene() {
                   <span className="metric-delta">今日+{scene.todayEnterprises}</span>
                 </div>
               </div>
-              <div className="scene-metric-box" onClick={() =>{scene.id == 1 && navigate('/scene-enterprise-dynamic')}}>
+              <div className="scene-metric-box" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic') }}>
                 <div className="metric-row-top">
-                  <span className="metric-name">{scene.description}</span>
+                  <span className="metric-name">{scene.subName}</span>
                   <span className="metric-arrow">→</span>
                 </div>
                 <div className="metric-row-bottom">
