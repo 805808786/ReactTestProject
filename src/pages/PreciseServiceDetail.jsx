@@ -5,6 +5,7 @@ import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
 import './PreciseServiceDetail.css';
 import PageHeader from '../components/PageHeader';
+import IconUpBlue from '../assets/icon-up-blue.svg'
 
 /* ===================== Mock 详情数据 ===================== */
 const MOCK_SERVICE_DATA = {
@@ -66,7 +67,7 @@ export default function PreciseServiceDetail() {
   const stateData = location.state?.serviceData;
   const data = stateData || MOCK_SERVICE_DATA[Number(id)] || DEFAULT_SERVICE;
 
-  const [flowExpanded, setFlowExpanded] = useState(true);
+  const [flowExpanded, setFlowExpanded] = useState(false);
 
   return (
     <div className="psd-container">
@@ -105,7 +106,7 @@ export default function PreciseServiceDetail() {
 
         {/* ===== 可服务事项卡片 ===== */}
         <div className="psd-card-service">
-          <div className="psd-card-content">
+          <div className="psd-card-content-service">
             <h3 className="psd-section-title">可服务事项</h3>
             <div className="psd-service-box">
               <p className="psd-service-text">
@@ -147,18 +148,35 @@ export default function PreciseServiceDetail() {
             {/* 已派发：显示流程进度 */}
             {dispatched && (
               <div className="psd-flow">
+
                 <div
                   className="psd-flow-header"
                   onClick={() => setFlowExpanded((v) => !v)}
                 >
-                  <span className="psd-flow-progress">总计流程1/2</span>
+                  {flowExpanded ?
+                    <span className="psd-flow-progress">总计流程1/2</span> :
+                    <span className="psd-flow-progress">
+                      <div className="psd-step-left">
+                        <span
+                          className={`psd-step-badge psd-step-badge-processing`}
+                        >
+                          1/2
+                        </span>
+                        <span className="psd-step-dept">拱墅区科技局</span>
+                      </div>
+                    </span>}
+
+
                   <div className="psd-flow-header-right">
-                    <span className="psd-flow-date">下发时间：2026年3月31日</span>
+                    {flowExpanded ? <span className="psd-flow-date">下发时间：2026年3月31日</span> :
+                      <span className="psd-flow-date">持续：2小时5分钟</span>}
+
                     <span className={`psd-flow-arrow ${flowExpanded ? 'psd-flow-arrow-up' : ''}`}>
-                      &#8963;
+                      <img src={IconUpBlue} alt="up" />
                     </span>
                   </div>
                 </div>
+
 
                 {flowExpanded && (
                   <div className="psd-flow-steps">
@@ -216,7 +234,7 @@ export default function PreciseServiceDetail() {
 
         {/* ===== 预期成效卡片 ===== */}
         <div className="psd-card-service">
-          <div className="psd-card-content">
+          <div className="psd-card-content-effect">
             <h3 className="psd-section-title">预期成效</h3>
             <div className="psd-effect-box">
               {data.effects.map((effect, index) => (

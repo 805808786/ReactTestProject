@@ -85,6 +85,22 @@
   padding: 16px;
 }
 
+.psd-card-content-service {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.psd-card-content-effect {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+
+
 /* ===== 企业信息头部 ===== */
 .psd-company-header {
   display: flex;
@@ -103,7 +119,7 @@
   font-weight: 400;
   color: #0A0A0A;
   line-height: 1.5;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+
 }
 
 /* 挖掘日期 */
@@ -127,7 +143,7 @@
   font-weight: 400;
   color: #6A7282;
   line-height: 1.4;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+
 }
 
 /* ===== 区块标题 ===== */
@@ -136,7 +152,7 @@
   font-weight: 600;
   color: #0A0A0A;
   line-height: 1.5;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+
   margin: 0;
 }
 
@@ -218,7 +234,7 @@
 
 .psd-effect-text {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #364153;
   line-height: 1.75;
@@ -229,7 +245,7 @@
 .psd-flow {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .psd-flow-header {
@@ -242,9 +258,10 @@
 
 .psd-flow-progress {
   font-size: 14px;
-  font-weight: 600;
-  color: #0A0A0A;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  color: #181818;
+  line-height: 20px;
+
 }
 
 .psd-flow-header-right {
@@ -254,10 +271,11 @@
 }
 
 .psd-flow-date {
-  font-size: 13px;
-  font-weight: 400;
-  color: #6A7282;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #181818;
+  line-height: 20px;
+
 }
 
 .psd-flow-arrow {
@@ -294,55 +312,55 @@
 .psd-step-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
 }
 
 .psd-step-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 2px 8px;
-  border-radius: 8px;
+  padding: 0 8px;
+  border-radius: 12px;
   font-size: 12px;
   font-weight: 500;
-  line-height: 1.333;
-  height: 22px;
   box-sizing: border-box;
   flex-shrink: 0;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  min-width: 46px;
+  height: 20px;
 }
 
 .psd-step-badge-done {
-  background: #ECFDF5;
-  color: #059669;
+  background: #2BA471;
+  color: #E3F9E9;
 }
 
 .psd-step-badge-processing {
-  background: #EFF6FF;
-  color: #155DFC;
+  background: #0052D9;
+  color: rgba(255, 255, 255, 0.90);
 }
 
 .psd-step-dept {
-  font-size: 15px;
-  font-weight: 600;
-  color: #0A0A0A;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #181818;
+
 }
 
 .psd-step-time {
-  font-size: 13px;
-  font-weight: 400;
-  color: #6A7282;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #181818;
+
 }
 
 .psd-step-detail {
-  background: #F9FAFB;
-  border-radius: 10px;
+  background: #FFF;
+  border-radius: 18px;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 6px;
+  border: 1px solid #E5E7EB;
 }
 
 .psd-step-detail-row {
@@ -356,14 +374,14 @@
   font-weight: 600;
   color: #0A0A0A;
   white-space: nowrap;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+
 }
 
 .psd-step-value {
   font-size: 14px;
   font-weight: 400;
   color: #364153;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+
 }
 
 .psd-step-processing-content {
@@ -376,19 +394,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 16px;
+  padding: 0 16px;
   background: #FFFFFF;
   border: 1px solid #D1D5DB;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #364153;
+  font-size: 12px;
+  height: 29px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.90);
   cursor: pointer;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
-  flex-shrink: 0;
   transition: background 0.2s;
+  border-radius: 3px;
+  background: #0052D9;
 }
 
 .psd-urge-btn:active {
-  background: #F3F4F6;
+  background: #0052D9;
 }

@@ -43,7 +43,7 @@ export default function ServiceDispatch() {
         </div>
 
         {/* ===== 分派流程卡片 ===== */}
-        <div className="sd-card">
+        <div className="sd-card-flow">
           <div className="sd-card-content">
             <h3 className="sd-flow-title">分派流程</h3>
             <div className="sd-flow-separator" />
