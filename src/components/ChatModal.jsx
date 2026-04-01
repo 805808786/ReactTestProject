@@ -84,6 +84,26 @@ export default function ChatModal({ isOpen, onClose }) {
   const [isTyping, setIsTyping] = useState(false)
   const [isSending, setIsSending] = useState(false)
   const messagesEndRef = useRef(null)
+  const [scrollY, setScrollY] = useState(0)
+
+  const chatBodyRef = useRef(null)
+  const setChatBodyRef = (element) => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.removeEventListener('scroll', handleScroll)
+    }
+    chatBodyRef.current = element
+    if (element) {
+      element.addEventListener('scroll', handleScroll)
+    }
+  }
+
+  const handleScroll = () => {
+    if (chatBodyRef.current) {
+      setScrollY(chatBodyRef.current.scrollTop)
+    }
+  }
+
+  console.log(scrollY)
 
   const generateRandomId = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -118,6 +138,8 @@ export default function ChatModal({ isOpen, onClose }) {
   useEffect(() => {
     localStorage.setItem('chat_messages', JSON.stringify(messages))
   }, [messages])
+
+
 
   const handleSend = async () => {
     if (!inputValue.trim() || isSending) return
@@ -258,7 +280,9 @@ export default function ChatModal({ isOpen, onClose }) {
     <div className="chat-modal-overlay" onClick={onClose}>
       <div className="chat-modal-container" onClick={e => e.stopPropagation()}>
         {/* 头部 */}
-        <div className="chat-header-cm chat-header-cm-small">
+        <div className={`chat-header-cm ${scrollY > 80 ? 'chat-header-cm-small' : ''}`} style={{
+          transition: 'all 0.3s ease'
+        }}>
           {/* 顶部导航栏 */}
           <div className="chat-nav-bar-container">
             <div className="chat-nav-bar">
@@ -281,23 +305,37 @@ export default function ChatModal({ isOpen, onClose }) {
           </div>
 
           {/* 图标区域 */}
-          {messages.length === 0 ? (
-            <div className="chat-hero-section">
-              <img className="chat-robot-avatar" src={SparklesIcon} alt="robot" />
-              <div className='chat-txt-wrapper'>
+          <div className="chat-hero-section" style={{
+            transition: 'all 0.3s ease'
+          }}>
+            <img 
+              className="chat-robot-avatar" 
+              src={SparklesIcon} 
+              alt="robot" 
+              style={{
+                transform: `translateY(${scrollY > 80 ? '-48px' : '0'})`,
+                transition: 'all 0.3s ease'
+              }}
+            />
+            {messages.length === 0 && (
+              <div className='chat-txt-wrapper' style={{
+                opacity: scrollY > 80 ? 0 : 1,
+                transform: `translateY(${scrollY > 80 ? '20px' : '0'})`,
+                height: scrollY > 80 ? '0' : '100%',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden'
+              }}>
                 <div className="chat-hero-greeting">
                   Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
                 </div>
                 <div className="chat-hero-subtitle">您有<span className="chat-hero-highlight-red">2</span>条未读消息</div>
               </div>
-            </div>
-          ) :
-            <img className="chat-robot-small-avatar" src={SparklesIcon} alt="robot" />
-          }
+            )}
+          </div>
         </div>
 
         {/* 聊天内容区 */}
-        <div className="chat-body-cm">
+        <div className="chat-body-cm" ref={setChatBodyRef}>
           {/* 静态欢迎卡片 - 始终显示 */}
           <div className="chat-message msg-bot">
             {/* <div className="avatar bot-avatar">
