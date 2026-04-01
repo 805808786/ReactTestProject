@@ -310,7 +310,7 @@ export default function ChatModal({ isOpen, onClose }) {
                   <ChatInfoCard
                     key={card.id}
                     card={card}
-                    onNavigate={(url) => { onClose(); navigate(url); }}
+                    onNavigate={(url) => { navigate(url); }}
                   />
                 ))}
               </div>

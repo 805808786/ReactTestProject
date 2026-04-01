@@ -5,6 +5,7 @@ import Dialog from '../components/Dialog'
 import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
 import { useBottomNavStore } from '../store/bottomNavStore'
+import { useChatStore } from '../store/chatStore'
 import PageHeader from '../components/PageHeader';
 
 import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
@@ -46,7 +47,7 @@ const bottomTabs = [
 
 export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
-  const [isChatOpen, setIsChatOpen] = useState(false)
+  const { isChatOpen, setIsChatOpen } = useChatStore()
   const navigate = useNavigate()
 
   const renderContent = () => {
@@ -109,8 +110,6 @@ export default function Home() {
         ))}
       </div>
 
-      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-
       {bottomTabs[activeBottomTab]?.logicCase !== 0 && (
         <div className="floating-assistant-btn" onClick={() => setIsChatOpen(true)}>
           <div className="floating-btn-inner">
@@ -119,6 +118,8 @@ export default function Home() {
           {/* <div className="notification-dot"></div> */}
         </div>
       )}
+
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   )
 }

@@ -214,7 +214,7 @@ export default function SceneEnterpriseDynamicDetail() {
                 {
                   data.category == 'recommend' && data.link && (
                     <div className="sedd-meta-item">
-                      <a className="sedd-link-text" href={data.link} target="_blank" rel="noopener noreferrer">查看详情 →</a>
+                      <a className="sedd-link-text" target="_blank" rel="noopener noreferrer">查看详情 →</a>
                     </div>
                   )
                 }
