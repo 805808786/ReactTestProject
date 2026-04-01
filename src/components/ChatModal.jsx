@@ -1,8 +1,61 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { History, Bot, User, Send } from 'lucide-react'
 import IconBackWhite from '../assets/icon-back-white.svg'
 import SparklesIcon from '../assets/Sparkles.svg'
+import ChatInfoCard from './ChatInfoCard'
 import './ChatModal.css'
+
+const INITIAL_CARDS = [
+  {
+    id: 'card-recommend',
+    category: 'recommend',
+    tagText: '今日推荐',
+    hasNotification: true,
+    dotColor: '#F59E0B',
+    title: '拱墅科技有限公司',
+    subTag: null,
+    description: '该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
+    timeAgo: '2小时前',
+    detailUrl: 'scene-enterprise-dynamic-detail/1',
+  },
+  {
+    id: 'card-news',
+    category: 'news',
+    tagText: '新闻动态',
+    hasNotification: true,
+    dotColor: '#3B82F6',
+    title: '拱墅数商产业园正式启动,多家企业入驻',
+    subTag: null,
+    description: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    timeAgo: '2小时前',
+    detailUrl: '/company-news-detail/1',
+  },
+  {
+    id: 'card-service',
+    category: 'service',
+    tagText: '精准服务',
+    hasNotification: false,
+    dotColor: null,
+    title: '拱墅科技有限公司',
+    subTag: { text: '腰部企业' },
+    description: '近3个月税收增长超50%，且税收金额达到30万元。技术研发投入占比达45%，具备快速成长为腰部企业潜力。',
+    timeAgo: '2小时前',
+    detailUrl: '/waist-enterprise',
+  },
+  {
+    id: 'card-related',
+    category: 'related',
+    tagText: '与我相关',
+    hasNotification: false,
+    dotColor: '#3B82F6',
+    title: '敖煜新调研督导物业服务领域信访问题...',
+    subTag: null,
+    description: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    timeAgo: '2小时前',
+    detailUrl: '/company-news-detail/2',
+  },
+]
 
 const initialMessages = [
   //   { id: 1, type: 'bot', text: '您好！我是墅企小助手，有什么可以帮助您的吗？', time: '13:56' },
@@ -10,6 +63,7 @@ const initialMessages = [
 ]
 
 export default function ChatModal({ isOpen, onClose }) {
+  const navigate = useNavigate()
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem('chat_messages')
     if (saved) {
@@ -191,7 +245,7 @@ export default function ChatModal({ isOpen, onClose }) {
     <div className="chat-modal-overlay" onClick={onClose}>
       <div className="chat-modal-container" onClick={e => e.stopPropagation()}>
         {/* 头部 */}
-        <div className={`chat-header-cm ${messages.length !== 0 ? 'chat-header-cm-small' : ''}`}>
+        <div className="chat-header-cm chat-header-cm-small">
           {/* 顶部导航栏 */}
           <div className="chat-nav-bar">
             <button className="chat-nav-btn" onClick={onClose}>
@@ -220,6 +274,25 @@ export default function ChatModal({ isOpen, onClose }) {
 
         {/* 聊天内容区 */}
         <div className="chat-body-cm">
+          {/* 静态欢迎卡片 - 始终显示 */}
+          <div className="chat-message msg-bot">
+            {/* <div className="avatar bot-avatar">
+              <Bot size={20} color="#155DFC" strokeWidth={1.5} />
+            </div> */}
+            <div className="msg-content-wrapper msg-content-wrapper--cards">
+              <div className="msg-cards-label">拱墅企业小助手：</div>
+              <div className="msg-cards-list">
+                {INITIAL_CARDS.map(card => (
+                  <ChatInfoCard
+                    key={card.id}
+                    card={card}
+                    onNavigate={(url) => { onClose(); navigate(url); }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
           {messages.map((msg) => (
             <div key={msg.id} className={`chat-message ${msg.type === 'user' ? 'msg-user' : 'msg-bot'}`}>
               {msg.type === 'bot' && (

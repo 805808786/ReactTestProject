@@ -211,6 +211,23 @@
   flex-direction: column;
 }
 
+.msg-content-wrapper--cards {
+  max-width: calc(100% - 48px);
+}
+
+.msg-cards-label {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.msg-cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .msg-bot .msg-content-wrapper {
   align-items: flex-start;
 }

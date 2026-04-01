@@ -70,6 +70,27 @@ const MOCK_DETAIL_DATA = {
       },
     ],
   },
+  4: {
+    type: '今日推荐',
+    title: '拱墅云端数据服务有限公司与多家银行达成战略合作',
+    date: '2026-02-28',
+    source: '杭州证券报',
+    summary: '摘要: 拱墅云端数据服务有限公司近日与工商银行、建设银行等多家金融机构签署战略合作协议，共同推进金融科技创新。',
+    paragraphs: [
+      '拱墅云端数据服务有限公司近日与工商银行、建设银行等多家金融机构签署战略合作协议，双方将在数字金融、数据服务、科技赋能等领域开展深度合作。',
+      '根据协议，拱墅云端数据服务有限公司将为合作银行提供企业数据画像、风险预警、智能分析等数字化服务，助力金融机构提升服务能力和风控水平。',
+      '业内人士表示，此次合作是金融科技与实体产业深度融合的典型案例，有助于降低企业融资门槛，推动区域金融生态健康发展。',
+    ],
+    relatedCompanies: [
+      {
+        id: 1,
+        name: '拱墅云端数据服务有限公司',
+        industry: '软件和信息技术服务业',
+        legalPerson: '王芳',
+        status: '存续',
+      },
+    ],
+  },
 };
 
 const DEFAULT_DETAIL = {
@@ -124,7 +145,7 @@ export default function SceneEnterpriseDynamicDetail() {
               {/* 类型标签 */}
               <div className="sedd-badge-wrapper">
                 <div className="sedd-badge">{data.type}</div>
-              </div>  
+              </div>
 
               {/* 标题行 */}
               <div className="sedd-title-row">
