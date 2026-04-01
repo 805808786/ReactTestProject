@@ -72,25 +72,41 @@ const MOCK_DETAIL_DATA = {
   },
   4: {
     type: '今日推荐',
-    title: '拱墅云端数据服务有限公司与多家银行达成战略合作',
-    date: '2026-02-28',
-    source: '杭州证券报',
-    summary: '摘要: 拱墅云端数据服务有限公司近日与工商银行、建设银行等多家金融机构签署战略合作协议，共同推进金融科技创新。',
+    title: '拱墅科技有限公司',
+    date: '2026-03-01',
+    source: '',
+    summary: '推荐理由：该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
     paragraphs: [
-      '拱墅云端数据服务有限公司近日与工商银行、建设银行等多家金融机构签署战略合作协议，双方将在数字金融、数据服务、科技赋能等领域开展深度合作。',
-      '根据协议，拱墅云端数据服务有限公司将为合作银行提供企业数据画像、风险预警、智能分析等数字化服务，助力金融机构提升服务能力和风控水平。',
-      '业内人士表示，此次合作是金融科技与实体产业深度融合的典型案例，有助于降低企业融资门槛，推动区域金融生态健康发展。',
+      '企业简介：浙文蓝耘智算(浙江)科技有限公司成立于2024年，位于杭州市拱墅区，注册资本5000万元，专注于数字技术、大数据、人工智能等信息技术服务，并提供计算机软硬件销售与租赁服务。公司是浙江省文化投资集团与科技企业合作设立的智算科技公司，专注于人工智能算力服务、大数据处理及文化数字化解决方案，服务于文化产业智能化升级。',
+    ],
+    relatedCompanies: [],
+  },
+  5: {
+    type: '新闻动态',
+    title: '拱墅数商产业园正式启动,多家企业入驻',
+    date: '2026-03-01',
+    source: '人民日报',
+    summary: '摘要：杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    paragraphs: [],
+    relatedDepartments: [
+      {
+        id: 1,
+        name: '拱墅区区委办公室',
+        street: '拱宸桥街道',
+        legalPerson: '张伟',
+      },
     ],
     relatedCompanies: [
       {
         id: 1,
-        name: '拱墅云端数据服务有限公司',
+        name: '杭州市创新科技有限公司',
         industry: '软件和信息技术服务业',
-        legalPerson: '王芳',
+        legalPerson: '张伟',
         status: '存续',
       },
     ],
   },
+
 };
 
 const DEFAULT_DETAIL = {
@@ -157,10 +173,10 @@ export default function SceneEnterpriseDynamicDetail() {
 
               {/* 来源 + 日期行 */}
               <div className="sedd-meta-row">
-                <div className="sedd-meta-item">
+                {data.source && <div className="sedd-meta-item">
                   <img src={iconNewspaper} alt="来源" width={12} height={12} />
                   <span className="sedd-meta-text">{data.source}</span>
-                </div>
+                </div>}
                 <div className="sedd-meta-item">
                   <img src={iconCalendar} alt="日期" width={12} height={12} />
                   <span className="sedd-meta-text">{data.date}</span>
@@ -185,44 +201,83 @@ export default function SceneEnterpriseDynamicDetail() {
           </div>
         </div>
 
-        {/* ===== 关联企业信息卡片 ===== */}
-        <div className="sedd-card">
-          <div className="sedd-card-content">
-            {/* 卡片标题 */}
-            <div className="sedd-section-header">
-              <img src={iconBuilding} alt="关联企业" width={16} height={16} />
-              <span className="sedd-section-title">关联企业</span>
-              <span className="sedd-section-count">({data.relatedCompanies.length}家)</span>
-            </div>
+        {/* ===== 关联部门信息卡片 ===== */}
+        {data.relatedDepartments && data.relatedDepartments.length > 0 &&
+          <div className="sedd-card">
+            <div className="sedd-card-content">
+              {/* 卡片标题 */}
+              <div className="sedd-section-header">
+                <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                <span className="sedd-section-title">关联部门</span>
+                <span className="sedd-section-count">({data.relatedDepartments.length}家)</span>
+              </div>
 
-            {/* 企业列表 */}
-            <div className="sedd-company-list">
-              {data.relatedCompanies.map((company) => (
-                <div key={company.id} className="sedd-company-item">
-                  {/* 企业信息行 */}
-                  <div className="sedd-company-main">
-                    {/* 左侧：名称 + 基本信息 */}
-                    <div className="sedd-company-left">
-                      <div className="sedd-company-name">{company.name}</div>
-                      <div className="sedd-company-info">
-                        <span className="sedd-company-industry">{company.industry}</span>
-                        <span className="sedd-company-dot">•</span>
-                        <span className="sedd-company-person">{company.legalPerson}</span>
+              {/* 企业列表 */}
+              <div className="sedd-company-list">
+                {data.relatedDepartments.map((department) => (
+                  <div key={department.id} className="sedd-company-item">
+                    {/* 企业信息行 */}
+                    <div className="sedd-company-main">
+                      {/* 左侧：名称 + 基本信息 */}
+                      <div className="sedd-company-left">
+                        <div className="sedd-department-name">{department.name}</div>
+                        <div className="sedd-company-info">
+                          <span className="sedd-company-industry">{department.street}</span>
+                        </div>
                       </div>
+                      {/* 右侧：状态标签 */}
+                      <div className="sedd-person">{department.legalPerson}</div>
                     </div>
-                    {/* 右侧：状态标签 */}
-                    <div className="sedd-status-badge">{company.status}</div>
-                  </div>
 
-                  {/* 查看详情 */}
-                  <div className="sedd-company-detail-row">
-                    <span className="sedd-company-detail-link">查看详情 →</span>
+                    {/* 查看详情 */}
+                    <div className="sedd-company-detail-row">
+                      <span className="sedd-company-detail-link">查看详情 →</span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
+          </div>}
+
+        {/* ===== 关联企业信息卡片 ===== */}
+        {data.relatedCompanies && data.relatedCompanies.length > 0 &&
+          <div className="sedd-card">
+            <div className="sedd-card-content">
+              {/* 卡片标题 */}
+              <div className="sedd-section-header">
+                <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                <span className="sedd-section-title">关联企业</span>
+                <span className="sedd-section-count">({data.relatedCompanies.length}家)</span>
+              </div>
+
+              {/* 企业列表 */}
+              <div className="sedd-company-list">
+                {data.relatedCompanies.map((company) => (
+                  <div key={company.id} className="sedd-company-item">
+                    {/* 企业信息行 */}
+                    <div className="sedd-company-main">
+                      {/* 左侧：名称 + 基本信息 */}
+                      <div className="sedd-company-left">
+                        <div className="sedd-company-name">{company.name}</div>
+                        <div className="sedd-company-info">
+                          <span className="sedd-company-industry">{company.industry}</span>
+                          <span className="sedd-company-dot">•</span>
+                          <span className="sedd-company-person">{company.legalPerson}</span>
+                        </div>
+                      </div>
+                      {/* 右侧：状态标签 */}
+                      <div className="sedd-status-badge">{company.status}</div>
+                    </div>
+
+                    {/* 查看详情 */}
+                    <div className="sedd-company-detail-row">
+                      <span className="sedd-company-detail-link">查看详情 →</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>}
       </div>
     </div>
   );

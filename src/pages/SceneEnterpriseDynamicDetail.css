@@ -5,8 +5,7 @@
   height: 100vh;
   max-width: 480px;
   margin: 0 auto;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
-  background-attachment: fixed;
+  background: #F8F8F8;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   overflow: hidden;
 }
@@ -284,9 +283,16 @@
   font-size: 14px;
   font-weight: 500;
   color: #0A0A0A;
-  line-height: 1.429;
-  letter-spacing: -0.011em;
+  line-height: 20px;
+  letter-spacing: -0.15px;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.sedd-department-name {
+  font-size: 14px;
+  color: #0A0A0A;
+  line-height: 20px;
+  letter-spacing: -0.15px;
 }
 
 .sedd-company-info {
@@ -340,6 +346,15 @@
   height: 22px;
   box-sizing: border-box;
   flex-shrink: 0;
+}
+
+.sedd-person {
+  color: #0A0A0A;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.15px;
 }
 
 /* 查看详情行 */
