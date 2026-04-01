@@ -82,6 +82,7 @@ export default function ChatModal({ isOpen, onClose }) {
   })
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [isSending, setIsSending] = useState(false)
   const messagesEndRef = useRef(null)
 
   const generateRandomId = () => {
@@ -119,7 +120,8 @@ export default function ChatModal({ isOpen, onClose }) {
   }, [messages])
 
   const handleSend = async () => {
-    if (!inputValue.trim()) return
+    if (!inputValue.trim() || isSending) return
+    setIsSending(true)
 
     // 获取当前 chatId，若不存在则生成并持久化
     let currentChatId = chatId
@@ -231,7 +233,17 @@ export default function ChatModal({ isOpen, onClose }) {
           time: timeString
         }]
       })
+    } finally {
+      setIsSending(false)
     }
+  }
+
+  const handleNewChat = () => {
+    const newChatId = generateRandomId()
+    setChatId(newChatId)
+    setMessages([])
+    localStorage.setItem('chat_id', newChatId)
+    localStorage.setItem('chat_messages', JSON.stringify([]))
   }
 
   const handleKeyDown = (e) => {
@@ -259,7 +271,7 @@ export default function ChatModal({ isOpen, onClose }) {
               <History size={20} color="white" />
             </button> */}
             <div className="chat-nav-action">
-              <button className="chat-nav-btn">
+              <button className="chat-nav-btn" onClick={handleNewChat}>
                 <IconNewChat className="chat-nav-icon" />
               </button>
               {/* <button className="chat-nav-btn">
@@ -315,7 +327,7 @@ export default function ChatModal({ isOpen, onClose }) {
 
               <div className="msg-content-wrapper">
                 <div className="msg-bubble">
-                  {msg.text.replace(/<br\s*\/?>/gi, '\n')}
+                  {msg.text.trim() ? msg.text.replace(/<br\s*\/?>/gi, '\n') : '思考中...'}
                 </div>
                 <div className="msg-time">{msg.time}</div>
               </div>
@@ -355,10 +367,11 @@ export default function ChatModal({ isOpen, onClose }) {
               onKeyDown={handleKeyDown}
             />
             <button
-              className={`send-btn ${inputValue.trim() ? 'active' : ''}`}
+              className={`send-btn ${inputValue.trim() && !isSending ? 'active' : ''} ${isSending ? 'loading' : ''}`}
               onClick={handleSend}
+              disabled={isSending}
             >
-              <Send size={16} color="white" />
+              {isSending ? <span className="send-btn-spinner" /> : <Send size={16} color="white" />}
             </button>
           </div>
         </div>
