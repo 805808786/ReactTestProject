@@ -183,10 +183,9 @@
 
 .psd-service-text {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: #364153;
-  line-height: 1.75;
 }
 
 .psd-service-highlight {
@@ -197,7 +196,6 @@
 .psd-task-btn-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: 12px;
 }
 
 .psd-task-btn {
@@ -235,11 +233,16 @@
 .psd-effect-text {
   margin: 0;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
   color: #364153;
-  line-height: 1.75;
-
 }
+
+.psd-effect-text-highlight {
+  color: #FF0B0B;
+  font-weight: 700;
+}
+
+
 
 /* ===== 流程进度 ===== */
 .psd-flow {

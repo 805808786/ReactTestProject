@@ -10,13 +10,13 @@ import IconUpBlue from '../assets/icon-up-blue.svg'
 /* ===================== Mock 详情数据 ===================== */
 const MOCK_SERVICE_DATA = {
   1: {
-    companyName: '杭州橙颂科技有限公司',
+    companyName: '杭州太希智能科技有限公司',
     discoverDate: '2026-04-01',
     background:
-      '该企业在快速发展阶段，对于项目管理与商务人才有较大需求缺口。',
-    serviceDept: '区人力社保局',
-    serviceTarget: '杭州橙颂科技有限公司',
-    serviceContent: '可为指导企业参与人才政策对接，协助引进和培养AI算法工程师、全栈开发工程师等高端技术人才，优化人才结构。',
+      '该企业在快速发展阶段，需要规模以上（人工智能）工业和服务业企业认定与入统指导。',
+    serviceDept: '区科技经信局',
+    serviceTarget: '杭州太希智能科技有限公司',
+    serviceContent: '可基于拱墅区经济高质量发展政策（2026年版）、国家/省市规模以上企业统计标准、区“115X”先进制造业集群培育行动、“人工智能+”企业库建设',
     effects: [
       '助力企业通过招聘所需的关键人才，推动企业更好更快发展',
     ],
@@ -24,12 +24,12 @@ const MOCK_SERVICE_DATA = {
 };
 
 const DEFAULT_SERVICE = {
-  companyName: '杭州橙颂科技有限公司',
+  companyName: '杭州太希智能科技有限公司',
   discoverDate: '2026-03-04',
   background:
     '近3个月税收增长超50%，且税收金额达到30万元。技术研发投入占比达45%，具备快速成长为腰部企业潜力。',
   serviceDept: '拱墅区科技局',
-  serviceTarget: '杭州橙颂科技有限公司',
+  serviceTarget: '杭州太希智能科技有限公司',
   serviceContent: '可为指导企业参与人才政策对接，协助引进和培养AI算法工程师、全栈开发工程师等高端技术人才，优化人才结构。',
   effects: [
     '助力企业通过招聘所需的关键人才，推动企业更好更快发展',
@@ -50,7 +50,7 @@ const MOCK_FLOW_STEPS = [
   {
     status: 'processing',
     statusLabel: '办理中',
-    deptName: '区人力社保局',
+    deptName: '区科技经信局',
     timeLabel: '持续：2小时5分钟',
     handler: '张三',
   },
@@ -163,13 +163,13 @@ export default function PreciseServiceDetail() {
                         >
                           0/1
                         </span>
-                        <span className="psd-step-dept">区人力社保局</span>
+                        <span className="psd-step-dept">区科技经信局</span>
                       </div>
                     </span>}
 
 
                   <div className="psd-flow-header-right">
-                    {flowExpanded ? <span className="psd-flow-date">下发时间：2026年3月31日</span> :
+                    {flowExpanded ? <span className="psd-flow-date">下发时间：2026年4月02日</span> :
                       <span className="psd-flow-date">持续：2小时5分钟</span>}
 
                     <span className={`psd-flow-arrow ${flowExpanded ? 'psd-flow-arrow-up' : ''}`}>
@@ -238,9 +238,14 @@ export default function PreciseServiceDetail() {
           <div className="psd-card-content-effect">
             <h3 className="psd-section-title">预期成效</h3>
             <div className="psd-effect-box">
-              {data.effects.map((effect, index) => (
+              <p className="psd-effect-text">
+                快速纳入区级AI企业库，满足<span className="psd-effect-text-highlight">
+                  头部企业
+                </span>标准第7条；提供统计培训、材料辅导、数据报送“一站式”服务，助力企业从成长型向规模以上跃升，积累省级/市级申报基础。
+              </p>
+              {/* {data.effects.map((effect, index) => (
                 <p key={index} className="psd-effect-text">{effect}</p>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>

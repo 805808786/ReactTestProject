@@ -8,7 +8,7 @@ const DEFAULT_DISPATCH = {
   companyName: '杭州市惠民服务有限公司',
   serviceContent:
     '为"杭州市惠民服务有限公司"提供"国家高新技术企业"资质申报的全流程辅导与协调服务',
-  deptName: '拱墅区科技局',
+  deptName: '区科技经信局',
   handler: '张三',
   phone: '13605809007',
 };
@@ -36,7 +36,7 @@ export default function ServiceDispatch() {
             <div className="sd-service-box">
               <p className="sd-service-text">
                 <span className="sd-service-bold">服务事项：</span>
-                该企业在快速发展阶段，对于项目管理与商务人才有较大需求缺口。
+                该企业在快速发展阶段，需要规模以上（人工智能）工业和服务业企业认定与入统指导。
               </p>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function ServiceDispatch() {
               <div className="sd-contact-row">
                 <div className="sd-contact-item">
                   <span className="sd-contact-label">分派依据：</span>
-                  <span className="sd-contact-value">指导企业参与人才政策对接，协助引进和培养AI算法工程师、全栈开发工程师等高端技术人才，优化人才结构。</span>
+                  <span className="sd-contact-value">拱墅区经济高质量发展政策（2026年版）、国家/省市规模以上企业统计标准、区“115X”先进制造业集群培育行动、“人工智能+”企业库建设</span>
                 </div>
 
               </div>
