@@ -5,6 +5,7 @@ import IconBackWhite from '../assets/icon-back-white.svg'
 import SparklesIcon from '../assets/Sparkles.svg'
 import ChatInfoCard from './ChatInfoCard'
 import './ChatModal.css'
+import IconNewChat from '../assets/icon-new-chat.svg?react'
 
 const INITIAL_CARDS = [
   {
@@ -247,15 +248,26 @@ export default function ChatModal({ isOpen, onClose }) {
         {/* 头部 */}
         <div className="chat-header-cm chat-header-cm-small">
           {/* 顶部导航栏 */}
-          <div className="chat-nav-bar">
-            <button className="chat-nav-btn" onClick={onClose}>
-              <img src={IconBackWhite} alt="back" />
-            </button>
-            <div className="chat-nav-title">墅企小助手</div>
+          <div className="chat-nav-bar-container">
+            <div className="chat-nav-bar">
+              <button className="chat-nav-btn" onClick={onClose}>
+                <img src={IconBackWhite} alt="back" />
+              </button>
+              <div className="chat-nav-title">墅企小助手</div>
+            </div>
             {/* <button className="chat-nav-btn">
               <History size={20} color="white" />
             </button> */}
+            <div className="chat-nav-action">
+              <button className="chat-nav-btn">
+                <IconNewChat className="chat-nav-icon" />
+              </button>
+              {/* <button className="chat-nav-btn">
+                <History size={20} color="white" />
+              </button> */}
+            </div>
           </div>
+
           {/* 英雄区域 */}
           {messages.length === 0 ? (
             <div className="chat-hero-section">
