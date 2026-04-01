@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 import { useNavigate } from 'react-router-dom'
 import { History, Bot, User, Send } from 'lucide-react'
 import IconBackWhite from '../assets/icon-back-white.svg'
@@ -6,6 +7,7 @@ import SparklesIcon from '../assets/Sparkles.svg'
 import ChatInfoCard from './ChatInfoCard'
 import './ChatModal.css'
 import IconNewChat from '../assets/icon-new-chat.svg?react'
+import headerBgSmall from '../assets/header-bg-3979f0.png'
 
 const INITIAL_CARDS = [
   {
@@ -84,26 +86,131 @@ export default function ChatModal({ isOpen, onClose }) {
   const [isTyping, setIsTyping] = useState(false)
   const [isSending, setIsSending] = useState(false)
   const messagesEndRef = useRef(null)
-  const [scrollY, setScrollY] = useState(0)
 
   const chatBodyRef = useRef(null)
-  const setChatBodyRef = (element) => {
-    if (chatBodyRef.current) {
-      chatBodyRef.current.removeEventListener('scroll', handleScroll)
-    }
-    chatBodyRef.current = element
-    if (element) {
-      element.addEventListener('scroll', handleScroll)
-    }
-  }
+  const headerRef = useRef(null)
+  const avatarRef = useRef(null)
+  const txtWrapperRef = useRef(null)
+  // 用 ref 跟踪收缩状态，避免触发 React 重渲染
+  const isCompactRef = useRef(false)
+  // 动画进行中时锁定，防止 compact 动画途中 body 增高导致 scrollTop 被夹到 <40，
+  // 触发 animateToNormal，形成两个 tween 互相竞争的抖动循环
+  const isAnimatingRef = useRef(false)
+  const naturalHeaderHeightRef = useRef(0)  // compact 前捕获，供 expand 还原（适配 rem）
+  const txtWrapperNaturalHeightRef = useRef(0)
 
-  const handleScroll = () => {
-    if (chatBodyRef.current) {
-      setScrollY(chatBodyRef.current.scrollTop)
+  // isOpen 变为 true 后，DOM 才存在，此时捕获各元素自然高度
+  useEffect(() => {
+    if (!isOpen) return
+    if (txtWrapperRef.current) {
+      txtWrapperNaturalHeightRef.current = txtWrapperRef.current.offsetHeight
     }
-  }
+  }, [isOpen])
 
-  console.log(scrollY)
+  // 绑定滚动监听，并在其中用 GSAP 直接操作 DOM，不触发 React 重渲染
+  useEffect(() => {
+    if (!isOpen) return
+    const el = chatBodyRef.current
+    if (!el) return
+
+    const animateToCompact = () => {
+      if (isCompactRef.current || isAnimatingRef.current) return
+      isCompactRef.current = true
+      isAnimatingRef.current = true
+
+      const header = headerRef.current
+      if (header) {
+        // compact 前捕获实际渲染高度（兼容 rem，不同分辨率下数值不同）
+        naturalHeaderHeightRef.current = header.offsetHeight
+        gsap.set(header, { height: naturalHeaderHeightRef.current })
+        header.style.overflow = 'unset'
+        header.style.backgroundImage = `url(${headerBgSmall})`
+        gsap.to(header, {
+          height: 71,
+          minHeight: 71,
+          marginBottom: 16,
+          duration: 0.1,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          onComplete: () => { isAnimatingRef.current = false },
+        })
+      }
+
+      if (avatarRef.current) {
+        gsap.to(avatarRef.current, { y: -48, duration: 0.1, ease: 'power2.out', overwrite: 'auto' })
+      }
+
+      if (txtWrapperRef.current) {
+        gsap.to(txtWrapperRef.current, {
+          opacity: 0,
+          height: 0,
+          duration: 0.1,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        })
+      }
+    }
+
+    const animateToNormal = () => {
+      if (!isCompactRef.current || isAnimatingRef.current) return
+      isCompactRef.current = false
+      isAnimatingRef.current = true
+
+      const header = headerRef.current
+      if (header) {
+        header.style.backgroundImage = ''
+        gsap.to(header, {
+          // 还原到 compact 前捕获的实际高度，而非硬编码 284px
+          height: naturalHeaderHeightRef.current,
+          minHeight: naturalHeaderHeightRef.current,
+          marginBottom: 0,
+          duration: 0.1,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          onComplete: () => {
+            header.style.overflow = 'hidden'
+            // 清除 GSAP inline styles，让 CSS rem 值重新接管
+            gsap.set(header, { clearProps: 'height,minHeight,marginBottom' })
+            isAnimatingRef.current = false
+          },
+        })
+      }
+
+      if (avatarRef.current) {
+        gsap.to(avatarRef.current, { y: 0, duration: 0.1, ease: 'power2.out', overwrite: 'auto' })
+      }
+
+      if (txtWrapperRef.current) {
+        gsap.to(txtWrapperRef.current, {
+          opacity: 1,
+          height: txtWrapperNaturalHeightRef.current,
+          duration: 0.1,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          onComplete: () => {
+            gsap.set(txtWrapperRef.current, { clearProps: 'height' })
+          },
+        })
+      }
+    }
+
+    const handleScroll = () => {
+      const scrollTop = el.scrollTop
+      // 有滚动条 = 内容超出容器高度
+      const hasScrollbar = el.scrollHeight > el.clientHeight
+
+      if (scrollTop >= 80 && !isCompactRef.current) {
+        // 向下滚动超过 80px → 收缩，且不因滚动条消失而反转
+        animateToCompact()
+      } else if (scrollTop < 40 && hasScrollbar && isCompactRef.current) {
+        // 向上滚动 < 40px，且确认仍有滚动条 → 展开
+        animateToNormal()
+      }
+    }
+
+    el.addEventListener('scroll', handleScroll, { passive: true })
+    return () => el.removeEventListener('scroll', handleScroll)
+  }, [isOpen])
 
   const generateRandomId = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -290,9 +397,7 @@ export default function ChatModal({ isOpen, onClose }) {
     <div className="chat-modal-overlay" onClick={onClose}>
       <div className="chat-modal-container" onClick={e => e.stopPropagation()}>
         {/* 头部 */}
-        <div className={`chat-header-cm ${scrollY > 80 ? 'chat-header-cm-small' : ''}`} style={{
-          transition: 'all 0.3s ease'
-        }}>
+        <div className="chat-header-cm" ref={headerRef}>
           {/* 顶部导航栏 */}
           <div className="chat-nav-bar-container">
             <div className="chat-nav-bar">
@@ -315,37 +420,24 @@ export default function ChatModal({ isOpen, onClose }) {
           </div>
 
           {/* 图标区域 */}
-          <div className="chat-hero-section" style={{
-            transition: 'all 0.3s ease'
-          }}>
+          <div className="chat-hero-section">
             <img
               className="chat-robot-avatar"
               src={SparklesIcon}
               alt="robot"
-              style={{
-                transform: `translateY(${scrollY > 80 ? '-48px' : '0'})`,
-                transition: 'all 0.3s ease'
-              }}
+              ref={avatarRef}
             />
-            {(
-              <div className='chat-txt-wrapper' style={{
-                opacity: scrollY > 80 ? 0 : 1,
-                transform: `translateY(${scrollY > 80 ? '20px' : '0'})`,
-                height: scrollY > 80 ? '0' : '100%',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden'
-              }}>
-                <div className="chat-hero-greeting">
-                  Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
-                </div>
-                <div className="chat-hero-subtitle">您有<span className="chat-hero-highlight-red">2</span>条未读消息</div>
+            <div className='chat-txt-wrapper' ref={txtWrapperRef}>
+              <div className="chat-hero-greeting">
+                Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
               </div>
-            )}
+              <div className="chat-hero-subtitle">您有<span className="chat-hero-highlight-red">2</span>条未读消息</div>
+            </div>
           </div>
         </div>
 
         {/* 聊天内容区 */}
-        <div className="chat-body-cm" ref={setChatBodyRef}>
+        <div className="chat-body-cm" ref={chatBodyRef}>
           {/* 静态欢迎卡片 - 始终显示 */}
           <div className="chat-message msg-bot">
             {/* <div className="avatar bot-avatar">
