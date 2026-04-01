@@ -4,6 +4,7 @@ import iconNewspaper from '../assets/icon-dynamic-newspaper.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
 import './SceneEnterpriseDynamicDetail.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 详情数据 ===================== */
 const MOCK_DETAIL_DATA = {
@@ -72,28 +73,49 @@ const MOCK_DETAIL_DATA = {
   },
   4: {
     type: '今日推荐',
+    category: 'recommend',
     title: '拱墅科技有限公司',
     date: '2026-03-01',
     source: '',
-    summary: '推荐理由：该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
+    summary: '该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
     paragraphs: [
-      '企业简介：浙文蓝耘智算(浙江)科技有限公司成立于2024年，位于杭州市拱墅区，注册资本5000万元，专注于数字技术、大数据、人工智能等信息技术服务，并提供计算机软硬件销售与租赁服务。公司是浙江省文化投资集团与科技企业合作设立的智算科技公司，专注于人工智能算力服务、大数据处理及文化数字化解决方案，服务于文化产业智能化升级。',
+      '浙文蓝耘智算(浙江)科技有限公司成立于2024年，位于杭州市拱墅区，注册资本5000万元，专注于数字技术、大数据、人工智能等信息技术服务，并提供计算机软硬件销售与租赁服务。公司是浙江省文化投资集团与科技企业合作设立的智算科技公司，专注于人工智能算力服务、大数据处理及文化数字化解决方案，服务于文化产业智能化升级。',
     ],
     relatedCompanies: [],
+    link: 'https://baidu.com'
   },
   5: {
     type: '新闻动态',
+    category: 'news',
     title: '拱墅数商产业园正式启动,多家企业入驻',
     date: '2026-03-01',
     source: '人民日报',
-    summary: '摘要：杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    summary: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    paragraphs: [],
+    relatedCompanies: [
+      {
+        id: 1,
+        name: '杭州市创新科技有限公司',
+        industry: '软件和信息技术服务业',
+        legalPerson: '张伟',
+        status: '存续',
+      },
+    ],
+  },
+  6: {
+    type: '与我相关',
+    category: 'related',
+    title: '敖煜新调研督导物业服务领域信访问题集中治理工作',
+    date: '2026-03-01',
+    source: '人民日报',
+    summary: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
     paragraphs: [],
     relatedDepartments: [
       {
         id: 1,
         name: '拱墅区区委办公室',
         street: '拱宸桥街道',
-        legalPerson: '张伟',
+        legalPerson: '王翔',
       },
     ],
     relatedCompanies: [
@@ -139,17 +161,22 @@ export default function SceneEnterpriseDynamicDetail() {
   const stateData = location.state?.dynamicData;
   const data = stateData || MOCK_DETAIL_DATA[Number(id)] || DEFAULT_DETAIL;
 
+  function getTitle() {
+    return data.category == 'recommend' ? '今日动态' : data.type
+  }
+
   return (
     <div className="sedd-container">
       {/* ===== 头部 ===== */}
-      <div className="sedd-header">
+      {/* <div className="sedd-header">
         <div className="sedd-header-row">
           <button className="sedd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
             <img src={iconBack} alt="返回" width={36} height={32} />
           </button>
           <span className="sedd-header-title">动态详情</span>
         </div>
-      </div>
+      </div> */}
+      <PageHeader title={getTitle()} />
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="sedd-body">
@@ -160,28 +187,38 @@ export default function SceneEnterpriseDynamicDetail() {
             <div className="sedd-info-section">
               {/* 类型标签 */}
               <div className="sedd-badge-wrapper">
-                <div className="sedd-badge">{data.type}</div>
+                <div className={`sedd-badge sedd-badge--${data.category}`}>{data.type}</div>
               </div>
 
               {/* 标题行 */}
               <div className="sedd-title-row">
                 <div className="sedd-title-inner">
-                  <div className="sedd-green-dot" />
+                  <div className={`sedd-green-dot sedd-green-dot--${data.category}`} />
                   <span className="sedd-title">{data.title}</span>
                 </div>
               </div>
 
               {/* 来源 + 日期行 */}
-              <div className="sedd-meta-row">
-                {data.source && <div className="sedd-meta-item">
-                  <img src={iconNewspaper} alt="来源" width={12} height={12} />
-                  <span className="sedd-meta-text">{data.source}</span>
-                </div>}
-                <div className="sedd-meta-item">
-                  <img src={iconCalendar} alt="日期" width={12} height={12} />
-                  <span className="sedd-meta-text">{data.date}</span>
+              <div className="sedd-meta-row-wrapper">
+                <div className="sedd-meta-row">
+                  {data.source && <div className="sedd-meta-item">
+                    <img src={iconNewspaper} alt="来源" width={12} height={12} />
+                    <span className="sedd-meta-text">{data.source}</span>
+                  </div>}
+                  <div className="sedd-meta-item">
+                    <img src={iconCalendar} alt="日期" width={12} height={12} />
+                    <span className="sedd-meta-text">{data.date}</span>
+                  </div>
                 </div>
+                {
+                  data.category == 'recommend' && data.link && (
+                    <div className="sedd-meta-item">
+                      <a className="sedd-link-text" href={data.link} target="_blank" rel="noopener noreferrer">查看详情 →</a>
+                    </div>
+                  )
+                }
               </div>
+
             </div>
 
             {/* 分隔线 */}
@@ -189,15 +226,20 @@ export default function SceneEnterpriseDynamicDetail() {
 
             {/* 摘要区域 */}
             <div className="sedd-summary-box">
-              <p className="sedd-summary-text">{data.summary}</p>
+              <p className="sedd-summary-text">{data.category == 'recommend' ? <span className="sedd-summary--bold">推荐理由：</span> : <span className="sedd-summary--bold">摘要: </span>} {data.summary}</p>
             </div>
 
             {/* 正文段落 */}
-            <div className="sedd-paragraphs">
-              {data.paragraphs.map((para, index) => (
-                <p key={index} className="sedd-paragraph">{para}</p>
-              ))}
-            </div>
+            {data.paragraphs && data.paragraphs.length > 0 ? data.category == 'recommend' ?
+              <div className="sedd-summary-box">
+                <p className="sedd-summary-text"> <span className="sedd-summary--green">企业简介：</span>  {data.paragraphs[0]}</p>
+              </div> : <div className="sedd-paragraphs">
+                {data.paragraphs.map((para, index) => (
+                  <p key={index} className="sedd-paragraph">{para}</p>
+                ))}
+              </div> : null}
+
+
           </div>
         </div>
 
@@ -209,7 +251,7 @@ export default function SceneEnterpriseDynamicDetail() {
               <div className="sedd-section-header">
                 <img src={iconBuilding} alt="关联企业" width={16} height={16} />
                 <span className="sedd-section-title">关联部门</span>
-                <span className="sedd-section-count">({data.relatedDepartments.length}家)</span>
+                <span className="sedd-section-count">({data.relatedDepartments.length}个)</span>
               </div>
 
               {/* 企业列表 */}
@@ -227,11 +269,6 @@ export default function SceneEnterpriseDynamicDetail() {
                       </div>
                       {/* 右侧：状态标签 */}
                       <div className="sedd-person">{department.legalPerson}</div>
-                    </div>
-
-                    {/* 查看详情 */}
-                    <div className="sedd-company-detail-row">
-                      <span className="sedd-company-detail-link">查看详情 →</span>
                     </div>
                   </div>
                 ))}

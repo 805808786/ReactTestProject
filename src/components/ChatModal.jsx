@@ -17,7 +17,7 @@ const INITIAL_CARDS = [
     subTag: null,
     description: '该企业刚刚被中央领导走访调研并列为全国重点标杆企业。是本辖区内龙头企业。',
     timeAgo: '2小时前',
-    detailUrl: 'scene-enterprise-dynamic-detail/1',
+    detailUrl: '/scene-enterprise-dynamic-detail/4',
   },
   {
     id: 'card-news',
@@ -29,7 +29,7 @@ const INITIAL_CARDS = [
     subTag: null,
     description: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
     timeAgo: '2小时前',
-    detailUrl: '/company-news-detail/1',
+    detailUrl: '/scene-enterprise-dynamic-detail/5',
   },
   {
     id: 'card-service',
@@ -41,7 +41,7 @@ const INITIAL_CARDS = [
     subTag: { text: '腰部企业' },
     description: '近3个月税收增长超50%，且税收金额达到30万元。技术研发投入占比达45%，具备快速成长为腰部企业潜力。',
     timeAgo: '2小时前',
-    detailUrl: '/waist-enterprise',
+    detailUrl: '/precise-service-detail/1',
   },
   {
     id: 'card-related',
@@ -53,7 +53,7 @@ const INITIAL_CARDS = [
     subTag: null,
     description: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
     timeAgo: '2小时前',
-    detailUrl: '/company-news-detail/2',
+    detailUrl: '/scene-enterprise-dynamic-detail/6',
   },
 ]
 

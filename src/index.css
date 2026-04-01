@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: 'MiSans-Thin';
   src: url('/MiSans-Thin.ttf') format('truetype');
   font-weight: 250;
@@ -10,7 +10,9 @@
   src: url('/MiSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
-}
+} */
+
+
 
 @font-face {
   font-family: 'YouSheBiaoTiHei';
@@ -19,7 +21,26 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Thin.ttf') format('truetype');
+  font-weight: 250;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Medium.ttf') format('truetype');
+  font-weight: 400, 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Bold.ttf') format('truetype');
+  font-weight: 600, 700;
+  font-style: normal;
+}
 
 * {
   box-sizing: border-box;
@@ -46,4 +67,3 @@ body {
 a {
   text-decoration: none;
 }
-

@@ -213,3 +213,171 @@
   line-height: 1.75;
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
+
+/* ===== 流程进度 ===== */
+.psd-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.psd-flow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.psd-flow-progress {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0A0A0A;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.psd-flow-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.psd-flow-date {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6A7282;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.psd-flow-arrow {
+  font-size: 18px;
+  color: #6A7282;
+  transition: transform 0.2s;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+
+.psd-flow-arrow-up {
+  transform: rotate(0deg);
+}
+
+/* ===== 流程步骤 ===== */
+.psd-flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.psd-step {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.psd-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.psd-step-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.psd-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.333;
+  height: 22px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.psd-step-badge-done {
+  background: #ECFDF5;
+  color: #059669;
+}
+
+.psd-step-badge-processing {
+  background: #EFF6FF;
+  color: #155DFC;
+}
+
+.psd-step-dept {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0A0A0A;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.psd-step-time {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6A7282;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.psd-step-detail {
+  background: #F9FAFB;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.psd-step-detail-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.psd-step-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0A0A0A;
+  white-space: nowrap;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.psd-step-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.psd-step-processing-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.psd-urge-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 16px;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #364153;
+  cursor: pointer;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.psd-urge-btn:active {
+  background: #F3F4F6;
+}

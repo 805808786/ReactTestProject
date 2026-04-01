@@ -8,6 +8,7 @@
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
+  min-height: 76px;
 }
 
 /* 底部城市天际线背景图（76px 高，带蓝色半透明遮罩） */

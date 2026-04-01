@@ -23,6 +23,7 @@ import TopEnterpriseDynamicDetail from './pages/TopEnterpriseDynamicDetail'
 import CompanyDetail from './pages/CompanyDetail'
 import CompanyNewsDetail from './pages/CompanyNewsDetail'
 import PreciseServiceDetail from './pages/PreciseServiceDetail'
+import ServiceDispatch from './pages/ServiceDispatch'
 import './index.css'
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/company-detail/:id" element={<CompanyDetail />} />
         <Route path="/company-news-detail/:id" element={<CompanyNewsDetail />} />
         <Route path="/precise-service-detail/:id" element={<PreciseServiceDetail />} />
+        <Route path="/service-dispatch" element={<ServiceDispatch />} />
       </Routes>
     </HashRouter>
   )

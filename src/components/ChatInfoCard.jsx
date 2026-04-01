@@ -48,7 +48,8 @@ export default function ChatInfoCard({ card, onNavigate }) {
       <div className={`chat-card-desc`}>
         {category == 'recommend' ? <span className="chat-card-desc--bold">推荐理由：</span>
           : (category == 'news' || category == 'related') ? <span className="chat-card-desc--bold">摘要: </span>
-            : null}
+            : category == 'service' ? <span className="chat-card-desc--bold">服务背景: </span>
+              : null}
         {description}
       </div>
 

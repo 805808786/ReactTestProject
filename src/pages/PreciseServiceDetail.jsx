@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import iconBack from '../assets/icon-dynamic-back.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
@@ -35,13 +36,36 @@ const DEFAULT_SERVICE = {
   ],
 };
 
+/* ===================== Mock 流程数据 ===================== */
+const MOCK_FLOW_STEPS = [
+  {
+    status: 'done',
+    statusLabel: '已完成',
+    deptName: '拱墅区市监局',
+    timeLabel: '耗时：5分钟',
+    result: '已联系企业并确认需求',
+    handler: '张三',
+    finishTime: '2026年3月31日21:09:16',
+  },
+  {
+    status: 'processing',
+    statusLabel: '办理中',
+    deptName: '拱墅区科技局',
+    timeLabel: '持续：2小时5分钟',
+    handler: '张三',
+  },
+];
+
 export default function PreciseServiceDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
 
+  const dispatched = location.state?.dispatched || false;
   const stateData = location.state?.serviceData;
   const data = stateData || MOCK_SERVICE_DATA[Number(id)] || DEFAULT_SERVICE;
+
+  const [flowExpanded, setFlowExpanded] = useState(true);
 
   return (
     <div className="psd-container">
@@ -83,13 +107,109 @@ export default function PreciseServiceDetail() {
             <h3 className="psd-section-title">可服务事项</h3>
             <div className="psd-service-box">
               <p className="psd-service-text">
-                <span className="psd-service-highlight">{data.serviceDept}</span>
-                可为&ldquo;{data.serviceTarget}&rdquo;提供{data.serviceContent}
+                {dispatched ? (
+                  <>科技局可为&ldquo;{data.serviceTarget}&rdquo;提供{data.serviceContent}</>
+                ) : (
+                  <>
+                    <span className="psd-service-highlight">{data.serviceDept}</span>
+                    可为&ldquo;{data.serviceTarget}&rdquo;提供{data.serviceContent}
+                  </>
+                )}
               </p>
             </div>
-            <div className="psd-task-btn-row">
-              <button className="psd-task-btn">发起任务</button>
-            </div>
+
+            {/* 未派发：显示发起任务按钮 */}
+            {!dispatched && (
+              <div className="psd-task-btn-row">
+                <button
+                  className="psd-task-btn"
+                  onClick={() =>
+                    navigate('/service-dispatch', {
+                      state: {
+                        dispatchData: {
+                          companyName: data.companyName,
+                          serviceContent: `为"${data.serviceTarget}"提供${data.serviceContent}`,
+                          deptName: data.serviceDept,
+                          handler: '张三',
+                          phone: '13605809007',
+                        },
+                      },
+                    })
+                  }
+                >
+                  发起任务
+                </button>
+              </div>
+            )}
+
+            {/* 已派发：显示流程进度 */}
+            {dispatched && (
+              <div className="psd-flow">
+                <div
+                  className="psd-flow-header"
+                  onClick={() => setFlowExpanded((v) => !v)}
+                >
+                  <span className="psd-flow-progress">总计流程1/2</span>
+                  <div className="psd-flow-header-right">
+                    <span className="psd-flow-date">下发时间：2026年3月31日</span>
+                    <span className={`psd-flow-arrow ${flowExpanded ? 'psd-flow-arrow-up' : ''}`}>
+                      &#8963;
+                    </span>
+                  </div>
+                </div>
+
+                {flowExpanded && (
+                  <div className="psd-flow-steps">
+                    {MOCK_FLOW_STEPS.map((step, idx) => (
+                      <div key={idx} className="psd-step">
+                        <div className="psd-step-header">
+                          <div className="psd-step-left">
+                            <span
+                              className={`psd-step-badge ${
+                                step.status === 'done'
+                                  ? 'psd-step-badge-done'
+                                  : 'psd-step-badge-processing'
+                              }`}
+                            >
+                              {step.statusLabel}
+                            </span>
+                            <span className="psd-step-dept">{step.deptName}</span>
+                          </div>
+                          <span className="psd-step-time">{step.timeLabel}</span>
+                        </div>
+
+                        <div className="psd-step-detail">
+                          {step.status === 'done' ? (
+                            <>
+                              <div className="psd-step-detail-row">
+                                <span className="psd-step-label">处置结果：</span>
+                                <span className="psd-step-value">{step.result}</span>
+                              </div>
+                              <div className="psd-step-detail-row">
+                                <span className="psd-step-label">处置人：</span>
+                                <span className="psd-step-value">{step.handler}</span>
+                                <span className="psd-step-label" style={{ marginLeft: 16 }}>
+                                  时间：
+                                </span>
+                                <span className="psd-step-value">{step.finishTime}</span>
+                              </div>
+                            </>
+                          ) : (
+                            <div className="psd-step-processing-content">
+                              <div className="psd-step-detail-row">
+                                <span className="psd-step-label">处置人：</span>
+                                <span className="psd-step-value">{step.handler}</span>
+                              </div>
+                              <button className="psd-urge-btn">发起催办</button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
