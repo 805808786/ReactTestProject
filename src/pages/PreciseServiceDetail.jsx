@@ -4,6 +4,7 @@ import iconBack from '../assets/icon-dynamic-back.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
 import './PreciseServiceDetail.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 详情数据 ===================== */
 const MOCK_SERVICE_DATA = {
@@ -70,14 +71,15 @@ export default function PreciseServiceDetail() {
   return (
     <div className="psd-container">
       {/* ===== 头部 ===== */}
-      <div className="psd-header">
+      {/* <div className="psd-header">0
         <div className="psd-header-row">
           <button className="psd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
             <img src={iconBack} alt="返回" width={36} height={32} />
           </button>
           <span className="psd-header-title">精准服务</span>
         </div>
-      </div>
+      </div> */}
+      <PageHeader title="精准服务" />
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="psd-body">
@@ -102,7 +104,7 @@ export default function PreciseServiceDetail() {
         </div>
 
         {/* ===== 可服务事项卡片 ===== */}
-        <div className="psd-card">
+        <div className="psd-card-service">
           <div className="psd-card-content">
             <h3 className="psd-section-title">可服务事项</h3>
             <div className="psd-service-box">
@@ -165,11 +167,10 @@ export default function PreciseServiceDetail() {
                         <div className="psd-step-header">
                           <div className="psd-step-left">
                             <span
-                              className={`psd-step-badge ${
-                                step.status === 'done'
-                                  ? 'psd-step-badge-done'
-                                  : 'psd-step-badge-processing'
-                              }`}
+                              className={`psd-step-badge ${step.status === 'done'
+                                ? 'psd-step-badge-done'
+                                : 'psd-step-badge-processing'
+                                }`}
                             >
                               {step.statusLabel}
                             </span>
@@ -214,7 +215,7 @@ export default function PreciseServiceDetail() {
         </div>
 
         {/* ===== 预期成效卡片 ===== */}
-        <div className="psd-card">
+        <div className="psd-card-service">
           <div className="psd-card-content">
             <h3 className="psd-section-title">预期成效</h3>
             <div className="psd-effect-box">

@@ -227,6 +227,7 @@
   font-weight: 500;
   color: #364153;
   line-height: 1.625;
+  letter-spacing: 3px;
 }
 
 .sedd-summary--green {
@@ -240,6 +241,33 @@
 }
 
 
+
+/* ===== 来源链接按钮 ===== */
+.sedd-source-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: 20px;
+  background: #FFFFFF;
+  text-decoration: none;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.sedd-source-link-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.sedd-source-link-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.4;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
 /* ===== 正文段落 ===== */
 .sedd-paragraphs {

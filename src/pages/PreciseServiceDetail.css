@@ -6,7 +6,7 @@
   max-width: 480px;
   margin: 0 auto;
   background: #F8F8F8;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+
   overflow: hidden;
 }
 
@@ -55,8 +55,8 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px 16px 16px;
+  gap: 20px;
+  padding: 16px;
 }
 
 /* ===== 卡片通用样式 ===== */
@@ -64,15 +64,24 @@
   background: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 14px;
-  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   flex-shrink: 0;
   overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
+}
+
+.psd-card-service {
+  background: linear-gradient(135deg, #FAF5FF 0%, #EFF6FF 100%);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  gap: 12px;
+  border-radius: 16px;
+
+
 }
 
 .psd-card-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   padding: 16px;
 }
 
@@ -84,14 +93,14 @@
 }
 
 .psd-company-icon {
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
 
 .psd-company-name {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   color: #0A0A0A;
   line-height: 1.5;
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -135,37 +144,37 @@
 .psd-bg-box {
   background: #EFF6FF;
   border-radius: 10px;
-  padding: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
 }
 
 .psd-bg-text {
   margin: 0;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 700;
   color: #364153;
   line-height: 1.75;
-  letter-spacing: 0.02em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  letter-spacing: 3px;
 }
 
 /* ===== 可服务事项 ===== */
 .psd-service-box {
-  background: #F9FAFB;
+  background: #fff;
   border-radius: 10px;
+  border: 1px solid #E5E7EB;
   padding: 14px;
 }
 
 .psd-service-text {
   margin: 0;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 600;
   color: #364153;
   line-height: 1.75;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
 
 .psd-service-highlight {
-  color: #155DFC;
+  color: #F00;
   font-weight: 600;
 }
 
@@ -179,16 +188,17 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 24px;
+  padding: 0 16px;
   background: #FFFFFF;
   border: 1px solid #D1D5DB;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #364153;
+  font-size: 12px;
+  height: 29px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.90);
   cursor: pointer;
-  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   transition: background 0.2s;
+  border-radius: 3px;
+  background: #0052D9;
 }
 
 .psd-task-btn:active {
@@ -197,21 +207,22 @@
 
 /* ===== 预期成效 ===== */
 .psd-effect-box {
-  background: #EFF6FF;
   border-radius: 10px;
   padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  border: 1px solid #E5E7EB;
+  background: #FFF;
 }
 
 .psd-effect-text {
   margin: 0;
   font-size: 14px;
   font-weight: 600;
-  color: #155DFC;
+  color: #364153;
   line-height: 1.75;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+
 }
 
 /* ===== 流程进度 ===== */

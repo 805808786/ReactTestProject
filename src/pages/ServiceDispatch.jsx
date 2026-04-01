@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import iconBack from '../assets/icon-dynamic-back.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
 import './ServiceDispatch.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== 默认数据 ===================== */
 const DEFAULT_DISPATCH = {
@@ -22,14 +22,7 @@ export default function ServiceDispatch() {
   return (
     <div className="sd-container">
       {/* ===== 头部 ===== */}
-      <div className="sd-header">
-        <div className="sd-header-row">
-          <button className="sd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="sd-header-title">一键派发</span>
-        </div>
-      </div>
+      <PageHeader title="一键派发" />
 
       {/* ===== 主体区域 ===== */}
       <div className="sd-body">

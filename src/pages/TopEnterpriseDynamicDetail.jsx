@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import iconBack from '../assets/icon-ted-back.svg';
+import { useParams } from 'react-router-dom';
 import iconNewspaper from '../assets/icon-ted-newspaper.svg';
+import PageHeader from '../components/PageHeader';
 import iconCalendar from '../assets/icon-ted-calendar.svg';
 import iconBuilding from '../assets/icon-ted-building.svg';
 import './TopEnterpriseDynamicDetail.css';
@@ -102,7 +102,6 @@ const DEFAULT_DETAIL = {
 };
 
 export default function TopEnterpriseDynamicDetail() {
-  const navigate = useNavigate();
   const { id } = useParams();
 
   const data = MOCK_DETAIL_DATA[Number(id)] || DEFAULT_DETAIL;
@@ -110,14 +109,7 @@ export default function TopEnterpriseDynamicDetail() {
   return (
     <div className="tedd-container">
       {/* ===== 头部 ===== */}
-      <div className="tedd-header">
-        <div className="tedd-header-row">
-          <button className="tedd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="tedd-header-title">动态详情</span>
-        </div>
-      </div>
+      <PageHeader title="动态详情" />
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="tedd-body">

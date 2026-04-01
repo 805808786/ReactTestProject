@@ -47,7 +47,8 @@
 }
 
 :root {
-  font-family: 'MiSans-Medium', 'MiSans-Thin', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  font-family: 'MiSans', 'Noto Sans SC', 'Alibaba PuHuiTi', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #1a1a1a;

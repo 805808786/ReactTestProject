@@ -91,6 +91,7 @@ const MOCK_DETAIL_DATA = {
     date: '2026-03-01',
     source: '人民日报',
     summary: '杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
+    sourceLink: { label: '杭州发布', url: 'https://www.hangzhou.gov.cn' },
     paragraphs: [],
     relatedCompanies: [
       {
@@ -228,6 +229,19 @@ export default function SceneEnterpriseDynamicDetail() {
             <div className="sedd-summary-box">
               <p className="sedd-summary-text">{data.category == 'recommend' ? <span className="sedd-summary--bold">推荐理由：</span> : <span className="sedd-summary--bold">摘要: </span>} {data.summary}</p>
             </div>
+
+            {/* 来源链接按钮 */}
+            {data.sourceLink && (
+              <a
+                className="sedd-source-link-btn"
+                href={data.sourceLink.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="sedd-source-link-icon">🔗</span>
+                <span className="sedd-source-link-label">{data.sourceLink.label}</span>
+              </a>
+            )}
 
             {/* 正文段落 */}
             {data.paragraphs && data.paragraphs.length > 0 ? data.category == 'recommend' ?

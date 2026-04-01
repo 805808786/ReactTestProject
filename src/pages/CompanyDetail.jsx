@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import iconBack from '../assets/icon-cd-back.svg';
 import iconTabData from '../assets/icon-cd-tab-data.svg';
+import PageHeader from '../components/PageHeader';
 import iconTabDataActive from '../assets/icon-cd-tab-data-active.svg';
 import iconTabServiceMatrix from '../assets/icon-cd-tab-service-matrix.svg';
 import iconTabEnterpriseService from '../assets/icon-cd-tab-enterprise-service.svg';
@@ -162,13 +162,7 @@ export default function CompanyDetail() {
       ) : (
         <>
           {/* ===== 头部 ===== */}
-          <div className="cd-header">
-            <div className="cd-header-top">
-              <button className="cd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-                <img src={iconBack} alt="返回" width={36} height={32} />
-              </button>
-              <span className="cd-company-name">{company.name}</span>
-            </div>
+          <PageHeader title={company.name}>
             {/* Tab 栏 */}
             <div className="cd-tab-bar">
               {TABS.map((tab) => (
@@ -185,7 +179,7 @@ export default function CompanyDetail() {
                 </button>
               ))}
             </div>
-          </div>
+          </PageHeader>
 
           {/* ===== 内容区域 ===== */}
           <div className="cd-body">

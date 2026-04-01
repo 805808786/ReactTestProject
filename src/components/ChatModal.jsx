@@ -166,13 +166,13 @@ export default function ChatModal({ isOpen, onClose }) {
           "variables": {
             "internet": false,
             "knowledge": true,
-            "enterpriseData": false,
+            "enterpriseData": true,
             "knowledgeList": [
               "2001109186508312577"
             ],
             "model": "deepseek-chat",
             "url": "",
-            "tenantCodes": []
+            "tenantCodes": ['other']
           }
         })
       })

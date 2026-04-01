@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import iconBack from '../assets/icon-cd-back.svg';
 import iconBuilding2 from '../assets/icon-cd-building2-news.svg';
+import PageHeader from '../components/PageHeader';
 import iconNewspaper from '../assets/icon-cd-newspaper.svg';
 import iconCalendar from '../assets/icon-cd-calendar.svg';
 import './CompanyNewsDetail.css';
@@ -82,14 +82,7 @@ export default function CompanyNewsDetail() {
   return (
     <div className="cnd-container">
       {/* ===== 头部 ===== */}
-      <div className="cnd-header">
-        <div className="cnd-header-row">
-          <button className="cnd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="cnd-header-title">资讯详情</span>
-        </div>
-      </div>
+      <PageHeader title="资讯详情" />
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="cnd-body">

@@ -2,10 +2,10 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InfiniteList from './components/InfiniteList';
 import DateSelection from './components/dataSelection/index';
-import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconSceneCalendar from '../assets/icon-scene-calendar.svg';
 import './SceneRadar.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 数据 ===================== */
 const SCENE_DATA = [
@@ -271,13 +271,7 @@ export default function SceneRadar() {
   return (
     <div className="sr-container">
       {/* ===== 头部 ===== */}
-      <div className="sr-header">
-        <div className="sr-header-top">
-          <button className="sr-back-btn" onClick={() => navigate('/')} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="sr-header-title">场景雷达</span>
-        </div>
+      <PageHeader title="场景雷达" onBack={() => navigate('/')}>
         {/* 搜索行 */}
         <div className="sr-search-row">
           <div className="sr-search-bar">
@@ -309,7 +303,7 @@ export default function SceneRadar() {
             <div className="sr-stat-value">{stats.totalDynamics}</div>
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 场景列表 ===== */}
       <InfiniteList
