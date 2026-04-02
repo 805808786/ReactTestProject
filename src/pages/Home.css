@@ -629,7 +629,7 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 12px;
   font-family: inherit;
   display: flex;
   align-items: center;
@@ -861,8 +861,7 @@
   align-items: center;
   justify-content: space-between;
   border-radius: 10px;
-  padding: 0 8px;
-  height: 84px;
+  padding: 16px 12px;
   margin-bottom: 12px;
   box-sizing: border-box;
   position: relative;
@@ -884,14 +883,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 100%;
 }
 
 .summary-right {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  height: 36px;
   flex: 1;
 }
 
@@ -902,6 +899,7 @@
 
 .summary-label {
   font-size: 14px;
+  font-weight: 500;
   color: #4a5565;
 }
 
@@ -912,8 +910,8 @@
 }
 
 .summary-value small {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
   margin-left: 2px;
 }
 
@@ -945,7 +943,7 @@
 .enterprise-row,
 .contribution-grid {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   flex-direction: row;
 }
 
@@ -969,6 +967,7 @@
 
 .item-label {
   font-size: 12px;
+  font-weight: 500;
   color: #4a5565;
 }
 

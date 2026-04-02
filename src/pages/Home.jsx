@@ -935,13 +935,14 @@ function BarChart() {
                 width={barW}
                 height={barH}
                 rx="4"
-                fill="#3B82F6"
+                fill="#155DFC"
               />
               <text
                 x={85 + barW + 6}
                 y={y + barH / 2 + 4}
                 fontSize="10"
                 fill="#101828"
+                fontFamily="Alibaba PuHuiTi, PingFang SC, sans-serif"
               >
                 {d.value.toLocaleString()}
               </text>
@@ -959,6 +960,7 @@ function BarChart() {
             fontSize="12"
             fill="#666666"
             textAnchor="end"
+            fontFamily="Alibaba PuHuiTi, PingFang SC, sans-serif"
           >
             {d.name}
           </text>
@@ -974,6 +976,7 @@ function BarChart() {
             fontSize="12"
             fill="#666666"
             textAnchor="middle"
+            fontFamily="Alibaba PuHuiTi, PingFang SC, sans-serif"
           >
             {value}
           </text>
@@ -1005,7 +1008,7 @@ function DataContribution() {
             </div>
           </div>
           <div className="summary-right">
-            <button onClick={() => navigate('/data-contribution')} className="view-all blue-text">查看全部 →</button>
+            {/* <button onClick={() => navigate('/data-contribution')} className="view-all blue-text">查看全部 →</button> */}
           </div>
         </div>
 
