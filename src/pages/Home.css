@@ -1168,7 +1168,7 @@
 .assistant-avatar-box {
   position: absolute;
   right: 0px;
-  top: -40px;  
+  top: -40px;
   width: 64px;
   height: 64px;
   z-index: 21;
@@ -1455,6 +1455,126 @@
   padding: 0 0 16px;
   position: relative;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== 今日消息 card ===== */
+.kf-message-card {
+  width: 100%;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.80);
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.08);
+}
+
+.kf-message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kf-message-title {
+  font-family: "MiSans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.90);
+  line-height: 19px;
+}
+
+.kf-message-title-red {
+  color: #F4200D;
+}
+
+.kf-message-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 19px;
+}
+
+.kf-message-num {
+  font-family: "MiSans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+.kf-message-dot-container {
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.kf-message-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FB2C36;
+}
+
+.kf-message-more {
+  font-size: 16px;
+  color: #6A7282;
+  display: flex;
+  align-items: center;
+}
+
+.kf-message-image {
+  width: 12px;
+  height: 12px;
+}
+
+.kf-message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kf-message-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kf-message-type {
+  font-family: "MiSans", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  line-height: 17px;
+}
+
+.kf-message-type--recommend {
+  background: #F6BA15;
+  color: #FFFBDE;
+}
+
+.kf-message-type--news {
+  background: #2BA471;
+  color: #E3F9E9;
+}
+
+.kf-message-time {
+  font-size: 12px;
+  color: #6A7282;
+  white-space: nowrap;
+}
+
+.kf-message-content {
+  font-size: 16px;
+  font-weight: 400;
+  color: #364153;
+  flex: 1;
+  line-height: 19px;
 }
 
 .kf-card-v2 {

@@ -45,6 +45,21 @@ const bottomTabs = [
   { label: '政策匹配', icon: policyMatchingIcon, logicCase: 5 },
 ]
 
+
+// 今日消息数据
+const todayMessages = [
+  {
+    type: '每日推荐',
+    content: '杭州杭钢云计算数据中心有限公司',
+    typeClass: 'recommend'
+  },
+  {
+    type: '新闻动态',
+    content: '区领导带队赴上海开展招商考察活动',
+    typeClass: 'news'
+  }
+];
+
 export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
   const { isChatOpen, setIsChatOpen } = useChatStore()
@@ -138,6 +153,32 @@ function KeyFocus() {
 
   return (
     <section className="key-focus-v2">
+      {/* 今日消息 card */}
+      <div className="kf-message-card">
+        <div className="kf-message-header">
+          <span className="kf-message-title">今日<span className="kf-message-title-red">消息</span></span>
+          <div className="kf-message-count">
+            <span className="kf-message-num">4 条</span>
+            <span className="kf-message-dot-container">
+              <span className="kf-message-dot"></span>
+            </span>
+            <span className="kf-message-more">
+              {/* 改成svg */}
+              <img src={chevronRightIcon} className="kf-message-image" />
+            </span>
+          </div>
+        </div>
+        <div className="kf-message-list">
+          {todayMessages.map((message, index) => (
+            <div key={index} className="kf-message-item">
+              <span className={`kf-message-type kf-message-type--${message.typeClass}`}>{message.type}</span>
+              <span className="kf-message-content">{message.content}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+
       <div className="kf-card-v2">
         <div className="kf-header-v2">
           <div className="kf-title-v2">当前重点关注</div>
@@ -332,7 +373,7 @@ function EnterpriseOverview() {
                   <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
-                  <span className="daily-label-v2">第三方平台核准</span>
+                  <span className="daily-label-v2">规则性调整</span>
                   <span className="daily-value-v2 other-val">{loading ? '--' : (stats.otherNum || 0)}</span>
                 </div>
               </div>
