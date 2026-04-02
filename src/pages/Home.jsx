@@ -51,12 +51,14 @@ const todayMessages = [
   {
     type: '每日推荐',
     content: '杭州杭钢云计算数据中心有限公司',
-    typeClass: 'recommend'
+    typeClass: 'recommend',
+    detailUrl: '/scene-enterprise-dynamic-detail/4'
   },
   {
     type: '新闻动态',
     content: '区领导带队赴上海开展招商考察活动',
-    typeClass: 'news'
+    typeClass: 'news',
+    detailUrl: '/scene-enterprise-dynamic-detail/5',
   }
 ];
 
@@ -157,7 +159,7 @@ function KeyFocus() {
       <div className="kf-message-card">
         <div className="kf-message-header">
           <span className="kf-message-title">今日<span className="kf-message-title-red">消息</span></span>
-          <div className="kf-message-count">
+          <div className="kf-message-count" onClick={() => navigate('/daily-messages')} style={{ cursor: 'pointer' }}>
             <span className="kf-message-num">4 条</span>
             <span className="kf-message-dot-container">
               <span className="kf-message-dot"></span>
@@ -170,7 +172,7 @@ function KeyFocus() {
         </div>
         <div className="kf-message-list">
           {todayMessages.map((message, index) => (
-            <div key={index} className="kf-message-item">
+            <div key={index} className="kf-message-item" onClick={() => navigate(message.detailUrl)}>
               <span className={`kf-message-type kf-message-type--${message.typeClass}`}>{message.type}</span>
               <span className="kf-message-content">{message.content}</span>
             </div>
@@ -1171,7 +1173,7 @@ function AssistantCard({ onClick }) {
       </div>
       <div className="assistant-avatar-box">
         <img src={SparklesIcon} alt="avatar" />
-        <div className="assistant-avatar-box-unread">2</div>
+        {/* <div className="assistant-avatar-box-unread">4</div> */}
       </div>
     </div>
   )

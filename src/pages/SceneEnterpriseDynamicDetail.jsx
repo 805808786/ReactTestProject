@@ -73,7 +73,7 @@ const MOCK_DETAIL_DATA = {
     ],
   },
   4: {
-    type: '今日推荐',
+    type: '每日推荐',
     category: 'recommend',
     title: '杭州杭钢云计算数据中心有限公司',
     date: '2026-04-01',
@@ -98,18 +98,18 @@ const MOCK_DETAIL_DATA = {
     relatedCompanies: [
       {
         id: 1,
-        name: '行业研究型精品CVC产业投资机构',
+        name: '上海润达医疗科技股份有限公司',
         // industry: '软件和信息技术服务业',
         // legalPerson: '张伟',
         // status: '存续',
       },
-      {
-        id: 2,
-        name: '上海润达医疗',
-        // industry: '软件和信息技术服务业',
-        // legalPerson: '张伟',
-        // status: '存续',
-      },
+      // {
+      //   id: 2,
+      //   name: '上海润达医疗',
+      //   // industry: '软件和信息技术服务业',
+      //   // legalPerson: '张伟',
+      //   // status: '存续',
+      // },
     ],
   },
   6: {

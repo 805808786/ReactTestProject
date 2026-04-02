@@ -13,7 +13,7 @@ const INITIAL_CARDS = [
   {
     id: 'card-recommend',
     category: 'recommend',
-    tagText: '今日推荐',
+    tagText: '每日推荐',
     hasNotification: true,
     dotColor: '#F59E0B',
     title: '杭州杭钢云计算数据中心有限公司',
@@ -431,7 +431,10 @@ export default function ChatModal({ isOpen, onClose }) {
               <div className="chat-hero-greeting">
                 Hi，我是<span className="chat-hero-highlight">拱墅企业助手</span>
               </div>
-              <div className="chat-hero-subtitle">您有<span className="chat-hero-highlight-red">2</span>条未读消息</div>
+              <div className="chat-hero-subtitle">
+                为您提供最新的企业资讯
+              </div>
+              {/* <div className="chat-hero-subtitle">您有<span className="chat-hero-highlight-red">2</span>条未读消息</div> */}
             </div>
           </div>
         </div>
@@ -439,10 +442,10 @@ export default function ChatModal({ isOpen, onClose }) {
         {/* 聊天内容区 */}
         <div className="chat-body-cm" ref={chatBodyRef}>
           {/* 静态欢迎卡片 - 始终显示 */}
-          <div className="chat-message msg-bot">
-            {/* <div className="avatar bot-avatar">
+          {/* <div className="chat-message msg-bot">
+            <div className="avatar bot-avatar">
               <Bot size={20} color="#155DFC" strokeWidth={1.5} />
-            </div> */}
+            </div>
             <div className="msg-content-wrapper msg-content-wrapper--cards">
               <div className="msg-cards-label">拱墅企业小助手：</div>
               <div className="msg-cards-list">
@@ -455,7 +458,7 @@ export default function ChatModal({ isOpen, onClose }) {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
 
           {messages.map((msg) => (
             <div key={msg.id} className={`chat-message ${msg.type === 'user' ? 'msg-user' : 'msg-bot'}`}>
