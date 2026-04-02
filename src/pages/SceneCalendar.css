@@ -6,6 +6,8 @@
 /* 容器 */
 .sc-container {
   width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   min-height: 100vh;
   background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
@@ -442,6 +444,8 @@
 
 .sc-sheet {
   width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
   background: #ffffff;
   border-radius: 20px 20px 0 0;
   padding: 0 0 32px;
