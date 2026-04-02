@@ -152,14 +152,14 @@
   pointer-events: none;
 }
 
-/* 矩形主体：高75px，顶部小圆角，底部大圆角 */
+/* 矩形主体：多延伸2px与拱形重叠，消除亚像素缝隙 */
 .bottom-nav-bg::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 75px;
+  height: 77px;
   background: #ffffff;
   border-radius: 6px 6px 24px 24px;
 }

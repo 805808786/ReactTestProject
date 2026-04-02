@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './TagCalendar.css';
 import DateSelection from './components/dataSelection/index';
+import PageHeader from '../components/PageHeader';
 
 // 生成近半年的每日标签数据（10000 ~ 20000 范围）
 function generateData(days) {
@@ -165,17 +166,7 @@ export default function TagCalendar() {
 
   return (
     <div className="tc-container">
-      {/* Header */}
-      <div className="tc-header">
-        <div className="tc-header-top">
-          <button className="tc-back-btn" onClick={() => navigate('/')} aria-label="返回">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <span className="tc-header-title">日历视图</span>
-        </div>
-      </div>
+      <PageHeader title="日历视图" />
 
       {/* Main Content */}
       <div className="tc-content">
