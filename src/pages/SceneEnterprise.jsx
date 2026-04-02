@@ -334,7 +334,8 @@ export default function SceneEnterprise() {
         street,
         secondTag,
         secondTagId,
-        keyword: debouncedSearch
+        keyword: debouncedSearch,
+        isFromRadar: true
       });
 
       const data = response.data || [];
