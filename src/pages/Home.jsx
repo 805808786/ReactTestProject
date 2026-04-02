@@ -243,7 +243,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/planned-visits')}>
                 <div className="kf-stat-label">拟走访企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-num">9</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
@@ -254,7 +254,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/enterprise-dynamic')}>
                 <div className="kf-stat-label">已走访企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-num">14</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>

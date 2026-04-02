@@ -92,7 +92,7 @@ const MOCK_DETAIL_DATA = {
     title: '区领导带队赴上海开展招商考察活动',
     date: '2026-04-01',
     source: '拱墅发布',
-    summary: '3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。',
+    summary: '3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。他强调，要坚持项目为王，抓项目促发展稳增长，围绕“1+4”产业主赛道和“115X”先进制造业集群建设，聚力推进招商引资，强链、补链、延链，着力推动产业结构调整和转型升级，为拱墅经济社会高质量发展注入强劲动能。区领导许雷挺、马志清参加。',
     sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/b0XVuLwoycSbCzNnWts1iA' },
     paragraphs: [],
     relatedCompanies: [
@@ -185,7 +185,7 @@ export default function SceneEnterpriseDynamicDetail() {
   const data = stateData || MOCK_DETAIL_DATA[Number(id)] || DEFAULT_DETAIL;
 
   function getTitle() {
-    return data.category == 'recommend' ? '今日动态' : data.type
+    return data.category == 'recommend' ? '每日推荐' : data.type
   }
 
   return (
