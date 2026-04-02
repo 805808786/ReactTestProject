@@ -2,10 +2,10 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
-import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconCompanySe from '../assets/icon-company-se.svg';
 import './FollowEnterprise.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 数据 ===================== */
 const STREETS = ['小河街道', '拱宸桥街道', '湖墅街道', '米市巷街道', '大关街道', '和睦街道', '康桥街道', '上塘街道', '祥符街道', '石桥街道'];
@@ -251,13 +251,7 @@ export default function FollowEnterprise() {
   return (
     <div className="fe-container">
       {/* ===== 头部 ===== */}
-      <div className="fe-header">
-        <div className="fe-header-top">
-          <button className="fe-back-btn" onClick={() => navigate('/')} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="fe-header-title">关注企业</span>
-        </div>
+      <PageHeader title="关注企业" onBack={() => navigate('/')}>
         {/* 搜索行 */}
         <div className="fe-search-row">
           <div className="fe-search-bar">
@@ -270,7 +264,7 @@ export default function FollowEnterprise() {
             />
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 筛选区域 ===== */}
       <div className="fe-filter-area">

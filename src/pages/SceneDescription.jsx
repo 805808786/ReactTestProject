@@ -1,6 +1,6 @@
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import iconBack from '../assets/icon-scene-back.svg';
+import { useParams, useLocation } from 'react-router-dom';
 import iconPublisher from '../assets/icon-scene-publisher.svg';
+import PageHeader from '../components/PageHeader';
 import iconCalendar from '../assets/icon-scene-calendar.svg';
 import iconGoalCheck from '../assets/icon-scene-goal-check.svg';
 import './SceneDescription.css';
@@ -148,7 +148,6 @@ const handleDownload = async (url, filename) => {
 };
 
 export default function SceneDescription() {
-  const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
 
@@ -162,14 +161,7 @@ export default function SceneDescription() {
   return (
     <div className="sd-container">
       {/* ===== 头部 ===== */}
-      <div className="sd-header">
-        <div className="sd-header-row">
-          <button className="sd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="sd-header-title">场景说明</span>
-        </div>
-      </div>
+      <PageHeader title="场景说明" />
 
       {/* ===== 内容区域 ===== */}
       <div className="sd-content">

@@ -22,6 +22,9 @@ import VisitDetail from './pages/VisitDetail'
 import TopEnterpriseDynamicDetail from './pages/TopEnterpriseDynamicDetail'
 import CompanyDetail from './pages/CompanyDetail'
 import CompanyNewsDetail from './pages/CompanyNewsDetail'
+import PreciseServiceDetail from './pages/PreciseServiceDetail'
+import ServiceDispatch from './pages/ServiceDispatch'
+import DailyMessageList from './pages/DailyMessageList'
 import './index.css'
 
 function App() {
@@ -51,6 +54,9 @@ function App() {
         <Route path="/top-enterprise-dynamic-detail/:id" element={<TopEnterpriseDynamicDetail />} />
         <Route path="/company-detail/:id" element={<CompanyDetail />} />
         <Route path="/company-news-detail/:id" element={<CompanyNewsDetail />} />
+        <Route path="/precise-service-detail/:id" element={<PreciseServiceDetail />} />
+        <Route path="/service-dispatch" element={<ServiceDispatch />} />
+        <Route path="/daily-messages" element={<DailyMessageList />} />
       </Routes>
     </HashRouter>
   )

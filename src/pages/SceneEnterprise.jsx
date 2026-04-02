@@ -418,9 +418,9 @@ export default function SceneEnterprise() {
         <div className="se-stats-area">
           {apiLoading ? (
             // 加载中状态
-            Array.from({ length: 5 }).map((_, index) => (
+            Array.from({ length: 4 }).map((_, index) => (
               <div key={index} className={`se-stat-card${index === 0 ? ' se-stat-card--primary' : ''}`}>
-                <div className="se-stat-label">{index === 0 ? '全部' : ['核心企业', '重点企业', '潜力企业', '后备企业'][index - 1]}</div>
+                <div className="se-stat-label">{index === 0 ? '全部' : ['核心企业', '重点企业', '潜力企业'][index - 1]}</div>
                 <div className="se-stat-value">加载中...</div>
               </div>
             ))

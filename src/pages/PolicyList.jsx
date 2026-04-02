@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 import InfiniteList from './components/InfiniteList';
-import iconBack from '../assets/icon-back.svg';
 import iconPolicyProgress from '../assets/icon-policy-progress.svg';
+import PageHeader from '../components/PageHeader';
 import iconPolicyDoc from '../assets/icon-policy-doc.svg';
 import iconPolicyEnterprise from '../assets/icon-policy-enterprise.svg';
 import iconPolicyAdvice from '../assets/icon-policy-advice.svg';
@@ -266,7 +265,6 @@ function PolicyCard({ policy, expanded, onToggle }) {
 
 /* ===================== 主页面 ===================== */
 export default function PolicyList() {
-  const navigate = useNavigate();
   const [expandedIds, setExpandedIds] = useState(new Set());
 
   // 列表数据（懒初始化避免 race condition）
@@ -316,15 +314,7 @@ export default function PolicyList() {
   return (
     <div className="pl-container">
       {/* ===== 头部 ===== */}
-      <div className="pl-header">
-        {/* 导航行 */}
-        <div className="pl-header-top">
-          <button className="pl-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="pl-header-title">政策匹配</span>
-        </div>
-
+      <PageHeader title="政策匹配">
         {/* 统计数据行 */}
         <div className="pl-stats-row">
           <div className="pl-stat-box">
@@ -354,7 +344,7 @@ export default function PolicyList() {
             />
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 政策列表 ===== */}
       <div className="pl-body">

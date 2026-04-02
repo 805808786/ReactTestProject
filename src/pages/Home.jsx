@@ -5,6 +5,7 @@ import Dialog from '../components/Dialog'
 import ChatModal from '../components/ChatModal'
 import { useEnterpriseStore } from '../store/enterpriseStore'
 import { useBottomNavStore } from '../store/bottomNavStore'
+import { useChatStore } from '../store/chatStore'
 import PageHeader from '../components/PageHeader';
 
 import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
@@ -44,9 +45,26 @@ const bottomTabs = [
   { label: '政策匹配', icon: policyMatchingIcon, logicCase: 5 },
 ]
 
+
+// 今日消息数据
+const todayMessages = [
+  {
+    type: '每日推荐',
+    content: '杭州杭钢云计算数据中心有限公司',
+    typeClass: 'recommend',
+    detailUrl: '/scene-enterprise-dynamic-detail/4'
+  },
+  {
+    type: '新闻动态',
+    content: '区领导带队赴上海开展招商考察活动',
+    typeClass: 'news',
+    detailUrl: '/scene-enterprise-dynamic-detail/5',
+  }
+];
+
 export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
-  const [isChatOpen, setIsChatOpen] = useState(false)
+  const { isChatOpen, setIsChatOpen } = useChatStore()
   const navigate = useNavigate()
 
   const renderContent = () => {
@@ -109,8 +127,6 @@ export default function Home() {
         ))}
       </div>
 
-      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
-
       {bottomTabs[activeBottomTab]?.logicCase !== 0 && (
         <div className="floating-assistant-btn" onClick={() => setIsChatOpen(true)}>
           <div className="floating-btn-inner">
@@ -119,6 +135,8 @@ export default function Home() {
           {/* <div className="notification-dot"></div> */}
         </div>
       )}
+
+      <ChatModal isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </div>
   )
 }
@@ -137,6 +155,32 @@ function KeyFocus() {
 
   return (
     <section className="key-focus-v2">
+      {/* 今日消息 card */}
+      <div className="kf-message-card">
+        <div className="kf-message-header">
+          <span className="kf-message-title">今日<span className="kf-message-title-red">消息</span></span>
+          <div className="kf-message-count" onClick={() => navigate('/daily-messages')} style={{ cursor: 'pointer' }}>
+            <span className="kf-message-num">4 条</span>
+            <span className="kf-message-dot-container">
+              <span className="kf-message-dot"></span>
+            </span>
+            <span className="kf-message-more">
+              {/* 改成svg */}
+              <img src={chevronRightIcon} className="kf-message-image" />
+            </span>
+          </div>
+        </div>
+        <div className="kf-message-list">
+          {todayMessages.map((message, index) => (
+            <div key={index} className="kf-message-item" onClick={() => navigate(message.detailUrl)}>
+              <span className={`kf-message-type kf-message-type--${message.typeClass}`}>{message.type}</span>
+              <span className="kf-message-content">{message.content}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+
       <div className="kf-card-v2">
         <div className="kf-header-v2">
           <div className="kf-title-v2">当前重点关注</div>
@@ -160,7 +204,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise')}>
                 <div className="kf-stat-label">人工智能企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-num">6,180</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
@@ -171,7 +215,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
                 <div className="kf-stat-label">场景动态</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">500</span>
+                  <span className="kf-stat-num">15</span>
                   <span className="kf-stat-unit">条</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
@@ -199,7 +243,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/planned-visits')}>
                 <div className="kf-stat-label">拟走访企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-num">9</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
@@ -210,7 +254,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/enterprise-dynamic')}>
                 <div className="kf-stat-label">已走访企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">21,943</span>
+                  <span className="kf-stat-num">14</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
@@ -331,8 +375,8 @@ function EnterpriseOverview() {
                   <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
-                  <span className="daily-label-v2">第三方平台核准</span>
-                  <span className="daily-value-v2 other-val">+{loading ? '--' : (stats.otherNum || 0)}</span>
+                  <span className="daily-label-v2">规则性调整</span>
+                  <span className="daily-value-v2 other-val">{loading ? '--' : (stats.otherNum || 0)}</span>
                 </div>
               </div>
             </div>
@@ -585,6 +629,7 @@ const SCENE_DATA = [
     id: 1,
     name: '人工智能企业筛选场景',
     description: '人工智能企业筛选',
+    subName: "人工智能企业动态",
     enterprises: 6262,
     dynamics: 32,
     todayEnterprises: 3,
@@ -594,6 +639,7 @@ const SCENE_DATA = [
     id: 2,
     name: '115X专题企业筛选场景',
     description: '115X专项企业筛选',
+    subName: "115X专项企业动态",
     enterprises: 18765,
     dynamics: 28,
     todayEnterprises: 2,
@@ -603,6 +649,7 @@ const SCENE_DATA = [
     id: 3,
     name: '数据产业专题筛选场景',
     description: '数据产业专项筛选',
+    subName: "数据产业专项动态",
     enterprises: 21512,
     dynamics: 45,
     todayEnterprises: 5,
@@ -612,6 +659,7 @@ const SCENE_DATA = [
     id: 4,
     name: '党建企业专题场景',
     description: '党建企业专项筛选',
+    subName: "党建企业专项动态",
     enterprises: 350,
     dynamics: 23,
     todayEnterprises: 1,
@@ -621,12 +669,13 @@ const SCENE_DATA = [
     id: 5,
     name: '出海企业专题场景',
     description: '出海企业专项筛选',
+    subName: "出海企业专项动态",
     enterprises: 9876,
     dynamics: 19,
     todayEnterprises: 3,
     todayDynamics: 1,
   },
-  
+
 ];
 
 
@@ -692,7 +741,7 @@ function FocusScene() {
             </div>
 
             <div className="scene-item-metrics">
-              <div className="scene-metric-box" onClick={() =>{scene.id == 1 && navigate('/scene-enterprise')}}>
+              <div className="scene-metric-box" onClick={() => { scene.id == 1 && navigate('/scene-enterprise') }}>
                 <div className="metric-row-top">
                   <span className="metric-name">人工智能企业</span>
                   <span className="metric-arrow">→</span>
@@ -702,9 +751,9 @@ function FocusScene() {
                   <span className="metric-delta">今日+{scene.todayEnterprises}</span>
                 </div>
               </div>
-              <div className="scene-metric-box" onClick={() =>{scene.id == 1 && navigate('/scene-enterprise-dynamic')}}>
+              <div className="scene-metric-box" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic') }}>
                 <div className="metric-row-top">
-                  <span className="metric-name">{scene.description}</span>
+                  <span className="metric-name">{scene.subName}</span>
                   <span className="metric-arrow">→</span>
                 </div>
                 <div className="metric-row-bottom">
@@ -1124,6 +1173,7 @@ function AssistantCard({ onClick }) {
       </div>
       <div className="assistant-avatar-box">
         <img src={SparklesIcon} alt="avatar" />
+        {/* <div className="assistant-avatar-box-unread">4</div> */}
       </div>
     </div>
   )

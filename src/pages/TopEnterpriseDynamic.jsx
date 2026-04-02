@@ -2,11 +2,11 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
-import iconBackWhite from '../assets/icon-back-white.svg';
 import iconSearchDynamic from '../assets/icon-search-dynamic.svg';
 import iconNewspaper from '../assets/icon-newspaper.svg';
 import iconCaretDown from '../assets/icon-caret-down-small.svg';
 import './TopEnterpriseDynamic.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 数据 ===================== */
 const TYPES = ['融资动态', '行业动态', '合作动态', '企业荣誉', '政策解读'];
@@ -318,14 +318,7 @@ export default function TopEnterpriseDynamic() {
   return (
     <div className="ted-container">
       {/* ===== 头部 ===== */}
-      <div className="ted-header">
-        <div className="ted-header-top">
-          <button className="ted-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBackWhite} alt="返回" width={36} height={32} />
-          </button>
-          <span className="ted-header-title">头部企业动态</span>
-        </div>
-
+      <PageHeader title="头部企业动态">
         {/* 搜索行 */}
         <div className="ted-search-row">
           <div className="ted-search-bar">
@@ -338,7 +331,7 @@ export default function TopEnterpriseDynamic() {
             />
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 主体区域 ===== */}
       <div className="ted-body">

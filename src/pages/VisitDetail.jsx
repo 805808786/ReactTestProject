@@ -1,6 +1,6 @@
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import iconBack from '../assets/icon-visit-detail-back.svg';
+import { useParams, useLocation } from 'react-router-dom';
 import iconCalendar from '../assets/icon-visit-detail-calendar.svg';
+import PageHeader from '../components/PageHeader';
 import iconBuilding from '../assets/icon-visit-detail-building.svg';
 import './VisitDetail.css';
 
@@ -54,7 +54,6 @@ const DEFAULT_VISIT_DETAIL = {
 };
 
 export default function VisitDetail() {
-  const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
 
@@ -64,14 +63,7 @@ export default function VisitDetail() {
   return (
     <div className="vd-container">
       {/* ===== 头部 ===== */}
-      <div className="vd-header">
-        <div className="vd-header-row">
-          <button className="vd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="vd-header-title">走访详情</span>
-        </div>
-      </div>
+      <PageHeader title="走访详情" />
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="vd-body">

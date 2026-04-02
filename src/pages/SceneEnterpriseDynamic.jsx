@@ -2,11 +2,11 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
-import iconBackWhite from '../assets/icon-back-white.svg';
 import iconSearchDynamic from '../assets/icon-search-dynamic.svg';
 import iconNewspaper from '../assets/icon-newspaper.svg';
 import iconCaretDown from '../assets/icon-caret-down-small.svg';
 import './SceneEnterpriseDynamic.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 数据 ===================== */
 const TYPES = ['融资动态', '行业动态', '合作动态', '企业荣誉', '政策解读'];
@@ -318,14 +318,7 @@ export default function SceneEnterpriseDynamic() {
   return (
     <div className="sed-container">
       {/* ===== 头部 ===== */}
-      <div className="sed-header">
-        <div className="sed-header-top">
-          <button className="sed-back-btn" onClick={() => navigate(-1)} aria-label="返回">
-            <img src={iconBackWhite} alt="返回" width={36} height={32} />
-          </button>
-          <span className="sed-header-title">人工智能场景动态</span>
-        </div>
-
+      <PageHeader title="人工智能场景动态">
         {/* 搜索行 */}
         <div className="sed-search-row">
           <div className="sed-search-bar">
@@ -338,7 +331,7 @@ export default function SceneEnterpriseDynamic() {
             />
           </div>
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 主体区域 ===== */}
       <div className="sed-body">

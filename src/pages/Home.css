@@ -12,13 +12,13 @@
   background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
   min-height: 100vh;
-  font-family:
+  /* font-family:
     "Noto Sans SC",
     -apple-system,
     BlinkMacSystemFont,
     "PingFang SC",
     "Microsoft YaHei",
-    sans-serif;
+    sans-serif; */
 }
 
 /* Header - 1:1 Figma (Node 54:760) */
@@ -464,11 +464,11 @@
 
 .total-num-v2 {
   font-family: "MiSans", sans-serif;
-  font-weight: 630;
-  font-size: 44px;
+  font-weight: 600;
+  font-size: 38px;
   color: #155DFC;
-  line-height: 0.73;
-  letter-spacing: -0.018em;
+  line-height: 32px;
+  letter-spacing: -0.8px;
 }
 
 .total-unit-v2 {
@@ -1168,13 +1168,32 @@
 .assistant-avatar-box {
   position: absolute;
   right: 0px;
-  top: -95px;
+  top: -40px;
   width: 64px;
   height: 64px;
   z-index: 21;
 }
 
+.assistant-avatar-box-unread {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FB2C36;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+
+}
+
 .assistant-avatar-box img {
+  position: absolute;
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -1436,6 +1455,126 @@
   padding: 0 0 16px;
   position: relative;
   z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== 今日消息 card ===== */
+.kf-message-card {
+  width: 100%;
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.80);
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.08);
+}
+
+.kf-message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kf-message-title {
+  font-family: "MiSans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.90);
+  line-height: 19px;
+}
+
+.kf-message-title-red {
+  color: #F4200D;
+}
+
+.kf-message-count {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 19px;
+}
+
+.kf-message-num {
+  font-family: "MiSans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+.kf-message-dot-container {
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.kf-message-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FB2C36;
+}
+
+.kf-message-more {
+  font-size: 16px;
+  color: #6A7282;
+  display: flex;
+  align-items: center;
+}
+
+.kf-message-image {
+  width: 12px;
+  height: 12px;
+}
+
+.kf-message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kf-message-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kf-message-type {
+  font-family: "MiSans", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 1px 7px;
+  border-radius: 6px;
+  white-space: nowrap;
+  line-height: 17px;
+}
+
+.kf-message-type--recommend {
+  background: #F6BA15;
+  color: #FFFBDE;
+}
+
+.kf-message-type--news {
+  background: #2BA471;
+  color: #E3F9E9;
+}
+
+.kf-message-time {
+  font-size: 12px;
+  color: #6A7282;
+  white-space: nowrap;
+}
+
+.kf-message-content {
+  font-size: 16px;
+  font-weight: 400;
+  color: #364153;
+  flex: 1;
+  line-height: 19px;
 }
 
 .kf-card-v2 {

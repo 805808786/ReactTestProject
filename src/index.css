@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: 'MiSans-Thin';
   src: url('/MiSans-Thin.ttf') format('truetype');
   font-weight: 250;
@@ -10,7 +10,9 @@
   src: url('/MiSans-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
-}
+} */
+
+
 
 @font-face {
   font-family: 'YouSheBiaoTiHei';
@@ -19,6 +21,42 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Thin.ttf') format('truetype');
+  font-weight: 250;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Medium.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Bold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('/MiSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
 
 
 * {
@@ -26,7 +64,8 @@
 }
 
 :root {
-  font-family: 'MiSans-Medium', 'MiSans-Thin', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  font-family: 'MiSans', 'Noto Sans SC', 'Alibaba PuHuiTi', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #1a1a1a;
@@ -46,4 +85,3 @@ body {
 a {
   text-decoration: none;
 }
-

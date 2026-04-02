@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import pxtorem from 'postcss-pxtorem'
+import svgr from 'vite-plugin-svgr'
 
 // https://vite.dev/config/
 export default defineConfig({
   base: '/lwt/',
-  plugins: [react()],
+  plugins: [react(), svgr()],
   server: {
     port: 8080,
     proxy: {

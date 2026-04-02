@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
 import DateSelection from './components/dataSelection/index';
-import iconBack from '../assets/icon-back.svg';
 import iconSearchInput from '../assets/icon-search-input.svg';
+import PageHeader from '../components/PageHeader';
 import iconCompany from '../assets/icon-company.svg';
 import iconElReason from '../assets/icon-el-reason.svg';
 import iconElTag from '../assets/icon-el-tag.svg';
@@ -257,13 +257,7 @@ export default function EnterpriseList() {
   return (
     <div className="el-container">
       {/* ===== 头部 ===== */}
-      <div className="el-header">
-        <div className="el-header-top">
-          <button className="el-back-btn" onClick={() => navigate('/')} aria-label="返回">
-            <img src={iconBack} alt="返回" width={36} height={32} />
-          </button>
-          <span className="el-header-title">企业清单</span>
-        </div>
+      <PageHeader title="企业清单" onBack={() => navigate('/')}>
         {/* 搜索行 */}
         <div className="el-search-row">
           <div className="el-search-bar">
@@ -277,7 +271,7 @@ export default function EnterpriseList() {
           </div>
           <button className="el-calendar-btn" onClick={() => { setPendingDate(confirmedDate); setSheetOpen(true); }}>企业日历</button>
         </div>
-      </div>
+      </PageHeader>
 
       {/* ===== 筛选区域 ===== */}
       <div className="el-filter-area">

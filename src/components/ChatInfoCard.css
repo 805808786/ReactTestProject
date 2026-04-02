@@ -1,0 +1,157 @@
+.chat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1),
+    0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.chat-card:active {
+  box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Header: tag left, detail link right */
+.chat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Category tag - base */
+.chat-card-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+/* Tag color variants */
+.chat-card-tag--recommend {
+  background: #F6BA15;
+  color: #FFFBDE;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+}
+
+.chat-card-tag--news {
+  background: #2BA471;
+  color: #E3F9E9;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+}
+
+.chat-card-tag--service {
+  background: #E37318;
+  color: #FFF1E9;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+}
+
+.chat-card-tag--related {
+  background: #003CAB;
+  color: #F2F3FF;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.00);
+}
+
+/* Detail link */
+.chat-card-detail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: #155DFC;
+}
+
+/* Red notification dot */
+.chat-card-red-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FB2C36;
+}
+
+/* Sub tag row (e.g. 腰部企业) */
+.chat-card-sub-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.chat-card-sub-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #00A63E;
+  background: #F0FDF4;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+}
+
+/* Title */
+.chat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
+  color: #0A0A0A;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.chat-card-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* Description */
+.chat-card-desc {
+  font-size: 16px;
+  color: #364153;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-card-desc--bold {
+  font-weight: 600;
+  color: #D54941;
+}
+
+/* Footer: calendar icon + time */
+.chat-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.chat-card-calendar-icon {
+  width: 12px;
+  height: 12px;
+  opacity: 0.6;
+}
+
+.chat-card-time {
+  font-size: 11px;
+  color: #364153;
+}

@@ -3,14 +3,16 @@ import iconBack from '../assets/icon-dynamic-back.svg';
 import iconNewspaper from '../assets/icon-dynamic-newspaper.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
+import iconLinkBlue from '../assets/icon-link-blue.svg';
 import './SceneEnterpriseDynamicDetail.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 详情数据 ===================== */
 const MOCK_DETAIL_DATA = {
   1: {
     type: '融资动态',
     title: '杭州市创新科技有限公司完成首轮融资',
-    date: '2026-03-01',
+    date: '2026-04-01',
     source: '人民日报',
     summary: '摘要: 杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
     paragraphs: [
@@ -70,12 +72,92 @@ const MOCK_DETAIL_DATA = {
       },
     ],
   },
+  4: {
+    type: '每日推荐',
+    category: 'recommend',
+    title: '杭州杭钢云计算数据中心有限公司',
+    date: '2026-04-01',
+    source: '',
+    summary: '杭州杭钢云计算数据中心有限公司是杭钢集团数字经济转型骨干企业。其数据中心（东区）入选国家绿色数据中心，PUE值控制在1.30以下，走在全国前列，利用老厂房改造实现“从炼钢到炼数”的绿色升级。',
+    subSummary: '项目与阿里合作，规划大规模算力设施，已投运数千机柜，支持政务云、信创云等应用，为长三角数字基础设施和AI发展提供坚实支撑，助力高质量发展。',
+    paragraphs: [
+      '杭州杭钢云计算数据中心有限公司是杭钢集团旗下国有企业，由金属制造转型为数字经济核心企业，主营第一类增值电信业务、大数据服务及软件开发等，注册资本75898万元。',
+    ],
+    relatedCompanies: [],
+    link: 'https://biiframe.yicall.com/lwt/#/company-detail/1848243523192745991'
+  },
+  5: {
+    type: '新闻动态',
+    category: 'news',
+    title: '区领导带队赴上海开展招商考察活动',
+    date: '2026-04-01',
+    source: '拱墅发布',
+    summary: '3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。他强调，要坚持项目为王，抓项目促发展稳增长，围绕“1+4”产业主赛道和“115X”先进制造业集群建设，聚力推进招商引资，强链、补链、延链，着力推动产业结构调整和转型升级，为拱墅经济社会高质量发展注入强劲动能。区领导许雷挺、马志清参加。',
+    sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/b0XVuLwoycSbCzNnWts1iA' },
+    paragraphs: [],
+    relatedCompanies: [
+      {
+        id: 1,
+        name: '上海润达医疗科技股份有限公司',
+        // industry: '软件和信息技术服务业',
+        // legalPerson: '张伟',
+        // status: '存续',
+      },
+      // {
+      //   id: 2,
+      //   name: '上海润达医疗',
+      //   // industry: '软件和信息技术服务业',
+      //   // legalPerson: '张伟',
+      //   // status: '存续',
+      // },
+    ],
+  },
+  6: {
+    type: '与我相关',
+    category: 'related',
+    title: '敖煜新赴区信访局接待来访群众',
+    date: '2026-04-01',
+    source: '拱墅发布',
+    summary: '4月1日下午，区委书记敖煜新赴区信访局接待来访群众，面对面倾听诉求，现场协调解决问题。',
+    sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/nFVGrStDCjLzngDZZQWZxw' },
+    paragraphs: [],
+    relatedDepartments: [
+      {
+        id: 1,
+        name: '拱墅区区委办',
+        // street: '拱宸桥街道',
+        // legalPerson: '王翔',
+      },
+      {
+        id: 2,
+        name: '拱墅区信访局',
+        // street: '拱宸桥街道',
+        // legalPerson: '王翔',
+      },
+      {
+        id: 3,
+        name: '拱墅区综合行政执法局',
+        // street: '拱宸桥街道',
+        // legalPerson: '王翔',
+      },
+    ],
+    // relatedCompanies: [
+    //   {
+    //     id: 1,
+    //     name: '杭州市创新科技有限公司',
+    //     industry: '软件和信息技术服务业',
+    //     legalPerson: '张伟',
+    //     status: '存续',
+    //   },
+    // ],
+  },
+
 };
 
 const DEFAULT_DETAIL = {
   type: '场景动态',
   title: '拱墅数商产业园正式启动,多家企业入驻',
-  date: '2026-03-01',
+  date: '2026-04-01',
   source: '人民日报',
   summary: '摘要: 杭州市创新科技有限公司近日宣布完成A轮融资,融资金额达3000万元,本轮融资将用于技术研发和市场拓展。',
   paragraphs: [
@@ -102,17 +184,22 @@ export default function SceneEnterpriseDynamicDetail() {
   const stateData = location.state?.dynamicData;
   const data = stateData || MOCK_DETAIL_DATA[Number(id)] || DEFAULT_DETAIL;
 
+  function getTitle() {
+    return data.category == 'recommend' ? '每日推荐' : data.type
+  }
+
   return (
     <div className="sedd-container">
       {/* ===== 头部 ===== */}
-      <div className="sedd-header">
+      {/* <div className="sedd-header">
         <div className="sedd-header-row">
           <button className="sedd-back-btn" onClick={() => navigate(-1)} aria-label="返回">
             <img src={iconBack} alt="返回" width={36} height={32} />
           </button>
           <span className="sedd-header-title">动态详情</span>
         </div>
-      </div>
+      </div> */}
+      <PageHeader title={getTitle()} />
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="sedd-body">
@@ -123,28 +210,38 @@ export default function SceneEnterpriseDynamicDetail() {
             <div className="sedd-info-section">
               {/* 类型标签 */}
               <div className="sedd-badge-wrapper">
-                <div className="sedd-badge">{data.type}</div>
-              </div>  
+                <div className={`sedd-badge sedd-badge--${data.category}`}>{data.type}</div>
+              </div>
 
               {/* 标题行 */}
               <div className="sedd-title-row">
                 <div className="sedd-title-inner">
-                  <div className="sedd-green-dot" />
+                  <div className={`sedd-green-dot sedd-green-dot--${data.category}`} />
                   <span className="sedd-title">{data.title}</span>
                 </div>
               </div>
 
               {/* 来源 + 日期行 */}
-              <div className="sedd-meta-row">
-                <div className="sedd-meta-item">
-                  <img src={iconNewspaper} alt="来源" width={12} height={12} />
-                  <span className="sedd-meta-text">{data.source}</span>
+              <div className="sedd-meta-row-wrapper">
+                <div className="sedd-meta-row">
+                  {data.source && <div className="sedd-meta-item">
+                    <img src={iconNewspaper} alt="来源" width={12} height={12} />
+                    <span className="sedd-meta-text">{data.source}</span>
+                  </div>}
+                  <div className="sedd-meta-item">
+                    <img src={iconCalendar} alt="日期" width={12} height={12} />
+                    <span className="sedd-meta-text">{data.date}</span>
+                  </div>
                 </div>
-                <div className="sedd-meta-item">
-                  <img src={iconCalendar} alt="日期" width={12} height={12} />
-                  <span className="sedd-meta-text">{data.date}</span>
-                </div>
+                {
+                  data.category == 'recommend' && data.link && (
+                    <div className="sedd-meta-item">
+                      <a className="sedd-link-text" href={data.link}>查看企业 →</a>
+                    </div>
+                  )
+                }
               </div>
+
             </div>
 
             {/* 分隔线 */}
@@ -152,56 +249,120 @@ export default function SceneEnterpriseDynamicDetail() {
 
             {/* 摘要区域 */}
             <div className="sedd-summary-box">
-              <p className="sedd-summary-text">{data.summary}</p>
+              <p className="sedd-summary-text">{data.category == 'recommend' ?
+                <span className="sedd-summary--bold">推荐理由：</span> :
+                <span className="sedd-summary--bold">摘要: </span>}
+                {data.summary}
+                {
+                  data.subSummary && (
+                    <>
+                      <br></br>
+                      {data.subSummary}
+                    </>
+                  )
+                }</p>
             </div>
+
+            {/* 来源链接按钮 */}
+            {data.sourceLink && (
+              <a
+                className="sedd-source-link-btn"
+                href={data.sourceLink.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="sedd-source-link-icon">
+                  <img src={iconLinkBlue} alt="🔗" width={16} height={16} />
+                </span>
+                <span className="sedd-source-link-label">{data.sourceLink.label}</span>
+              </a>
+            )}
 
             {/* 正文段落 */}
-            <div className="sedd-paragraphs">
-              {data.paragraphs.map((para, index) => (
-                <p key={index} className="sedd-paragraph">{para}</p>
-              ))}
-            </div>
+            {data.paragraphs && data.paragraphs.length > 0 ? data.category == 'recommend' ?
+              <div className="sedd-summary-box">
+                <p className="sedd-summary-text"> <span className="sedd-summary--green">企业简介：</span>  {data.paragraphs[0]}</p>
+              </div> : <div className="sedd-paragraphs">
+                {data.paragraphs.map((para, index) => (
+                  <p key={index} className="sedd-paragraph">{para}</p>
+                ))}
+              </div> : null}
+
+
           </div>
         </div>
+
+        {/* ===== 关联部门信息卡片 ===== */}
+        {data.relatedDepartments && data.relatedDepartments.length > 0 &&
+          <div className="sedd-card">
+            <div className="sedd-card-content">
+              {/* 卡片标题 */}
+              <div className="sedd-section-header">
+                <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                <span className="sedd-section-title">关联部门</span>
+                <span className="sedd-section-count">({data.relatedDepartments.length}个)</span>
+              </div>
+
+              {/* 企业列表 */}
+              <div className="sedd-company-list">
+                {data.relatedDepartments.map((department) => (
+                  <div key={department.id} className="sedd-company-item">
+                    {/* 企业信息行 */}
+                    <div className="sedd-company-main">
+                      {/* 左侧：名称 + 基本信息 */}
+                      <div className="sedd-company-left">
+                        <div className="sedd-department-name">{department.name}</div>
+                        <div className="sedd-company-info">
+                          <span className="sedd-company-industry">{department.street}</span>
+                        </div>
+                      </div>
+                      {/* 右侧：状态标签 */}
+                      <div className="sedd-person">{department.legalPerson}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>}
 
         {/* ===== 关联企业信息卡片 ===== */}
-        <div className="sedd-card">
-          <div className="sedd-card-content">
-            {/* 卡片标题 */}
-            <div className="sedd-section-header">
-              <img src={iconBuilding} alt="关联企业" width={16} height={16} />
-              <span className="sedd-section-title">关联企业</span>
-              <span className="sedd-section-count">({data.relatedCompanies.length}家)</span>
-            </div>
+        {data.relatedCompanies && data.relatedCompanies.length > 0 &&
+          <div className="sedd-card">
+            <div className="sedd-card-content">
+              {/* 卡片标题 */}
+              <div className="sedd-section-header">
+                <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                <span className="sedd-section-title">关联企业</span>
+                <span className="sedd-section-count">({data.relatedCompanies.length}家)</span>
+              </div>
 
-            {/* 企业列表 */}
-            <div className="sedd-company-list">
-              {data.relatedCompanies.map((company) => (
-                <div key={company.id} className="sedd-company-item">
-                  {/* 企业信息行 */}
-                  <div className="sedd-company-main">
-                    {/* 左侧：名称 + 基本信息 */}
-                    <div className="sedd-company-left">
-                      <div className="sedd-company-name">{company.name}</div>
-                      <div className="sedd-company-info">
-                        <span className="sedd-company-industry">{company.industry}</span>
-                        <span className="sedd-company-dot">•</span>
-                        <span className="sedd-company-person">{company.legalPerson}</span>
+              {/* 企业列表 */}
+              <div className="sedd-company-list">
+                {data.relatedCompanies.map((company) => (
+                  <div key={company.id} className="sedd-company-item">
+                    {/* 企业信息行 */}
+                    <div className="sedd-company-main">
+                      {/* 左侧：名称 + 基本信息 */}
+                      <div className="sedd-company-left">
+                        <div className="sedd-company-name">{company.name}</div>
+                        {company.legalPerson && company.industry && <div className="sedd-company-info">
+                          <span className="sedd-company-industry">{company.industry}</span>
+                          <span className="sedd-company-dot">•</span>
+                          <span className="sedd-company-person">{company.legalPerson}</span>
+                        </div>}
                       </div>
+                      {/* 右侧：状态标签 */}
+                      {company.status && <div className="sedd-status-badge">{company.status}</div>}
                     </div>
-                    {/* 右侧：状态标签 */}
-                    <div className="sedd-status-badge">{company.status}</div>
+                    {/* 查看详情 */}
+                    {data.category != 'news' && <div className="sedd-company-detail-row">
+                      <span className="sedd-company-detail-link">查看详情 →</span>
+                    </div>}
                   </div>
-
-                  {/* 查看详情 */}
-                  <div className="sedd-company-detail-row">
-                    <span className="sedd-company-detail-link">查看详情 →</span>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
+          </div>}
       </div>
     </div>
   );

@@ -1,0 +1,415 @@
+/* ===== 页面容器 ===== */
+.psd-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F8F8F8;
+
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.psd-header {
+  height: 64px;
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.psd-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.psd-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.psd-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.022em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== 主体区域（可滚动） ===== */
+.psd-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 16px;
+}
+
+/* ===== 卡片通用样式 ===== */
+.psd-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10);
+}
+
+.psd-card-service {
+  background: linear-gradient(135deg, #FAF5FF 0%, #EFF6FF 100%);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  gap: 12px;
+  border-radius: 16px;
+
+
+}
+
+.psd-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.psd-card-content-service {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.psd-card-content-effect {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+
+
+/* ===== 企业信息头部 ===== */
+.psd-company-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.psd-company-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.psd-company-name {
+  font-size: 16px;
+  font-weight: 400;
+  color: #0A0A0A;
+  line-height: 1.5;
+
+}
+
+/* 挖掘日期 */
+.psd-date-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #F3F4F6;
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.psd-date-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.psd-date-text {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.4;
+
+}
+
+/* ===== 区块标题 ===== */
+.psd-section-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.5;
+
+  margin: 0;
+}
+
+/* ===== 服务背景 ===== */
+.psd-bg-box {
+  background: #EFF6FF;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.psd-bg-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.75;
+  letter-spacing: 3px;
+}
+
+/* ===== 可服务事项 ===== */
+.psd-service-box {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #E5E7EB;
+  padding: 14px;
+}
+
+.psd-service-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #364153;
+}
+
+.psd-service-highlight {
+  color: #F00;
+  font-weight: 600;
+}
+
+.psd-task-btn-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.psd-task-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  font-size: 12px;
+  height: 29px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.90);
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 3px;
+  background: #0052D9;
+}
+
+.psd-task-btn:active {
+  background: #F3F4F6;
+}
+
+/* ===== 预期成效 ===== */
+.psd-effect-box {
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #E5E7EB;
+  background: #FFF;
+}
+
+.psd-effect-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #364153;
+}
+
+.psd-effect-text-highlight {
+  color: #FF0B0B;
+  font-weight: 700;
+}
+
+
+
+/* ===== 流程进度 ===== */
+.psd-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.psd-flow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.psd-flow-progress {
+  font-size: 14px;
+  font-weight: 500;
+  color: #181818;
+  line-height: 20px;
+
+}
+
+.psd-flow-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.psd-flow-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #181818;
+  line-height: 20px;
+
+}
+
+.psd-flow-arrow {
+  font-size: 18px;
+  color: #6A7282;
+  transition: transform 0.2s;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+
+.psd-flow-arrow-up {
+  transform: rotate(0deg);
+}
+
+/* ===== 流程步骤 ===== */
+.psd-flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.psd-step {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.psd-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.psd-step-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.psd-step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-width: 46px;
+  height: 20px;
+}
+
+.psd-step-badge-done {
+  background: #2BA471;
+  color: #E3F9E9;
+}
+
+.psd-step-badge-processing {
+  background: #0052D9;
+  color: rgba(255, 255, 255, 0.90);
+}
+
+.psd-step-dept {
+  font-size: 16px;
+  font-weight: 500;
+  color: #181818;
+
+}
+
+.psd-step-time {
+  font-size: 14px;
+  font-weight: 500;
+  color: #181818;
+
+}
+
+.psd-step-detail {
+  background: #FFF;
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 1px solid #E5E7EB;
+}
+
+.psd-step-detail-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.psd-step-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0A0A0A;
+  white-space: nowrap;
+
+}
+
+.psd-step-value {
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+
+}
+
+.psd-step-processing-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.psd-urge-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  font-size: 12px;
+  height: 29px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.90);
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 3px;
+  background: #0052D9;
+}
+
+.psd-urge-btn:active {
+  background: #0052D9;
+}
