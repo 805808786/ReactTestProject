@@ -465,10 +465,10 @@
 .total-num-v2 {
   font-family: "MiSans", sans-serif;
   font-weight: 600;
-  font-size: 44px;
+  font-size: 40px;
   color: #155DFC;
-  line-height: 0.73;
-  letter-spacing: -0.018em;
+  line-height: 32px;
+  letter-spacing: -0.8px;
 }
 
 .total-unit-v2 {
