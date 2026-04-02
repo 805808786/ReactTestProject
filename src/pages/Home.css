@@ -152,16 +152,26 @@
   pointer-events: none;
 }
 
-.bottom-nav-bg img {
+/* 矩形主体：高75px，顶部小圆角，底部大圆角 */
+.bottom-nav-bg::after {
+  content: '';
   position: absolute;
-  /* 或 relative，根据布局 */
   bottom: 0;
-  /* 如果是底部背景 */
   left: 0;
-  /* height: 107px; */
-  width: 100%;
-  height: auto;
-  /* 关键：保持原始比例，不拉伸高度 */
+  right: 0;
+  height: 75px;
+  background: #ffffff;
+  border-radius: 6px 6px 24px 24px;
+}
+
+/* 顶部平滑拱形凸起：内联SVG，viewBox 自动等比缩放，不受 rem 影响 */
+.bottom-nav-arch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 97px;
+  height: 32px;
   display: block;
 }
 
@@ -201,7 +211,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 5px;
   flex: 1;
   cursor: pointer;
   pointer-events: auto;
@@ -217,7 +227,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2px;
 }
 
 .tab-icon {
@@ -239,27 +248,27 @@
 }
 
 .center-item .bottom-nav-icon {
-  width: 64px;
-  height: 64px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
-  margin-top: -48px;
+  margin-top: -32px;
 }
 
 @media (max-width: 520px) {
   .center-item .bottom-nav-icon {
-    margin-top: -40px;
+    margin-top: -28px;
   }
 }
 
 .center-icon {
-  width: 72px;
-  height: 72px;
+  width: 55px;
+  height: 55px;
   /* filter: drop-shadow(0px 8px 16px rgba(97, 62, 234, 0.35)); */
 }
 
 .bottom-nav-label {
   font-family: "MiSans", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 400;
   color: #9DB2CE;
   white-space: nowrap;

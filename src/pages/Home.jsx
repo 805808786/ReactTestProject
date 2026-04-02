@@ -12,7 +12,6 @@ import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
 import homeBtnIcon from '../assets/tabs/redesign/home-btn.svg'
 import homeBtnUnactiveIcon from '../assets/tabs/redesign/home-btn-unactive.svg'
-import tabBgIcon from '../assets/tabs/redesign/tab-bg.svg'
 
 import dataContributionIcon from '../assets/tabs/redesign/data-contribution.svg'
 import policyMatchingIcon from '../assets/tabs/redesign/policy-matching.svg'
@@ -100,9 +99,10 @@ export default function Home() {
       </div>
 
       <div className="bottom-nav">
-        {/* 背景图片 */}
         <div className="bottom-nav-bg">
-          <img src={tabBgIcon} alt="bottom nav background" />
+          <svg className="bottom-nav-arch" viewBox="0 0 96.632 32" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48.316 0 C62.462 0 74.701 8.159 80.586 20.028 C83.756 26.422 89.495 32 96.632 32 L0 32 C7.137 32 12.876 26.422 16.046 20.028 C21.931 8.159 34.17 0 48.316 0 Z" fill="white"/>
+          </svg>
         </div>
         {/* 背景切槽装饰 */}
         {/* <div className="bottom-nav-mask">
