@@ -131,7 +131,7 @@ const SCENE_DATA = [
 //   },
 // ];
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 5;
 
 /* ===================== 场景卡片 ===================== */
 function SceneCard({ scene, onSceneDetail }) {
@@ -205,7 +205,7 @@ export default function SceneRadar() {
 
   // 列表数据
   const [displayedItems, setDisplayedItems] = useState([]);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 

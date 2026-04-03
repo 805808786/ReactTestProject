@@ -719,7 +719,7 @@ function FocusScene() {
         </div>
       </div>
 
-      <div className="scene-summary-card" onClick={() => navigate('/scene-radar')}>
+      {/* <div className="scene-summary-card" onClick={() => navigate('/scene-radar')}>
         <div className="summary-left">
           <div className="summary-label">场景雷达</div>
           <div className="summary-value">5<small>个</small></div>
@@ -727,7 +727,7 @@ function FocusScene() {
         <div className="summary-right">
           <span className="view-all-link">查看全部 →</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="scene-list-container">
         {SCENE_DATA.map((scene) => (
