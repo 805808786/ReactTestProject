@@ -161,7 +161,7 @@
   right: 0;
   height: 77px;
   background: #ffffff;
-  border-radius: 6px 6px 24px 24px;
+  border-radius: 6px 6px 0 0;
 }
 
 /* 顶部平滑拱形凸起：内联SVG，viewBox 自动等比缩放，不受 rem 影响 */
@@ -261,8 +261,8 @@
 }
 
 .center-icon {
-  width: 55px;
-  height: 55px;
+  width: 72px;
+  height: 72px;
   /* filter: drop-shadow(0px 8px 16px rgba(97, 62, 234, 0.35)); */
 }
 
