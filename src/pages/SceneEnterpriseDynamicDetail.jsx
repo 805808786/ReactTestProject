@@ -84,7 +84,7 @@ const MOCK_DETAIL_DATA = {
       '杭州杭钢云计算数据中心有限公司是杭钢集团旗下国有企业，由金属制造转型为数字经济核心企业，主营第一类增值电信业务、大数据服务及软件开发等，注册资本75898万元。',
     ],
     relatedCompanies: [],
-    link: 'https://biiframe.yicall.com/lwt/#/company-detail/1848243523192745991'
+    link: '/company-detail/1848243523192745991'
   },
   5: {
     type: '新闻动态',
@@ -99,6 +99,7 @@ const MOCK_DETAIL_DATA = {
       {
         id: 1,
         name: '杭州本导生物医药科技有限公司',
+        detailUrl: '/company-detail/2039978194416812033'
         // industry: '软件和信息技术服务业',
         // legalPerson: '张伟',
         // status: '存续',
@@ -235,8 +236,8 @@ export default function SceneEnterpriseDynamicDetail() {
                 </div>
                 {
                   data.category == 'recommend' && data.link && (
-                    <div className="sedd-meta-item">
-                      <a className="sedd-link-text" href={data.link}>查看企业 →</a>
+                    <div className="sedd-meta-item" onClick={() => navigate(data.link)}>
+                      <a className="sedd-link-text">查看企业 →</a>
                     </div>
                   )
                 }
@@ -352,7 +353,10 @@ export default function SceneEnterpriseDynamicDetail() {
                         </div>}
                       </div>
                       {/* 右侧：状态标签 */}
-                      {company.status && <div className="sedd-status-badge">{company.status}</div>}
+                      {company.status && company.category != 'news' && <div className="sedd-status-badge">{company.status}</div>}
+                      {company.detailUrl && <div className="sedd-company-detail-row" onClick={() => navigate(company.detailUrl)}>
+                        <span className="sedd-company-detail-link">查看企业 →</span>
+                      </div>}
                     </div>
                     {/* 查看详情 */}
                     {data.category != 'news' && <div className="sedd-company-detail-row">
