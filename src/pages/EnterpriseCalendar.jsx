@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import './EnterpriseCalendar.css';
 import DateSelection from './components/dataSelection/index';
 import useEnterpriseCalendarStore from '../store/enterpriseCalendarStore';
+import PageHeader from '../components/PageHeader';
 
 // 生成近半年的每日企业数量数据（130,000 ~ 140,000 范围）
 function generateData(days) {
@@ -239,17 +240,7 @@ export default function EnterpriseCalendar() {
 
   return (
     <div className="ec-container">
-      {/* Header */}
-      <div className="ec-header">
-        <div className="ec-header-top">
-          <button className="ec-back-btn" onClick={() => navigate('/')} aria-label="返回">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <span className="ec-header-title">日历视图</span>
-        </div>
-      </div>
+      <PageHeader title="日历视图" />
 
       {/* Main Content */}
       <div className="ec-content">

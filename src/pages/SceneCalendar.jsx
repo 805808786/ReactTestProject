@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import './SceneCalendar.css';
 import DateSelection from './components/dataSelection/index';
+import PageHeader from '../components/PageHeader';
 
 // 生成近一年的每日场景数量数据（0~15范围）
 function generateYearData() {
@@ -114,18 +115,7 @@ export default function SceneCalendar() {
 
   return (
     <div className="sc-container">
-      {/* Header */}
-      <div className="sc-header">
-        <div className="sc-header-top">
-          <button className="sc-back-btn" onClick={() => navigate('/')} aria-label="返回">
-            {/* 返回箭头图标 */}
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M15 18L9 12L15 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <span className="sc-header-title">日历视图</span>
-        </div>
-      </div>
+      <PageHeader title="日历视图" />
 
       {/* Main Content */}
       <div className="sc-content">

@@ -12,7 +12,6 @@ import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
 import homeBtnIcon from '../assets/tabs/redesign/home-btn.svg'
 import homeBtnUnactiveIcon from '../assets/tabs/redesign/home-btn-unactive.svg'
-import tabBgIcon from '../assets/tabs/redesign/tab-bg.svg'
 
 import dataContributionIcon from '../assets/tabs/redesign/data-contribution.svg'
 import policyMatchingIcon from '../assets/tabs/redesign/policy-matching.svg'
@@ -48,17 +47,17 @@ const bottomTabs = [
 
 // 今日消息数据
 const todayMessages = [
+    {
+    type: '新闻动态',
+    content: '头部药企迁入拱墅',
+    typeClass: 'news',
+    detailUrl: '/scene-enterprise-dynamic-detail/5',
+  },
   {
     type: '每日推荐',
     content: '杭州杭钢云计算数据中心有限公司',
     typeClass: 'recommend',
     detailUrl: '/scene-enterprise-dynamic-detail/4'
-  },
-  {
-    type: '新闻动态',
-    content: '区领导带队赴上海开展招商考察活动',
-    typeClass: 'news',
-    detailUrl: '/scene-enterprise-dynamic-detail/5',
   }
 ];
 
@@ -100,9 +99,10 @@ export default function Home() {
       </div>
 
       <div className="bottom-nav">
-        {/* 背景图片 */}
         <div className="bottom-nav-bg">
-          <img src={tabBgIcon} alt="bottom nav background" />
+          <svg className="bottom-nav-arch" viewBox="0 0 96.632 32" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg">
+            <path d="M48.316 0 C62.462 0 74.701 8.159 80.586 20.028 C83.756 26.422 89.495 32 96.632 32 L0 32 C7.137 32 12.876 26.422 16.046 20.028 C21.931 8.159 34.17 0 48.316 0 Z" fill="white"/>
+          </svg>
         </div>
         {/* 背景切槽装饰 */}
         {/* <div className="bottom-nav-mask">
@@ -719,7 +719,7 @@ function FocusScene() {
         </div>
       </div>
 
-      <div className="scene-summary-card" onClick={() => navigate('/scene-radar')}>
+      {/* <div className="scene-summary-card" onClick={() => navigate('/scene-radar')}>
         <div className="summary-left">
           <div className="summary-label">场景雷达</div>
           <div className="summary-value">5<small>个</small></div>
@@ -727,7 +727,7 @@ function FocusScene() {
         <div className="summary-right">
           <span className="view-all-link">查看全部 →</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="scene-list-container">
         {SCENE_DATA.map((scene) => (
@@ -935,13 +935,14 @@ function BarChart() {
                 width={barW}
                 height={barH}
                 rx="4"
-                fill="#3B82F6"
+                fill="#155DFC"
               />
               <text
                 x={85 + barW + 6}
                 y={y + barH / 2 + 4}
                 fontSize="10"
                 fill="#101828"
+                fontFamily="Alibaba PuHuiTi, PingFang SC, sans-serif"
               >
                 {d.value.toLocaleString()}
               </text>
@@ -959,6 +960,7 @@ function BarChart() {
             fontSize="12"
             fill="#666666"
             textAnchor="end"
+            fontFamily="Alibaba PuHuiTi, PingFang SC, sans-serif"
           >
             {d.name}
           </text>
@@ -974,6 +976,7 @@ function BarChart() {
             fontSize="12"
             fill="#666666"
             textAnchor="middle"
+            fontFamily="Alibaba PuHuiTi, PingFang SC, sans-serif"
           >
             {value}
           </text>
@@ -1005,7 +1008,7 @@ function DataContribution() {
             </div>
           </div>
           <div className="summary-right">
-            <button onClick={() => navigate('/data-contribution')} className="view-all blue-text">查看全部 →</button>
+            {/* <button onClick={() => navigate('/data-contribution')} className="view-all blue-text">查看全部 →</button> */}
           </div>
         </div>
 
