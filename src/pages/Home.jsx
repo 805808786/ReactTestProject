@@ -47,17 +47,17 @@ const bottomTabs = [
 
 // 今日消息数据
 const todayMessages = [
+    {
+    type: '新闻动态',
+    content: '头部药企迁入拱墅',
+    typeClass: 'news',
+    detailUrl: '/scene-enterprise-dynamic-detail/5',
+  },
   {
     type: '每日推荐',
     content: '杭州杭钢云计算数据中心有限公司',
     typeClass: 'recommend',
     detailUrl: '/scene-enterprise-dynamic-detail/4'
-  },
-  {
-    type: '新闻动态',
-    content: '区领导带队赴上海开展招商考察活动',
-    typeClass: 'news',
-    detailUrl: '/scene-enterprise-dynamic-detail/5',
   }
 ];
 

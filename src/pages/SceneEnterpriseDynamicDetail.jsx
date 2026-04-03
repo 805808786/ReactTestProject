@@ -89,16 +89,16 @@ const MOCK_DETAIL_DATA = {
   5: {
     type: '新闻动态',
     category: 'news',
-    title: '区领导带队赴上海开展招商考察活动',
-    date: '2026-04-01',
+    title: '头部药企迁入拱墅',
+    date: '2026-04-03',
     source: '拱墅发布',
-    summary: '3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。他强调，要坚持项目为王，抓项目促发展稳增长，围绕“1+4”产业主赛道和“115X”先进制造业集群建设，聚力推进招商引资，强链、补链、延链，着力推动产业结构调整和转型升级，为拱墅经济社会高质量发展注入强劲动能。区领导许雷挺、马志清参加。',
-    sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/b0XVuLwoycSbCzNnWts1iA' },
+    summary: '近日，拱墅生物医药产业迎来重磅消息：基因编辑领域头部创新药研发企业——上海本导基因技术有限公司正式完成迁址，从上海市闵行区迁入拱墅，并入驻区国投集团旗下凤栖谷华章产业园。公司同步更名为杭州本导生物医药科技有限公司。',
+    sourceLink: { label: '拱墅发布', url: 'https://mp.weixin.qq.com/s/7SH7wqXDgGctEQYifbT-kA' },
     paragraphs: [],
     relatedCompanies: [
       {
         id: 1,
-        name: '上海润达医疗科技股份有限公司',
+        name: '杭州本导生物医药科技有限公司',
         // industry: '软件和信息技术服务业',
         // legalPerson: '张伟',
         // status: '存续',
