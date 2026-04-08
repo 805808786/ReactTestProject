@@ -221,6 +221,42 @@
   box-sizing: border-box;
 }
 
+/* Badge color variants */
+.sed-badge--news {
+  background: #2BA471;
+  color: #E3F9E9;
+}
+
+.sed-badge--recommend {
+  background: #F6BA15;
+  color: #FFFBDE;
+}
+
+.sed-badge--service {
+  background: #E37318;
+  color: #FFF1E9;
+}
+
+.sed-badge--related {
+  background: #003CAB;
+  color: #F2F3FF;
+}
+
+.sed-badge--tech {
+  background: #2BA471;
+  color: #F2F3FF;
+}
+
+.sed-badge--business {
+  background: #F6BA15;
+  color: #F2F3FF;
+}
+
+.sed-badge--city {
+  background: #4B4B4B;
+  color: #F2F3FF;
+}
+
 .sed-view-detail {
   font-size: 12px;
   color: #155DFC;

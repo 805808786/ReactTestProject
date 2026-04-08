@@ -330,11 +330,26 @@ function DynamicCard({ item, onViewDetail }) {
   const { type, title, date, content, source, relatedCount, isFirst } = item;
   const relatedText = `关联 ${relatedCount} 家企业`;
 
+  // 类型到样式类名的映射
+  const getBadgeClass = (type) => {
+    const typeMap = {
+      '调研走访': 'sed-badge--news',
+      '政策法规': 'sed-badge--recommend',
+      '为企服务': 'sed-badge--service',
+      '数据要素': 'sed-badge--related',
+      '科技创新': 'sed-badge--tech',
+      '商务社区': 'sed-badge--business',
+      '城市建设': 'sed-badge--city',
+      '文旅宣传': 'sed-badge--recommend'
+    };
+    return typeMap[type] || 'sed-badge';
+  };
+
   return (
     <div className={`sed-card`}>
       {/* 顶部：类型标签 + 查看详情 */}
       <div className="sed-card-top">
-        <div className="sed-badge">{type}</div>
+        <div className={`sed-badge ${getBadgeClass(type)}`}>{type}</div>
         <span className="sed-view-detail" onClick={() => onViewDetail && onViewDetail(item.id)}>查看详情 →</span>
       </div>
 

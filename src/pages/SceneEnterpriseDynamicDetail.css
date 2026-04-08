@@ -119,6 +119,26 @@
   color: #F2F3FF;
 }
 
+.sedd-badge--service {
+  background: #E37318;
+  color: #FFF1E9;
+}
+
+.sedd-badge--tech {
+  background: #2BA471;
+  color: #F2F3FF;
+}
+
+.sedd-badge--business {
+  background: #F6BA15;
+  color: #F2F3FF;
+}
+
+.sedd-badge--city {
+  background: #4B4B4B;
+  color: #F2F3FF;
+}
+
 
 
 /* 标题行 */
@@ -151,6 +171,22 @@
 
 .sedd-green-dot--related {
   background: #003CAB;
+}
+
+.sedd-green-dot--service {
+  background: #E37318;
+}
+
+.sedd-green-dot--tech {
+  background: #2BA471;
+}
+
+.sedd-green-dot--business {
+  background: #F6BA15;
+}
+
+.sedd-green-dot--city {
+  background: #4B4B4B;
 }
 
 .sedd-title {
