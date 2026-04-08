@@ -215,7 +215,7 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
                 <div className="kf-stat-label">场景动态</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">15</span>
+                  <span className="kf-stat-num">11</span>
                   <span className="kf-stat-unit">条</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
