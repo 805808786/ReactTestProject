@@ -98,7 +98,7 @@
   font-weight: 500;
   color: #030213;
   line-height: 1.333;
-  
+
   height: 22px;
   box-sizing: border-box;
   margin-bottom: 8px;
@@ -195,7 +195,7 @@
   color: #0A0A0A;
   line-height: 1.556;
   letter-spacing: -0.024em;
-  
+
 }
 
 
@@ -294,15 +294,15 @@
 
 .sedd-source-link-icon {
   font-size: 12px;
-  line-height: 1;
+  /* line-height: 1; */
+  display: flex;
 }
 
 .sedd-source-link-label {
   font-size: 16px;
   font-weight: 500;
   color: #155DFC;
-  line-height: 1.4;
-  
+
 }
 
 /* ===== 正文段落 ===== */
@@ -353,7 +353,7 @@
   color: #0A0A0A;
   line-height: 1.429;
   letter-spacing: -0.011em;
-  
+
   margin-left: 24px;
 }
 
@@ -461,7 +461,7 @@
   font-weight: 500;
   color: #FFFFFF;
   line-height: 1.333;
-  
+
   height: 22px;
   box-sizing: border-box;
   flex-shrink: 0;

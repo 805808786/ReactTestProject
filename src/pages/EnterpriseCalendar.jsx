@@ -341,6 +341,10 @@ export default function EnterpriseCalendar() {
             if (item.cancelEnterprisesNum > 0) {
               dynamicReasons.push({ text: '拱墅区区内企业注销或吊销', delta: `-${item.cancelEnterprisesNum}家`, deltaPositive: false });
             }
+            // 123
+            if (item.newCancelEnterprisesNum > 0) {
+              dynamicReasons.push({ text: '拱墅区区内企业迁出', delta: `-${item.newCancelEnterprisesNum}家`, deltaPositive: false });
+            }
             if (item.otherNum !== 0 && item.otherNum !== undefined) {
               const isOtherPos = item.otherNum > 0;
               dynamicReasons.push({

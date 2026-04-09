@@ -15,7 +15,6 @@ if (!globalThis.__oldRequest) {
   instance.interceptors.response.use(
     (response) => {
       const { data } = response
-      console.log(data.data)
       if (data.code === 200 || data.code === 2000 || data.code === 0 || data.success === true) {
         return data.data
       }

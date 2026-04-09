@@ -321,7 +321,7 @@ function EnterpriseOverview() {
 
   const stats = enterpriseData?.statistics || {};
   const newAndMoveIn = (stats.newNum || 0) + (stats.newMoveInNum || 0);
-
+  const newCancelNum = (stats.cancelNum || 0) + (stats.newCancelNum || 0);
   return (
     <section className="overview-section-v2">
       <div className="overview-container-v2">
@@ -371,8 +371,8 @@ function EnterpriseOverview() {
                   <span className="daily-value-v2 pos">+{loading ? '--' : (newAndMoveIn || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
-                  <span className="daily-label-v2">注销/吊销</span>
-                  <span className="daily-value-v2 neg">-{loading ? '--' : Math.abs(stats.cancelNum || 0)}</span>
+                  <span className="daily-label-v2">注销/吊销/迁出</span>
+                  <span className="daily-value-v2 neg">-{loading ? '--' : (newCancelNum || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">规则性调整</span>
