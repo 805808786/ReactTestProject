@@ -4,17 +4,29 @@ import ChatInfoCard from '../components/ChatInfoCard'
 import './DailyMessageList.css'
 
 const DAILY_MESSAGES = [
-    {
+  {
     id: 'card-news',
     category: 'news',
     tagText: '新闻动态',
     hasNotification: true,
     dotColor: '#10BA51',
-    title: '头部药企迁入拱墅',
+    title: '竣工！大城北再添“产业新引擎”',
     subTag: null,
-    description: '近日，拱墅生物医药产业迎来重磅消息：基因编辑领域头部创新药研发企业——上海本导基因技术有限公司正式完成迁址，从上海市闵行区迁入拱墅，并入驻区国投集团旗下凤栖谷华章产业园。公司同步更名为杭州本导生物医药科技有限公司。',
+    description: '近日，杭州城投·未来500⁺一期首发项目成功取得《建设工程竣工验收备案表》，标志着该项目已全面具备投产运营条件，为杭州大城北再添一座高品质产业载体，为产业升级注入新动能，助力区域产业能级实现新提升。',
     timeAgo: '2小时前',
     detailUrl: '/scene-enterprise-dynamic-detail/5',
+  },
+  {
+    id: 'card-related',
+    category: 'related',
+    tagText: '与我相关',
+    hasNotification: true,
+    dotColor: '#3B82F6',
+    title: '区领导带队赴上海开展招商考察活动',
+    subTag: null,
+    description: '3月31日至4月1日，区委副书记、区长陈宇带队赴上海开展招商考察活动。',
+    timeAgo: '2小时前',
+    detailUrl: '/scene-enterprise-dynamic-detail/6',
   },
   {
     id: 'card-recommend',
@@ -40,18 +52,7 @@ const DAILY_MESSAGES = [
     timeAgo: '2小时前',
     detailUrl: '/precise-service-detail/1',
   },
-  {
-    id: 'card-related',
-    category: 'related',
-    tagText: '与我相关',
-    hasNotification: true,
-    dotColor: '#3B82F6',
-    title: '敖煜新赴区信访局接待来访群众',
-    subTag: null,
-    description: '摘4月1日下午，区委书记敖煜新赴区信访局接待来访群众，面对面倾听诉求，现场协调解决问题。',
-    timeAgo: '2小时前',
-    detailUrl: '/scene-enterprise-dynamic-detail/6',
-  },
+
 ]
 
 function formatDateCN(date) {

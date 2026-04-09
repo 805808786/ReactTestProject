@@ -49,15 +49,15 @@ const bottomTabs = [
 const todayMessages = [
     {
     type: '新闻动态',
-    content: '头部药企迁入拱墅',
+    content: '竣工！大城北再添“产业新引擎”',
     typeClass: 'news',
     detailUrl: '/scene-enterprise-dynamic-detail/5',
   },
   {
-    type: '每日推荐',
-    content: '杭州杭钢云计算数据中心有限公司',
-    typeClass: 'recommend',
-    detailUrl: '/scene-enterprise-dynamic-detail/4'
+    type: '与我相关',
+    content: '区领导带队赴上海开展招商考察活动',
+    typeClass: 'related',
+    detailUrl: '/scene-enterprise-dynamic-detail/6'
   }
 ];
 
@@ -215,11 +215,11 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
                 <div className="kf-stat-label">场景动态</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">11</span>
+                  <span className="kf-stat-num">12</span>
                   <span className="kf-stat-unit">条</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">今日 +3</span>
+                    <span className="kf-today-text">今日 +1</span>
                   </div>
                 </div>
               </div>

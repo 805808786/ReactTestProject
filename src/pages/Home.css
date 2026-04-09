@@ -1571,6 +1571,11 @@
   color: #E3F9E9;
 }
 
+.kf-message-type--related {
+  background: #003CAB;
+  color: #F2F3FF;
+}
+
 .kf-message-time {
   font-size: 12px;
   color: #6A7282;
