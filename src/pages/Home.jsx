@@ -368,11 +368,11 @@ function EnterpriseOverview() {
               <div className="daily-list-v2">
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">新注册/迁入</span>
-                  <span className="daily-value-v2 pos">+{loading ? '--' : (newAndMoveIn || 0)}</span>
+                  <span className="daily-value-v2 neg">+{loading ? '--' : (newAndMoveIn || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">注销/吊销/迁出</span>
-                  <span className="daily-value-v2 neg">-{loading ? '--' : (newCancelNum || 0)}</span>
+                  <span className="daily-value-v2 pos">-{loading ? '--' : (newCancelNum || 0)}</span>
                 </div>
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">规则性调整</span>
