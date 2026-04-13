@@ -55,13 +55,12 @@ function mapApiItemToCard(item) {
   return {
     id: item.id,
     category,
-    tagText: item.tagText || CARD_TYPE_TAG_MAP[cardType] || '新闻动态',
-    hasNotification: true,
+    tagText: CARD_TYPE_TAG_MAP[cardType] || '新闻动态',
+    hasNotification: !item.isRead,
     dotColor: CARD_TYPE_DOT_COLOR_MAP[cardType] || null,
     title: item.title,
-    subTag: item.subTag || null,
-    description: item.summary || item.description || '',
-    timeAgo: item.timeAgo || item.createTime || '',
+    description: item.content || '',
+    timeAgo: item.publishTime || '',
     detailUrl: `/scene-enterprise-dynamic-detail/${item.id}`,
   }
 }
@@ -109,29 +108,31 @@ export default function DailyMessageList() {
   }, [typeFilter, confirmedDate])
 
   // 获取列表数据
-  const fetchMessages = useCallback(async (pageIndex = 1, isRefresh = false) => {
+  const fetchMessages = useCallback(async (page = 1, isRefresh = false) => {
     const { typeFilter: currentTypeFilter, confirmedDate: currentConfirmedDate } = filtersRef.current
     const cardType = currentTypeFilter.length > 0 ? TYPE_VALUE_MAP[currentTypeFilter[0]] : undefined
 
     try {
       const response = await getDailyMessageList({
-        pageIndex,
+        currentPage: page,
         pageSize: 10,
         cardType,
-        selectDate: currentConfirmedDate,
+        startTime: currentConfirmedDate || undefined,
+        endTime: currentConfirmedDate || undefined,
       })
 
-      const data = response.data || []
-      const total = response.totalCount || 0
+      const pageData = response.data || {}
+      const items = pageData.data || []
+      const total = pageData.total || 0
 
-      const mappedData = data.map(mapApiItemToCard)
+      const mappedData = items.map(mapApiItemToCard)
 
       setDisplayedItems(prev => {
         const updated = isRefresh ? mappedData : [...prev, ...mappedData]
         setHasMore(updated.length < total)
         return updated
       })
-      setCurrentPage(pageIndex)
+      setCurrentPage(page)
     } catch (error) {
       console.error('Error fetching daily messages:', error)
     }

@@ -287,6 +287,23 @@
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
 }
 
+.sedd-rich-content {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625;
+  letter-spacing: -0.011em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.sedd-rich-content img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ===== 关联企业卡片 ===== */
 .sedd-card:last-child {
   margin-bottom: 16px;

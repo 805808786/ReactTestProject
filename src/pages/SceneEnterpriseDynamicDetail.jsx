@@ -18,6 +18,12 @@ const CARD_TYPE_CATEGORY_MAP = {
   'related': 'related',
 };
 
+const CARD_TYPE_TAG_MAP = {
+  1: '每日推荐',
+  2: '新闻动态',
+  3: '与我相关',
+};
+
 const DEFAULT_DETAIL = {
   type: '场景动态',
   title: '加载中...',
@@ -31,21 +37,52 @@ const DEFAULT_DETAIL = {
 function mapApiDetailToData(apiData) {
   if (!apiData) return null;
   const cardType = apiData.cardType;
-  const category = CARD_TYPE_CATEGORY_MAP[cardType] || apiData.category || 'news';
-  return {
-    type: apiData.type || apiData.tagText || '场景动态',
+  const category = CARD_TYPE_CATEGORY_MAP[cardType] || 'news';
+  const tagText = CARD_TYPE_TAG_MAP[cardType] || '场景动态';
+
+  // 基础字段
+  const result = {
+    type: tagText,
     category,
     title: apiData.title || '',
-    date: apiData.date || apiData.createTime || '',
-    source: apiData.source || '',
-    summary: apiData.summary || apiData.description || '',
-    subSummary: apiData.subSummary || null,
-    sourceLink: apiData.sourceLink || null,
-    paragraphs: apiData.paragraphs || (apiData.content ? [apiData.content] : []),
-    relatedCompanies: apiData.relatedCompanies || [],
-    relatedDepartments: apiData.relatedDepartments || [],
-    link: apiData.link || null,
+    date: apiData.publishTime || apiData.gmtCreate || '',
+    source: '',
+    summary: apiData.content || '',
+    subSummary: null,
+    sourceLink: null,
+    paragraphs: [],
+    relatedCompanies: [],
+    relatedDepartments: [],
+    link: null,
+    richTextContent: apiData.richTextContent || null,
   };
+
+  if (cardType === 1) {
+    // 每日推荐：关联企业信息
+    if (apiData.enterpriseId) {
+      result.link = `/enterprise-detail/${apiData.enterpriseId}`;
+    }
+    if (apiData.enterpriseIntroduction) {
+      result.paragraphs = [apiData.enterpriseIntroduction];
+    }
+    if (apiData.enterpriseName) {
+      result.relatedCompanies = [{
+        id: apiData.enterpriseId,
+        name: apiData.enterpriseName,
+      }];
+    }
+  } else if (cardType === 2 || cardType === 3) {
+    // 新闻动态 / 与我相关：关联新闻信息
+    result.source = apiData.newsSource || '';
+    if (apiData.articleUrl) {
+      result.sourceLink = {
+        url: apiData.articleUrl,
+        label: apiData.articleTitle || '查看原文',
+      };
+    }
+  }
+
+  return result;
 }
 
 export default function SceneEnterpriseDynamicDetail() {
@@ -63,7 +100,7 @@ export default function SceneEnterpriseDynamicDetail() {
     const fetchDetail = async () => {
       setApiLoading(true);
       try {
-        const response = await getDailyMessageDetail({ id });
+        const response = await getDailyMessageDetail({ id: Number(id) });
         const apiData = response.data;
         if (apiData) {
           setData(mapApiDetailToData(apiData));
@@ -181,6 +218,11 @@ export default function SceneEnterpriseDynamicDetail() {
                   <p key={index} className="sedd-paragraph">{para}</p>
                 ))}
               </div> : null}
+
+            {/* 富文本内容 */}
+            {data.richTextContent && (
+              <div className="sedd-rich-content" dangerouslySetInnerHTML={{ __html: data.richTextContent }} />
+            )}
 
 
           </div>
