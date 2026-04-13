@@ -125,14 +125,11 @@ export default function DailyMessageList() {
 
       const mappedData = data.map(mapApiItemToCard)
 
-      if (isRefresh) {
-        setDisplayedItems(mappedData)
-      } else {
-        setDisplayedItems(prev => [...prev, ...mappedData])
-      }
-
-      const newTotal = isRefresh ? mappedData.length : displayedItems.length + mappedData.length
-      setHasMore(newTotal < total)
+      setDisplayedItems(prev => {
+        const updated = isRefresh ? mappedData : [...prev, ...mappedData]
+        setHasMore(updated.length < total)
+        return updated
+      })
       setCurrentPage(pageIndex)
     } catch (error) {
       console.error('Error fetching daily messages:', error)
