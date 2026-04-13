@@ -1,83 +1,258 @@
-import { useNavigate } from 'react-router-dom'
+import { useState, useCallback, useRef, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import ChatInfoCard from '../components/ChatInfoCard'
+import InfiniteList from './components/InfiniteList'
+import FilterSheet from './components/FilterSheet'
+import DateSelection from './components/dataSelection/index'
+import { getDailyMessageList } from '../api/dailyMessage'
 import './DailyMessageList.css'
 
-const DAILY_MESSAGES = [
-    {
-    id: 'card-news',
-    category: 'news',
-    tagText: '新闻动态',
-    hasNotification: true,
-    dotColor: '#10BA51',
-    title: '头部药企迁入拱墅',
-    subTag: null,
-    description: '近日，拱墅生物医药产业迎来重磅消息：基因编辑领域头部创新药研发企业——上海本导基因技术有限公司正式完成迁址，从上海市闵行区迁入拱墅，并入驻区国投集团旗下凤栖谷华章产业园。公司同步更名为杭州本导生物医药科技有限公司。',
-    timeAgo: '2小时前',
-    detailUrl: '/scene-enterprise-dynamic-detail/5',
-  },
-  {
-    id: 'card-recommend',
-    category: 'recommend',
-    tagText: '每日推荐',
-    hasNotification: true,
-    dotColor: '#F59E0B',
-    title: '杭州杭钢云计算数据中心有限公司',
-    subTag: null,
-    description: '杭州杭钢云计算数据中心有限公司是杭钢集团数字经济转型骨干企业。其数据中心（东区）入选国家绿色数据中心，PUE值控制在1.30以下，走在全国前列，利用老厂房改造实现"从炼钢到炼数"的绿色升级。',
-    timeAgo: '2小时前',
-    detailUrl: '/scene-enterprise-dynamic-detail/4',
-  },
-  {
-    id: 'card-service',
-    category: 'service',
-    tagText: '精准服务',
-    hasNotification: true,
-    dotColor: null,
-    title: '杭州太希智能科技有限公司',
-    subTag: { text: '腰部企业' },
-    description: '该企业在快速发展阶段，需要规模以上（人工智能）工业和服务业企业认定与入统指导。',
-    timeAgo: '2小时前',
-    detailUrl: '/precise-service-detail/1',
-  },
-  {
-    id: 'card-related',
-    category: 'related',
-    tagText: '与我相关',
-    hasNotification: true,
-    dotColor: '#3B82F6',
-    title: '敖煜新赴区信访局接待来访群众',
-    subTag: null,
-    description: '摘4月1日下午，区委书记敖煜新赴区信访局接待来访群众，面对面倾听诉求，现场协调解决问题。',
-    timeAgo: '2小时前',
-    detailUrl: '/scene-enterprise-dynamic-detail/6',
-  },
-]
+/* ===================== 常量 ===================== */
+const MESSAGE_TYPES = ['每日推荐', '新闻动态', '与我相关']
+const TYPE_VALUE_MAP = { '每日推荐': 1, '新闻动态': 2, '与我相关': 3 }
+const CARD_TYPE_CATEGORY_MAP = {
+  1: 'recommend',
+  2: 'news',
+  3: 'related',
+  'recommend': 'recommend',
+  'news': 'news',
+  'related': 'related',
+}
+const CARD_TYPE_TAG_MAP = {
+  1: '每日推荐',
+  2: '新闻动态',
+  3: '与我相关',
+  'recommend': '每日推荐',
+  'news': '新闻动态',
+  'related': '与我相关',
+}
+const CARD_TYPE_DOT_COLOR_MAP = {
+  1: '#F59E0B',
+  2: '#10BA51',
+  3: '#3B82F6',
+  'recommend': '#F59E0B',
+  'news': '#10BA51',
+  'related': '#3B82F6',
+}
 
-function formatDateCN(date) {
-  return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
+/* ===================== 工具函数 ===================== */
+function getTodayStr() {
+  const d = new Date()
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+}
+
+function formatDateDisplay(str) {
+  if (!str) return ''
+  const [y, m, d] = str.split('-')
+  return `${y}年${parseInt(m)}月${parseInt(d)}日`
+}
+
+function mapApiItemToCard(item) {
+  const cardType = item.cardType
+  const category = CARD_TYPE_CATEGORY_MAP[cardType] || 'news'
+  return {
+    id: item.id,
+    category,
+    tagText: item.tagText || CARD_TYPE_TAG_MAP[cardType] || '新闻动态',
+    hasNotification: true,
+    dotColor: CARD_TYPE_DOT_COLOR_MAP[cardType] || null,
+    title: item.title,
+    subTag: item.subTag || null,
+    description: item.summary || item.description || '',
+    timeAgo: item.timeAgo || item.createTime || '',
+    detailUrl: `/scene-enterprise-dynamic-detail/${item.id}`,
+  }
+}
+
+/* ===================== 筛选标签按钮 ===================== */
+function FilterButton({ label, active, count, onClick }) {
+  return (
+    <button className={`dm-filter-btn${active ? ' dm-filter-btn--active' : ''}`} onClick={onClick}>
+      <span>{label}{count > 0 ? `(${count})` : ''}</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9" />
+      </svg>
+    </button>
+  )
 }
 
 export default function DailyMessageList() {
   const navigate = useNavigate()
-  const today = formatDateCN(new Date())
+  const [searchParams] = useSearchParams()
+  const urlDate = searchParams.get('date')
+  const currentDate = urlDate || getTodayStr()
+
+  // 筛选状态
+  const [typeFilter, setTypeFilter] = useState([])
+  const [activeFilter, setActiveFilter] = useState(null)
+
+  // 日历弹框
+  const [calendarOpen, setCalendarOpen] = useState(false)
+  const [pendingDate, setPendingDate] = useState(currentDate)
+  const [confirmedDate, setConfirmedDate] = useState(currentDate)
+
+  // 列表数据
+  const [displayedItems, setDisplayedItems] = useState([])
+  const [hasMore, setHasMore] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const contentRef = useRef(null)
+
+  // 使用ref存储最新的筛选条件
+  const filtersRef = useRef({ typeFilter, confirmedDate })
+  useEffect(() => {
+    filtersRef.current = { typeFilter, confirmedDate }
+  }, [typeFilter, confirmedDate])
+
+  // 获取列表数据
+  const fetchMessages = useCallback(async (pageIndex = 1, isRefresh = false) => {
+    const { typeFilter: currentTypeFilter, confirmedDate: currentConfirmedDate } = filtersRef.current
+    const cardType = currentTypeFilter.length > 0 ? TYPE_VALUE_MAP[currentTypeFilter[0]] : undefined
+
+    try {
+      const response = await getDailyMessageList({
+        pageIndex,
+        pageSize: 10,
+        cardType,
+        selectDate: currentConfirmedDate,
+      })
+
+      const data = response.data || []
+      const total = response.totalCount || 0
+
+      const mappedData = data.map(mapApiItemToCard)
+
+      if (isRefresh) {
+        setDisplayedItems(mappedData)
+      } else {
+        setDisplayedItems(prev => [...prev, ...mappedData])
+      }
+
+      const newTotal = isRefresh ? mappedData.length : displayedItems.length + mappedData.length
+      setHasMore(newTotal < total)
+      setCurrentPage(pageIndex)
+    } catch (error) {
+      console.error('Error fetching daily messages:', error)
+    }
+  }, [])
+
+  // 统一处理筛选条件变化
+  useEffect(() => {
+    setCurrentPage(1)
+    setLoading(true)
+    setDisplayedItems([])
+    setHasMore(false)
+    if (contentRef.current) {
+      contentRef.current.scrollTop = 0
+      const ilContainer = contentRef.current.querySelector('.il-container')
+      if (ilContainer) {
+        ilContainer.scrollTop = 0
+      }
+    }
+    fetchMessages(1, true).finally(() => {
+      setLoading(false)
+    })
+  }, [typeFilter, confirmedDate, fetchMessages])
+
+  const handleLoadMore = useCallback(async () => {
+    if (loading || !hasMore) return
+    setLoading(true)
+    await fetchMessages(currentPage + 1)
+    setLoading(false)
+  }, [loading, hasMore, currentPage, fetchMessages])
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true)
+    await fetchMessages(1, true)
+    setRefreshing(false)
+  }, [fetchMessages])
+
+  const handleCalendarOpen = useCallback(() => {
+    setPendingDate(confirmedDate)
+    setCalendarOpen(true)
+  }, [confirmedDate])
+
+  const handleCalendarClose = useCallback(() => setCalendarOpen(false), [])
+
+  const handleCalendarConfirm = useCallback(() => {
+    setConfirmedDate(pendingDate)
+    setCalendarOpen(false)
+    setTypeFilter([])
+    setActiveFilter(null)
+  }, [pendingDate])
 
   return (
     <div className="daily-msg-page">
       <PageHeader title="今日消息" showBack={true} />
-      {/* <div className="daily-msg-meta">
-        <span className="daily-msg-date">{today}</span>
-        <span className="daily-msg-total">共 {DAILY_MESSAGES.length} 条</span>
-      </div> */}
-      <div className="daily-msg-list">
-        {DAILY_MESSAGES.map(card => (
-          <ChatInfoCard
-            key={card.id}
-            card={card}
-            onNavigate={(url) => navigate(url)}
-          />
-        ))}
+
+      <div className="daily-msg-body" ref={contentRef}>
+        {/* 筛选区域 */}
+        <div className="dm-filter-area">
+          <div className="dm-filter-row">
+            <FilterButton
+              label="类型"
+              active={activeFilter === 'type' || typeFilter.length > 0}
+              count={typeFilter.length}
+              onClick={() => setActiveFilter(activeFilter === 'type' ? null : 'type')}
+            />
+            <FilterButton
+              label={confirmedDate ? formatDateDisplay(confirmedDate) : '时间'}
+              active={activeFilter === 'date' || !!confirmedDate}
+              count={0}
+              onClick={handleCalendarOpen}
+            />
+          </div>
+        </div>
+
+        {/* 列表 */}
+        <InfiniteList
+          items={displayedItems}
+          renderItem={(item) => (
+            <ChatInfoCard
+              card={item}
+              onNavigate={(url) => navigate(url)}
+            />
+          )}
+          onLoadMore={handleLoadMore}
+          onRefresh={handleRefresh}
+          hasMore={hasMore}
+          loading={loading}
+          refreshing={refreshing}
+          endText="已显示全部消息"
+        />
       </div>
+
+      {/* 类型筛选底部弹框 */}
+      <FilterSheet
+        title="类型"
+        options={MESSAGE_TYPES}
+        value={typeFilter}
+        onChange={setTypeFilter}
+        onClose={() => setActiveFilter(null)}
+        open={activeFilter === 'type'}
+        multiple={false}
+      />
+
+      {/* 日历底部弹框 */}
+      {calendarOpen && (
+        <div className="dm-cal-overlay" onClick={handleCalendarClose}>
+          <div className="dm-cal-sheet" onClick={e => e.stopPropagation()}>
+            <div className="dm-cal-handle" />
+            <DateSelection
+              dateDisabledType="afterToday"
+              onSelect={date => setPendingDate(date)}
+              defaultValue={pendingDate}
+            />
+            <div className="dm-cal-footer">
+              <button className="dm-cal-btn dm-cal-btn--cancel" onClick={handleCalendarClose}>取消</button>
+              <button className="dm-cal-btn dm-cal-btn--confirm" onClick={handleCalendarConfirm}>确认</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

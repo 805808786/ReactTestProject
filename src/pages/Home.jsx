@@ -159,7 +159,11 @@ function KeyFocus() {
       <div className="kf-message-card">
         <div className="kf-message-header">
           <span className="kf-message-title">今日<span className="kf-message-title-red">消息</span></span>
-          <div className="kf-message-count" onClick={() => navigate('/daily-messages')} style={{ cursor: 'pointer' }}>
+          <div className="kf-message-count" onClick={() => {
+            const today = new Date();
+            const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            navigate(`/daily-messages?date=${dateStr}`);
+          }} style={{ cursor: 'pointer' }}>
             <span className="kf-message-num">4 条</span>
             <span className="kf-message-dot-container">
               <span className="kf-message-dot"></span>
