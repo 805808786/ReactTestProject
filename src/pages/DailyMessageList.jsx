@@ -6,6 +6,7 @@ import InfiniteList from './components/InfiniteList'
 import FilterSheet from './components/FilterSheet'
 import DateSelection from './components/dataSelection/index'
 import { getDailyMessageList } from '../api/dailyMessage'
+import './SceneEnterprise.css'
 import './DailyMessageList.css'
 
 /* ===================== 常量 ===================== */
@@ -68,7 +69,7 @@ function mapApiItemToCard(item) {
 /* ===================== 筛选标签按钮 ===================== */
 function FilterButton({ label, active, count, onClick }) {
   return (
-    <button className={`dm-filter-btn${active ? ' dm-filter-btn--active' : ''}`} onClick={onClick}>
+    <button className={`se-filter-btn${active ? ' se-filter-btn--active' : ''}`} onClick={onClick}>
       <span>{label}{count > 0 ? `(${count})` : ''}</span>
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9" />
@@ -187,8 +188,8 @@ export default function DailyMessageList() {
 
       <div className="daily-msg-body" ref={contentRef}>
         {/* 筛选区域 */}
-        <div className="dm-filter-area">
-          <div className="dm-filter-row">
+        <div className="se-dynamic-filter-area">
+          <div className="se-filter-row">
             <FilterButton
               label="类型"
               active={activeFilter === 'type' || typeFilter.length > 0}
