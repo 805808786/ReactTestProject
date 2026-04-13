@@ -474,3 +474,154 @@
   font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
   cursor: pointer;
 }
+
+/* ===== 反馈浮动按钮 ===== */
+.sedd-feedback-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.sedd-feedback-btn img {
+  display: block;
+}
+
+/* ===== 反馈弹框遮罩 ===== */
+.sedd-feedback-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* ===== 反馈弹框主体 ===== */
+.sedd-feedback-drawer {
+  background: #FFFFFF;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* 拖拽条 */
+.sedd-feedback-handle-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 0;
+}
+
+.sedd-feedback-handle {
+  width: 40px;
+  height: 4px;
+  background: #E5E7EB;
+  border-radius: 9999px;
+}
+
+/* 弹框内容区 */
+.sedd-feedback-content {
+  padding: 0 24px 24px;
+}
+
+/* 标题行 */
+.sedd-feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  margin-bottom: 20px;
+}
+
+.sedd-feedback-title {
+  font-family: 'Arimo', 'PingFang SC', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #0A0A0A;
+}
+
+.sedd-feedback-close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+/* 文本输入区 */
+.sedd-feedback-textarea {
+  width: 100%;
+  height: 160px;
+  border: 0.67px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Arimo', 'PingFang SC', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.sedd-feedback-textarea::placeholder {
+  color: #9CA3AF;
+}
+
+/* 字数统计 */
+.sedd-feedback-counter-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.sedd-feedback-counter {
+  font-family: 'Arimo', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #9CA3AF;
+}
+
+/* 提交按钮 */
+.sedd-feedback-submit {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #155DFC;
+  color: #FFFFFF;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.sedd-feedback-submit--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

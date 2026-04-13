@@ -29,3 +29,17 @@ export const getDailyMessageList = ({ currentPage = 1, pageSize = 10, cardType, 
 export const getDailyMessageDetail = ({ id }) => {
   return dailyMessageRequest.post('/client/recommend/leaderBoardInfo', { id })
 }
+
+/**
+ * 新增评论（用户反馈）
+ * POST /client/comment/add
+ * @param {object} params
+ * @param {number} params.recommendId - 锦囊 ID
+ * @param {string} params.content - 评论内容
+ */
+export const addFeedback = ({ recommendId, content }) => {
+  return dailyMessageRequest.post('/client/comment/add', {
+    recommendId,
+    content
+  })
+}

@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import iconBack from '../assets/icon-dynamic-back.svg';
 import iconNewspaper from '../assets/icon-dynamic-newspaper.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
 import iconLinkBlue from '../assets/icon-link-blue.svg';
+import iconFeedback from '../assets/icon-feedback.svg';
+import iconClose from '../assets/icon-close.svg';
 import './SceneEnterpriseDynamicDetail.css';
 import PageHeader from '../components/PageHeader';
-import { getDailyMessageDetail } from '../api/dailyMessage';
+import { getDailyMessageDetail, addFeedback } from '../api/dailyMessage';
 
 const CARD_TYPE_CATEGORY_MAP = {
   1: 'recommend',
@@ -88,6 +90,13 @@ export default function SceneEnterpriseDynamicDetail() {
   const [data, setData] = useState(stateData ? mapApiDetailToData(stateData) || stateData : DEFAULT_DETAIL);
   const [apiLoading, setApiLoading] = useState(!stateData);
 
+  // 反馈弹框状态
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackContent, setFeedbackContent] = useState('');
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
+
+  const FEEDBACK_MAX_LENGTH = 500;
+
   useEffect(() => {
     if (stateData) return;
 
@@ -108,6 +117,30 @@ export default function SceneEnterpriseDynamicDetail() {
 
     fetchDetail();
   }, [id, stateData]);
+
+  const handleFeedbackOpen = useCallback(() => {
+    setFeedbackContent('');
+    setFeedbackOpen(true);
+  }, []);
+
+  const handleFeedbackClose = useCallback(() => {
+    setFeedbackOpen(false);
+    setFeedbackContent('');
+  }, []);
+
+  const handleFeedbackSubmit = useCallback(async () => {
+    if (!feedbackContent.trim() || feedbackSubmitting) return;
+    setFeedbackSubmitting(true);
+    try {
+      await addFeedback({ recommendId: Number(id), content: feedbackContent.trim() });
+      setFeedbackOpen(false);
+      setFeedbackContent('');
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+    } finally {
+      setFeedbackSubmitting(false);
+    }
+  }, [feedbackContent, feedbackSubmitting, id]);
 
   function getTitle() {
     return data.category == 'recommend' ? '每日推荐' : data.type
@@ -294,6 +327,57 @@ export default function SceneEnterpriseDynamicDetail() {
             </div>
           </div>}
       </div>
+
+      {/* ===== 反馈浮动按钮 ===== */}
+      <button className="sedd-feedback-btn" onClick={handleFeedbackOpen} aria-label="用户反馈">
+        <img src={iconFeedback} alt="反馈" width={56} height={56} />
+      </button>
+
+      {/* ===== 反馈弹框 ===== */}
+      {feedbackOpen && (
+        <div className="sedd-feedback-overlay" onClick={handleFeedbackClose}>
+          <div className="sedd-feedback-drawer" onClick={e => e.stopPropagation()}>
+            {/* 拖拽条 */}
+            <div className="sedd-feedback-handle-wrapper">
+              <div className="sedd-feedback-handle" />
+            </div>
+            {/* 内容区 */}
+            <div className="sedd-feedback-content">
+              {/* 标题行 */}
+              <div className="sedd-feedback-header">
+                <div className="sedd-feedback-title">用户反馈</div>
+                <button className="sedd-feedback-close-btn" onClick={handleFeedbackClose} aria-label="关闭">
+                  <img src={iconClose} alt="关闭" width={32} height={32} />
+                </button>
+              </div>
+              {/* 文本输入区 */}
+              <textarea
+                className="sedd-feedback-textarea"
+                placeholder="请输入您的反馈意见..."
+                value={feedbackContent}
+                onChange={e => {
+                  if (e.target.value.length <= FEEDBACK_MAX_LENGTH) {
+                    setFeedbackContent(e.target.value);
+                  }
+                }}
+                maxLength={FEEDBACK_MAX_LENGTH}
+              />
+              {/* 字数统计 */}
+              <div className="sedd-feedback-counter-row">
+                <span className="sedd-feedback-counter">{feedbackContent.length}/{FEEDBACK_MAX_LENGTH}</span>
+              </div>
+              {/* 提交按钮 */}
+              <button
+                className={`sedd-feedback-submit${feedbackContent.trim() ? '' : ' sedd-feedback-submit--disabled'}`}
+                disabled={!feedbackContent.trim() || feedbackSubmitting}
+                onClick={handleFeedbackSubmit}
+              >
+                提交反馈
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
