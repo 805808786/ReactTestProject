@@ -80,8 +80,7 @@ function FilterButton({ label, active, count, onClick }) {
 export default function DailyMessageList() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const urlDate = searchParams.get('date')
-  const currentDate = urlDate || getTodayStr()
+  const currentDate = searchParams.get('date')
 
   // 筛选状态
   const [typeFilter, setTypeFilter] = useState([])
@@ -189,7 +188,7 @@ export default function DailyMessageList() {
 
       <div className="daily-msg-body" ref={contentRef}>
         {/* 筛选区域 */}
-        <div className="se-dynamic-filter-area">
+        <div className="se-dynamic-filter-area pb-16">
           <div className="se-filter-row">
             <FilterButton
               label="类型"

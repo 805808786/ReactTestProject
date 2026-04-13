@@ -100,7 +100,7 @@ export default function SceneEnterpriseDynamicDetail() {
     const fetchDetail = async () => {
       setApiLoading(true);
       try {
-        const response = await getDailyMessageDetail({ id: Number(id) });
+        const response = await getDailyMessageDetail({ id });
         const apiData = response.data;
         if (apiData) {
           setData(mapApiDetailToData(apiData));

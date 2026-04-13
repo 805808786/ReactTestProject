@@ -36,6 +36,10 @@
   padding: 16px;
 }
 
+.pb-16 {
+  padding-bottom: 16px;
+}
+
 /* ===== 日历弹框 ===== */
 .dm-cal-overlay {
   position: fixed;
