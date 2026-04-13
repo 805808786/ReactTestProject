@@ -45,31 +45,25 @@ function mapApiDetailToData(apiData) {
     type: tagText,
     category,
     title: apiData.title || '',
+    summary: apiData.content || '',
     date: apiData.publishTime || apiData.gmtCreate || '',
     source: '',
-    summary: apiData.content || '',
     subSummary: null,
     sourceLink: null,
     paragraphs: [],
     relatedCompanies: [],
     relatedDepartments: [],
     link: null,
-    richTextContent: apiData.richTextContent || null,
+    richTextContent: null,
   };
 
   if (cardType === 1) {
     // 每日推荐：关联企业信息
     if (apiData.enterpriseId) {
-      result.link = `/enterprise-detail/${apiData.enterpriseId}`;
+      result.link = `/company-detail/${apiData.enterpriseId}`;
     }
     if (apiData.enterpriseIntroduction) {
       result.paragraphs = [apiData.enterpriseIntroduction];
-    }
-    if (apiData.enterpriseName) {
-      result.relatedCompanies = [{
-        id: apiData.enterpriseId,
-        name: apiData.enterpriseName,
-      }];
     }
   } else if (cardType === 2 || cardType === 3) {
     // 新闻动态 / 与我相关：关联新闻信息
@@ -167,7 +161,7 @@ export default function SceneEnterpriseDynamicDetail() {
                 {
                   data.category == 'recommend' && data.link && (
                     <div className="sedd-meta-item">
-                      <a className="sedd-link-text" href={data.link}>查看企业 →</a>
+                      <a className="sedd-link-text" onClick={() => navigate(data.link)}>查看企业 →</a>
                     </div>
                   )
                 }
