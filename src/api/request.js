@@ -3,8 +3,7 @@ import axios from 'axios'
 // 使用 globalThis 缓存实例，保证 Vite HMR 热重载时不重复创建和注册
 if (!globalThis.__axiosRequest) {
   const instance = axios.create({
-    baseURL: 'https://sjch5.gongshu.gov.cn/pbdm-api',
-    // baseURL: 'http://192.168.10.229:9081',
+    baseURL: import.meta.env.VITE_BASE_URL,
     timeout: 30000,
     headers: {
       'Content-Type': 'application/json',
