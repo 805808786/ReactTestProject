@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
@@ -10,9 +10,11 @@ import iconCaretDown from '../assets/icon-caret-down-small.svg';
 import iconBuilding from '../assets/icon-cd-building2.svg';
 import './EnterpriseChangeList.css';
 
+
 const PAGE_SIZE = 10;
 
 const DYNAMIC_TYPE_OPTIONS = {
+  '规则性调整': -1,
   '拱墅区区内新设企业': 2,
   '拱墅区区外新迁入企业': 3,
   '拱墅区区内企业注销或吊销': 4,
@@ -26,7 +28,7 @@ const TYPE_CODE_TO_LABEL = Object.fromEntries(
 );
 
 const NEGATIVE_TYPE_CODES = [4, 7];
-const POSITIVE_STATUS_KEYWORDS = ['存续', '在业', '开业', '正常'];
+const POSITIVE_STATUS_KEYWORDS = ['存续'];
 
 function getDefaultPickerDate() {
   const d = new Date();
@@ -46,18 +48,12 @@ function normalizeStatusTone(statusText) {
 }
 
 function normalizeType(item, selectedTypeCode) {
-  const rawTypeCode = Number(item?.typeCode ?? item?.type ?? item?.changeType);
-  const finalTypeCode = Number.isFinite(rawTypeCode) ? rawTypeCode : selectedTypeCode;
-  const finalTypeLabel =
-    TYPE_CODE_TO_LABEL[finalTypeCode] ||
-    item?.typeName ||
-    item?.typeDesc ||
-    item?.type ||
-    (selectedTypeCode ? TYPE_CODE_TO_LABEL[selectedTypeCode] : '企业变化');
+  const finalTypeCode = item?.type || 0;
+  const finalTypeLabel = TYPE_CODE_TO_LABEL[finalTypeCode] || '';
 
   return {
     type: finalTypeLabel,
-    typeTone: NEGATIVE_TYPE_CODES.includes(Number(finalTypeCode)) ? 'danger' : 'success',
+    typeTone: [2, 3].includes(finalTypeCode) ? 'green' : [4, 7].includes(finalTypeCode) ? 'red' : [8, 9].includes(finalTypeCode) ? 'blue' : ''
   };
 }
 
@@ -70,8 +66,9 @@ function toCardItem(item, index, selectedTypeCode) {
   const { type, typeTone } = normalizeType(item, selectedTypeCode);
   const status = String(item?.businessStatus || '').trim() || '--';
 
+
   return {
-    id: item?.enterpriseId || `${item?.unifiedCreditCode || 'enterprise'}-${index}`,
+    id: item?.enterpriseId,
     type,
     typeTone,
     name: item?.enterpriseName || '--',
@@ -100,7 +97,7 @@ function FilterButton({ label, active, count, onClick }) {
   );
 }
 
-function ChangeCard({ item, highlighted = false }) {
+function ChangeCard({ item, highlighted = false, onDetail }) {
   return (
     <article className={`ecl-card ${highlighted ? 'ecl-card--highlight' : ''}`}>
       <div className={`ecl-card-type ecl-card-type--${item.typeTone}`}>{item.type}</div>
@@ -120,7 +117,7 @@ function ChangeCard({ item, highlighted = false }) {
             </div>
           </div>
         </div>
-        <button type="button" className="ecl-card-detail-btn">查看详情 →</button>
+        <button type="button" className="ecl-card-detail-btn" onClick={onDetail}>查看详情 →</button>
       </div>
 
       <div className="ecl-card-info">
@@ -143,6 +140,7 @@ function ChangeCard({ item, highlighted = false }) {
 
 export default function EnterpriseChangeList() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
   const [debouncedKeyword, setDebouncedKeyword] = useState('');
   const [typeFilter, setTypeFilter] = useState([]);
@@ -307,7 +305,6 @@ export default function EnterpriseChangeList() {
             <FilterButton
               label="时间"
               active={activeFilter === 'time' || Boolean(confirmedDate)}
-              count={confirmedDate ? 1 : 0}
               onClick={handleTimeToggle}
             />
           </div>
@@ -322,7 +319,11 @@ export default function EnterpriseChangeList() {
             <InfiniteList
               items={listData}
               renderItem={(item, index) => (
-                <ChangeCard item={item} highlighted={index === 0 && item.typeTone === 'danger'} />
+                <ChangeCard
+                  item={item}
+                  highlighted={index === 0 && item.typeTone === 'danger'}
+                  onDetail={() => navigate(`/company-detail/${item.id}`)}
+                />
               )}
               onLoadMore={handleLoadMore}
               hasMore={hasMore}

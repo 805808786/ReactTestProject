@@ -4,6 +4,7 @@ import './EnterpriseCalendar.css';
 import DateSelection from './components/dataSelection/index';
 import useEnterpriseCalendarStore from '../store/enterpriseCalendarStore';
 import PageHeader from '../components/PageHeader';
+import IconDetailRight from '../assets/icon-detail-rigth.svg?react';
 
 // 生成近半年的每日企业数量数据（130,000 ~ 140,000 范围）
 function generateData(days) {
@@ -425,9 +426,20 @@ export default function EnterpriseCalendar() {
                       )}
                     </div>
                   </div>
-                  {/* {dynamicReasons.length > 0 && <Link to="/calendar" className="overview-date-v2" style={{ textDecoration: 'none' }}>
-                    查看变化明细
-                  </Link>} */}
+
+                  {/* 查看变化明细按钮 */}
+                  <div className="ec-tl-detail-btn-container">
+                    <div
+                      className="ec-tl-detail-btn"
+                      onClick={() => {
+                        const dateToPass = dateStr || getDefaultPickerDate();
+                        navigate('/enterprise-change-list', { state: { date: dateToPass } });
+                      }}
+                    >
+                      <span>查看变化明细</span>
+                      <IconDetailRight className="-nav-icon" />
+                    </div>
+                  </div>
                 </div>
               </div>
             );

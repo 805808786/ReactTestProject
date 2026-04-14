@@ -452,6 +452,29 @@
   cursor: pointer;
 }
 
+/* 查看变化明细按钮 */
+.ec-tl-detail-btn-container {
+  /* margin-top: 8px; */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ec-tl-detail-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: transparent;
+  border-radius: 8px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #155DFC;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
 /* 标签变化每行 */
 .ec-tl-change-row {
   display: flex;

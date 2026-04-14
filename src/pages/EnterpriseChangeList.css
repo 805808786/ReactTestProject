@@ -168,14 +168,19 @@
   margin-bottom: 8px;
 }
 
-.ecl-card-type--danger {
+.ecl-card-type--red {
   color: #d54941;
   border-color: #d54941;
 }
 
-.ecl-card-type--success {
+.ecl-card-type--green {
   color: #008858;
   border-color: #10ba51;
+}
+
+.ecl-card-type--blue {
+  color: #0052D9;
+  border-color: #0052D9;
 }
 
 .ecl-card-top {
@@ -269,9 +274,10 @@
 }
 
 .ecl-card-info {
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .ecl-card-info-row {
@@ -385,7 +391,3 @@
   background: #155dfc;
   color: #ffffff;
 }
-
-
-
-
