@@ -1,13 +1,14 @@
 import axios from 'axios'
 
-// 使用 globalThis 缓存实例，保证 Vite HMR 热重载时不重复创建和注册
-if (!globalThis.__axiosRequest) {
+// 今日消息接口专用的 axios 实例
+// 使用 globalThis 缓存实例，保证 Vite HMR 热重载时不重复创建
+if (!globalThis.__axiosDailyMessageRequest) {
   const instance = axios.create({
-    baseURL: import.meta.env.VITE_BASE_URL,
+    baseURL: import.meta.env.VITE_YICALL_URL,
     timeout: 30000,
     headers: {
       'Content-Type': 'application/json',
-      'YICALL-SECRET-KEY': 'CQ2Fgiaux3Ml9qoO'
+      'YICALL-SECRET-KEY': 'CQ2Fgiaux3Ml9qXxx'
     }
   })
 
@@ -24,9 +25,9 @@ if (!globalThis.__axiosRequest) {
     }
   )
 
-  globalThis.__axiosRequest = instance
+  globalThis.__axiosDailyMessageRequest = instance
 }
 
-const request = globalThis.__axiosRequest
+const dailyMessageRequest = globalThis.__axiosDailyMessageRequest
 
-export default request
+export default dailyMessageRequest
