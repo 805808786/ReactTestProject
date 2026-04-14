@@ -58,6 +58,23 @@ export const getDataCountInfo = ({ selectDate, sceneName }) => {
 }
 
 /**
+ * 获取场景概览（企业总数、变化企业数、动态总数、动态变化数）
+ * @param {object} params
+ * @param {string} params.selectDate - 选择日期，格式 YYYY-MM-DD
+ * @param {string} params.sceneName - 场景名称，如 "人工智能"
+ * @param {string} [params.firstTag] - 一级标签
+ * @param {number} [params.firstTagId] - 一级标签 ID
+ */
+export const getSceneOverview = ({ selectDate, sceneName, firstTag, firstTagId }) => {
+  return request.post('/backend/sceneRadar/getSceneOverview', {
+    selectDate,
+    sceneName,
+    firstTag,
+    firstTagId
+  })
+}
+
+/**
  * 获取企业基本信息
  * @param {object} params
  * @param {string} params.enterpriseId - 企业 ID

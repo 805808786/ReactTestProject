@@ -61,7 +61,7 @@ function mapApiItemToCard(item) {
     title: item.title,
     description: item.content || '',
     timeAgo: item.publishTime || '',
-    detailUrl: `/scene-enterprise-dynamic-detail/${item.id}`,
+    detailUrl: `/daily-message-detail/${item.id}`,
   }
 }
 
