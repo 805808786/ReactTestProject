@@ -363,7 +363,7 @@ function EnterpriseOverview() {
           </div>
 
           <div className="overview-right-v2">
-            <div className="daily-changes-card-v2">
+            <div className="daily-changes-card-v2" onClick={() => navigate('/enterprise-change-list', { state: { date: todayStr } })} style={{ cursor: 'pointer' }}>
               <div className="daily-title-v2">每日变化</div>
               <div className="daily-list-v2">
                 <div className="daily-item-v2">

@@ -79,7 +79,7 @@
   background: #ffffff;
   border-radius: 14px;
   box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1),
-              0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+    0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: stretch;
   z-index: 10;
@@ -384,7 +384,8 @@
 }
 
 .ec-tl-delta--neg {
-  color: #0AA34E; /* Figma: -13家 is green */
+  color: #0AA34E;
+  /* Figma: -13家 is green */
 }
 
 .ec-tl-delta--pos {
@@ -431,11 +432,17 @@
 }
 
 .ec-tl-reason-delta.pos {
-  color: #D54941; /* Figma: +15家 is red */
+  color: #D54941;
+  /* Figma: +15家 is red */
 }
 
 .ec-tl-reason-delta.neg {
-  color: #2BA471; /* Figma: -15家 is green */
+  color: #2BA471;
+  /* Figma: -15家 is green */
+}
+
+.ec-tl-reason-delta.local {
+  color: #0052D9;
 }
 
 .ec-tl-reason-link {
@@ -533,8 +540,13 @@
 }
 
 @keyframes ec-sheet-slide-up {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 /* 顶部把手 */
@@ -572,9 +584,17 @@
   gap: 8px;
 }
 
-.ec-sheet-card--blue { background: #F4F7FF; }
-.ec-sheet-card--orange { background: #FFF8F2; }
-.ec-sheet-card--purple { background: #F9F6FF; }
+.ec-sheet-card--blue {
+  background: #F4F7FF;
+}
+
+.ec-sheet-card--orange {
+  background: #FFF8F2;
+}
+
+.ec-sheet-card--purple {
+  background: #F9F6FF;
+}
 
 .ec-sheet-card-label {
   font-family: 'PingFang SC', sans-serif;
@@ -602,8 +622,13 @@
   font-weight: 500;
 }
 
-.ec-sheet-card-delta--pos { color: #F33E3E; }
-.ec-sheet-card-delta--neg { color: #0AA34E; }
+.ec-sheet-card-delta--pos {
+  color: #F33E3E;
+}
+
+.ec-sheet-card-delta--neg {
+  color: #0AA34E;
+}
 
 /* 列表样式 */
 .ec-sheet-card-list {
@@ -619,8 +644,13 @@
   line-height: 1.5;
 }
 
-.ec-sheet-card-list-idx { color: rgba(0, 0, 0, 0.4); }
-.ec-sheet-card-list-txt { color: rgba(0, 0, 0, 0.9); }
+.ec-sheet-card-list-idx {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.ec-sheet-card-list-txt {
+  color: rgba(0, 0, 0, 0.9);
+}
 
 /* 标签变化行 */
 .ec-sheet-card-tag-row {
@@ -696,4 +726,3 @@
   background: #155DFC;
   color: #ffffff;
 }
-

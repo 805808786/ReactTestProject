@@ -264,7 +264,7 @@ export default function EnterpriseCalendar() {
         </div>
 
         {/* 企业变化趋势卡片 */}
-        <div className="ec-trend-card">
+        {/* <div className="ec-trend-card">
           <div className="ec-trend-header">
             <div className="ec-trend-left">
               <span className="ec-trend-dot" />
@@ -286,7 +286,6 @@ export default function EnterpriseCalendar() {
             </div>
           </div>
 
-          {/* 折线图 */}
           <div className="ec-chart-wrap">
             <div className="ec-y-axis">
               {yAxisTicks.map(v => (
@@ -320,7 +319,7 @@ export default function EnterpriseCalendar() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* 时间轴列表 */}
         <div className="ec-timeline">
@@ -341,10 +340,19 @@ export default function EnterpriseCalendar() {
             if (item.cancelEnterprisesNum > 0) {
               dynamicReasons.push({ text: '拱墅区区内企业注销或吊销', delta: `-${item.cancelEnterprisesNum}家`, deltaPositive: false });
             }
-            // 123
+
             if (item.newCancelEnterprisesNum > 0) {
               dynamicReasons.push({ text: '拱墅区区内企业迁出', delta: `-${item.newCancelEnterprisesNum}家`, deltaPositive: false });
             }
+
+            if (item.localToRegisteredNum > 0) {
+              dynamicReasons.push({ text: '在册企业转为在地', delta: `${item.localToRegisteredNum}家`, deltaPositive: false, type: "local" });
+            }
+            if (item.registeredToLocalNum > 0) {
+              dynamicReasons.push({ text: '在地企业转为在册', delta: `${item.registeredToLocalNum}家`, deltaPositive: false, type: "local" });
+            }
+
+
             if (item.otherNum !== 0 && item.otherNum !== undefined) {
               const isOtherPos = item.otherNum > 0;
               dynamicReasons.push({
@@ -403,7 +411,7 @@ export default function EnterpriseCalendar() {
                             <span className="ec-tl-reason-text">{r.text}</span>
                           </div>
                           <div className="ec-tl-reason-right">
-                            <span className={`ec-tl-reason-delta ${r.deltaPositive ? 'pos' : 'neg'}`}>{r.delta}</span>
+                            <span className={`ec-tl-reason-delta ${r.type == "local" ? 'local' : r.deltaPositive ? 'pos' : 'neg'}`}>{r.delta}</span>
                             {/* <span className="ec-tl-reason-link">查看企业&gt;</span> */}
                           </div>
                         </div>
@@ -417,6 +425,9 @@ export default function EnterpriseCalendar() {
                       )}
                     </div>
                   </div>
+                  {/* {dynamicReasons.length > 0 && <Link to="/calendar" className="overview-date-v2" style={{ textDecoration: 'none' }}>
+                    查看变化明细
+                  </Link>} */}
                 </div>
               </div>
             );

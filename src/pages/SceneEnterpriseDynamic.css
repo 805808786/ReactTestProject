@@ -7,7 +7,7 @@
   margin: 0 auto;
   background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif; */
   overflow: hidden;
 }
 
