@@ -1,4 +1,5 @@
 import dailyMessageRequest from './dailyMessageRequest'
+import request from './request'
 
 /**
  * 获取领导看板锦囊列表（今日消息列表）
@@ -43,3 +44,14 @@ export const addFeedback = ({ recommendId, content }) => {
     content
   })
 }
+
+/**
+ * 获取新闻详情
+ * POST /backend/newsInsight/detail
+ * @param {object} params
+ * @param {number} params.id - 新闻 ID (newsContentId)
+ */
+export const getNewsInsightDetail = ({ id }) => {
+  return dailyMessageRequest.post('/backend/newsInsight/detail', { id })
+}
+

@@ -4,12 +4,13 @@ import iconBack from '../assets/icon-dynamic-back.svg';
 import iconNewspaper from '../assets/icon-dynamic-newspaper.svg';
 import iconCalendar from '../assets/icon-dynamic-calendar.svg';
 import iconBuilding from '../assets/icon-dynamic-building.svg';
+import iconDept from '../assets/icon-dynamic-dept.svg';
 import iconLinkBlue from '../assets/icon-link-blue.svg';
 import iconFeedback from '../assets/icon-feedback.svg';
 import iconClose from '../assets/icon-close.svg';
 import './SceneEnterpriseDynamicDetail.css';
 import PageHeader from '../components/PageHeader';
-import { getDailyMessageDetail, addFeedback } from '../api/dailyMessage';
+import { getDailyMessageDetail, addFeedback, getNewsInsightDetail } from '../api/dailyMessage';
 
 const CARD_TYPE_CATEGORY_MAP = {
   1: 'recommend',
@@ -94,11 +95,41 @@ export default function SceneEnterpriseDynamicDetail() {
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackContent, setFeedbackContent] = useState('');
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
 
   const FEEDBACK_MAX_LENGTH = 500;
 
   useEffect(() => {
-    if (stateData) return;
+    const fetchNewsDetail = async (newsContentId) => {
+      try {
+        const newsResponse = await getNewsInsightDetail({ id: newsContentId });
+        const newsData = newsResponse.data;
+        if (newsData) {
+          setData(prev => ({
+            ...prev,
+            relatedCompanies: (newsData.enterpriseList || []).map(e => ({
+              id: e.enterpriseId,
+              name: e.enterpriseName,
+            })),
+            relatedDepartments: (newsData.orgList || []).map(o => ({
+              id: o.platformOrgId,
+              name: o.platformOrgName,
+            })),
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching news detail:', error);
+      }
+    };
+
+    if (stateData) {
+      const cardType = stateData.cardType;
+      const newsContentId = stateData.newsContentId;
+      if ((cardType === 2 || cardType === 3) && newsContentId) {
+        fetchNewsDetail(newsContentId);
+      }
+      return;
+    }
 
     const fetchDetail = async () => {
       setApiLoading(true);
@@ -107,6 +138,11 @@ export default function SceneEnterpriseDynamicDetail() {
         const apiData = response.data;
         if (apiData) {
           setData(mapApiDetailToData(apiData));
+          const cardType = apiData.cardType;
+          const newsContentId = apiData.newsContentId;
+          if ((cardType === 2 || cardType === 3) && newsContentId) {
+            await fetchNewsDetail(newsContentId);
+          }
         }
       } catch (error) {
         console.error('Error fetching detail:', error);
@@ -135,6 +171,8 @@ export default function SceneEnterpriseDynamicDetail() {
       await addFeedback({ recommendId: Number(id), content: feedbackContent.trim() });
       setFeedbackOpen(false);
       setFeedbackContent('');
+      setToastVisible(true);
+      setTimeout(() => setToastVisible(false), 2000);
     } catch (error) {
       console.error('Error submitting feedback:', error);
     } finally {
@@ -261,7 +299,7 @@ export default function SceneEnterpriseDynamicDetail() {
             <div className="sedd-card-content">
               {/* 卡片标题 */}
               <div className="sedd-section-header">
-                <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                <img src={iconDept} alt="关联部门" width={16} height={16} />
                 <span className="sedd-section-title">关联部门</span>
                 <span className="sedd-section-count">({data.relatedDepartments.length}个)</span>
               </div>
@@ -275,9 +313,6 @@ export default function SceneEnterpriseDynamicDetail() {
                       {/* 左侧：名称 + 基本信息 */}
                       <div className="sedd-company-left">
                         <div className="sedd-department-name">{department.name}</div>
-                        <div className="sedd-company-info">
-                          <span className="sedd-company-industry">{department.street}</span>
-                        </div>
                       </div>
                       {/* 右侧：状态标签 */}
                       <div className="sedd-person">{department.legalPerson}</div>
@@ -308,19 +343,12 @@ export default function SceneEnterpriseDynamicDetail() {
                       {/* 左侧：名称 + 基本信息 */}
                       <div className="sedd-company-left">
                         <div className="sedd-company-name">{company.name}</div>
-                        {company.legalPerson && company.industry && <div className="sedd-company-info">
-                          <span className="sedd-company-industry">{company.industry}</span>
-                          <span className="sedd-company-dot">•</span>
-                          <span className="sedd-company-person">{company.legalPerson}</span>
-                        </div>}
                       </div>
-                      {/* 右侧：状态标签 */}
-                      {company.status && <div className="sedd-status-badge">{company.status}</div>}
+                      {company.id && <div className="sedd-company-detail-row"  onClick={() => navigate(`/company-detail/${company.id}`)}>
+                        <span className="sedd-company-detail-link">查看详情 →</span>
+                      </div>}
                     </div>
                     {/* 查看详情 */}
-                    {data.category != 'news' && <div className="sedd-company-detail-row">
-                      <span className="sedd-company-detail-link">查看详情 →</span>
-                    </div>}
                   </div>
                 ))}
               </div>
@@ -351,17 +379,19 @@ export default function SceneEnterpriseDynamicDetail() {
                 </button>
               </div>
               {/* 文本输入区 */}
-              <textarea
-                className="sedd-feedback-textarea"
-                placeholder="请输入您的反馈意见..."
-                value={feedbackContent}
-                onChange={e => {
-                  if (e.target.value.length <= FEEDBACK_MAX_LENGTH) {
-                    setFeedbackContent(e.target.value);
-                  }
-                }}
-                maxLength={FEEDBACK_MAX_LENGTH}
-              />
+              <div>
+                <textarea
+                    className="sedd-feedback-textarea"
+                    placeholder="请输入您的反馈意见..."
+                    value={feedbackContent}
+                    onChange={e => {
+                      if (e.target.value.length <= FEEDBACK_MAX_LENGTH) {
+                        setFeedbackContent(e.target.value);
+                      }
+                    }}
+                    maxLength={FEEDBACK_MAX_LENGTH}
+                />
+              </div>
               {/* 字数统计 */}
               <div className="sedd-feedback-counter-row">
                 <span className="sedd-feedback-counter">{feedbackContent.length}/{FEEDBACK_MAX_LENGTH}</span>
@@ -376,6 +406,14 @@ export default function SceneEnterpriseDynamicDetail() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ===== 成功提示 Toast ===== */}
+      {toastVisible && (
+        <div className="sedd-toast">
+          <span className="sedd-toast-icon">✓</span>
+          反馈提交成功
         </div>
       )}
     </div>

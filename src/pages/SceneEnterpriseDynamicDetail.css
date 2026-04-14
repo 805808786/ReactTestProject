@@ -367,7 +367,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 8px;
 }
 
@@ -383,7 +382,7 @@
   font-size: 14px;
   font-weight: 500;
   color: #0A0A0A;
-  line-height: 20px;
+  line-height: 24px;
   letter-spacing: -0.15px;
 }
 
@@ -505,6 +504,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  line-height: 0;
 }
 
 /* ===== 反馈弹框主体 ===== */
@@ -624,4 +624,44 @@
 .sedd-feedback-submit--disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ===== 成功提示 Toast ===== */
+.sedd-toast {
+  position: fixed;
+  bottom: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: rgba(21, 93, 252, 0.92);
+  color: #fff;
+  border-radius: 24px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+  white-space: nowrap;
+  animation: sedd-toast-in 0.25s ease;
+}
+
+.sedd-toast-icon {
+  font-size: 16px;
+  font-weight: 700;
+  color: #6EE7B7;
+}
+
+@keyframes sedd-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
