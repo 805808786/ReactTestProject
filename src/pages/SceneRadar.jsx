@@ -169,7 +169,7 @@ function SceneCard({ scene, onSceneDetail }) {
           </div>
         </div>
 
-        <div className="sr-metric-item" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic') }}>
+        <div className="sr-metric-item" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic?sceneName=人工智能') }}>
           <div className="sr-metric-header">
             <span className="sr-metric-label">{name.replace('专题场景', '')}动态</span>
             <span className="sr-metric-arrow">→</span>

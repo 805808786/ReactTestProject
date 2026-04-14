@@ -37,6 +37,15 @@ const DEFAULT_DETAIL = {
   relatedCompanies: [],
 };
 
+function formatDateToDay(str) {
+  if (!str) return '';
+  const match = String(str).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (match) {
+    return `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+  }
+  return str;
+}
+
 function mapApiDetailToData(apiData) {
   if (!apiData) return null;
   const cardType = apiData.cardType;
@@ -49,7 +58,7 @@ function mapApiDetailToData(apiData) {
     category,
     title: apiData.title || '',
     summary: apiData.content || '',
-    date: apiData.publishTime || apiData.gmtCreate || '',
+    date: formatDateToDay(apiData.publishTime || apiData.gmtCreate || ''),
     source: '',
     subSummary: null,
     sourceLink: null,

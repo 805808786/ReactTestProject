@@ -58,20 +58,33 @@ export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
   const { isChatOpen, setIsChatOpen } = useChatStore()
   const navigate = useNavigate()
-  const [sceneOverview, setSceneOverview] = useState(null)
+  const [sceneOverviews, setSceneOverviews] = useState({})
 
   useEffect(() => {
     const today = new Date()
     const selectDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+    const sceneNames = ['人工智能', '数商企业']
 
-    getSceneOverview({ selectDate, sceneName: '人工智能' })
-      .then(res => {
-        const overviewData = res.data || {}
-        setSceneOverview(overviewData)
+    Promise.allSettled(
+      sceneNames.map(sceneName =>
+        getSceneOverview({ selectDate, sceneName }).then(res => ({
+          sceneName,
+          data: res.data || null,
+        }))
+      )
+    ).then(results => {
+      setSceneOverviews(() => {
+        const nextState = {}
+        results.forEach(result => {
+          if (result.status === 'fulfilled') {
+            nextState[result.value.sceneName] = result.value.data
+          } else {
+            console.error('首页场景概览加载失败:', result.reason)
+          }
+        })
+        return nextState
       })
-      .catch(err => {
-        console.error('首页场景概览加载失败:', err)
-      })
+    })
   }, [])
 
   const renderContent = () => {
@@ -83,13 +96,13 @@ export default function Home() {
 
             <AssistantCard onClick={() => setIsChatOpen(true)} />
             <EnterpriseOverview />
-            <KeyFocus sceneOverview={sceneOverview} />
+            <KeyFocus sceneOverview={sceneOverviews['人工智能']} />
           </>
         )
       case 1:
         return <Special115X />
       case 3:
-        return <FocusScene sceneOverview={sceneOverview} />
+        return <FocusScene sceneOverviews={sceneOverviews} />
       case 4:
         return <DataContribution />
       case 5:
@@ -169,7 +182,7 @@ function KeyFocus({ sceneOverview }) {
             type: mapping.label,
             typeClass: mapping.typeClass,
             content: item.title || item.content || '',
-            detailUrl: `/scene-enterprise-dynamic-detail/${item.id}`,
+            detailUrl: `/daily-message-detail/${item.id}`,
         }
         }))
       })
@@ -252,7 +265,7 @@ function KeyFocus({ sceneOverview }) {
                 </div>
                 <span className="kf-section-name purple-text">人工智能</span>
               </div>
-              <div className="kf-tag-badge purple-badge" onClick={() => navigate('/scene-description/1')}>
+              <div className="kf-tag-badge purple-badge" onClick={() => navigate('/scene-description/6')}>
                 场景说明
               </div>
             </div>
@@ -268,7 +281,7 @@ function KeyFocus({ sceneOverview }) {
                   </div>
                 </div>
               </div>
-              <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
+              <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic?sceneName=人工智能')}>
                 <div className="kf-stat-label">场景动态</div>
                 <div className="kf-stat-value-row">
                   <span className="kf-stat-num">{sceneOverview?.dynamicTotal ?? '--'}</span>
@@ -686,10 +699,12 @@ const SCENE_DATA = [
     name: '人工智能企业筛选场景',
     description: '人工智能企业筛选',
     subName: "人工智能企业动态",
-    enterprises: 6262,
-    dynamics: 32,
-    todayEnterprises: 3,
-    todayDynamics: 3,
+    enterprises: null,
+    dynamics: null,
+    todayEnterprises: null,
+    todayDynamics: null,
+    sceneId: "6",
+    sceneName: "人工智能",
   },
   {
     id: 2,
@@ -700,16 +715,19 @@ const SCENE_DATA = [
     dynamics: 28,
     todayEnterprises: 2,
     todayDynamics: 1,
+    sceneId: "5",
   },
   {
     id: 3,
-    name: '数据产业专题筛选场景',
-    description: '数据产业专项筛选',
-    subName: "数据产业专项动态",
+    name: '数商企业筛选场景',
+    description: '数商企业筛选',
+    subName: "数商企业动态",
     enterprises: 21512,
     dynamics: 45,
     todayEnterprises: 5,
     todayDynamics: 4,
+    sceneId: "1",
+    sceneName: "数商企业",
   },
   {
     id: 4,
@@ -720,6 +738,7 @@ const SCENE_DATA = [
     dynamics: 23,
     todayEnterprises: 1,
     todayDynamics: 2,
+    sceneId: "3",
   },
   {
     id: 5,
@@ -730,22 +749,25 @@ const SCENE_DATA = [
     dynamics: 19,
     todayEnterprises: 3,
     todayDynamics: 1,
+    sceneId: "2",
   },
 
 ];
 
 
-function FocusScene({ sceneOverview }) {
+function FocusScene({ sceneOverviews }) {
   const navigate = useNavigate()
   const sceneData = SCENE_DATA.map(scene => {
-    if (scene.id !== 1 || !sceneOverview) return scene
+    if (!scene.sceneName) return scene
+
+    const sceneOverview = sceneOverviews?.[scene.sceneName]
 
     return {
       ...scene,
-      enterprises: Number(sceneOverview.enterpriseTotal ?? scene.enterprises),
-      dynamics: Number(sceneOverview.dynamicTotal ?? scene.dynamics),
-      todayEnterprises: sceneOverview.difference ?? scene.todayEnterprises,
-      todayDynamics: sceneOverview.dynamicDifference ?? scene.todayDynamics,
+      enterprises: sceneOverview?.enterpriseTotal ?? null,
+      dynamics: sceneOverview?.dynamicTotal ?? null,
+      todayEnterprises: sceneOverview?.difference ?? null,
+      todayDynamics: sceneOverview?.dynamicDifference ?? null,
     }
   })
 
@@ -803,7 +825,7 @@ function FocusScene({ sceneOverview }) {
             <div className="scene-item-header">
               <div className="scene-item-title-box">
                 <h3 className="scene-item-title">{scene.name}</h3>
-                {scene.id != 5 && <span className="scene-item-badge" onClick={() => navigate(`/scene-description/${scene.id}`)}>场景说明</span>}
+                {scene.id != 5 && <span className="scene-item-badge" onClick={() => navigate(`/scene-description/${scene.sceneId}`)}>场景说明</span>}
               </div>
               <p className="scene-item-desc">{scene.description}</p>
             </div>
@@ -815,18 +837,18 @@ function FocusScene({ sceneOverview }) {
                   <span className="metric-arrow">→</span>
                 </div>
                 <div className="metric-row-bottom">
-                  <span className="metric-val">{scene.enterprises.toLocaleString()}<small>家</small></span>
-                  <span className="metric-delta">今日{scene.todayEnterprises}</span>
+                  <span className="metric-val">{scene.enterprises == null ? '--' : scene.enterprises.toLocaleString()}<small>家</small></span>
+                  <span className="metric-delta">今日{scene.todayEnterprises ?? '--'}</span>
                 </div>
               </div>
-              <div className="scene-metric-box" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic') }}>
+              <div className="scene-metric-box" onClick={() => { scene.sceneName && navigate(`/scene-enterprise-dynamic?sceneName=${scene.sceneName}`) }}>
                 <div className="metric-row-top">
                   <span className="metric-name">{scene.subName}</span>
                   <span className="metric-arrow">→</span>
                 </div>
                 <div className="metric-row-bottom">
-                  <span className="metric-val">{scene.dynamics}<small>条</small></span>
-                  <span className="metric-delta">今日{scene.todayDynamics}</span>
+                  <span className="metric-val">{scene.dynamics == null ? '--' : scene.dynamics}<small>条</small></span>
+                  <span className="metric-delta">今日{scene.todayDynamics ?? '--'}</span>
                 </div>
               </div>
             </div>
