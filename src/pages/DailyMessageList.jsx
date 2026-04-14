@@ -49,6 +49,15 @@ function formatDateDisplay(str) {
   return `${y}年${parseInt(m)}月${parseInt(d)}日`
 }
 
+function formatDateToDay(str) {
+  if (!str) return ''
+  const match = String(str).match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)
+  if (match) {
+    return `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`
+  }
+  return str
+}
+
 function mapApiItemToCard(item) {
   const cardType = item.cardType
   const category = CARD_TYPE_CATEGORY_MAP[cardType] || 'news'
@@ -60,7 +69,7 @@ function mapApiItemToCard(item) {
     dotColor: CARD_TYPE_DOT_COLOR_MAP[cardType] || null,
     title: item.title,
     description: item.content || '',
-    timeAgo: item.publishTime || '',
+    timeAgo: formatDateToDay(item.publishTime || ''),
     detailUrl: `/daily-message-detail/${item.id}`,
   }
 }

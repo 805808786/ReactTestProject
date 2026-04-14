@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
 import iconSearchDynamic from '../assets/icon-search-dynamic.svg';
@@ -81,6 +81,8 @@ function DynamicCard({ item, onViewDetail }) {
 
 export default function SceneEnterpriseDynamic() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const sceneName = searchParams.get('sceneName')?.trim() || '';
 
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
@@ -167,13 +169,13 @@ export default function SceneEnterpriseDynamic() {
 
     try {
       const response = await getNewsInsightPage({
-        sceneGroupName:"人工智能",
         currentPage: page,
         pageSize: PAGE_SIZE,
         keyword: keyword || undefined,
         newsType: currentTypeFilter[0] || undefined,
         newsSource: currentSourceFilter[0] || undefined,
         timeType: currentTimeFilter[0] ? TIME_TYPE_MAP[currentTimeFilter[0]] : undefined,
+        sceneGroupName: sceneName || undefined,
       });
 
       const pageData = response.data || {};
@@ -198,7 +200,7 @@ export default function SceneEnterpriseDynamic() {
         setHasMore(false);
       }
     }
-  }, []);
+  }, [sceneName]);
 
   const reloadDynamicList = useCallback(async () => {
     setCurrentPage(1);
@@ -240,7 +242,7 @@ export default function SceneEnterpriseDynamic() {
 
   return (
     <div className="sed-container">
-      <PageHeader title="人工智能场景动态">
+      <PageHeader title={`${sceneName || '场景'}动态`}>
         <div className="sed-search-row">
           <div className="sed-search-bar">
             <img src={iconSearchDynamic} alt="搜索" className="sed-search-icon" />
