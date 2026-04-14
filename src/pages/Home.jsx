@@ -7,6 +7,7 @@ import { useEnterpriseStore } from '../store/enterpriseStore'
 import { useBottomNavStore } from '../store/bottomNavStore'
 import { useChatStore } from '../store/chatStore'
 import PageHeader from '../components/PageHeader';
+import { getDailyMessageList } from '../api/dailyMessage'
 
 import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
@@ -45,21 +46,12 @@ const bottomTabs = [
 ]
 
 
-// 今日消息数据
-const todayMessages = [
-    {
-    type: '新闻动态',
-    content: '头部药企迁入拱墅',
-    typeClass: 'news',
-    detailUrl: '/scene-enterprise-dynamic-detail/5',
-  },
-  {
-    type: '每日推荐',
-    content: '杭州杭钢云计算数据中心有限公司',
-    typeClass: 'recommend',
-    detailUrl: '/scene-enterprise-dynamic-detail/4'
-  }
-];
+// cardType → typeClass / label mapping
+const CARD_TYPE_HOME_MAP = {
+  1: { typeClass: 'recommend', label: '每日推荐' },
+  2: { typeClass: 'news', label: '新闻动态' },
+  3: { typeClass: 'related', label: '与我相关' },
+}
 
 export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
@@ -145,6 +137,37 @@ export default function Home() {
 function KeyFocus() {
   const navigate = useNavigate()
 
+  // --- 今日消息：从 API 获取数据 ---
+  const [messageItems, setMessageItems] = useState([])
+  const [unreadCount, setUnreadCount] = useState(0)
+  const [messageLoaded, setMessageLoaded] = useState(false)
+
+  useEffect(() => {
+    getDailyMessageList({ currentPage: 1, pageSize: 999 })
+      .then(res => {
+        const pageData = res.data || {}
+        const items = pageData.data || []
+        // 按接口返回顺序取前两条
+        const top2 = items.slice(0, 2).map(item => {
+          const mapping = CARD_TYPE_HOME_MAP[item.cardType] || { typeClass: 'news', label: '新闻动态' }
+          return {
+            type: mapping.label,
+            typeClass: mapping.typeClass,
+            content: item.title || item.content || '',
+            detailUrl: `/scene-enterprise-dynamic-detail/${item.id}`,
+          }
+        })
+        setMessageItems(top2)
+        setUnreadCount(items.filter(i => i.isRead === false).length)
+      })
+      .catch(err => {
+        console.error('首页今日消息加载失败:', err)
+        setMessageItems([])
+        setUnreadCount(0)
+      })
+      .finally(() => setMessageLoaded(true))
+  }, [])
+
   // Enterprise list data from JSON (Top 9)
   const enterprises = enterpriseDataJson.slice(0, 9).map((item, index) => ({
     id: item?.['基本信息']?.data?.enterpriseId || index,
@@ -164,10 +187,12 @@ function KeyFocus() {
             const dateStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
             navigate(`/daily-messages?date=${dateStr}`);
           }} style={{ cursor: 'pointer' }}>
-            <span className="kf-message-num">4 条</span>
-            <span className="kf-message-dot-container">
-              <span className="kf-message-dot"></span>
-            </span>
+            <span className="kf-message-num">{unreadCount} 条</span>
+            {unreadCount > 0 && (
+              <span className="kf-message-dot-container">
+                <span className="kf-message-dot"></span>
+              </span>
+            )}
             <span className="kf-message-more">
               {/* 改成svg */}
               <img src={chevronRightIcon} className="kf-message-image" />
@@ -175,12 +200,16 @@ function KeyFocus() {
           </div>
         </div>
         <div className="kf-message-list">
-          {todayMessages.map((message, index) => (
-            <div key={index} className="kf-message-item" onClick={() => navigate(message.detailUrl)}>
-              <span className={`kf-message-type kf-message-type--${message.typeClass}`}>{message.type}</span>
-              <span className="kf-message-content">{message.content}</span>
-            </div>
-          ))}
+          {messageLoaded && messageItems.length === 0 ? (
+            <div className="kf-message-empty">暂无消息</div>
+          ) : (
+            messageItems.map((message, index) => (
+              <div key={index} className="kf-message-item" onClick={() => navigate(message.detailUrl)}>
+                <span className={`kf-message-type kf-message-type--${message.typeClass}`}>{message.type}</span>
+                <span className="kf-message-content">{message.content}</span>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
