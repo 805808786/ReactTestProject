@@ -175,6 +175,10 @@ export default function DailyMessageList() {
 
   const handleCalendarClose = useCallback(() => setCalendarOpen(false), [])
 
+  const handleCalendarReset = useCallback(() => {
+    setPendingDate(null)
+  }, [])
+
   const handleCalendarConfirm = useCallback(() => {
     setConfirmedDate(pendingDate)
     setCalendarOpen(false)
@@ -239,6 +243,10 @@ export default function DailyMessageList() {
         <div className="dm-cal-overlay" onClick={handleCalendarClose}>
           <div className="dm-cal-sheet" onClick={e => e.stopPropagation()}>
             <div className="dm-cal-handle" />
+            <div className="dm-cal-header">
+              <span className="dm-cal-title">时间</span>
+              <button className="dm-cal-reset-btn" onClick={handleCalendarReset}>重置</button>
+            </div>
             <DateSelection
               dateDisabledType="afterToday"
               onSelect={date => setPendingDate(date)}
