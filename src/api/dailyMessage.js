@@ -1,5 +1,4 @@
 import dailyMessageRequest from './dailyMessageRequest'
-import request from './request'
 
 /**
  * 获取领导看板锦囊列表（今日消息列表）
@@ -46,12 +45,9 @@ export const addFeedback = ({ recommendId, content }) => {
 }
 
 /**
- * 获取新闻详情
- * POST /backend/newsInsight/detail
- * @param {object} params
- * @param {number} params.id - 新闻 ID (newsContentId)
+ * 统计未读数量
+ * POST /client/recommend/countUnread
  */
-export const getNewsInsightDetail = ({ id }) => {
-  return dailyMessageRequest.post('/backend/newsInsight/detail', { id })
+export const countUnread = () => {
+  return dailyMessageRequest.post('/client/recommend/countUnread')
 }
-

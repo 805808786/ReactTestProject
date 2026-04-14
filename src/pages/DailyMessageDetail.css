@@ -1,0 +1,667 @@
+/* ===== 页面容器 ===== */
+.dmd-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #F8F8F8;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif; */
+  overflow: hidden;
+}
+
+/* ===== 头部 ===== */
+.dmd-header {
+  height: 64px;
+  background: linear-gradient(90deg, #155DFC 0%, #1447E6 100%);
+  padding: 16px 16px 0px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.dmd-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+}
+
+.dmd-back-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  flex-shrink: 0;
+}
+
+.dmd-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.4;
+  letter-spacing: -0.022em;
+  font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+}
+
+/* ===== 主体区域（可滚动） ===== */
+.dmd-body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 16px 0px;
+}
+
+/* ===== 卡片通用样式 ===== */
+.dmd-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1), 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.dmd-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* ===== 动态基本信息 ===== */
+.dmd-info-section {
+  position: relative;
+}
+
+/* 类型标签 */
+.dmd-badge-wrapper {
+  display: flex;
+}
+
+.dmd-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: #ECEEF2;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #030213;
+  line-height: 1.333;
+  
+  height: 22px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.dmd-badge--recommend {
+  background: #F6BA15;
+  color: #FFFBDE;
+}
+
+.dmd-badge--news {
+  background: #2BA471;
+  color: #E3F9E9;
+}
+
+.dmd-badge--related {
+  background: #003CAB;
+  color: #F2F3FF;
+}
+
+
+
+/* 标题行 */
+.dmd-title-row {
+  margin-bottom: 8px;
+}
+
+.dmd-title-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.dmd-green-dot {
+  width: 12px;
+  height: 12px;
+  background: #10BA51;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dmd-green-dot--recommend {
+  background: #F6BA15;
+}
+
+.dmd-green-dot--news {
+  background: #2BA471;
+}
+
+.dmd-green-dot--related {
+  background: #003CAB;
+}
+
+.dmd-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.556;
+  letter-spacing: -0.024em;
+  
+}
+
+
+/* 来源 + 日期行 */
+
+.dmd-meta-row-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.dmd-meta-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+}
+
+.dmd-meta-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  height: 16px;
+}
+
+.dmd-meta-text {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.dmd-link-text {
+  color: #155DFC;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+
+
+/* ===== 分隔线 ===== */
+.dmd-separator {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* ===== 摘要区域 ===== */
+.dmd-summary-box {
+  background: #EFF6FF;
+  border-radius: 10px;
+  padding: 12px 12px 0px;
+  min-height: 51px;
+  box-sizing: border-box;
+}
+
+.dmd-summary-text {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625;
+  letter-spacing: 3px;
+}
+
+.dmd-summary--green {
+  font-weight: 400;
+  color: #10BA51;
+}
+
+.dmd-summary--bold {
+  font-weight: 600;
+  color: #D54941;
+}
+
+
+
+/* ===== 来源链接按钮 ===== */
+.dmd-source-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border: 1px solid #BEDBFF;
+  border-radius: 10px;
+  background: #EFF6FF;
+  text-decoration: none;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.dmd-source-link-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+.dmd-source-link-label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #155DFC;
+  line-height: 1.4;
+  
+}
+
+/* ===== 正文段落 ===== */
+.dmd-paragraphs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.dmd-paragraph {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625;
+  letter-spacing: -0.011em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+.dmd-rich-content {
+  margin-top: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #364153;
+  line-height: 1.625;
+  letter-spacing: -0.011em;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.dmd-rich-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===== 关联企业卡片 ===== */
+.dmd-card:last-child {
+  margin-bottom: 16px;
+}
+
+.dmd-card:last-child .dmd-card-content {
+  gap: 16px;
+}
+
+/* 卡片标题 */
+.dmd-section-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 20px;
+  position: relative;
+}
+
+.dmd-section-header img {
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+
+.dmd-section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 1.429;
+  letter-spacing: -0.011em;
+  
+  margin-left: 24px;
+}
+
+.dmd-section-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: #6A7282;
+  line-height: 1.333;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  margin-left: 8px;
+}
+
+/* ===== 企业列表 ===== */
+.dmd-company-list {
+  background: #F9FAFB;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dmd-company-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 企业信息行 */
+.dmd-company-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dmd-company-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.dmd-company-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #0A0A0A;
+  line-height: 24px;
+  letter-spacing: -0.15px;
+}
+
+.dmd-department-name {
+  font-size: 14px;
+  color: #0A0A0A;
+  line-height: 20px;
+  letter-spacing: -0.15px;
+  font-weight: 400;
+}
+
+.dmd-company-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.dmd-company-industry {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4A5565;
+  line-height: 1.333;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.dmd-company-dot {
+  font-size: 12px;
+  color: #4A5565;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  flex-shrink: 0;
+}
+
+.dmd-company-person {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4A5565;
+  line-height: 1.333;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+}
+
+/* 状态标签 */
+.dmd-status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  background: #0AA34E;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 1.333;
+  
+  height: 22px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.dmd-person {
+  color: #0A0A0A;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.15px;
+}
+
+/* 查看详情行 */
+.dmd-company-detail-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  height: 24px;
+}
+
+.dmd-company-detail-link {
+  font-size: 12px;
+  font-weight: 400;
+  color: #155DFC;
+  line-height: 1.333;
+  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  cursor: pointer;
+}
+
+/* ===== 反馈浮动按钮 ===== */
+.dmd-feedback-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.dmd-feedback-btn img {
+  display: block;
+}
+
+/* ===== 反馈弹框遮罩 ===== */
+.dmd-feedback-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  line-height: 0;
+}
+
+/* ===== 反馈弹框主体 ===== */
+.dmd-feedback-drawer {
+  background: #FFFFFF;
+  border-radius: 20px 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* 拖拽条 */
+.dmd-feedback-handle-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0 0;
+}
+
+.dmd-feedback-handle {
+  width: 40px;
+  height: 4px;
+  background: #E5E7EB;
+  border-radius: 9999px;
+}
+
+/* 弹框内容区 */
+.dmd-feedback-content {
+  padding: 0 24px 24px;
+}
+
+/* 标题行 */
+.dmd-feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  margin-bottom: 20px;
+}
+
+.dmd-feedback-title {
+  font-family: 'Arimo', 'PingFang SC', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #0A0A0A;
+}
+
+.dmd-feedback-close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+/* 文本输入区 */
+.dmd-feedback-textarea {
+  width: 100%;
+  height: 160px;
+  border: 0.67px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Arimo', 'PingFang SC', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #000000;
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.dmd-feedback-textarea::placeholder {
+  color: #9CA3AF;
+}
+
+/* 字数统计 */
+.dmd-feedback-counter-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.dmd-feedback-counter {
+  font-family: 'Arimo', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #9CA3AF;
+}
+
+/* 提交按钮 */
+.dmd-feedback-submit {
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #155DFC;
+  color: #FFFFFF;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.dmd-feedback-submit--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== 成功提示 Toast ===== */
+.dmd-toast {
+  position: fixed;
+  bottom: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  background: rgba(21, 93, 252, 0.92);
+  color: #fff;
+  border-radius: 24px;
+  font-family: 'PingFang SC', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  z-index: 9999;
+  white-space: nowrap;
+  animation: dmd-toast-in 0.25s ease;
+}
+
+.dmd-toast-icon {
+  font-size: 16px;
+  font-weight: 700;
+  color: #6EE7B7;
+}
+
+@keyframes dmd-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}

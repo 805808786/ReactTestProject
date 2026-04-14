@@ -7,7 +7,8 @@ import { useEnterpriseStore } from '../store/enterpriseStore'
 import { useBottomNavStore } from '../store/bottomNavStore'
 import { useChatStore } from '../store/chatStore'
 import PageHeader from '../components/PageHeader';
-import { getDailyMessageList } from '../api/dailyMessage'
+import { countUnread, getDailyMessageList } from '../api/dailyMessage'
+import { getSceneOverview } from '../api/enterprise'
 
 import sceneRadarIcon from '../assets/tabs/redesign/scene-radar.svg'
 import specialThemesIcon from '../assets/tabs/redesign/special-themes.svg'
@@ -57,6 +58,21 @@ export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore()
   const { isChatOpen, setIsChatOpen } = useChatStore()
   const navigate = useNavigate()
+  const [sceneOverview, setSceneOverview] = useState(null)
+
+  useEffect(() => {
+    const today = new Date()
+    const selectDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`
+
+    getSceneOverview({ selectDate, sceneName: '人工智能' })
+      .then(res => {
+        const overviewData = res.data || {}
+        setSceneOverview(overviewData)
+      })
+      .catch(err => {
+        console.error('首页场景概览加载失败:', err)
+      })
+  }, [])
 
   const renderContent = () => {
     const tab = bottomTabs[activeBottomTab];
@@ -67,13 +83,13 @@ export default function Home() {
 
             <AssistantCard onClick={() => setIsChatOpen(true)} />
             <EnterpriseOverview />
-            <KeyFocus />
+            <KeyFocus sceneOverview={sceneOverview} />
           </>
         )
       case 1:
         return <Special115X />
       case 3:
-        return <FocusScene />
+        return <FocusScene sceneOverview={sceneOverview} />
       case 4:
         return <DataContribution />
       case 5:
@@ -134,7 +150,7 @@ export default function Home() {
 }
 
 
-function KeyFocus() {
+function KeyFocus({ sceneOverview }) {
   const navigate = useNavigate()
 
   // --- 今日消息：从 API 获取数据 ---
@@ -143,29 +159,36 @@ function KeyFocus() {
   const [messageLoaded, setMessageLoaded] = useState(false)
 
   useEffect(() => {
-    getDailyMessageList({ currentPage: 1, pageSize: 999 })
+    getDailyMessageList({ currentPage: 1, pageSize: 2 })
       .then(res => {
         const pageData = res.data || {}
         const items = pageData.data || []
-        // 按接口返回顺序取前两条
-        const top2 = items.slice(0, 2).map(item => {
+        setMessageItems(items.map((item) => {
           const mapping = CARD_TYPE_HOME_MAP[item.cardType] || { typeClass: 'news', label: '新闻动态' }
           return {
             type: mapping.label,
             typeClass: mapping.typeClass,
             content: item.title || item.content || '',
             detailUrl: `/scene-enterprise-dynamic-detail/${item.id}`,
-          }
-        })
-        setMessageItems(top2)
-        setUnreadCount(items.filter(i => i.isRead === false).length)
+        }
+        }))
       })
       .catch(err => {
         console.error('首页今日消息加载失败:', err)
         setMessageItems([])
-        setUnreadCount(0)
       })
       .finally(() => setMessageLoaded(true))
+  }, [])
+
+  useEffect(() => {
+    countUnread()
+      .then(res => {
+        setUnreadCount(Number(res.data || 0))
+      })
+      .catch(err => {
+        console.error('首页未读数加载失败:', err)
+        setUnreadCount(0)
+      })
   }, [])
 
   // Enterprise list data from JSON (Top 9)
@@ -237,22 +260,22 @@ function KeyFocus() {
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise')}>
                 <div className="kf-stat-label">人工智能企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">6,180</span>
+                  <span className="kf-stat-num">{sceneOverview?.enterpriseTotal ?? '--'}</span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">今日 +3</span>
+                    <span className="kf-today-text">今日 {sceneOverview?.difference ?? '0'}</span>
                   </div>
                 </div>
               </div>
               <div className="kf-stat-item" onClick={() => navigate('/scene-enterprise-dynamic')}>
                 <div className="kf-stat-label">场景动态</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">15</span>
+                  <span className="kf-stat-num">{sceneOverview?.dynamicTotal ?? '--'}</span>
                   <span className="kf-stat-unit">条</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">今日 +3</span>
+                    <span className="kf-today-text">今日 {sceneOverview?.dynamicDifference ?? '0'}</span>
                   </div>
                 </div>
               </div>
@@ -280,7 +303,7 @@ function KeyFocus() {
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">今日 3</span>
+                    <span className="kf-today-text">今日 +3</span>
                   </div>
                 </div>
               </div>
@@ -712,8 +735,20 @@ const SCENE_DATA = [
 ];
 
 
-function FocusScene() {
+function FocusScene({ sceneOverview }) {
   const navigate = useNavigate()
+  const sceneData = SCENE_DATA.map(scene => {
+    if (scene.id !== 1 || !sceneOverview) return scene
+
+    return {
+      ...scene,
+      enterprises: Number(sceneOverview.enterpriseTotal ?? scene.enterprises),
+      dynamics: Number(sceneOverview.dynamicTotal ?? scene.dynamics),
+      todayEnterprises: sceneOverview.difference ?? scene.todayEnterprises,
+      todayDynamics: sceneOverview.dynamicDifference ?? scene.todayDynamics,
+    }
+  })
+
   return (
     <section className="card focus-scene-view">
       <div className="card-header">
@@ -763,7 +798,7 @@ function FocusScene() {
       </div> */}
 
       <div className="scene-list-container">
-        {SCENE_DATA.map((scene) => (
+        {sceneData.map((scene) => (
           <div className="scene-item-card" key={scene.id}>
             <div className="scene-item-header">
               <div className="scene-item-title-box">
@@ -781,7 +816,7 @@ function FocusScene() {
                 </div>
                 <div className="metric-row-bottom">
                   <span className="metric-val">{scene.enterprises.toLocaleString()}<small>家</small></span>
-                  <span className="metric-delta">今日+{scene.todayEnterprises}</span>
+                  <span className="metric-delta">今日{scene.todayEnterprises}</span>
                 </div>
               </div>
               <div className="scene-metric-box" onClick={() => { scene.id == 1 && navigate('/scene-enterprise-dynamic') }}>
@@ -791,7 +826,7 @@ function FocusScene() {
                 </div>
                 <div className="metric-row-bottom">
                   <span className="metric-val">{scene.dynamics}<small>条</small></span>
-                  <span className="metric-delta">今日+{scene.todayDynamics}</span>
+                  <span className="metric-delta">今日{scene.todayDynamics}</span>
                 </div>
               </div>
             </div>
