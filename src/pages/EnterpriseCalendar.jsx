@@ -4,6 +4,7 @@ import './EnterpriseCalendar.css';
 import DateSelection from './components/dataSelection/index';
 import useEnterpriseCalendarStore from '../store/enterpriseCalendarStore';
 import PageHeader from '../components/PageHeader';
+import IconDetailRight from '../assets/icon-detail-rigth.svg?react';
 
 // 生成近半年的每日企业数量数据（130,000 ~ 140,000 范围）
 function generateData(days) {
@@ -264,7 +265,7 @@ export default function EnterpriseCalendar() {
         </div>
 
         {/* 企业变化趋势卡片 */}
-        <div className="ec-trend-card">
+        {/* <div className="ec-trend-card">
           <div className="ec-trend-header">
             <div className="ec-trend-left">
               <span className="ec-trend-dot" />
@@ -286,7 +287,6 @@ export default function EnterpriseCalendar() {
             </div>
           </div>
 
-          {/* 折线图 */}
           <div className="ec-chart-wrap">
             <div className="ec-y-axis">
               {yAxisTicks.map(v => (
@@ -320,7 +320,7 @@ export default function EnterpriseCalendar() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* 时间轴列表 */}
         <div className="ec-timeline">
@@ -341,6 +341,19 @@ export default function EnterpriseCalendar() {
             if (item.cancelEnterprisesNum > 0) {
               dynamicReasons.push({ text: '拱墅区区内企业注销或吊销', delta: `-${item.cancelEnterprisesNum}家`, deltaPositive: false });
             }
+
+            if (item.newCancelEnterprisesNum > 0) {
+              dynamicReasons.push({ text: '拱墅区区内企业迁出', delta: `-${item.newCancelEnterprisesNum}家`, deltaPositive: false });
+            }
+
+            if (item.localToRegisteredNum > 0) {
+              dynamicReasons.push({ text: '在册企业转为在地', delta: `${item.localToRegisteredNum}家`, deltaPositive: false, type: "local" });
+            }
+            if (item.registeredToLocalNum > 0) {
+              dynamicReasons.push({ text: '在地企业转为在册', delta: `${item.registeredToLocalNum}家`, deltaPositive: false, type: "local" });
+            }
+
+
             if (item.otherNum !== 0 && item.otherNum !== undefined) {
               const isOtherPos = item.otherNum > 0;
               dynamicReasons.push({
@@ -399,7 +412,7 @@ export default function EnterpriseCalendar() {
                             <span className="ec-tl-reason-text">{r.text}</span>
                           </div>
                           <div className="ec-tl-reason-right">
-                            <span className={`ec-tl-reason-delta ${r.deltaPositive ? 'pos' : 'neg'}`}>{r.delta}</span>
+                            <span className={`ec-tl-reason-delta ${r.type == "local" ? 'local' : r.deltaPositive ? 'pos' : 'neg'}`}>{r.delta}</span>
                             {/* <span className="ec-tl-reason-link">查看企业&gt;</span> */}
                           </div>
                         </div>
@@ -411,6 +424,20 @@ export default function EnterpriseCalendar() {
                           </div>
                         </div>
                       )}
+                    </div>
+                  </div>
+
+                  {/* 查看变化明细按钮 */}
+                  <div className="ec-tl-detail-btn-container">
+                    <div
+                      className="ec-tl-detail-btn"
+                      onClick={() => {
+                        const dateToPass = dateStr || getDefaultPickerDate();
+                        navigate('/enterprise-change-list', { state: { date: dateToPass } });
+                      }}
+                    >
+                      <span>查看变化明细</span>
+                      <IconDetailRight className="-nav-icon" />
                     </div>
                   </div>
                 </div>

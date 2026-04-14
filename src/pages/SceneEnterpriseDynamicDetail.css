@@ -98,7 +98,7 @@
   font-weight: 500;
   color: #030213;
   line-height: 1.333;
-  
+
   height: 22px;
   box-sizing: border-box;
   margin-bottom: 8px;
@@ -116,6 +116,26 @@
 
 .sedd-badge--related {
   background: #003CAB;
+  color: #F2F3FF;
+}
+
+.sedd-badge--service {
+  background: #E37318;
+  color: #FFF1E9;
+}
+
+.sedd-badge--tech {
+  background: #2BA471;
+  color: #F2F3FF;
+}
+
+.sedd-badge--business {
+  background: #F6BA15;
+  color: #F2F3FF;
+}
+
+.sedd-badge--city {
+  background: #4B4B4B;
   color: #F2F3FF;
 }
 
@@ -153,13 +173,29 @@
   background: #003CAB;
 }
 
+.sedd-green-dot--service {
+  background: #E37318;
+}
+
+.sedd-green-dot--tech {
+  background: #2BA471;
+}
+
+.sedd-green-dot--business {
+  background: #F6BA15;
+}
+
+.sedd-green-dot--city {
+  background: #4B4B4B;
+}
+
 .sedd-title {
   font-size: 18px;
   font-weight: 500;
   color: #0A0A0A;
   line-height: 1.556;
   letter-spacing: -0.024em;
-  
+
 }
 
 
@@ -258,15 +294,15 @@
 
 .sedd-source-link-icon {
   font-size: 12px;
-  line-height: 1;
+  /* line-height: 1; */
+  display: flex;
 }
 
 .sedd-source-link-label {
   font-size: 16px;
   font-weight: 500;
   color: #155DFC;
-  line-height: 1.4;
-  
+
 }
 
 /* ===== 正文段落 ===== */
@@ -334,7 +370,7 @@
   color: #0A0A0A;
   line-height: 1.429;
   letter-spacing: -0.011em;
-  
+
   margin-left: 24px;
 }
 
@@ -441,7 +477,7 @@
   font-weight: 500;
   color: #FFFFFF;
   line-height: 1.333;
-  
+
   height: 22px;
   box-sizing: border-box;
   flex-shrink: 0;

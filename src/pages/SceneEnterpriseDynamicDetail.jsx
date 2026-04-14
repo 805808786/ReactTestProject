@@ -85,6 +85,48 @@ export default function SceneEnterpriseDynamicDetail() {
     return data.type;
   }
 
+  // 类型到样式类名的映射
+  const getBadgeClass = (type, category) => {
+    // 保留原有类别样式
+    if (category) {
+      return `sedd-badge--${category}`;
+    }
+    
+    // 新增类型的样式映射
+    const typeMap = {
+      '调研走访': 'sedd-badge--news',
+      '政策法规': 'sedd-badge--recommend',
+      '为企服务': 'sedd-badge--service',
+      '数据要素': 'sedd-badge--related',
+      '科技创新': 'sedd-badge--tech',
+      '商务社区': 'sedd-badge--business',
+      '城市建设': 'sedd-badge--city',
+      '文旅宣传': 'sedd-badge--recommend'
+    };
+    return typeMap[type] || '';
+  };
+
+  // 类型到绿色圆点样式类名的映射
+  const getGreenDotClass = (type, category) => {
+    // 保留原有类别样式
+    if (category) {
+      return `sedd-green-dot--${category}`;
+    }
+    
+    // 新增类型的样式映射
+    const typeMap = {
+      '调研走访': 'sedd-green-dot--news',
+      '政策法规': 'sedd-green-dot--recommend',
+      '为企服务': 'sedd-green-dot--service',
+      '数据要素': 'sedd-green-dot--related',
+      '科技创新': 'sedd-green-dot--tech',
+      '商务社区': 'sedd-green-dot--business',
+      '城市建设': 'sedd-green-dot--city',
+      '文旅宣传': 'sedd-green-dot--recommend'
+    };
+    return typeMap[type] || '';
+  };
+
   return (
     <div className="sedd-container">
       {/* ===== 头部 ===== */}
@@ -107,13 +149,13 @@ export default function SceneEnterpriseDynamicDetail() {
             <div className="sedd-info-section">
               {/* 类型标签 */}
               <div className="sedd-badge-wrapper">
-                <div className={`sedd-badge sedd-badge--${data.category}`}>{data.type}</div>
+                <div className={`sedd-badge ${getBadgeClass(data.type, data.category)}`}>{data.type}</div>
               </div>
 
               {/* 标题行 */}
               <div className="sedd-title-row">
                 <div className="sedd-title-inner">
-                  <div className={`sedd-green-dot sedd-green-dot--${data.category}`} />
+                  <div className={`sedd-green-dot ${getGreenDotClass(data.type, data.category)}`} />
                   <span className="sedd-title">{data.title}</span>
                 </div>
               </div>

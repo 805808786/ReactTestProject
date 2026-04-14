@@ -30,7 +30,6 @@ const useEnterpriseCalendarStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const data = await getChangeByTime(startDate, endDate);
-      console.log(data,123)
       set({ trendData: data || [], loading: false });
     } catch (err) {
       set({ error: err.message, loading: false });
@@ -47,7 +46,6 @@ const useEnterpriseCalendarStore = create((set, get) => ({
         currentPage: 1,
         pageSize: 10
       });
-      console.log('API Response:', res);
       // 更加兼容的解析逻辑：优先取 list 字段，其次看 res 是否本身是数组，最后看 res.data
       const list = Array.isArray(res?.list) ? res.list : (Array.isArray(res) ? res : (Array.isArray(res?.data) ? res.data : []));
       const total = res?.total ?? list.length;

@@ -26,6 +26,7 @@ import PreciseServiceDetail from './pages/PreciseServiceDetail'
 import ServiceDispatch from './pages/ServiceDispatch'
 import DailyMessageList from './pages/DailyMessageList'
 import DailyMessageDetail from './pages/DailyMessageDetail'
+import EnterpriseChangeList from './pages/EnterpriseChangeList'
 import './index.css'
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
         <Route path="/service-dispatch" element={<ServiceDispatch />} />
         <Route path="/daily-messages" element={<DailyMessageList />} />
         <Route path="/daily-message-detail/:id" element={<DailyMessageDetail />} />
+        <Route path="/enterprise-change-list" element={<EnterpriseChangeList />} />
       </Routes>
     </HashRouter>
   )

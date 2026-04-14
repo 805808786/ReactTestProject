@@ -24,7 +24,8 @@ export const useEnterpriseStore = create((set) => ({
         // 保留旧字段防止报错，但后续 UI 会切到新字段
         registered: (Number(statisticsData?.newNum || 0) + Number(statisticsData?.newMoveInNum || 0)),
         cancelled: Number(statisticsData?.cancelNum || 0),
-        other: Number(statisticsData?.otherNum || 0)
+        other: Number(statisticsData?.otherNum || 0),
+        newCancelNum: Number(statisticsData?.newCancelNum || 0)
       }
 
       set({ 

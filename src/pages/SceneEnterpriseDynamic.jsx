@@ -51,6 +51,21 @@ function DynamicCard({ item, onViewDetail }) {
   } = item;
   const relatedText = `关联 ${(enterpriseList || []).length} 家企业`;
 
+  // 类型到样式类名的映射
+  const getBadgeClass = (type) => {
+    const typeMap = {
+      '调研走访': 'sed-badge--news',
+      '政策法规': 'sed-badge--recommend',
+      '为企服务': 'sed-badge--service',
+      '数据要素': 'sed-badge--related',
+      '科技创新': 'sed-badge--tech',
+      '商务社区': 'sed-badge--business',
+      '城市建设': 'sed-badge--city',
+      '文旅宣传': 'sed-badge--recommend'
+    };
+    return typeMap[type] || 'sed-badge';
+  };
+
   return (
     <div className={`sed-card${isFirst ? ' sed-card--first' : ''}`}>
       <div className="sed-card-top">
@@ -73,7 +88,7 @@ function DynamicCard({ item, onViewDetail }) {
           <img src={iconNewspaper} alt="来源" className="sed-newspaper-icon" width={12} height={12} />
           <span className="sed-source-name">{newsSource || ''}</span>
         </div>
-        <span className="sed-related">{relatedText}</span>
+        {relatedCount > 0 && <span className="sed-related">{relatedText}</span>}
       </div>
     </div>
   );

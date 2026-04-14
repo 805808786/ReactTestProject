@@ -30,3 +30,11 @@ export function getChangeByTime(startDate, endDate) {
 export function queryEnterpriseByTime(params) {
   return oldRequest.post('/backend/dataEnterpriseChange/queryEnterpriseByTime', params);
 }
+
+/**
+ * 分页获取企业变化列表数据
+ * @param {Object} params - { currentPage, pageSize, date, keyword, type }
+ */
+export function queryEnterpriseChangeList(params) {
+  return oldRequest.post('/backend/dataEnterpriseChange/queryEnterpriseChangeList', params);
+}

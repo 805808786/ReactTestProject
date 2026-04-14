@@ -7,7 +7,7 @@
   margin: 0 auto;
   background: url('../assets/container.png') no-repeat center top / 100% 100%;
   background-attachment: fixed;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif; */
   overflow: hidden;
 }
 
@@ -219,6 +219,42 @@
   font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
   height: 22px;
   box-sizing: border-box;
+}
+
+/* Badge color variants */
+.sed-badge--news {
+  background: #2BA471;
+  color: #E3F9E9;
+}
+
+.sed-badge--recommend {
+  background: #F6BA15;
+  color: #FFFBDE;
+}
+
+.sed-badge--service {
+  background: #E37318;
+  color: #FFF1E9;
+}
+
+.sed-badge--related {
+  background: #003CAB;
+  color: #F2F3FF;
+}
+
+.sed-badge--tech {
+  background: #2BA471;
+  color: #F2F3FF;
+}
+
+.sed-badge--business {
+  background: #F6BA15;
+  color: #F2F3FF;
+}
+
+.sed-badge--city {
+  background: #4B4B4B;
+  color: #F2F3FF;
 }
 
 .sed-view-detail {
