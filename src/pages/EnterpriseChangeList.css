@@ -3,7 +3,6 @@
   margin: 0 auto;
   height: 100vh;
   background: #f4f6fb;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-serif;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -149,7 +148,7 @@
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 14px;
-  padding: 14px 16px;
+  padding: 16px;
 }
 
 .ecl-card--highlight {
@@ -161,10 +160,9 @@
   width: fit-content;
   border-radius: 3px;
   border: 1px solid;
-  padding: 2px 8px;
+  padding: 0 8px;
   font-size: 12px;
-  line-height: 20px;
-  font-family: 'MiSans', 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  line-height: 24px;
   margin-bottom: 8px;
 }
 
@@ -283,8 +281,7 @@
 .ecl-card-info-row {
   margin: 0;
   font-size: 12px;
-  line-height: 18px;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  line-height: 16px;
   display: flex;
   align-items: center;
   gap: 2px;
