@@ -26,6 +26,7 @@ import PreciseServiceDetail from './pages/PreciseServiceDetail'
 import ServiceDispatch from './pages/ServiceDispatch'
 import DailyMessageList from './pages/DailyMessageList'
 import DailyMessageDetail from './pages/DailyMessageDetail'
+import PdfPreview from './pages/PdfPreview'
 import EnterpriseChangeList from './pages/EnterpriseChangeList'
 import './index.css'
 
@@ -60,6 +61,7 @@ function App() {
         <Route path="/service-dispatch" element={<ServiceDispatch />} />
         <Route path="/daily-messages" element={<DailyMessageList />} />
         <Route path="/daily-message-detail/:id" element={<DailyMessageDetail />} />
+        <Route path="/pdf-preview" element={<PdfPreview />} />
         <Route path="/enterprise-change-list" element={<EnterpriseChangeList />} />
       </Routes>
     </HashRouter>
