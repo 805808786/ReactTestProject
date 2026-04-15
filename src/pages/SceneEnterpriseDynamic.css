@@ -142,6 +142,11 @@
 }
 
 .sed-filter-btn-text {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

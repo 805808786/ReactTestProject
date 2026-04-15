@@ -37,15 +37,14 @@ const TIME_TYPE_MAP = {
 };
 const PAGE_SIZE = 8;
 
-function FilterButton({ label, active, count, onClick }) {
+function FilterButton({ label, selected, active, onClick }) {
   return (
     <button
       className={`sed-filter-btn${active ? " sed-filter-btn--active" : ""}`}
       onClick={onClick}
     >
       <span className="sed-filter-btn-text">
-        {label}
-        {count > 0 ? `(${count})` : ""}
+        {selected || label}
       </span>
       <img
         src={iconCaretDown}
@@ -143,6 +142,9 @@ export default function SceneEnterpriseDynamic() {
   const [typeOptions, setTypeOptions] = useState(DEFAULT_TYPES);
   const [sourceOptions, setSourceOptions] = useState(DEFAULT_SOURCES);
   const [activeFilter, setActiveFilter] = useState(null);
+  const typeFilterLabel = typeFilter[0] || "类型";
+  const sourceFilterLabel = sourceFilter[0] || "来源";
+  const timeFilterLabel = timeFilter[0] || "时间";
 
   const [displayedItems, setDisplayedItems] = useState([]);
   const [hasMore, setHasMore] = useState(false);
@@ -335,19 +337,19 @@ export default function SceneEnterpriseDynamic() {
             <FilterButton
               label="类型"
               active={activeFilter === "type" || typeFilter.length > 0}
-              count={typeFilter.length}
+              selected={typeFilterLabel}
               onClick={() => handleFilterToggle("type")}
             />
             <FilterButton
               label="来源"
               active={activeFilter === "source" || sourceFilter.length > 0}
-              count={sourceFilter.length}
+              selected={sourceFilterLabel}
               onClick={() => handleFilterToggle("source")}
             />
             <FilterButton
               label="时间"
               active={activeFilter === "time" || timeFilter.length > 0}
-              count={timeFilter.length}
+              selected={timeFilterLabel}
               onClick={() => handleFilterToggle("time")}
             />
           </div>
