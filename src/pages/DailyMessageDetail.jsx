@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import iconNewspaper from "../assets/icon-dynamic-newspaper.svg";
 import iconCalendar from "../assets/icon-dynamic-calendar.svg";
 import iconBuilding from "../assets/icon-dynamic-building.svg";
@@ -7,6 +7,7 @@ import iconDept from "../assets/icon-dynamic-dept.svg";
 import iconLinkBlue from "../assets/icon-link-blue.svg";
 import iconFeedback from "../assets/icon-feedback.svg";
 import iconClose from "../assets/icon-close.svg";
+import iconChevronDownBlue from "../assets/icon-cd-chevron-down-blue.svg";
 import "./DailyMessageDetail.css";
 import PageHeader from "../components/PageHeader";
 import { getDailyMessageDetail, addFeedback } from "../api/dailyMessage";
@@ -17,26 +18,53 @@ const CARD_TYPE_CATEGORY_MAP = {
   1: "recommend",
   2: "news",
   3: "related",
+  4: "service",
   recommend: "recommend",
   news: "news",
   related: "related",
+  service: "service",
 };
 
 const CARD_TYPE_TAG_MAP = {
   1: "每日推荐",
   2: "新闻动态",
   3: "与我相关",
+  4: "精准服务",
 };
 
 const DEFAULT_DETAIL = {
   type: "场景动态",
+  category: "news",
   title: "加载中...",
   date: "",
   source: "",
   summary: "",
   paragraphs: [],
   relatedCompanies: [],
+  relatedDepartments: [],
+  serviceBackground: "",
+  serviceOpinion: "",
+  serviceProgress: "",
+  serviceProcesses: [],
+  progressAttachments: [],
+  richTextContent: null,
 };
+
+const SERVICE_TASK_STATUS_MAP = {
+  0: { label: "待开始", className: "pending" },
+  1: { label: "办理中", className: "processing" },
+  2: { label: "已完成", className: "done" },
+};
+
+function getAttachmentPreviewUrl(attachment) {
+  if (!attachment) return "";
+  return attachment.routePath || attachment.filePath || "";
+}
+
+function getAttachmentDisplayName(attachment, index) {
+  if (!attachment) return `附件${index + 1}`;
+  return attachment.fileName || attachment.routeTitle || `附件${index + 1}`;
+}
 
 function formatDateToDay(str) {
   if (!str) return "";
@@ -68,6 +96,11 @@ function mapApiDetailToData(apiData) {
     relatedDepartments: [],
     link: null,
     richTextContent: null,
+    serviceBackground: "",
+    serviceOpinion: "",
+    serviceProgress: "",
+    serviceProcesses: [],
+    progressAttachments: [],
   };
 
   if (cardType === 1) {
@@ -87,15 +120,44 @@ function mapApiDetailToData(apiData) {
         label: apiData.articleTitle || "查看原文",
       };
     }
+  } else if (cardType === 4) {
+    result.summary = "";
+    result.richTextContent = apiData.richTextContent || null;
+    result.serviceBackground = apiData.serviceBackground || "";
+    result.serviceOpinion = apiData.serviceOpinion || "";
+    result.serviceProgress = apiData.serviceProgress || "";
+    result.progressAttachments = apiData.progressAttachments || [];
+    result.serviceProcesses = (apiData.serviceProcesses || []).map(
+      (process, processIndex) => ({
+        id: process.id || `process-${processIndex}`,
+        enterpriseId: process.enterpriseId,
+        serviceTargetName:
+          process.serviceTargetName || process.enterpriseName || "",
+        tasks: (process.taskList || []).map((task, taskIndex) => ({
+          id: task.id || `${process.id || processIndex}-${taskIndex}`,
+          taskContent: task.taskContent || "",
+          status: task.status,
+          leadOrgName: task.leadOrgName || "",
+          feedbackResult: task.feedbackResult || "",
+          feedbackDate: formatDateToDay(task.feedbackDate || ""),
+        })),
+      }),
+    );
   }
 
   return result;
+}
+
+function getServiceTaskStatus(status) {
+  return SERVICE_TASK_STATUS_MAP[status] || SERVICE_TASK_STATUS_MAP[0];
 }
 
 export default function SceneEnterpriseDynamicDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState(DEFAULT_DETAIL);
+  const [expandedServiceTaskKey, setExpandedServiceTaskKey] = useState(null);
+  const [attachmentSheetOpen, setAttachmentSheetOpen] = useState(false);
 
   // 反馈弹框状态
   const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -149,6 +211,8 @@ export default function SceneEnterpriseDynamicDetail() {
         const response = await getDailyMessageDetail({ id });
         const apiData = response.data;
         if (apiData) {
+          setExpandedServiceTaskKey(null);
+          setAttachmentSheetOpen(false);
           setData(mapApiDetailToData(apiData));
           const cardType = apiData.cardType;
           const newsContentId = apiData.newsContentId;
@@ -178,6 +242,33 @@ export default function SceneEnterpriseDynamicDetail() {
     setFeedbackContent("");
   }, []);
 
+  const handleServiceTaskToggle = useCallback((taskKey) => {
+    setExpandedServiceTaskKey((prev) => (prev === taskKey ? null : taskKey));
+  }, []);
+
+  const handlePreviewAttachment = useCallback(
+    (attachment, index) => {
+      const previewUrl = getAttachmentPreviewUrl(attachment);
+      if (!previewUrl) return;
+      const attachmentName = getAttachmentDisplayName(attachment, index);
+      setAttachmentSheetOpen(false);
+      navigate(
+        `/pdf-preview?url=${encodeURIComponent(previewUrl)}&name=${encodeURIComponent(attachmentName)}`,
+      );
+    },
+    [navigate],
+  );
+
+  const handleProgressPreview = useCallback(() => {
+    const attachments = data.progressAttachments || [];
+    if (attachments.length === 0) return;
+    if (attachments.length === 1) {
+      handlePreviewAttachment(attachments[0], 0);
+      return;
+    }
+    setAttachmentSheetOpen(true);
+  }, [data.progressAttachments, handlePreviewAttachment]);
+
   const handleFeedbackSubmit = useCallback(async () => {
     if (!feedbackContent.trim() || feedbackSubmitting) return;
     setFeedbackSubmitting(true);
@@ -201,6 +292,11 @@ export default function SceneEnterpriseDynamicDetail() {
     return data.category == "recommend" ? "每日推荐" : data.type;
   }
 
+  const isServiceDetail = data.category === "service";
+  const serviceBackgroundContent =
+    data.richTextContent || data.serviceBackground || "";
+  const hasProgressAttachments = (data.progressAttachments || []).length > 0;
+
   return (
     <div className="dmd-container">
       {/* ===== 头部 ===== */}
@@ -216,205 +312,386 @@ export default function SceneEnterpriseDynamicDetail() {
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="dmd-body">
-        {/* ===== 动态基本信息卡片 ===== */}
-        <div className="dmd-card">
-          <div className="dmd-card-content">
-            {/* 顶部信息区域 */}
-            <div className="dmd-info-section">
-              {/* 类型标签 */}
-              <div className="dmd-badge-wrapper">
-                <div className={`dmd-badge dmd-badge--${data.category}`}>
-                  {data.type}
-                </div>
-              </div>
-
-              {/* 标题行 */}
-              <div className="dmd-title-row">
-                <div className="dmd-title-inner">
-                  <div
-                    className={`dmd-green-dot dmd-green-dot--${data.category}`}
+        {isServiceDetail ? (
+          <>
+            <div className="dmd-card dmd-service-top-card">
+              <div className="dmd-card-content dmd-service-top-card-content">
+                <div className="dmd-service-header">
+                  <img
+                    src={iconBuilding}
+                    alt="精准服务"
+                    width={20}
+                    height={20}
                   />
-                  <span className="dmd-title">{data.title}</span>
+                  <span className="dmd-service-title">{data.title}</span>
+                </div>
+                <div className="dmd-service-date-row">
+                  <img src={iconCalendar} alt="日期" width={12} height={12} />
+                  <span className="dmd-service-date-text">
+                    日期：{data.date}
+                  </span>
+                </div>
+                <div className="dmd-service-section-title">任务背景</div>
+                {serviceBackgroundContent && (
+                  <div className="dmd-service-background-box">
+                    <div
+                      className="dmd-service-rich-text dmd-service-background-text"
+                      dangerouslySetInnerHTML={{
+                        __html: serviceBackgroundContent,
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {data.serviceOpinion && (
+              <div className="dmd-service-panel">
+                <div className="dmd-service-panel-title">办理意见</div>
+                <div className="dmd-service-panel-box">
+                  <div
+                    className="dmd-service-rich-text dmd-service-opinion-text"
+                    dangerouslySetInnerHTML={{ __html: data.serviceOpinion }}
+                  />
                 </div>
               </div>
+            )}
 
-              {/* 来源 + 日期行 */}
-              <div className="dmd-meta-row-wrapper">
-                <div className="dmd-meta-row">
-                  {data.source && (
-                    <div className="dmd-meta-item">
-                      <img
-                        src={iconNewspaper}
-                        alt="来源"
-                        width={12}
-                        height={12}
-                      />
-                      <span className="dmd-meta-text">{data.source}</span>
+            {data.serviceProgress && (
+              <div className="dmd-service-panel">
+                <div className="dmd-service-panel-title">办理进度</div>
+                <div className="dmd-service-panel-box dmd-service-progress-box">
+                  <div
+                    className="dmd-service-rich-text dmd-service-progress-text"
+                    dangerouslySetInnerHTML={{ __html: data.serviceProgress }}
+                  />
+                  {hasProgressAttachments && (
+                    <div className="dmd-service-progress-actions">
+                      <button
+                        type="button"
+                        className="dmd-service-progress-btn"
+                        onClick={handleProgressPreview}
+                      >
+                        查看办理详情
+                      </button>
                     </div>
                   )}
-                  <div className="dmd-meta-item">
-                    <img src={iconCalendar} alt="日期" width={12} height={12} />
-                    <span className="dmd-meta-text">{data.date}</span>
-                  </div>
                 </div>
-                {data.category == "recommend" && data.link && (
-                  <div className="dmd-meta-item">
-                    <a
-                      className="dmd-link-text"
-                      onClick={() => navigate(data.link)}
-                    >
-                      查看企业 →
-                    </a>
-                  </div>
-                )}
               </div>
-            </div>
-
-            {/* 分隔线 */}
-            <div className="dmd-separator" />
-
-            {/* 摘要区域 */}
-            <div className="dmd-summary-box">
-              <p className="dmd-summary-text">
-                {data.category == "recommend" ? (
-                  <span className="dmd-summary--bold">推荐理由：</span>
-                ) : (
-                  <span className="dmd-summary--bold">摘要: </span>
-                )}
-                {data.summary}
-                {data.subSummary && (
-                  <>
-                    <br></br>
-                    {data.subSummary}
-                  </>
-                )}
-              </p>
-            </div>
-
-            {/* 来源链接按钮 */}
-            {data.sourceLink && (
-              <a
-                className="dmd-source-link-btn"
-                href={data.sourceLink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="dmd-source-link-icon">
-                  <img src={iconLinkBlue} alt="🔗" width={16} height={16} />
-                </span>
-                <span className="dmd-source-link-label">
-                  {data.sourceLink.label}
-                </span>
-              </a>
             )}
 
-            {/* 正文段落 */}
-            {data.paragraphs && data.paragraphs.length > 0 ? (
-              data.category == "recommend" ? (
-                <div className="dmd-summary-box">
-                  <p className="dmd-summary-text">
-                    <span className="dmd-summary--green">企业简介：</span>{" "}
-                    {data.paragraphs[0]}
-                  </p>
-                </div>
-              ) : (
-                <div className="dmd-paragraphs">
-                  {data.paragraphs.map((para, index) => (
-                    <p key={index} className="dmd-paragraph">
-                      {para}
-                    </p>
-                  ))}
-                </div>
-              )
-            ) : null}
-
-            {/* 富文本内容 */}
-            {data.richTextContent && (
-              <div
-                className="dmd-rich-content"
-                dangerouslySetInnerHTML={{ __html: data.richTextContent }}
-              />
-            )}
-          </div>
-        </div>
-
-        {/* ===== 关联部门信息卡片 ===== */}
-        {data.relatedDepartments && data.relatedDepartments.length > 0 && (
-          <div className="dmd-card">
-            <div className="dmd-card-content">
-              {/* 卡片标题 */}
-              <div className="dmd-section-header">
-                <img src={iconDept} alt="关联部门" width={16} height={16} />
-                <span className="dmd-section-title">关联部门</span>
-                <span className="dmd-section-count">
-                  ({data.relatedDepartments.length}个)
-                </span>
-              </div>
-
-              {/* 企业列表 */}
-              <div className="dmd-company-list">
-                {data.relatedDepartments.map((department) => (
-                  <div key={department.id} className="dmd-company-item">
-                    {/* 企业信息行 */}
-                    <div className="dmd-company-main">
-                      {/* 左侧：名称 + 基本信息 */}
-                      <div className="dmd-company-left">
-                        <div className="dmd-department-name">
-                          {department.name}
-                        </div>
+            {data.serviceProcesses && data.serviceProcesses.length > 0 && (
+              <>
+                {data.serviceProcesses.map((process, processIndex) => (
+                  <div key={process.id} className="dmd-service-panel">
+                    <div className="dmd-service-process-header">
+                      <div className="dmd-service-process-company">
+                        {process.serviceTargetName}
                       </div>
-                      {/* 右侧：状态标签 */}
-                      <div className="dmd-person">{department.legalPerson}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ===== 关联企业信息卡片 ===== */}
-        {data.relatedCompanies && data.relatedCompanies.length > 0 && (
-          <div className="dmd-card">
-            <div className="dmd-card-content">
-              {/* 卡片标题 */}
-              <div className="dmd-section-header">
-                <img src={iconBuilding} alt="关联企业" width={16} height={16} />
-                <span className="dmd-section-title">关联企业</span>
-                <span className="dmd-section-count">
-                  ({data.relatedCompanies.length}家)
-                </span>
-              </div>
-
-              {/* 企业列表 */}
-              <div className="dmd-company-list">
-                {data.relatedCompanies.map((company) => (
-                  <div key={company.id} className="dmd-company-item">
-                    {/* 企业信息行 */}
-                    <div className="dmd-company-main">
-                      {/* 左侧：名称 + 基本信息 */}
-                      <div className="dmd-company-left">
-                        <div className="dmd-company-name">{company.name}</div>
-                      </div>
-                      {company.id && (
-                        <div
-                          className="dmd-company-detail-row"
+                      {process.enterpriseId && (
+                        <button
+                          type="button"
+                          className="dmd-service-company-link"
                           onClick={() =>
-                            navigate(`/company-detail/${company.id}`)
+                            navigate(
+                              `/company-detail/${process.enterpriseId}`,
+                            )
                           }
                         >
-                          <span className="dmd-company-detail-link">
-                            查看详情 →
-                          </span>
-                        </div>
+                          查看企业 →
+                        </button>
                       )}
                     </div>
-                    {/* 查看详情 */}
+
+                    {process.tasks.map((task, taskIndex) => {
+                      const taskKey = `${process.id}-${task.id}-${taskIndex}`;
+                      const taskStatus = getServiceTaskStatus(task.status);
+                      const isExpanded = expandedServiceTaskKey === taskKey;
+                      const hasFeedbackContent =
+                        task.feedbackResult || task.feedbackDate;
+
+                      return (
+                        <div key={taskKey} className="dmd-service-task-group">
+                          <div className="dmd-service-task-box">
+                            <div className="dmd-service-task-text">
+                              <span className="dmd-service-task-label">
+                                任务目标：
+                              </span>
+                              <span>{task.taskContent}</span>
+                            </div>
+                          </div>
+
+                          <div className="dmd-service-task-meta">
+                            <div className="dmd-service-task-meta-left">
+                              <span
+                                className={`dmd-service-task-status dmd-service-task-status--${taskStatus.className}`}
+                              >
+                                {taskStatus.label}
+                              </span>
+                              <span className="dmd-service-task-org">
+                                {task.leadOrgName}
+                              </span>
+                            </div>
+
+                            <button
+                              type="button"
+                              className="dmd-service-task-toggle"
+                              onClick={() => handleServiceTaskToggle(taskKey)}
+                            >
+                              <span>
+                                {isExpanded ? "收起反馈" : "展开反馈"}
+                              </span>
+                              <img
+                                src={iconChevronDownBlue}
+                                alt=""
+                                className={`dmd-service-task-toggle-icon${isExpanded ? " dmd-service-task-toggle-icon--expanded" : ""}`}
+                              />
+                            </button>
+                          </div>
+
+                          {isExpanded && hasFeedbackContent && (
+                            <div className="dmd-service-feedback-box">
+                              {task.feedbackResult && (
+                                <div className="dmd-service-feedback-text">
+                                  <span className="dmd-service-task-label">
+                                    反馈结果：
+                                  </span>
+                                  <span>{task.feedbackResult}</span>
+                                </div>
+                              )}
+                              {task.feedbackDate && (
+                                <div className="dmd-service-feedback-date">
+                                  反馈日期：{task.feedbackDate}
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {taskIndex < process.tasks.length - 1 && (
+                            <div className="dmd-service-task-divider" />
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    {process.tasks.length === 0 && processIndex < data.serviceProcesses.length - 1 && (
+                      <div className="dmd-service-task-divider" />
+                    )}
                   </div>
                 ))}
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {/* ===== 动态基本信息卡片 ===== */}
+            <div className="dmd-card">
+              <div className="dmd-card-content">
+                {/* 顶部信息区域 */}
+                <div className="dmd-info-section">
+                  {/* 类型标签 */}
+                  <div className="dmd-badge-wrapper">
+                    <div className={`dmd-badge dmd-badge--${data.category}`}>
+                      {data.type}
+                    </div>
+                  </div>
+
+                  {/* 标题行 */}
+                  <div className="dmd-title-row">
+                    <div className="dmd-title-inner">
+                      <div
+                        className={`dmd-green-dot dmd-green-dot--${data.category}`}
+                      />
+                      <span className="dmd-title">{data.title}</span>
+                    </div>
+                  </div>
+
+                  {/* 来源 + 日期行 */}
+                  <div className="dmd-meta-row-wrapper">
+                    <div className="dmd-meta-row">
+                      {data.source && (
+                        <div className="dmd-meta-item">
+                          <img
+                            src={iconNewspaper}
+                            alt="来源"
+                            width={12}
+                            height={12}
+                          />
+                          <span className="dmd-meta-text">{data.source}</span>
+                        </div>
+                      )}
+                      <div className="dmd-meta-item">
+                        <img
+                          src={iconCalendar}
+                          alt="日期"
+                          width={12}
+                          height={12}
+                        />
+                        <span className="dmd-meta-text">{data.date}</span>
+                      </div>
+                    </div>
+                    {data.category == "recommend" && data.link && (
+                      <div className="dmd-meta-item">
+                        <a
+                          className="dmd-link-text"
+                          onClick={() => navigate(data.link)}
+                        >
+                          查看企业 →
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 分隔线 */}
+                <div className="dmd-separator" />
+
+                {/* 摘要区域 */}
+                <div className="dmd-summary-box">
+                  <p className="dmd-summary-text">
+                    {data.category == "recommend" ? (
+                      <span className="dmd-summary--bold">推荐理由：</span>
+                    ) : (
+                      <span className="dmd-summary--bold">摘要: </span>
+                    )}
+                    {data.summary}
+                    {data.subSummary && (
+                      <>
+                        <br></br>
+                        {data.subSummary}
+                      </>
+                    )}
+                  </p>
+                </div>
+
+                {/* 来源链接按钮 */}
+                {data.sourceLink && (
+                  <a
+                    className="dmd-source-link-btn"
+                    href={data.sourceLink.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="dmd-source-link-icon">
+                      <img src={iconLinkBlue} alt="🔗" width={16} height={16} />
+                    </span>
+                    <span className="dmd-source-link-label">
+                      {data.sourceLink.label}
+                    </span>
+                  </a>
+                )}
+
+                {/* 正文段落 */}
+                {data.paragraphs && data.paragraphs.length > 0 ? (
+                  data.category == "recommend" ? (
+                    <div className="dmd-summary-box">
+                      <p className="dmd-summary-text">
+                        <span className="dmd-summary--green">企业简介：</span>{" "}
+                        {data.paragraphs[0]}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="dmd-paragraphs">
+                      {data.paragraphs.map((para, index) => (
+                        <p key={index} className="dmd-paragraph">
+                          {para}
+                        </p>
+                      ))}
+                    </div>
+                  )
+                ) : null}
+
+                {/* 富文本内容 */}
+                {data.richTextContent && (
+                  <div
+                    className="dmd-rich-content"
+                    dangerouslySetInnerHTML={{ __html: data.richTextContent }}
+                  />
+                )}
               </div>
             </div>
-          </div>
+
+            {/* ===== 关联部门信息卡片 ===== */}
+            {data.relatedDepartments && data.relatedDepartments.length > 0 && (
+              <div className="dmd-card">
+                <div className="dmd-card-content">
+                  {/* 卡片标题 */}
+                  <div className="dmd-section-header">
+                    <img src={iconDept} alt="关联部门" width={16} height={16} />
+                    <span className="dmd-section-title">关联部门</span>
+                    <span className="dmd-section-count">
+                      ({data.relatedDepartments.length}个)
+                    </span>
+                  </div>
+
+                  {/* 企业列表 */}
+                  <div className="dmd-company-list">
+                    {data.relatedDepartments.map((department) => (
+                      <div key={department.id} className="dmd-company-item">
+                        {/* 企业信息行 */}
+                        <div className="dmd-company-main">
+                          {/* 左侧：名称 + 基本信息 */}
+                          <div className="dmd-company-left">
+                            <div className="dmd-department-name">
+                              {department.name}
+                            </div>
+                          </div>
+                          {/* 右侧：状态标签 */}
+                          <div className="dmd-person">
+                            {department.legalPerson}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ===== 关联企业信息卡片 ===== */}
+            {data.relatedCompanies && data.relatedCompanies.length > 0 && (
+              <div className="dmd-card">
+                <div className="dmd-card-content">
+                  {/* 卡片标题 */}
+                  <div className="dmd-section-header">
+                    <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                    <span className="dmd-section-title">关联企业</span>
+                    <span className="dmd-section-count">
+                      ({data.relatedCompanies.length}家)
+                    </span>
+                  </div>
+
+                  {/* 企业列表 */}
+                  <div className="dmd-company-list">
+                    {data.relatedCompanies.map((company) => (
+                      <div key={company.id} className="dmd-company-item">
+                        {/* 企业信息行 */}
+                        <div className="dmd-company-main">
+                          {/* 左侧：名称 + 基本信息 */}
+                          <div className="dmd-company-left">
+                            <div className="dmd-company-name">{company.name}</div>
+                          </div>
+                          {company.id && (
+                            <div
+                              className="dmd-company-detail-row"
+                              onClick={() =>
+                                navigate(`/company-detail/${company.id}`)
+                              }
+                            >
+                              <span className="dmd-company-detail-link">
+                                查看详情 →
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        {/* 查看详情 */}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
@@ -489,6 +766,43 @@ export default function SceneEnterpriseDynamicDetail() {
         <div className="dmd-toast">
           <span className="dmd-toast-icon">✓</span>
           反馈提交成功
+        </div>
+      )}
+
+      {attachmentSheetOpen && (
+        <div
+          className="dmd-attachment-overlay"
+          onClick={() => setAttachmentSheetOpen(false)}
+        >
+          <div
+            className="dmd-attachment-sheet"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="dmd-attachment-handle" />
+            <div className="dmd-attachment-title">选择附件</div>
+            <div className="dmd-attachment-list">
+              {(data.progressAttachments || []).map((attachment, index) => {
+                const previewUrl = getAttachmentPreviewUrl(attachment);
+                const attachmentName = getAttachmentDisplayName(
+                  attachment,
+                  index,
+                );
+
+                return (
+                  <button
+                    key={attachment.id || `${attachmentName}-${index}`}
+                    type="button"
+                    className="dmd-attachment-item"
+                    onClick={() => handlePreviewAttachment(attachment, index)}
+                    disabled={!previewUrl}
+                  >
+                    <span className="dmd-attachment-name">{attachmentName}</span>
+                    <span className="dmd-attachment-action">预览</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       )}
     </div>
