@@ -67,25 +67,23 @@ function formatDateToDay(str) {
 function richTextToPlainText(content) {
   if (!content) return "";
   if (typeof window === "undefined") {
-    return String(content).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    return String(content)
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
   }
 
   const div = document.createElement("div");
   div.innerHTML = content;
-  return (div.textContent || div.innerText || "")
-    .replace(/\s+/g, " ")
-    .trim();
+  return (div.textContent || div.innerText || "").replace(/\s+/g, " ").trim();
 }
 
 function mapApiItemToCard(item) {
   const cardType = item.cardType;
   const category = CARD_TYPE_CATEGORY_MAP[cardType] || "news";
-  const description =
-    cardType === 4
-      ? richTextToPlainText(
-          item.richTextContent || item.serviceBackground || item.content || "",
-        )
-      : item.content || "";
+  const description = richTextToPlainText(
+    item.content || item.richTextContent || item.serviceBackground || "",
+  );
 
   return {
     id: item.id,

@@ -86,10 +86,9 @@ function mapApiDetailToData(apiData) {
     type: tagText,
     category,
     title: apiData.title || "",
-    summary: apiData.content || "",
+    summary: apiData.content || apiData.richTextContent || null,
     date: formatDateToDay(apiData.publishTime || apiData.gmtCreate || ""),
     source: "",
-    subSummary: null,
     sourceLink: null,
     paragraphs: [],
     relatedCompanies: [],
@@ -553,13 +552,7 @@ export default function SceneEnterpriseDynamicDetail() {
                     ) : (
                       <span className="dmd-summary--bold">摘要: </span>
                     )}
-                    {data.summary}
-                    {data.subSummary && (
-                      <>
-                        <br></br>
-                        {data.subSummary}
-                      </>
-                    )}
+                    <div dangerouslySetInnerHTML={{ __html: data.summary }} />
                   </p>
                 </div>
 
