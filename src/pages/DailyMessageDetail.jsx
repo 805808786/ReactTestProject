@@ -122,7 +122,7 @@ function mapApiDetailToData(apiData) {
     }
   } else if (cardType === 4) {
     result.summary = "";
-    result.richTextContent = apiData.richTextContent || null;
+    result.richTextContent = apiData.content || apiData.richTextContent || null;
     result.serviceBackground = apiData.serviceBackground || "";
     result.serviceOpinion = apiData.serviceOpinion || "";
     result.serviceProgress = apiData.serviceProgress || "";
@@ -393,9 +393,7 @@ export default function SceneEnterpriseDynamicDetail() {
                           type="button"
                           className="dmd-service-company-link"
                           onClick={() =>
-                            navigate(
-                              `/company-detail/${process.enterpriseId}`,
-                            )
+                            navigate(`/company-detail/${process.enterpriseId}`)
                           }
                         >
                           查看企业 →
@@ -474,9 +472,10 @@ export default function SceneEnterpriseDynamicDetail() {
                       );
                     })}
 
-                    {process.tasks.length === 0 && processIndex < data.serviceProcesses.length - 1 && (
-                      <div className="dmd-service-task-divider" />
-                    )}
+                    {process.tasks.length === 0 &&
+                      processIndex < data.serviceProcesses.length - 1 && (
+                        <div className="dmd-service-task-divider" />
+                      )}
                   </div>
                 ))}
               </>
@@ -654,7 +653,12 @@ export default function SceneEnterpriseDynamicDetail() {
                 <div className="dmd-card-content">
                   {/* 卡片标题 */}
                   <div className="dmd-section-header">
-                    <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                    <img
+                      src={iconBuilding}
+                      alt="关联企业"
+                      width={16}
+                      height={16}
+                    />
                     <span className="dmd-section-title">关联企业</span>
                     <span className="dmd-section-count">
                       ({data.relatedCompanies.length}家)
@@ -669,7 +673,9 @@ export default function SceneEnterpriseDynamicDetail() {
                         <div className="dmd-company-main">
                           {/* 左侧：名称 + 基本信息 */}
                           <div className="dmd-company-left">
-                            <div className="dmd-company-name">{company.name}</div>
+                            <div className="dmd-company-name">
+                              {company.name}
+                            </div>
                           </div>
                           {company.id && (
                             <div
@@ -796,7 +802,9 @@ export default function SceneEnterpriseDynamicDetail() {
                     onClick={() => handlePreviewAttachment(attachment, index)}
                     disabled={!previewUrl}
                   >
-                    <span className="dmd-attachment-name">{attachmentName}</span>
+                    <span className="dmd-attachment-name">
+                      {attachmentName}
+                    </span>
                     <span className="dmd-attachment-action">预览</span>
                   </button>
                 );
