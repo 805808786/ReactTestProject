@@ -356,12 +356,12 @@ export default function EnterpriseDynamic() {
         {/* 筛选区域 */}
         <div className="ed-filter-area">
           <div className="ed-filter-row">
-            <FilterButton
+            {/* <FilterButton
               label="部门名称"
               active={activeFilter === 'dept' || deptFilter.length > 0}
               selected={deptFilterLabel}
               onClick={() => handleFilterToggle('dept')}
-            />
+            /> */}
             <FilterButton
               label="走访日期"
               active={activeFilter === 'date' || dateFilter.length > 0}
