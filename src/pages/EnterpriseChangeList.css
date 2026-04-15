@@ -99,6 +99,11 @@
 }
 
 .ecl-filter-btn-text {
+  display: block;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+  text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -208,17 +213,9 @@
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #f2f8ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
 }
 
-.ecl-card-icon-box img {
-  width: 20px;
-  height: 20px;
-}
+
 
 .ecl-card-title {
   margin: 0;

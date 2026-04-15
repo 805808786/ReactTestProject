@@ -140,13 +140,13 @@ function groupAndFlatten(visits) {
 }
 
 /* ===================== 筛选标签按钮 ===================== */
-function FilterButton({ label, active, count, onClick }) {
+function FilterButton({ label, selected, active, onClick }) {
   return (
     <button
       className={`ed-filter-btn${active ? ' ed-filter-btn--active' : ''}`}
       onClick={onClick}
     >
-      <span className="ed-filter-btn-text">{label}{count > 0 ? `(${count})` : ''}</span>
+      <span className="ed-filter-btn-text">{selected || label}</span>
       <img
         src={iconCaretDown}
         alt="展开"
@@ -237,6 +237,8 @@ export default function EnterpriseDynamic() {
   const [deptFilter, setDeptFilter] = useState([]);
   const [dateFilter, setDateFilter] = useState([]);
   const [activeFilter, setActiveFilter] = useState(null);
+  const deptFilterLabel = deptFilter.length > 0 ? deptFilter.join('、') : '部门名称';
+  const dateFilterLabel = dateFilter.length > 0 ? dateFilter.join('、') : '走访日期';
 
   const [displayedItems, setDisplayedItems] = useState([]);
   const [hasMore, setHasMore] = useState(true);
@@ -357,13 +359,13 @@ export default function EnterpriseDynamic() {
             <FilterButton
               label="部门名称"
               active={activeFilter === 'dept' || deptFilter.length > 0}
-              count={deptFilter.length}
+              selected={deptFilterLabel}
               onClick={() => handleFilterToggle('dept')}
             />
             <FilterButton
               label="走访日期"
               active={activeFilter === 'date' || dateFilter.length > 0}
-              count={dateFilter.length}
+              selected={dateFilterLabel}
               onClick={() => handleFilterToggle('date')}
             />
           </div>

@@ -27,11 +27,11 @@ function formatDateDisplay(str) {
 }
 
 /* ===================== 筛选标签按钮 ===================== */
-function FilterButton({ label, active, count, onClick }) {
+function FilterButton({ label, selected, active, onClick }) {
   return (
     <button className={`se-filter-btn${active ? ' se-filter-btn--active' : ''}`} onClick={onClick}>
-      <span>{label}{count > 0 ? `(${count})` : ''}</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <span className="se-filter-btn-text">{selected || label}</span>
+      <svg className="se-filter-caret" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
         <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9" />
       </svg>
     </button>
@@ -44,6 +44,8 @@ function EnterpriseCard({ enterprise }) {
   const {
     enterpriseName,
     enterpriseLogo,
+    enterpriseLogoDefault,
+    enterpriseLogoSmall,
     tags,
     categoryName,
     isFirst,
@@ -67,7 +69,7 @@ function EnterpriseCard({ enterprise }) {
       <div className="se-card-top">
         <div className="se-card-left">
           <img
-            src={enterpriseLogo || iconCompany}
+            src={enterpriseLogo || enterpriseLogoSmall || enterpriseLogoDefault || iconCompany}
             alt="企业"
             className="se-company-icon"
           />
@@ -196,6 +198,9 @@ export default function SceneEnterprise() {
 
   // 当前展开的筛选器
   const [activeFilter, setActiveFilter] = useState(null);
+  const streetFilterLabel = streetFilter[0] || '所属街道';
+  const enterpriseSizeFilterLabel = enterpriseSizeFilter[0] || '企业规模';
+  const tagFilterLabel = tagFilter[0] || '重点标签';
 
   // 列表数据
   const [displayedItems, setDisplayedItems] = useState([]);
@@ -488,19 +493,19 @@ export default function SceneEnterprise() {
                 <FilterButton
                   label="所属街道"
                   active={activeFilter === 'street' || streetFilter.length > 0}
-                  count={streetFilter.length}
+                  selected={streetFilterLabel}
                   onClick={() => setActiveFilter(activeFilter === 'street' ? null : 'street')}
                 />
                 <FilterButton
                   label="企业规模"
                   active={activeFilter === 'enterpriseSize' || enterpriseSizeFilter.length > 0}
-                  count={enterpriseSizeFilter.length}
+                  selected={enterpriseSizeFilterLabel}
                   onClick={() => setActiveFilter(activeFilter === 'enterpriseSize' ? null : 'enterpriseSize')}
                 />
                 <FilterButton
                   label="重点标签"
                   active={activeFilter === 'tag' || tagFilter.length > 0}
-                  count={tagFilter.length}
+                  selected={tagFilterLabel}
                   onClick={() => setActiveFilter(activeFilter === 'tag' ? null : 'tag')}
                 />
               </div>

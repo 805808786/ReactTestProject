@@ -7,7 +7,7 @@ import DateSelection from './components/dataSelection/index';
 import { queryEnterpriseChangeList } from '../api/enterpriseChange';
 import iconSearchInput from '../assets/icon-search-input.svg';
 import iconCaretDown from '../assets/icon-caret-down-small.svg';
-import iconBuilding from '../assets/icon-cd-building2.svg';
+import iconBuilding from '../assets/icon-company-se.svg';
 import './EnterpriseChangeList.css';
 
 
@@ -79,6 +79,9 @@ function toCardItem(item, index, selectedTypeCode) {
     statusTone: normalizeStatusTone(status),
     sourceLabel: '数据来源',
     sourceValue: item?.dataSource || '--',
+    enterpriseLogo: item?.enterpriseLogo || '',
+    enterpriseLogoSmall: item?.enterpriseLogoSmall || '',
+    enterpriseLogoDefault: item?.enterpriseLogoDefault || '',
   };
 }
 
@@ -104,9 +107,7 @@ function ChangeCard({ item, highlighted = false, onDetail }) {
 
       <div className="ecl-card-top">
         <div className="ecl-card-title-wrap">
-          <div className="ecl-card-icon-box">
-            <img src={iconBuilding} alt="" />
-          </div>
+          <img className="ecl-card-icon-box" src={(item.enterpriseLogo ? import.meta.env.VITE_BASE_URL + item.enterpriseLogo : item.enterpriseLogoSmall ? import.meta.env.VITE_BASE_URL + item.enterpriseLogoSmall : item.enterpriseLogoDefault ? import.meta.env.VITE_BASE_URL + item.enterpriseLogoDefault : iconBuilding)} alt="" />
           <div className="ecl-card-main">
             <h3 className="ecl-card-title">{item.name}</h3>
             <div className="ecl-card-tags">
@@ -160,6 +161,14 @@ export default function EnterpriseChangeList() {
     const firstType = typeFilter[0];
     return firstType ? DYNAMIC_TYPE_OPTIONS[firstType] : undefined;
   }, [typeFilter]);
+
+  const selectedTypeLabel = useMemo(() => (
+    typeFilter.length > 0 ? typeFilter.join('、') : '类型'
+  ), [typeFilter]);
+
+  const selectedTimeLabel = useMemo(() => (
+    confirmedDate ? formatDateDisplay(confirmedDate) : '时间'
+  ), [confirmedDate]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -297,13 +306,12 @@ export default function EnterpriseChangeList() {
         <div className="ecl-filter-area">
           <div className="ecl-filter-row">
             <FilterButton
-              label="类型"
+              label={selectedTypeLabel}
               active={activeFilter === 'type' || typeFilter.length > 0}
-              count={typeFilter.length}
               onClick={handleTypeToggle}
             />
             <FilterButton
-              label="时间"
+              label={selectedTimeLabel}
               active={activeFilter === 'time' || Boolean(confirmedDate)}
               onClick={handleTimeToggle}
             />
