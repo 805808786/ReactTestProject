@@ -285,7 +285,7 @@ export default function EnterpriseChangeList() {
             <img src={iconSearchInput} alt="搜索" className="ecl-search-icon" />
             <input
               className="ecl-search-input"
-              placeholder="搜索资讯信息"
+              placeholder="搜索企业名称/统一社会信用代码"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
