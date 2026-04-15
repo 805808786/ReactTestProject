@@ -629,7 +629,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
         </div> */}
 
         {/* 企业通用标签 */}
-        <div className="cd-tag-section">
+        {enterpriseTags.length > 0 && enterpriseFlatTags.length > 0 && <div className="cd-tag-section">
           <div className="cd-tag-section-title">企业通用标签</div>
           <div className="cd-tag-container">
             {!labelExpanded ? (
@@ -661,10 +661,10 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
               <span>{labelExpanded ? '收起' : '展开'}</span>
             </button>
           </div>
-        </div>
+        </div>}
 
         {/* 数商专有标签 */}
-        <div className="cd-tag-section cd-tag-section--purple">
+        {dataBusinessTagGroups.length > 0 && dataBusinessFlatTags.length > 0 && <div className="cd-tag-section cd-tag-section--purple">
           <div className="cd-tag-section-title cd-tag-section-title--purple">数商专有标签</div>
           <div className="cd-tag-container">
             {!labelExpanded2 ? (
@@ -696,7 +696,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
               <span>{labelExpanded2 ? '收起' : '展开'}</span>
             </button>
           </div>
-        </div>
+        </div>}
 
         {/* 基本字段 */}
         <div className="cd-info-grid">

@@ -393,8 +393,6 @@ export default function SceneEnterprise() {
     setRefreshing(false);
   }, [fetchEnterprises]);
 
-  console.log(dateInfoData)
-
   return (
     <div className="se-container">
       {/* ===== 头部 ===== */}

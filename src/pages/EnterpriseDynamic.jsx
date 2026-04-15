@@ -7,6 +7,7 @@ import iconVisitSearch from '../assets/icon-visit-search.svg';
 import iconCaretDown from '../assets/icon-caret-down-small.svg';
 import iconEdLink from '../assets/icon-ed-link.svg';
 import './EnterpriseDynamic.css';
+import PageHeader from '../components/PageHeader';
 
 /* ===================== Mock 数据 ===================== */
 const DEPARTMENTS = ['经济发展局', '商务局', '工信局', '市场监管局', '科技局'];
@@ -213,7 +214,7 @@ function VisitCard({ item }) {
             {sources.map((s, idx) => (
               // 点击之后防止继续页面跳转
               <a key={idx} href={s.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
-                <div  className="ed-card-tag">
+                <div className="ed-card-tag">
                   <img src={iconEdLink} alt="" width={16} height={16} />
                   <span>{s.name}</span>
                 </div>
@@ -313,7 +314,7 @@ export default function EnterpriseDynamic() {
   return (
     <div className="ed-container">
       {/* ===== 头部 ===== */}
-      <div className="ed-header">
+      {/* <div className="ed-header">
         <div className="ed-header-top">
           <button className="ed-back-btn" onClick={() => navigate(-1)} aria-label="返回">
             <img src={iconVisitBack} alt="返回" width={36} height={32} />
@@ -331,7 +332,22 @@ export default function EnterpriseDynamic() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
+
+      <PageHeader title="走访动态">
+        <div className="ed-search-row">
+          <div className="ed-search-bar">
+            <img src={iconVisitSearch} alt="搜索" className="ed-search-icon" />
+            <input
+              className="ed-search-input"
+              placeholder="搜索走访动态"
+              value={searchText}
+              onChange={e => setSearchText(e.target.value)}
+            />
+          </div>
+        </div>
+
+      </PageHeader>
 
       {/* ===== 主体区域 ===== */}
       <div className="ed-body">
