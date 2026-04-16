@@ -58,3 +58,19 @@ export const getSceneNewsOverview = ({ sceneName }) => {
     sceneName,
   });
 };
+
+/**
+ * 走访首页统计
+ * GET /backend/newsInsight/getVisitIndexInfo
+ * @param {object} params
+ * @param {string} params.date - 日期，格式 YYYY-MM-DD
+ * @param {string} params.sceneName - 场景名称
+ */
+export const getVisitIndexInfo = ({ date, sceneName } = {}) => {
+  return dailyMessageRequest.get("/backend/newsInsight/getVisitIndexInfo", {
+    params: {
+      date,
+      sceneName,
+    },
+  });
+};

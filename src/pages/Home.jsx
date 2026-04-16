@@ -9,7 +9,10 @@ import { useChatStore } from "../store/chatStore";
 import PageHeader from "../components/PageHeader";
 import { countUnread, getDailyMessageList } from "../api/dailyMessage";
 import { getSceneOverview } from "../api/enterprise";
-import { getSceneNewsOverview } from "../api/sceneEnterpriseDynamic";
+import {
+  getSceneNewsOverview,
+  getVisitIndexInfo,
+} from "../api/sceneEnterpriseDynamic";
 
 import sceneRadarIcon from "../assets/tabs/redesign/scene-radar.svg";
 import specialThemesIcon from "../assets/tabs/redesign/special-themes.svg";
@@ -65,13 +68,18 @@ function isTodayByPublishTime(publishTime) {
   return String(publishTime).startsWith(getTodayStr());
 }
 
+function formatTodayChangeText(changeNum) {
+  const value = Number(changeNum || 0);
+  return `今日 ${value > 0 ? "+" : ""}${value}`;
+}
+
 export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore();
   const { isChatOpen, setIsChatOpen } = useChatStore();
   const [sceneOverviews, setSceneOverviews] = useState({});
 
   useEffect(() => {
-    const sceneNames = ["人工智能", "数商企业"];
+    const sceneNames = ["人工智能", "数商企业", "115X专项"];
 
     Promise.allSettled(
       sceneNames.map((sceneName) =>
@@ -200,6 +208,7 @@ function KeyFocus({ sceneOverview }) {
   const [messageTotal, setMessageTotal] = useState(0);
   const [unreadCount, setUnreadCount] = useState(0);
   const [messageLoaded, setMessageLoaded] = useState(false);
+  const [visitOverview, setVisitOverview] = useState(null);
 
   useEffect(() => {
     getDailyMessageList({
@@ -243,6 +252,17 @@ function KeyFocus({ sceneOverview }) {
       .catch((err) => {
         console.error("首页未读数加载失败:", err);
         setUnreadCount(0);
+      });
+  }, []);
+
+  useEffect(() => {
+    getVisitIndexInfo()
+      .then((res) => {
+        setVisitOverview(res.data || null);
+      })
+      .catch((err) => {
+        console.error("首页走访统计加载失败:", err);
+        setVisitOverview(null);
       });
   }, []);
 
@@ -408,11 +428,15 @@ function KeyFocus({ sceneOverview }) {
               >
                 <div className="kf-stat-label">已走访企业</div>
                 <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">14</span>
+                  <span className="kf-stat-num">
+                    {visitOverview?.num ?? "--"}
+                  </span>
                   <span className="kf-stat-unit">家</span>
                   <div className="kf-today-badge green-badge">
                     <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">今日 +3</span>
+                    <span className="kf-today-text">
+                      {formatTodayChangeText(visitOverview?.changeNum)}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -458,10 +482,6 @@ function Header() {
       }
     ></PageHeader>
   );
-}
-
-function formatDateCN(date) {
-  return `${date.getFullYear()}年${String(date.getMonth() + 1).padStart(2, "0")}月${String(date.getDate()).padStart(2, "0")}日`;
 }
 
 function EnterpriseOverview() {
@@ -919,21 +939,22 @@ const SCENE_DATA = [
     name: "115X专题企业筛选场景",
     description: "115X专项企业筛选",
     subName: "115X专项企业动态",
-    enterprises: 18765,
-    dynamics: 28,
-    todayEnterprises: 2,
-    todayDynamics: 1,
+    enterprises: null,
+    dynamics: null,
+    todayEnterprises: null,
+    todayDynamics: null,
     sceneId: "5",
+    sceneName: "115X专项",
   },
   {
     id: 3,
     name: "数商企业筛选场景",
     description: "数商企业筛选",
     subName: "数商企业动态",
-    enterprises: 21512,
-    dynamics: 45,
-    todayEnterprises: 5,
-    todayDynamics: 4,
+    enterprises: null,
+    dynamics: null,
+    todayEnterprises: null,
+    todayDynamics: null,
     sceneId: "1",
     sceneName: "数商企业",
   },
@@ -967,12 +988,18 @@ function FocusScene({ sceneOverviews }) {
     if (!scene.sceneName) return scene;
 
     const sceneOverview = sceneOverviews?.[scene.sceneName];
-
+    // "115X专项"的企业数量暂时写死
     return {
       ...scene,
-      enterprises: sceneOverview?.enterpriseTotal ?? null,
+      enterprises:
+        scene.sceneName === "115X专项"
+          ? 2152
+          : (sceneOverview?.enterpriseTotal ?? null),
       dynamics: sceneOverview?.dynamicTotal ?? null,
-      todayEnterprises: sceneOverview?.difference ?? null,
+      todayEnterprises:
+        scene.sceneName === "115X专项"
+          ? 0
+          : (sceneOverview?.difference ?? null),
       todayDynamics: sceneOverview?.dynamicDifference ?? null,
     };
   });
@@ -1406,7 +1433,6 @@ function BarChart() {
 }
 
 function DataContribution() {
-  const navigate = useNavigate();
   return (
     <>
       <section className="card focus-scene-view">
@@ -1686,7 +1712,6 @@ function PolicyMatching() {
   );
 }
 
-import assistantAvatarNew from "../assets/overview-redesign/assistant-avatar-new.png";
 // import SparklesIcon from '../assets/Sparkles.svg'
 import iconAsstSearch from "../assets/overview-redesign/icon-asst-search.svg";
 

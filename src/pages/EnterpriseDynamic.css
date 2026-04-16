@@ -203,12 +203,6 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-
-.ed-card:active {
-  transform: scale(0.98);
 }
 
 .ed-card-date {
