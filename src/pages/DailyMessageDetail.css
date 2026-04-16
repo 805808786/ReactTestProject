@@ -252,6 +252,12 @@
 
 
 /* ===== 来源链接按钮 ===== */
+.dmd-source-link {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .dmd-source-link-btn {
   display: inline-flex;
   align-items: center;

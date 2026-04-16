@@ -11,6 +11,17 @@ export const getNewsInsightDetail = ({ id }) => {
 }
 
 /**
+ * 获取新闻的关联新闻
+ * POST /backend/newsInsight/getAllRelatedNews
+ * @param {object} params
+ * @param {number} params.id - 新闻 ID
+ */
+export const getNewsInsightAllRelatedNews = ({ id }) => {
+  return dailyMessageRequest.post('/backend/newsInsight/getAllRelatedNews', { id })
+}
+
+
+/**
  * 获取新闻类型列表
  * GET /backend/newsInsight/getNewsTypeList
  */

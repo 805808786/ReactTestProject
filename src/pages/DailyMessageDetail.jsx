@@ -11,7 +11,10 @@ import iconChevronDownBlue from "../assets/icon-cd-chevron-down-blue.svg";
 import "./DailyMessageDetail.css";
 import PageHeader from "../components/PageHeader";
 import { getDailyMessageDetail, addFeedback } from "../api/dailyMessage";
-import { getNewsInsightDetail } from "../api/sceneEnterpriseDynamic";
+import {
+  getNewsInsightDetail,
+  getNewsInsightAllRelatedNews,
+} from "../api/sceneEnterpriseDynamic";
 import { getSslmEnterprisesInfoById } from "../api/enterprise";
 
 const CARD_TYPE_CATEGORY_MAP = {
@@ -86,10 +89,9 @@ function mapApiDetailToData(apiData) {
     type: tagText,
     category,
     title: apiData.title || "",
-    summary: apiData.content || "",
+    summary: apiData.content || apiData.richTextContent || null,
     date: formatDateToDay(apiData.publishTime || apiData.gmtCreate || ""),
     source: "",
-    subSummary: null,
     sourceLink: null,
     paragraphs: [],
     relatedCompanies: [],
@@ -117,12 +119,12 @@ function mapApiDetailToData(apiData) {
     if (apiData.articleUrl) {
       result.sourceLink = {
         url: apiData.articleUrl,
-        label: apiData.articleTitle || "查看原文",
+        label: apiData.newsSource || "查看原文",
       };
     }
   } else if (cardType === 4) {
     result.summary = "";
-    result.richTextContent = apiData.richTextContent || null;
+    result.richTextContent = apiData.content || apiData.richTextContent || null;
     result.serviceBackground = apiData.serviceBackground || "";
     result.serviceOpinion = apiData.serviceOpinion || "";
     result.serviceProgress = apiData.serviceProgress || "";
@@ -189,6 +191,22 @@ export default function SceneEnterpriseDynamicDetail() {
         console.error("Error fetching news detail:", error);
       }
     };
+    const fetchNewsInsightAllRelatedNews = async (newsContentId) => {
+      try {
+        const newsResponse = await getNewsInsightAllRelatedNews({
+          id: newsContentId,
+        });
+        const newsData = newsResponse.data;
+        if (newsData) {
+          setData((prev) => ({
+            ...prev,
+            allRelatedNews: newsData,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching news detail:", error);
+      }
+    };
     const fetchEnterpriseDetail = async (enterpriseId) => {
       try {
         const enterpriseResponse = await getSslmEnterprisesInfoById({
@@ -222,6 +240,7 @@ export default function SceneEnterpriseDynamicDetail() {
           }
           if ((cardType === 2 || cardType === 3) && newsContentId) {
             await fetchNewsDetail(newsContentId);
+            await fetchNewsInsightAllRelatedNews(newsContentId);
           }
         }
       } catch (error) {
@@ -393,9 +412,7 @@ export default function SceneEnterpriseDynamicDetail() {
                           type="button"
                           className="dmd-service-company-link"
                           onClick={() =>
-                            navigate(
-                              `/company-detail/${process.enterpriseId}`,
-                            )
+                            navigate(`/company-detail/${process.enterpriseId}`)
                           }
                         >
                           查看企业 →
@@ -474,9 +491,10 @@ export default function SceneEnterpriseDynamicDetail() {
                       );
                     })}
 
-                    {process.tasks.length === 0 && processIndex < data.serviceProcesses.length - 1 && (
-                      <div className="dmd-service-task-divider" />
-                    )}
+                    {process.tasks.length === 0 &&
+                      processIndex < data.serviceProcesses.length - 1 && (
+                        <div className="dmd-service-task-divider" />
+                      )}
                   </div>
                 ))}
               </>
@@ -554,32 +572,9 @@ export default function SceneEnterpriseDynamicDetail() {
                     ) : (
                       <span className="dmd-summary--bold">摘要: </span>
                     )}
-                    {data.summary}
-                    {data.subSummary && (
-                      <>
-                        <br></br>
-                        {data.subSummary}
-                      </>
-                    )}
+                    <div dangerouslySetInnerHTML={{ __html: data.summary }} />
                   </p>
                 </div>
-
-                {/* 来源链接按钮 */}
-                {data.sourceLink && (
-                  <a
-                    className="dmd-source-link-btn"
-                    href={data.sourceLink.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="dmd-source-link-icon">
-                      <img src={iconLinkBlue} alt="🔗" width={16} height={16} />
-                    </span>
-                    <span className="dmd-source-link-label">
-                      {data.sourceLink.label}
-                    </span>
-                  </a>
-                )}
 
                 {/* 正文段落 */}
                 {data.paragraphs && data.paragraphs.length > 0 ? (
@@ -607,6 +602,51 @@ export default function SceneEnterpriseDynamicDetail() {
                     className="dmd-rich-content"
                     dangerouslySetInnerHTML={{ __html: data.richTextContent }}
                   />
+                )}
+
+                {/* 来源链接按钮 */}
+                {data.sourceLink && (
+                  <div className="dmd-source-link">
+                    <a
+                      className="dmd-source-link-btn"
+                      href={data.sourceLink.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="dmd-source-link-icon">
+                        <img
+                          src={iconLinkBlue}
+                          alt="🔗"
+                          width={16}
+                          height={16}
+                        />
+                      </span>
+                      <span className="dmd-source-link-label">
+                        {data.sourceLink.label}
+                      </span>
+                    </a>
+                    {data.allRelatedNews?.map((link, index) => (
+                      <a
+                        key={index}
+                        className="dmd-source-link-btn"
+                        href={link.articleUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="dmd-source-link-icon">
+                          <img
+                            src={iconLinkBlue}
+                            alt="🔗"
+                            width={16}
+                            height={16}
+                          />
+                        </span>
+                        <span className="dmd-source-link-label">
+                          {link.newsSource}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
@@ -654,7 +694,12 @@ export default function SceneEnterpriseDynamicDetail() {
                 <div className="dmd-card-content">
                   {/* 卡片标题 */}
                   <div className="dmd-section-header">
-                    <img src={iconBuilding} alt="关联企业" width={16} height={16} />
+                    <img
+                      src={iconBuilding}
+                      alt="关联企业"
+                      width={16}
+                      height={16}
+                    />
                     <span className="dmd-section-title">关联企业</span>
                     <span className="dmd-section-count">
                       ({data.relatedCompanies.length}家)
@@ -669,7 +714,9 @@ export default function SceneEnterpriseDynamicDetail() {
                         <div className="dmd-company-main">
                           {/* 左侧：名称 + 基本信息 */}
                           <div className="dmd-company-left">
-                            <div className="dmd-company-name">{company.name}</div>
+                            <div className="dmd-company-name">
+                              {company.name}
+                            </div>
                           </div>
                           {company.id && (
                             <div
@@ -796,7 +843,9 @@ export default function SceneEnterpriseDynamicDetail() {
                     onClick={() => handlePreviewAttachment(attachment, index)}
                     disabled={!previewUrl}
                   >
-                    <span className="dmd-attachment-name">{attachmentName}</span>
+                    <span className="dmd-attachment-name">
+                      {attachmentName}
+                    </span>
                     <span className="dmd-attachment-action">预览</span>
                   </button>
                 );
