@@ -9,10 +9,7 @@ import { useChatStore } from "../store/chatStore";
 import PageHeader from "../components/PageHeader";
 import { countUnread, getDailyMessageList } from "../api/dailyMessage";
 import { getSceneOverview } from "../api/enterprise";
-import {
-  getSceneNewsOverview,
-  getVisitIndexInfo,
-} from "../api/sceneEnterpriseDynamic";
+import { getSceneNewsOverview } from "../api/sceneEnterpriseDynamic";
 
 import sceneRadarIcon from "../assets/tabs/redesign/scene-radar.svg";
 import specialThemesIcon from "../assets/tabs/redesign/special-themes.svg";
@@ -27,8 +24,6 @@ import chevronRightIcon from "../assets/chevron-right.svg";
 import enterpriseDataJson from "../json/enterprise.json";
 import SparklesIcon from "../assets/Sparkles.svg";
 import iconAi from "../assets/key-focus-redesign/icon-ai.svg";
-import iconKeyEnt from "../assets/key-focus-redesign/icon-key-ent.svg";
-import iconChevronList from "../assets/key-focus-redesign/icon-chevron-list.svg";
 import ZapIcon from "../assets/Zap.svg";
 import MessageCircleIcon from "../assets/MessageCircle.svg";
 import iconKeyEnterpriseChevron from "../assets/icon-key-enterprise-chevron-right.svg";
@@ -58,6 +53,27 @@ const CARD_TYPE_HOME_MAP = {
   3: { typeClass: "related", label: "与我相关" },
 };
 
+const IN_DISTRICT_SERVICE_ENTERPRISES = [
+  { name: "杭州杭钢云计算数据中心有限公司", date: "04-30" },
+  { name: "浙江高信技术股份有限公司", date: "04-28" },
+  { name: "浙江联合通讯技术股份有限公司", date: "04-26" },
+  { name: "浙江逻辑科技有限公司", date: "04-26" },
+];
+
+const OUT_DISTRICT_SERVICE_ENTERPRISES = [
+  { name: "杭州杭钢云计算数据中心有限公司", date: "04-30" },
+  { name: "浙江高信技术股份有限公司", date: "04-28" },
+  { name: "浙江联合通讯技术股份有限公司", date: "04-26" },
+  { name: "浙江逻辑科技有限公司", date: "04-26" },
+];
+
+const SERVICE_DEPARTMENTS = [
+  { name: "拱墅区发改局", progress: "任务进度（1/6）", todayIncrease: "+3" },
+  { name: "拱墅区发改局", progress: "任务进度（1/6）", todayIncrease: "+3" },
+  { name: "东新街道", progress: "任务进度（1/6）", todayIncrease: "+3" },
+  { name: "武林街道", progress: "任务进度（0/6）", todayIncrease: "+1" },
+];
+
 function getTodayStr() {
   const today = new Date();
   return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
@@ -68,9 +84,72 @@ function isTodayByPublishTime(publishTime) {
   return String(publishTime).startsWith(getTodayStr());
 }
 
-function formatTodayChangeText(changeNum) {
-  const value = Number(changeNum || 0);
-  return `今日 ${value > 0 ? "+" : ""}${value}`;
+function HomeCardHeader({ title, countText, hasUnread }) {
+  return (
+    <div className="kf-service-header">
+      <div className="kf-service-title">{title}</div>
+      <div className="kf-service-header-right">
+        <span className="kf-service-count">{countText}</span>
+        {hasUnread && <span className="kf-service-dot" />}
+        <img
+          src={iconKeyEnterpriseChevron}
+          alt=""
+          className="kf-service-chevron"
+        />
+      </div>
+    </div>
+  );
+}
+
+function ServiceEnterpriseCard({ title, total, hasUnread, items }) {
+  return (
+    <div className="kf-service-card">
+      <HomeCardHeader
+        title={title}
+        countText={`${total} 家`}
+        hasUnread={hasUnread}
+      />
+      <div className="kf-service-enterprise-list">
+        {items.map((item, index) => (
+          <div className="kf-service-enterprise-item" key={`${item.name}-${index}`}>
+            <div className="kf-service-enterprise-name">{item.name}</div>
+            <div className="kf-service-enterprise-date">{item.date}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ServiceDepartmentCard({ title, total, hasUnread, items }) {
+  return (
+    <div className="kf-service-card">
+      <HomeCardHeader
+        title={title}
+        countText={`${total} 个`}
+        hasUnread={hasUnread}
+      />
+      <div className="kf-service-department-list">
+        {items.map((item, index) => (
+          <div className="kf-service-department-item" key={`${item.name}-${index}`}>
+            <div className="kf-service-department-name">{item.name}</div>
+            <div className="kf-service-department-progress">{item.progress}</div>
+            <div className="kf-service-department-today">
+              <span className="kf-service-department-today-dot" />
+              <span className="kf-service-department-today-text">
+                今日 {item.todayIncrease}
+              </span>
+            </div>
+            <img
+              src={iconKeyEnterpriseChevronItem}
+              alt=""
+              className="kf-service-department-chevron"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
@@ -208,7 +287,6 @@ function KeyFocus({ sceneOverview }) {
   const [messageTotal, setMessageTotal] = useState(0);
   const [unreadCount, setUnreadCount] = useState(0);
   const [messageLoaded, setMessageLoaded] = useState(false);
-  const [visitOverview, setVisitOverview] = useState(null);
 
   useEffect(() => {
     getDailyMessageList({
@@ -254,28 +332,6 @@ function KeyFocus({ sceneOverview }) {
         setUnreadCount(0);
       });
   }, []);
-
-  useEffect(() => {
-    getVisitIndexInfo()
-      .then((res) => {
-        setVisitOverview(res.data || null);
-      })
-      .catch((err) => {
-        console.error("首页走访统计加载失败:", err);
-        setVisitOverview(null);
-      });
-  }, []);
-
-  // Enterprise list data from JSON (Top 9)
-  const enterprises = enterpriseDataJson.slice(0, 9).map((item, index) => ({
-    id: item?.["基本信息"]?.data?.enterpriseId || index,
-    name: item?.["基本信息"]?.data?.enterpriseName || "",
-    tag1: (item?.["基本信息"]?.data?.categoryName || "重点").replace(
-      "企业",
-      "",
-    ),
-    tag2: "拟走访",
-  }));
 
   return (
     <section className="key-focus-v2">
@@ -329,7 +385,7 @@ function KeyFocus({ sceneOverview }) {
 
       <div className="kf-card-v2">
         <div className="kf-header-v2">
-          <div className="kf-title-v2">当前重点关注</div>
+          <div className="kf-title-v2">重点场景</div>
         </div>
 
         <div className="kf-content-stack">
@@ -390,82 +446,29 @@ function KeyFocus({ sceneOverview }) {
               </div>
             </div>
           </div>
-
-          {/* Key Enterprise Section */}
-          <div className="kf-section-box key-ent-box">
-            <div className="kf-section-header">
-              <div className="kf-section-title-grp">
-                <div className="kf-section-icon-bg blue-bg">
-                  <img src={iconKeyEnt} alt="KeyEnt" />
-                </div>
-                <span className="kf-section-name blue-text">重点企业</span>
-              </div>
-              <div
-                className="kf-tag-badge blue-badge"
-                onClick={() => navigate("/planned-visits")}
-              >
-                重点企业说明
-              </div>
-            </div>
-            <div className="kf-stats-grid">
-              <div
-                className="kf-stat-item"
-                onClick={() => navigate("/planned-visits")}
-              >
-                <div className="kf-stat-label">拟走访企业</div>
-                <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">9</span>
-                  <span className="kf-stat-unit">家</span>
-                  <div className="kf-today-badge green-badge">
-                    <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">今日 +3</span>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="kf-stat-item"
-                onClick={() => navigate("/enterprise-dynamic")}
-              >
-                <div className="kf-stat-label">已走访企业</div>
-                <div className="kf-stat-value-row">
-                  <span className="kf-stat-num">
-                    {visitOverview?.num ?? "--"}
-                  </span>
-                  <span className="kf-stat-unit">家</span>
-                  <div className="kf-today-badge green-badge">
-                    <span className="kf-dot green-dot"></span>
-                    <span className="kf-today-text">
-                      {formatTodayChangeText(visitOverview?.changeNum)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Enterprise List */}
-          <div className="kf-ent-list">
-            {enterprises.map((ent) => (
-              <div
-                key={ent.id}
-                className="kf-ent-item"
-                onClick={() => navigate(`/company-detail/${ent.id}`)}
-              >
-                <div className="kf-ent-info">
-                  <span className="kf-ent-name">{ent.name}</span>
-                  <span className="kf-ent-tag head-tag">{ent.tag1}</span>
-                  <span className="kf-ent-tag visit-tag">{ent.tag2}</span>
-                </div>
-                <img
-                  src={iconChevronList}
-                  alt="chevron"
-                  className="kf-chevron"
-                />
-              </div>
-            ))}
-          </div>
         </div>
       </div>
+
+      <ServiceEnterpriseCard
+        title="区内重点服务企业"
+        total={20}
+        hasUnread
+        items={IN_DISTRICT_SERVICE_ENTERPRISES}
+      />
+
+      <ServiceEnterpriseCard
+        title="区外重点服务企业"
+        total={5}
+        hasUnread
+        items={OUT_DISTRICT_SERVICE_ENTERPRISES}
+      />
+
+      <ServiceDepartmentCard
+        title="企业服务部门"
+        total={6}
+        hasUnread
+        items={SERVICE_DEPARTMENTS}
+      />
     </section>
   );
 }

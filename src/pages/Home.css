@@ -121,7 +121,7 @@
 }
 
 .bottom-nav-content {
-  padding-bottom: 154px !important;
+  padding-bottom: 100px !important;
 }
 
 /* Bottom Navigation Redesign */
@@ -1599,7 +1599,6 @@
 
 .kf-card-v2 {
   /* max-width: 408px; */
-  min-height: 467px;
   /* margin: 0 auto; */
   background: rgba(250, 250, 250, 0.7);
   border-radius: 16px;
@@ -1844,6 +1843,175 @@
   font-size: 12px;
   line-height: 1.5;
   white-space: nowrap;
+}
+
+.kf-service-card {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kf-service-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kf-service-title {
+  font-family: "MiSans", sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 22.5px;
+  letter-spacing: -0.0117em;
+  color: #050505;
+}
+
+.kf-service-header-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.kf-service-count {
+  font-family: "MiSans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: rgba(0, 0, 0, 0.36);
+}
+
+.kf-service-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #FB2C36;
+}
+
+.kf-service-chevron {
+  width: 12px;
+  height: 12px;
+}
+
+.kf-service-enterprise-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kf-service-enterprise-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.kf-service-enterprise-name {
+  flex: 1;
+  min-width: 0;
+  font-family: "MiSans", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: normal;
+  color: rgba(0, 0, 0, 0.9);
+  word-break: break-all;
+  white-space: normal;
+}
+
+.kf-service-enterprise-date {
+  flex-shrink: 0;
+  min-width: 38px;
+  text-align: right;
+  font-family: "PingFang SC", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.kf-service-department-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.kf-service-department-item {
+  min-height: 30px;
+  border-radius: 10px;
+  background: #EFF6FF;
+  padding: 5px 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px 58px 16px;
+  gap: 8px;
+  align-items: center;
+}
+
+.kf-service-department-name {
+  min-width: 0;
+  font-family: "Inter", "Noto Sans SC", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.0094em;
+  color: #1777FF;
+  white-space: normal;
+  word-break: break-all;
+}
+
+.kf-service-department-progress {
+  width: 92px;
+  min-height: 20px;
+  border-radius: 4px;
+  background: #D9E1FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  font-family: "PingFang SC", sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  color: #0052D9;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.kf-service-department-today {
+  width: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.kf-service-department-today-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #00C950;
+  flex-shrink: 0;
+}
+
+.kf-service-department-today-text {
+  font-family: "Source Han Sans CN", sans-serif;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 0.0117em;
+  color: #00A63E;
+  white-space: nowrap;
+}
+
+.kf-service-department-chevron {
+  width: 16px;
+  height: 16px;
+  justify-self: end;
 }
 
 .head-tag {
