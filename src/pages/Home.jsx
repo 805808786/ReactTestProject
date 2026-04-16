@@ -9,6 +9,7 @@ import { useChatStore } from "../store/chatStore";
 import PageHeader from "../components/PageHeader";
 import { countUnread, getDailyMessageList } from "../api/dailyMessage";
 import { getSceneOverview } from "../api/enterprise";
+import { getSceneNewsOverview } from "../api/sceneEnterpriseDynamic";
 
 import sceneRadarIcon from "../assets/tabs/redesign/scene-radar.svg";
 import specialThemesIcon from "../assets/tabs/redesign/special-themes.svg";
@@ -20,7 +21,6 @@ import policyMatchingIcon from "../assets/tabs/redesign/policy-matching.svg";
 import icon115 from "../assets/special-115x/115-badge-icon.svg";
 import icon296 from "../assets/special-115x/icon-special-296.svg";
 import chevronRightIcon from "../assets/chevron-right.svg";
-import starIcon from "../assets/icon-dc-star.svg";
 import enterpriseDataJson from "../json/enterprise.json";
 import SparklesIcon from "../assets/Sparkles.svg";
 import iconAi from "../assets/key-focus-redesign/icon-ai.svg";
@@ -30,13 +30,9 @@ import ZapIcon from "../assets/Zap.svg";
 import MessageCircleIcon from "../assets/MessageCircle.svg";
 import iconKeyEnterpriseChevron from "../assets/icon-key-enterprise-chevron-right.svg";
 import iconKeyEnterpriseChevronItem from "../assets/icon-key-enterprise-chevron-right2.svg";
-import assistantAvatar from "../assets/assistant-avatar.svg";
-import assistantArrow from "../assets/assistant-arrow.svg";
 
 import iconTrendUp from "../assets/overview-redesign/icon-trend-up.svg";
 import iconSearchInput from "../assets/icon-search-input.svg";
-import iconSceneCalendar from "../assets/icon-scene-calendar.svg";
-import iconHelpOutline from "../assets/overview-redesign/icon-help-outline.svg";
 
 const bottomTabs = [
   { label: "墅企专题", icon: specialThemesIcon, logicCase: 1 },
@@ -72,19 +68,26 @@ function isTodayByPublishTime(publishTime) {
 export default function Home() {
   const { activeBottomTab, setActiveBottomTab } = useBottomNavStore();
   const { isChatOpen, setIsChatOpen } = useChatStore();
-  const navigate = useNavigate();
   const [sceneOverviews, setSceneOverviews] = useState({});
 
   useEffect(() => {
-    const today = new Date();
-    const selectDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
     const sceneNames = ["人工智能", "数商企业"];
 
     Promise.allSettled(
       sceneNames.map((sceneName) =>
-        getSceneOverview({ selectDate, sceneName }).then((res) => ({
+        Promise.all([
+          getSceneOverview({ sceneName }),
+          getSceneNewsOverview({ sceneName }),
+        ]).then(([overviewRes, newsOverviewRes]) => ({
           sceneName,
-          data: res.data || null,
+          data: {
+            ...(overviewRes.data || {}),
+            ...(newsOverviewRes.data || {}),
+            enterpriseTotal: overviewRes.data?.enterpriseTotal ?? null,
+            difference: overviewRes.data?.difference ?? null,
+            dynamicTotal: newsOverviewRes.data?.dynamicTotal ?? null,
+            dynamicDifference: newsOverviewRes.data?.dynamicDifference ?? null,
+          },
         })),
       ),
     ).then((results) => {
@@ -199,8 +202,6 @@ function KeyFocus({ sceneOverview }) {
   const [messageLoaded, setMessageLoaded] = useState(false);
 
   useEffect(() => {
-    const todayStr = getTodayStr();
-
     getDailyMessageList({
       currentPage: 1,
       pageSize: 2,
