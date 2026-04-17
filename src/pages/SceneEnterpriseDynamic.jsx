@@ -225,6 +225,7 @@ export default function SceneEnterpriseDynamic() {
 
       try {
         const response = await getNewsInsightPage({
+          status: "1",
           currentPage: page,
           pageSize: PAGE_SIZE,
           keyword: keyword || undefined,
