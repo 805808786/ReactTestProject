@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import {useNavigate, useLocation, useSearchParams} from 'react-router-dom';
 import FilterSheet from './components/FilterSheet';
 import InfiniteList from './components/InfiniteList';
 import DateSelection from './components/dataSelection/index';
@@ -139,8 +139,8 @@ function EnterpriseCard({ enterprise }) {
 /* ===================== 主页面 ===================== */
 export default function SceneEnterprise() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const sceneName = location.state?.sceneName || '人工智能';
+  const [searchParams] = useSearchParams();
+  const sceneName = searchParams.get("sceneName")?.trim() || '人工智能';
 
   const [searchText, setSearchText] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');

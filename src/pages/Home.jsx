@@ -68,7 +68,7 @@ function HomeCardHeader({ title, countText, onClick }) {
   );
 }
 
-const REGION_COLOR = { 1: '#00A63E', 2: '#BB4D00' };
+const REGION_COLOR = { 1: '#00A63E', 2: '#E37318' };
 
 function ServiceEnterpriseCard({ title, total, items, regionType, navigate }) {
   const prefix = regionType === 1 ? '区内' : '区外';
@@ -144,24 +144,31 @@ export default function Home() {
   const [sceneOverviews, setSceneOverviews] = useState({});
 
   useEffect(() => {
-    const sceneNames = ["人工智能", "数商企业", "115X专项"];
+    const sceneNames = [
+      {type: "1", sceneName: "人工智能"},
+      {type: "2", sceneName: "数商企业"},
+      {type: "3", sceneName: "115X专项"}
+    ];
 
     Promise.allSettled(
-      sceneNames.map((sceneName) =>
+      sceneNames.map(({sceneName, type}) =>
         Promise.all([
-          getSceneOverview({ sceneName }),
+          getSceneOverview({ type }),
           getSceneNewsOverview({ sceneName }),
-        ]).then(([overviewRes, newsOverviewRes]) => ({
-          sceneName,
-          data: {
-            ...(overviewRes.data || {}),
-            ...(newsOverviewRes.data || {}),
-            enterpriseTotal: overviewRes.data?.enterpriseTotal ?? null,
-            difference: overviewRes.data?.difference ?? null,
-            dynamicTotal: newsOverviewRes.data?.dynamicTotal ?? null,
-            dynamicDifference: newsOverviewRes.data?.dynamicDifference ?? null,
-          },
-        })),
+        ]).then(([overviewRes, newsOverviewRes]) => {
+          const overviewData = overviewRes.data?.[0];
+          return {
+            sceneName,
+            data: {
+              ...(overviewData || {}),
+              ...(newsOverviewRes.data || {}),
+              enterpriseTotal: overviewData?.enterpriseNum ?? null,
+              difference: overviewData?.yesterdayChangeNum ?? null,
+              dynamicTotal: newsOverviewRes.data?.dynamicTotal ?? null,
+              dynamicDifference: newsOverviewRes.data?.dynamicDifference ?? null,
+            },
+          };
+        }),
       ),
     ).then((results) => {
       setSceneOverviews(() => {
@@ -969,15 +976,9 @@ function FocusScene({ sceneOverviews }) {
     // "115X专项"的企业数量暂时写死
     return {
       ...scene,
-      enterprises:
-        scene.sceneName === "115X专项"
-          ? 2152
-          : (sceneOverview?.enterpriseTotal ?? null),
+      enterprises: sceneOverview?.enterpriseTotal ?? null,
       dynamics: sceneOverview?.dynamicTotal ?? null,
-      todayEnterprises:
-        scene.sceneName === "115X专项"
-          ? 0
-          : (sceneOverview?.difference ?? null),
+      todayEnterprises: sceneOverview?.difference ?? null,
       todayDynamics: sceneOverview?.dynamicDifference ?? null,
     };
   });
@@ -1069,7 +1070,7 @@ function FocusScene({ sceneOverviews }) {
               <div
                 className="scene-metric-box"
                 onClick={() => {
-                  scene.id == 1 && navigate("/scene-enterprise");
+                  scene.sceneName && navigate(`/scene-enterprise?sceneName=${scene.sceneName}`);
                 }}
               >
                 <div className="metric-row-top">

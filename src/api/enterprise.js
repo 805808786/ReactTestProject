@@ -79,11 +79,11 @@ export const getDataCountInfo = ({ selectDate, sceneName }) => {
 /**
  * 获取场景概览（企业总数、变化企业数、动态总数、动态变化数）
  * @param {object} params
- * @param {string} params.sceneName - 场景名称，如 "人工智能"
+ * @param {string} params.type - 场景类型，如 "1： 人工智能、2: 数商企业、3: 115x专项"
  */
-export const getSceneOverview = ({ sceneName }) => {
-  return request.post("/backend/sceneRadar/getSceneOverview", {
-    sceneName,
+export const getSceneOverview = ({ type }) => {
+  return request.post("/backend/sceneRadar/listSceneGroupOverviewByType", {
+    type,
   });
 };
 
