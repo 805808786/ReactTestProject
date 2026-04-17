@@ -401,7 +401,7 @@ export default function SceneEnterprise() {
   return (
     <div className="se-container">
       {/* ===== 头部 ===== */}
-      <PageHeader title={`${sceneName}场景`}>
+      <PageHeader title={`${sceneName}${sceneName.includes('场景') ? '' : '场景'}`}>
         {/* 搜索行 */}
         <div className="se-search-row">
           <div className="se-search-bar">

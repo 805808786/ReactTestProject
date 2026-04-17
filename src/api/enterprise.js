@@ -19,7 +19,7 @@ export const getEnterpriseChangeByDate = (date) => {
  * @param {number} params.pageLevel - 页面层级，默认 1
  */
 export const selectEnterpriseFirstTag = ({ sceneName, pageLevel = 1 }) => {
-  return request.post("/backend/sceneRadar/selectEnterpriseFirstTag", {
+  return request.post("/backend/sceneRadar/selectEnterpriseFirstTagV2", {
     sceneName,
     pageLevel,
   });
@@ -38,7 +38,7 @@ export const selectEnterpriseFirstTag = ({ sceneName, pageLevel = 1 }) => {
  * @param {string} params.street - 所属街道
  */
 export const searchEnterpriseByTag = (date) => {
-  return request.post("/backend/sceneRadar/searchEnterpriseByTag", { ...date });
+  return request.post("/backend/sceneRadar/searchEnterpriseByTagV2", { ...date });
 };
 
 /**
@@ -55,7 +55,7 @@ export const selectEnterpriseSecondTag = ({
   sceneName,
   selectDate,
 }) => {
-  return request.post("/backend/sceneRadar/selectEnterpriseSecondTag", {
+  return request.post("/backend/sceneRadar/selectEnterpriseSecondTagV2", {
     firstTag,
     firstTagId,
     sceneName,
@@ -70,7 +70,7 @@ export const selectEnterpriseSecondTag = ({
  * @param {string} params.sceneName - 场景名称，如 "人工智能"
  */
 export const getDataCountInfo = ({ selectDate, sceneName }) => {
-  return request.post("/backend/sceneRadar/dataCountInfo", {
+  return request.post("/backend/sceneRadar/dataCountInfoV2", {
     selectDate,
     sceneName,
   });

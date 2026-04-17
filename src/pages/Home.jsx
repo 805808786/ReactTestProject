@@ -918,6 +918,7 @@ const SCENE_DATA = [
     todayDynamics: null,
     sceneId: "6",
     sceneName: "人工智能",
+    sceneTitle: "人工智能",
   },
   {
     id: 2,
@@ -930,6 +931,7 @@ const SCENE_DATA = [
     todayDynamics: null,
     sceneId: "5",
     sceneName: "115X专项",
+    sceneTitle: "“115X”先进制造业集群场景",
   },
   {
     id: 3,
@@ -942,29 +944,30 @@ const SCENE_DATA = [
     todayDynamics: null,
     sceneId: "1",
     sceneName: "数商企业",
+    sceneTitle: "数商企业",
   },
-  {
-    id: 4,
-    name: "党建企业专题场景",
-    description: "党建企业专项筛选",
-    subName: "党建企业专项动态",
-    enterprises: 350,
-    dynamics: 23,
-    todayEnterprises: 1,
-    todayDynamics: 2,
-    sceneId: "3",
-  },
-  {
-    id: 5,
-    name: "出海企业专题场景",
-    description: "出海企业专项筛选",
-    subName: "出海企业专项动态",
-    enterprises: 9876,
-    dynamics: 19,
-    todayEnterprises: 3,
-    todayDynamics: 1,
-    sceneId: "2",
-  },
+  // {
+  //   id: 4,
+  //   name: "党建企业专题场景",
+  //   description: "党建企业专项筛选",
+  //   subName: "党建企业专项动态",
+  //   enterprises: 350,
+  //   dynamics: 23,
+  //   todayEnterprises: 1,
+  //   todayDynamics: 2,
+  //   sceneId: "3",
+  // },
+  // {
+  //   id: 5,
+  //   name: "出海企业专题场景",
+  //   description: "出海企业专项筛选",
+  //   subName: "出海企业专项动态",
+  //   enterprises: 9876,
+  //   dynamics: 19,
+  //   todayEnterprises: 3,
+  //   todayDynamics: 1,
+  //   sceneId: "2",
+  // },
 ];
 
 function FocusScene({ sceneOverviews }) {
@@ -973,7 +976,6 @@ function FocusScene({ sceneOverviews }) {
     if (!scene.sceneName) return scene;
 
     const sceneOverview = sceneOverviews?.[scene.sceneName];
-    // "115X专项"的企业数量暂时写死
     return {
       ...scene,
       enterprises: sceneOverview?.enterpriseTotal ?? null,
@@ -1070,7 +1072,7 @@ function FocusScene({ sceneOverviews }) {
               <div
                 className="scene-metric-box"
                 onClick={() => {
-                  scene.sceneName && navigate(`/scene-enterprise?sceneName=${scene.sceneName}`);
+                  scene.sceneName && navigate(`/scene-enterprise?sceneName=${scene.sceneTitle}`);
                 }}
               >
                 <div className="metric-row-top">
