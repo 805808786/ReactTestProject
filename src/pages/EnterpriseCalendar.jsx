@@ -520,7 +520,7 @@ export default function EnterpriseCalendar() {
                           <div className="ec-sheet-card-list-item" key={ri}>
                             <span className="ec-sheet-card-list-idx">{ri + 1}.</span>
                             <span className="ec-sheet-card-list-txt">{r.text}</span>
-                            <span style={{ marginLeft: 'auto', fontSize: '13px', color: r.val.startsWith('-') ? '#0AA34E' : '#D54941' }}>{r.val}家</span>
+                            <span style={{ marginLeft: 'auto', fontSize: '13px', color: r.val.startsWith('-') ? '#FB2C36' : '#00A63E' }}>{r.val}家</span>
                           </div>
                         )) : (
                           <div className="ec-sheet-card-list-item">

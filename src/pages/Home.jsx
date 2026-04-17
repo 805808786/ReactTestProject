@@ -596,13 +596,13 @@ function EnterpriseOverview() {
               <div className="daily-list-v2">
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">新注册/迁入</span>
-                  <span className="daily-value-v2 neg">
+                  <span className="daily-value-v2 pos">
                     +{loading ? "--" : newAndMoveIn || 0}
                   </span>
                 </div>
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">注销/吊销/迁出</span>
-                  <span className="daily-value-v2 pos">
+                  <span className="daily-value-v2 neg">
                     -{loading ? "--" : newCancelNum || 0}
                   </span>
                 </div>
@@ -718,14 +718,14 @@ function Special115X() {
                 <div className="sub-card-total">
                   106<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">新能源装备</div>
                 <div className="sub-card-total">
                   119<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: "8px" }}>
@@ -734,21 +734,21 @@ function Special115X() {
                 <div className="sub-card-total">
                   160<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">低空经济</div>
                 <div className="sub-card-total">
                   96<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">光电科技</div>
                 <div className="sub-card-total">
                   288<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
             </div>
           </div>
@@ -761,28 +761,28 @@ function Special115X() {
                 <div className="sub-card-total">
                   60<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">网络通信</div>
                 <div className="sub-card-total">
                   95<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">智能网联汽..</div>
                 <div className="sub-card-total">
                   76<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">现代纺织与服装</div>
                 <div className="sub-card-total">
                   284<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
             </div>
           </div>
@@ -844,14 +844,14 @@ function Special115X() {
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">生物医药与企业</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: "8px" }}>
@@ -860,21 +860,21 @@ function Special115X() {
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">智能网联汽车</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">新能源装备</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: "8px" }}>
@@ -883,21 +883,21 @@ function Special115X() {
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">高端通用设备</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">现代纺织与服装</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
             </div>
             <div

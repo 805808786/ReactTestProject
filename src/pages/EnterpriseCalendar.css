@@ -384,12 +384,11 @@
 }
 
 .ec-tl-delta--neg {
-  color: #0AA34E;
-  /* Figma: -13家 is green */
+  color: #FB2C36;
 }
 
 .ec-tl-delta--pos {
-  color: #D54941;
+  color: #00A63E;
 }
 
 /* 变化原因列表行 */
@@ -432,17 +431,15 @@
 }
 
 .ec-tl-reason-delta.pos {
-  color: #D54941;
-  /* Figma: +15家 is red */
+  color: #00A63E;
 }
 
 .ec-tl-reason-delta.neg {
-  color: #2BA471;
-  /* Figma: -15家 is green */
+  color: #FB2C36;
 }
 
 .ec-tl-reason-delta.local {
-  color: #0052D9;
+  color: #00A63E;
 }
 
 .ec-tl-reason-link {
@@ -646,11 +643,11 @@
 }
 
 .ec-sheet-card-delta--pos {
-  color: #F33E3E;
+  color: #00A63E;
 }
 
 .ec-sheet-card-delta--neg {
-  color: #0AA34E;
+  color: #FB2C36;
 }
 
 /* 列表样式 */
