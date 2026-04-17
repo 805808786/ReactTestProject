@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import iconTabData from '../assets/icon-cd-tab-data.svg';
 import PageHeader from '../components/PageHeader';
@@ -41,6 +41,7 @@ import iconFileText from '../assets/icon-cd-filetext.svg';
 import iconTrendingUp from '../assets/icon-cd-trending-up.svg';
 import iconMessageSquare from '../assets/icon-cd-message-square.svg';
 import iconActivity from '../assets/icon-cd-activity.svg';
+import iconProcessTasks from '../assets/icon-cd-iconProcessTasks.svg';
 import iconNewsFileText from '../assets/icon-cd-news-filetext.svg';
 import iconZap from '../assets/icon-cd-zap.svg';
 import iconChevronUp from '../assets/icon-cd-chevron-up.svg';
@@ -61,21 +62,7 @@ import iconNavFinance from '../assets/icon-cd-nav-finance.svg';
 import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
-import enterpriseDataJson from '../json/enterprise.json';
-import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo, serviceMatrixList, selectEnterpriseVisitsList, getBusinessCommunityEnterpriseAppealPage, getBusinessCommunityEnterpriseNewsPage, getManageRiskEarlyWarningPage, enterpriseDynamicArchivesCount, enterpriseDynamicArchivesList } from '../api/enterprise';
-
-const getCompanyData = (id) => {
-  if (!id) return enterpriseDataJson[0] || {};
-  return enterpriseDataJson.find(item => String(item?.['基本信息']?.data?.enterpriseId) === String(id)) || enterpriseDataJson[0] || {};
-};
-
-/* ===================== Mock 数据 ===================== */
-const MOCK_COMPANY = {
-  1: { name: '科技创新有限公司', type: '头部企业', industry: '软件和信息技术服务业' },
-  2: { name: '智能制造股份公司', type: '腰部企业', industry: '高端制造业' },
-};
-
-const DEFAULT_COMPANY = { name: '', type: '', industry: '' };
+import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo, serviceMatrixList, selectEnterpriseVisitsList, getBusinessCommunityEnterpriseAppealPage, getBusinessCommunityEnterpriseNewsPage, getManageRiskEarlyWarningPage, enterpriseDynamicArchivesCount, enterpriseDynamicArchivesList, listProcessTaskByEnterpriseId } from '../api/enterprise';
 
 const TABS = [
   { key: 'data', label: '企业数据', icon: iconTabData, activeIcon: iconTabDataActive },
@@ -219,7 +206,10 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [financingRecords, setFinancingRecords] = useState([]);
   const [bidRecords, setBidRecords] = useState([]);
   const [equityData, setEquityData] = useState({});
+  const [processTasks, setProcessTasks] = useState([]);
+  const [expandedTaskIds, setExpandedTaskIds] = useState(new Set());
   const sectionRefs = useRef({});
+  const navigate = useNavigate();
 
   // 提取股权穿透相关数据
   const { id } = useParams();
@@ -467,6 +457,38 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       });
   }, [id]);
 
+  // 从 API 获取服务动态
+  useEffect(() => {
+    if (!id) return;
+    listProcessTaskByEnterpriseId({ enterpriseId: id })
+      .then((res) => {
+        const list = res.data || [];
+        setProcessTasks(list);
+        if (list.length > 0) {
+          setExpandedTaskIds(new Set([list[0].id]));
+        }
+      })
+      .catch((err) => {
+        console.error('获取服务动态失败:', err);
+        setProcessTasks([]);
+      });
+  }, [id]);
+
+  const toggleTaskExpand = (taskId) => {
+    setExpandedTaskIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(taskId)) {
+        next.delete(taskId);
+      } else {
+        next.add(taskId);
+      }
+      return next;
+    });
+  };
+
+  const TASK_STATUS_MAP = { 0: '待开始', 1: '办理中', 2: '已完成' };
+  const TASK_STATUS_CLASS = { 0: 'pending', 1: 'processing', 2: 'done' };
+
   // 只使用 API 数据
   const basicInfo = apiBasicInfo || {};
   const legalRepresentative = equityData.legalRepresentative || '';
@@ -607,6 +629,68 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
           )}
         </div>
       </div>
+
+      {/* 服务动态 */}
+      {processTasks.length > 0 && (
+        <div className="cd-sd-section">
+          <div className="cd-sd-header">
+            <img src={iconProcessTasks} alt="服务动态" width={20} height={20} />
+            <span className="cd-sd-title">服务动态</span>
+          </div>
+          {processTasks.map((task) => {
+            const isExpanded = expandedTaskIds.has(task.id);
+            return (
+              <div key={task.id} className="cd-sd-card">
+                <div className="cd-sd-card-top">
+                  <div className="cd-sd-card-left">
+                    <span className={`cd-sd-status cd-sd-status--${TASK_STATUS_CLASS[task.status] || 'pending'}`}>
+                      {TASK_STATUS_MAP[task.status] || '待开始'}
+                    </span>
+                    {task.leadOrgName && (
+                      <span className="cd-sd-org">{task.leadOrgName}</span>
+                    )}
+                  </div>
+                  <button type="button" className="cd-sd-toggle-btn" onClick={() => toggleTaskExpand(task.id)}>
+                    <span>{isExpanded ? '收起反馈' : '展开反馈'}</span>
+                    <img src={iconChevronDownBlue} alt="" width={14} height={14}
+                      style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}
+                    />
+                  </button>
+                </div>
+                {isExpanded && (
+                  <>
+                    {task.taskContent && (
+                      <div className="cd-sd-box">
+                        <p className="cd-sd-box-text">
+                          <span className="cd-sd-box-label">任务目标：</span>
+                          {task.taskContent}
+                        </p>
+                      </div>
+                    )}
+                    {task.feedbackResult && (
+                      <div className="cd-sd-box">
+                        <p className="cd-sd-box-text">
+                          <span className="cd-sd-box-label">反馈结果：</span>
+                          {task.feedbackResult}
+                        </p>
+                        {task.feedbackDate && (
+                          <p className="cd-sd-feedback-date">反馈日期：{task.feedbackDate}</p>
+                        )}
+                      </div>
+                    )}
+                    {task.recommendId && (
+                      <div className="cd-sd-detail-row" onClick={() => navigate(`/daily-message-detail/${task.recommendId}?processId=${task.processId}`)}>
+                        <span className="cd-sd-detail-text">查看任务详情</span>
+                        <img src={iconChevronDownBlue} alt="" width={14} height={14} style={{ transform: 'rotate(-90deg)' }} />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* 企业基本信息 */}
       <div className={`cd-section-card${collapsedSections.basic ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['basic'] = el}>
@@ -1418,6 +1502,7 @@ function ServiceMatrixTab() {
 
 function EnterpriseServiceTab() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [visitRecords, setVisitRecords] = useState([]);
   const [demands, setDemands] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -1432,6 +1517,9 @@ function EnterpriseServiceTab() {
       .catch((err) => {
         console.error('获取走访记录失败:', err);
         setVisitRecords([]);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [id]);
 
@@ -1441,12 +1529,10 @@ function EnterpriseServiceTab() {
     getBusinessCommunityEnterpriseAppealPage({ enterpriseId: id })
       .then((res) => {
         setDemands(res.data || []);
-        setLoading(false);
       })
       .catch((err) => {
         console.error('获取企业诉求失败:', err);
         setDemands([]);
-        setLoading(false);
       });
   }, [id]);
 
@@ -1509,6 +1595,7 @@ function EnterpriseServiceTab() {
           )) : <div className="cd-no-data">暂无企业诉求</div>}
         </div>
       </div>
+
       <div style={{ height: 24 }} />
     </div>
   );

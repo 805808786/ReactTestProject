@@ -634,6 +634,87 @@ export const enterpriseDynamicArchivesCount = ({
  * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
  * @param {string} params.enterpriseName - 企业名称
  */
+/**
+ * 获取企业服务动态（流程任务列表）
+ * POST /client/recommend/listProcessTaskByEnterpriseId
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ */
+export const listProcessTaskByEnterpriseId = ({ enterpriseId }) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskByEnterpriseId', {
+    enterpriseId,
+  });
+};
+
+/**
+ * 首页重点企业模块（区内/区外）
+ */
+export const homeEnterpriseModules = () => {
+  return dailyMessageRequest.post('/client/recommend/homeEnterpriseModules');
+};
+
+/**
+ * 重点企业模块列表（分页）
+ * @param {object} params
+ * @param {number} params.regionType - 区域类型 1=区内 2=区外（必填）
+ * @param {number} [params.itemType] - 条目类型 1=服务动态 2=新闻动态
+ * @param {string} [params.startDate] - 开始日期 yyyy-MM-dd
+ * @param {string} [params.endDate] - 结束日期 yyyy-MM-dd
+ * @param {number} [params.currentPage] - 当前页码
+ * @param {number} [params.pageSize] - 每页数量
+ */
+export const listEnterpriseModules = ({ regionType, itemType, startDate, endDate, currentPage, pageSize }) => {
+  return dailyMessageRequest.post('/client/recommend/listEnterpriseModules', {
+    regionType,
+    ...(itemType != null && { itemType }),
+    ...(startDate && { startDate }),
+    ...(endDate && { endDate }),
+    currentPage,
+    pageSize,
+  });
+};
+
+/**
+ * 部门任务汇总总数
+ */
+export const getProcessTaskDeptTotal = ({ leadOrgId, date, limit } = {}) => {
+  return dailyMessageRequest.post('/client/recommend/getProcessTaskDeptTotal', {
+    ...(leadOrgId != null && { leadOrgId }),
+    ...(date && { date }),
+    ...(limit != null && { limit }),
+  });
+};
+
+/**
+ * 按部门和时间筛选处置流程任务列表
+ */
+export const listProcessTaskByDeptAndDate = ({ leadOrgId, date, currentPage, pageSize }) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskByDeptAndDate', {
+    ...(leadOrgId != null && { leadOrgId }),
+    ...(date && { date }),
+    currentPage,
+    pageSize,
+  });
+};
+
+/**
+ * 部门任务汇总统计列表
+ */
+export const listProcessTaskDeptSummary = ({ leadOrgId, date, limit } = {}) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskDeptSummary', {
+    leadOrgId,
+    date,
+    limit
+  });
+};
+
+/**
+ * 查询所有部门下拉选项
+ */
+export const listProcessTaskDepts = () => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskDepts');
+};
+
 export const enterpriseDynamicArchivesList = ({
   frontendId,
   type,

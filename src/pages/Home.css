@@ -1978,6 +1978,7 @@
   grid-template-columns: minmax(0, 1fr) 92px 58px 16px;
   gap: 8px;
   align-items: center;
+  cursor: pointer;
 }
 
 .kf-service-department-name {

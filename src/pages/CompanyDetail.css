@@ -1946,3 +1946,151 @@
     transform: rotate(360deg);
   }
 }
+
+/* ===== 服务动态 ===== */
+.cd-sd-section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 0 16px 12px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.1), 0px 1px 2px 0px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cd-sd-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 24px;
+}
+
+.cd-sd-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #101828;
+  letter-spacing: -0.3125px;
+  font-family: 'MiSans', 'PingFang SC', sans-serif;
+}
+
+.cd-sd-card {
+  background: linear-gradient(140deg, rgb(250,245,255) 0%, rgb(239,246,255) 100%);
+  border-radius: 16px;
+  padding: 15px 16px;
+  box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cd-sd-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cd-sd-card-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cd-sd-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 19px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.9);
+  font-family: 'MiSans', sans-serif;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.cd-sd-status--pending {
+  background: #9CA3AF;
+}
+
+.cd-sd-status--processing {
+  background: #0052d9;
+}
+
+.cd-sd-status--done {
+  background: #2ba471;
+}
+
+.cd-sd-org {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1777ff;
+  letter-spacing: -0.1504px;
+  white-space: nowrap;
+}
+
+.cd-sd-toggle-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #003cab;
+  letter-spacing: -0.1504px;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+
+.cd-sd-toggle-btn span {
+  line-height: 20px;
+}
+
+.cd-sd-box {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 13px;
+}
+
+.cd-sd-box-text {
+  font-size: 16px;
+  color: #364153;
+  line-height: 19.5px;
+  margin: 0;
+  font-family: 'MiSans', sans-serif;
+}
+
+.cd-sd-box-label {
+  font-weight: 700;
+  color: #000;
+}
+
+.cd-sd-feedback-date {
+  font-size: 14px;
+  color: #000;
+  margin: 8px 0 0;
+  line-height: 19.5px;
+  font-family: 'MiSans', sans-serif;
+  white-space: nowrap;
+}
+
+.cd-sd-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.cd-sd-detail-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #003cab;
+  letter-spacing: -0.1504px;
+  line-height: 20px;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}

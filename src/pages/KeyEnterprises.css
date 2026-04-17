@@ -1,0 +1,332 @@
+/* ===== KeyEnterprises 页面 ===== */
+.ke-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.ke-body {
+  padding: 0 16px 16px;
+  overflow-y: auto;
+  height: calc(100vh - 52px);
+
+  .il-list {
+    padding: 0;
+  }
+}
+
+.ke-filter-area {
+  padding: 12px 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ke-filter-area .se-filter-row {
+  flex: 1;
+  height: 48px;
+  border-radius: 14px;
+}
+
+.ke-filter-area .se-filter-btn {
+  padding: 12px 8px;
+  height: 48px;
+}
+
+.ke-filter-area .se-filter-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.ke-reset-btn {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: #6a7282;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ===== 服务动态卡片 ===== */
+.ke-svc-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 15px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ke-svc-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  min-height: 26px;
+}
+
+.ke-svc-top-left {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.ke-svc-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 21px;
+  padding: 3px 9px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  font-family: 'PingFang SC', sans-serif;
+  flex-shrink: 0;
+}
+
+.ke-svc-badge--svc {
+  background: #f6ba15;
+  color: #fffbde;
+}
+
+.ke-svc-badge--news {
+  background: #2ba471;
+  color: #e3f9e9;
+  width: 66px;
+}
+
+.ke-svc-enterprise-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -0.1504px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ke-svc-link {
+  font-size: 12px;
+  font-weight: 400;
+  color: #155dfc;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-family: 'Alibaba PuHuiTi', sans-serif;
+}
+
+.ke-svc-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ke-svc-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 19px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'MiSans', sans-serif;
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.ke-svc-status--pending {
+  background: #9ca3af;
+}
+
+.ke-svc-status--processing {
+  background: #0052d9;
+}
+
+.ke-svc-status--done {
+  background: #2ba471;
+}
+
+.ke-svc-org {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1777ff;
+  letter-spacing: -0.1504px;
+  white-space: nowrap;
+}
+
+.ke-svc-box {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 13px;
+}
+
+.ke-svc-box-text {
+  font-size: 16px;
+  color: #364153;
+  line-height: 19.5px;
+  margin: 0;
+  font-family: 'MiSans', sans-serif;
+}
+
+.ke-svc-box-label {
+  font-weight: 700;
+  color: #000;
+}
+
+.ke-svc-feedback-date {
+  font-size: 14px;
+  color: #000;
+  margin: 8px 0 0;
+  line-height: 19.5px;
+  font-family: 'MiSans', sans-serif;
+  white-space: nowrap;
+}
+
+.ke-svc-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.ke-svc-detail-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #003cab;
+  letter-spacing: -0.1504px;
+  line-height: 20px;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+}
+
+.ke-svc-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  color: #003cab;
+  letter-spacing: -0.1504px;
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  margin-left: auto;
+}
+
+/* ===== 新闻动态卡片 ===== */
+.ke-news-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ke-news-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 26px;
+}
+
+.ke-news-top-right {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.ke-news-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fb2c36;
+  flex-shrink: 0;
+}
+
+.ke-news-link {
+  font-size: 12px;
+  color: #155dfc;
+  white-space: nowrap;
+  font-family: 'Alibaba PuHuiTi', sans-serif;
+}
+
+.ke-news-title {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.ke-news-dot-green {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10ba51;
+  flex-shrink: 0;
+}
+
+.ke-news-title-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: #0a0a0a;
+  letter-spacing: -0.1504px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'PingFang SC', sans-serif;
+}
+
+.ke-news-summary {
+  font-size: 16px;
+  line-height: 19.5px;
+  height: 39px;
+  overflow: hidden;
+  font-family: 'MiSans', sans-serif;
+}
+
+.ke-news-summary-label {
+  font-weight: 700;
+  color: #d54941;
+}
+
+.ke-news-summary-text {
+  font-weight: 400;
+  color: #364153;
+}
+
+.ke-news-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding-top: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 29px;
+}
+
+.ke-news-date {
+  font-size: 12px;
+  color: #99a1af;
+  font-family: 'Inter', sans-serif;
+}
+
+/* 列表项间距 */
+.ke-body .infinite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
