@@ -912,6 +912,7 @@ const SCENE_DATA = [
     name: "人工智能企业筛选场景",
     description: "人工智能企业筛选",
     subName: "人工智能企业动态",
+    actionName: "人工智能企业",
     enterprises: null,
     dynamics: null,
     todayEnterprises: null,
@@ -925,6 +926,7 @@ const SCENE_DATA = [
     name: "115X专题企业筛选场景",
     description: "115X专项企业筛选",
     subName: "115X专项企业动态",
+    actionName: "115X专项企业",
     enterprises: null,
     dynamics: null,
     todayEnterprises: null,
@@ -938,6 +940,7 @@ const SCENE_DATA = [
     name: "数商企业筛选场景",
     description: "数商企业筛选",
     subName: "数商企业动态",
+    actionName: "数商企业",
     enterprises: null,
     dynamics: null,
     todayEnterprises: null,
@@ -1076,7 +1079,7 @@ function FocusScene({ sceneOverviews }) {
                 }}
               >
                 <div className="metric-row-top">
-                  <span className="metric-name">人工智能企业</span>
+                  <span className="metric-name">{scene.actionName}</span>
                   <span className="metric-arrow">→</span>
                 </div>
                 <div className="metric-row-bottom">
