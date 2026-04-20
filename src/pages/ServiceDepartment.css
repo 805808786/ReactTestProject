@@ -1,0 +1,182 @@
+/* ===== ServiceDepartment 页面 ===== */
+.sd-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.sd-body {
+  padding: 0 16px 16px;
+  overflow-y: auto;
+  height: calc(100vh - 52px);
+
+  .il-list {
+    padding: 0;
+  }
+}
+
+.sd-filter-area {
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sd-filter-area .se-filter-row {
+  flex: 1;
+  height: 48px;
+  border-radius: 14px;
+}
+
+.sd-filter-area .se-filter-btn {
+  padding: 12px 8px;
+  height: 48px;
+}
+
+.sd-filter-area .se-filter-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ===== 任务卡片 ===== */
+.sd-card {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 15px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sd-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sd-dept-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  letter-spacing: -0.1504px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sd-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 19px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.sd-status--pending {
+  background: #9ca3af;
+}
+
+.sd-status--processing {
+  background: #0052d9;
+}
+
+.sd-status--done {
+  background: #2ba471;
+}
+
+.sd-enterprise-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sd-badge-svc {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 21px;
+  padding: 3px 9px;
+  border-radius: 8px;
+  background: #0052d9;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sd-enterprise-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1777ff;
+  letter-spacing: -0.1504px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sd-link {
+  font-size: 12px;
+  font-weight: 400;
+  color: #155dfc;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.sd-box {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 13px;
+}
+
+.sd-box-text {
+  font-size: 16px;
+  color: #364153;
+  line-height: 19.5px;
+  margin: 0;
+}
+
+.sd-box-label {
+  font-weight: 700;
+  color: #000;
+}
+
+.sd-feedback-date {
+  font-size: 14px;
+  color: #000;
+  margin: 8px 0 0;
+  line-height: 19.5px;
+  white-space: nowrap;
+}
+
+.sd-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.sd-detail-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #003cab;
+  letter-spacing: -0.1504px;
+  line-height: 20px;
+}
+
+/* 列表项间距 */
+.sd-body .infinite-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

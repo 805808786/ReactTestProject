@@ -579,7 +579,7 @@
 }
 
 .daily-value-v2.other-val {
-  color: #155DFC;
+  color: #00A63E;
 }
 
 /* Focus Scene */
@@ -737,6 +737,34 @@
   background: #F4EBFF;
   padding: 1px 4px;
   border-radius: 4px;
+}
+
+.metric-delta-value--pos {
+  color: #00A63E;
+}
+
+.metric-delta-value--neg {
+  color: #FB2C36;
+}
+
+.metric-delta-value--zero {
+  color: #00A63E;
+}
+
+.metric-delta-value--empty {
+  color: inherit;
+}
+
+.sub-card-today-value--pos {
+  color: #00A63E;
+}
+
+.sub-card-today-value--neg {
+  color: #FB2C36;
+}
+
+.sub-card-today-value--zero {
+  color: #00A63E;
 }
 
 /* Home Scene Radar Header Module */
@@ -1950,6 +1978,7 @@
   grid-template-columns: minmax(0, 1fr) 92px 58px 16px;
   gap: 8px;
   align-items: center;
+  cursor: pointer;
 }
 
 .kf-service-department-name {
@@ -2206,16 +2235,26 @@
   line-height: 1.33;
 }
 
-.sub-card-today.up {
-  color: #155DFC;
-}
-
-.sub-card-today.down {
-  color: #FC1515;
-}
-
+.sub-card-today.up,
+.sub-card-today.down,
 .sub-card-today:not(.up):not(.down) {
-  color: #155DFC;
+  color: inherit;
+}
+
+.sub-card-today-value--pos {
+  color: #00A63E;
+}
+
+.sub-card-today-value--neg {
+  color: #FB2C36;
+}
+
+.sub-card-today-value--zero {
+  color: #00A63E;
+}
+
+.sub-card-today-value--empty {
+  color: inherit;
 }
 
 

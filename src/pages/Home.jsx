@@ -8,7 +8,7 @@ import { useBottomNavStore } from "../store/bottomNavStore";
 import { useChatStore } from "../store/chatStore";
 import PageHeader from "../components/PageHeader";
 import { countUnread, getDailyMessageList } from "../api/dailyMessage";
-import { getSceneOverview } from "../api/enterprise";
+import { getSceneOverview, homeEnterpriseModules, getProcessTaskDeptTotal, listProcessTaskDeptSummary } from "../api/enterprise";
 import { getSceneNewsOverview } from "../api/sceneEnterpriseDynamic";
 
 import sceneRadarIcon from "../assets/tabs/redesign/scene-radar.svg";
@@ -46,51 +46,18 @@ const bottomTabs = [
   { label: "政策匹配", icon: policyMatchingIcon, logicCase: 5 },
 ];
 
-// cardType → typeClass / label mapping
-const CARD_TYPE_HOME_MAP = {
-  1: { typeClass: "recommend", label: "每日推荐" },
-  2: { typeClass: "news", label: "新闻动态" },
-  3: { typeClass: "related", label: "与我相关" },
-};
-
-const IN_DISTRICT_SERVICE_ENTERPRISES = [
-  { name: "杭州杭钢云计算数据中心有限公司", date: "04-30" },
-  { name: "浙江高信技术股份有限公司", date: "04-28" },
-  { name: "浙江联合通讯技术股份有限公司", date: "04-26" },
-  { name: "浙江逻辑科技有限公司", date: "04-26" },
-];
-
-const OUT_DISTRICT_SERVICE_ENTERPRISES = [
-  { name: "杭州杭钢云计算数据中心有限公司", date: "04-30" },
-  { name: "浙江高信技术股份有限公司", date: "04-28" },
-  { name: "浙江联合通讯技术股份有限公司", date: "04-26" },
-  { name: "浙江逻辑科技有限公司", date: "04-26" },
-];
-
-const SERVICE_DEPARTMENTS = [
-  { name: "拱墅区发改局", progress: "任务进度（1/6）", todayIncrease: "+3" },
-  { name: "拱墅区发改局", progress: "任务进度（1/6）", todayIncrease: "+3" },
-  { name: "东新街道", progress: "任务进度（1/6）", todayIncrease: "+3" },
-  { name: "武林街道", progress: "任务进度（0/6）", todayIncrease: "+1" },
-];
 
 function getTodayStr() {
   const today = new Date();
   return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 }
 
-function isTodayByPublishTime(publishTime) {
-  if (!publishTime) return false;
-  return String(publishTime).startsWith(getTodayStr());
-}
-
-function HomeCardHeader({ title, countText, hasUnread }) {
+function HomeCardHeader({ title, countText, onClick }) {
   return (
-    <div className="kf-service-header">
+    <div className="kf-service-header" onClick={onClick} style={{ cursor: 'pointer' }}>
       <div className="kf-service-title">{title}</div>
       <div className="kf-service-header-right">
         <span className="kf-service-count">{countText}</span>
-        {hasUnread && <span className="kf-service-dot" />}
         <img
           src={iconKeyEnterpriseChevron}
           alt=""
@@ -101,53 +68,72 @@ function HomeCardHeader({ title, countText, hasUnread }) {
   );
 }
 
-function ServiceEnterpriseCard({ title, total, hasUnread, items }) {
+const REGION_COLOR = { 1: '#00A63E', 2: '#E37318' };
+
+function ServiceEnterpriseCard({ title, total, items, regionType, navigate }) {
+  const prefix = regionType === 1 ? '区内' : '区外';
+  const rest = title.replace(prefix, '');
+  const coloredTitle = (
+    <>
+      <span style={{ color: REGION_COLOR[regionType] }}>{prefix}</span>
+      {rest}
+    </>
+  );
   return (
     <div className="kf-service-card">
       <HomeCardHeader
-        title={title}
+        title={coloredTitle}
         countText={`${total} 家`}
-        hasUnread={hasUnread}
+        onClick={() => navigate(`/key-enterprises/${regionType}`)}
       />
-      <div className="kf-service-enterprise-list">
-        {items.map((item, index) => (
-          <div className="kf-service-enterprise-item" key={`${item.name}-${index}`}>
-            <div className="kf-service-enterprise-name">{item.name}</div>
-            <div className="kf-service-enterprise-date">{item.date}</div>
-          </div>
-        ))}
-      </div>
+      {items.length > 0 && (
+        <div className="kf-service-enterprise-list">
+          {items.map((item, index) => (
+            <div
+              className="kf-service-enterprise-item"
+              key={`${item.enterpriseId}-${index}`}
+              onClick={() => navigate(`/company-detail/${item.enterpriseId}`)}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="kf-service-enterprise-name">{item.enterpriseName}</div>
+              <div className="kf-service-enterprise-date">{item.latestDate || ''}</div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
 
-function ServiceDepartmentCard({ title, total, hasUnread, items }) {
+function ServiceDepartmentCard({ title, total, items, onHeaderClick, onItemClick }) {
   return (
     <div className="kf-service-card">
       <HomeCardHeader
         title={title}
         countText={`${total} 个`}
-        hasUnread={hasUnread}
+        onClick={onHeaderClick}
       />
-      <div className="kf-service-department-list">
-        {items.map((item, index) => (
-          <div className="kf-service-department-item" key={`${item.name}-${index}`}>
-            <div className="kf-service-department-name">{item.name}</div>
-            <div className="kf-service-department-progress">{item.progress}</div>
-            <div className="kf-service-department-today">
-              <span className="kf-service-department-today-dot" />
-              <span className="kf-service-department-today-text">
-                今日 {item.todayIncrease}
-              </span>
+      {items.length > 0 && (
+        <div className="kf-service-department-list">
+          {items.map((item) => (
+            <div className="kf-service-department-item" key={item.leadOrgId} onClick={() => onItemClick?.(item)} style={{ cursor: 'pointer' }}>
+              <div className="kf-service-department-name">{item.leadOrgName}</div>
+              <div className="kf-service-department-progress">任务进度 ({item.completedCount}/{item.totalCount})</div>
+              <div className="kf-service-department-today">
+                <span className="kf-service-department-today-dot" />
+                <span className="kf-service-department-today-text">
+                  今日 {item.todayAddedCount}
+                </span>
+              </div>
+              <img
+                src={iconKeyEnterpriseChevronItem}
+                alt=""
+                className="kf-service-department-chevron"
+              />
             </div>
-            <img
-              src={iconKeyEnterpriseChevronItem}
-              alt=""
-              className="kf-service-department-chevron"
-            />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -158,24 +144,31 @@ export default function Home() {
   const [sceneOverviews, setSceneOverviews] = useState({});
 
   useEffect(() => {
-    const sceneNames = ["人工智能", "数商企业", "115X专项"];
+    const sceneNames = [
+      {type: "1", sceneName: "人工智能"},
+      {type: "2", sceneName: "数商企业"},
+      {type: "3", sceneName: "115X专项"}
+    ];
 
     Promise.allSettled(
-      sceneNames.map((sceneName) =>
+      sceneNames.map(({sceneName, type}) =>
         Promise.all([
-          getSceneOverview({ sceneName }),
+          getSceneOverview({ type }),
           getSceneNewsOverview({ sceneName }),
-        ]).then(([overviewRes, newsOverviewRes]) => ({
-          sceneName,
-          data: {
-            ...(overviewRes.data || {}),
-            ...(newsOverviewRes.data || {}),
-            enterpriseTotal: overviewRes.data?.enterpriseTotal ?? null,
-            difference: overviewRes.data?.difference ?? null,
-            dynamicTotal: newsOverviewRes.data?.dynamicTotal ?? null,
-            dynamicDifference: newsOverviewRes.data?.dynamicDifference ?? null,
-          },
-        })),
+        ]).then(([overviewRes, newsOverviewRes]) => {
+          const overviewData = overviewRes.data?.[0];
+          return {
+            sceneName,
+            data: {
+              ...(overviewData || {}),
+              ...(newsOverviewRes.data || {}),
+              enterpriseTotal: overviewData?.enterpriseNum ?? null,
+              difference: overviewData?.yesterdayChangeNum ?? null,
+              dynamicTotal: newsOverviewRes.data?.dynamicTotal ?? null,
+              dynamicDifference: newsOverviewRes.data?.dynamicDifference ?? null,
+            },
+          };
+        }),
       ),
     ).then((results) => {
       setSceneOverviews(() => {
@@ -283,43 +276,20 @@ function KeyFocus({ sceneOverview }) {
   const navigate = useNavigate();
 
   // --- 今日消息：从 API 获取数据 ---
-  const [messageItems, setMessageItems] = useState([]);
   const [messageTotal, setMessageTotal] = useState(0);
   const [unreadCount, setUnreadCount] = useState(0);
-  const [messageLoaded, setMessageLoaded] = useState(false);
+  const [enterpriseModules, setEnterpriseModules] = useState(null);
+  const [deptTotal, setDeptTotal] = useState(0);
+  const [deptItems, setDeptItems] = useState([]);
 
   useEffect(() => {
-    getDailyMessageList({
-      currentPage: 1,
-      pageSize: 2,
-    })
+    getDailyMessageList({ currentPage: 1, pageSize: 1 })
       .then((res) => {
-        const pageData = res.data || {};
-        const items = (pageData.data || []).filter((item) =>
-          isTodayByPublishTime(item.publishTime),
-        );
-        setMessageTotal(Number(pageData.total || 0));
-        setMessageItems(
-          items.map((item) => {
-            const mapping = CARD_TYPE_HOME_MAP[item.cardType] || {
-              typeClass: "news",
-              label: "新闻动态",
-            };
-            return {
-              type: mapping.label,
-              typeClass: mapping.typeClass,
-              content: item.title || item.content || "",
-              detailUrl: `/daily-message-detail/${item.id}`,
-            };
-          }),
-        );
+        setMessageTotal(Number(res.data?.total || 0));
       })
-      .catch((err) => {
-        console.error("首页今日消息加载失败:", err);
-        setMessageItems([]);
+      .catch(() => {
         setMessageTotal(0);
-      })
-      .finally(() => setMessageLoaded(true));
+      });
   }, []);
 
   useEffect(() => {
@@ -330,6 +300,35 @@ function KeyFocus({ sceneOverview }) {
       .catch((err) => {
         console.error("首页未读数加载失败:", err);
         setUnreadCount(0);
+      });
+  }, []);
+
+  useEffect(() => {
+    homeEnterpriseModules()
+      .then((res) => {
+        setEnterpriseModules(res.data || null);
+      })
+      .catch((err) => {
+        console.error('获取重点企业模块失败:', err);
+        setEnterpriseModules(null);
+      });
+  }, []);
+
+  useEffect(() => {
+    getProcessTaskDeptTotal()
+      .then((res) => {
+        setDeptTotal(Number(res.data || 0));
+      })
+      .catch((err) => {
+        console.error('获取部门任务总数失败:', err);
+      });
+
+    listProcessTaskDeptSummary()
+      .then((res) => {
+        setDeptItems(res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取部门任务列表失败:', err);
       });
   }, []);
 
@@ -360,26 +359,6 @@ function KeyFocus({ sceneOverview }) {
               <img src={chevronRightIcon} className="kf-message-image" />
             </span>
           </div>
-        </div>
-        <div className="kf-message-list">
-          {messageLoaded && messageItems.length === 0 ? (
-            <div className="kf-message-empty">暂无消息</div>
-          ) : (
-            messageItems.map((message, index) => (
-              <div
-                key={index}
-                className="kf-message-item"
-                onClick={() => navigate(message.detailUrl)}
-              >
-                <span
-                  className={`kf-message-type kf-message-type--${message.typeClass}`}
-                >
-                  {message.type}
-                </span>
-                <span className="kf-message-content">{message.content}</span>
-              </div>
-            ))
-          )}
         </div>
       </div>
 
@@ -450,24 +429,27 @@ function KeyFocus({ sceneOverview }) {
       </div>
 
       <ServiceEnterpriseCard
-        title="区内重点服务企业"
-        total={20}
-        hasUnread
-        items={IN_DISTRICT_SERVICE_ENTERPRISES}
+        title={enterpriseModules?.insideModule?.moduleTitle || '区内重点服务企业'}
+        total={enterpriseModules?.insideModule?.total || 0}
+        items={enterpriseModules?.insideModule?.previewList || []}
+        regionType={1}
+        navigate={navigate}
       />
 
       <ServiceEnterpriseCard
-        title="区外重点服务企业"
-        total={5}
-        hasUnread
-        items={OUT_DISTRICT_SERVICE_ENTERPRISES}
+        title={enterpriseModules?.outsideModule?.moduleTitle || '区外重点服务企业'}
+        total={enterpriseModules?.outsideModule?.total || 0}
+        items={enterpriseModules?.outsideModule?.previewList || []}
+        regionType={2}
+        navigate={navigate}
       />
 
       <ServiceDepartmentCard
         title="企业服务部门"
-        total={6}
-        hasUnread
-        items={SERVICE_DEPARTMENTS}
+        total={deptTotal}
+        items={deptItems}
+        onHeaderClick={() => navigate('/service-departments')}
+        onItemClick={(item) => navigate(`/service-departments?leadOrgId=${item.leadOrgId}`)}
       />
     </section>
   );
@@ -596,13 +578,13 @@ function EnterpriseOverview() {
               <div className="daily-list-v2">
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">新注册/迁入</span>
-                  <span className="daily-value-v2 neg">
+                  <span className="daily-value-v2 pos">
                     +{loading ? "--" : newAndMoveIn || 0}
                   </span>
                 </div>
                 <div className="daily-item-v2">
                   <span className="daily-label-v2">注销/吊销/迁出</span>
-                  <span className="daily-value-v2 pos">
+                  <span className="daily-value-v2 neg">
                     -{loading ? "--" : newCancelNum || 0}
                   </span>
                 </div>
@@ -718,14 +700,14 @@ function Special115X() {
                 <div className="sub-card-total">
                   106<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">新能源装备</div>
                 <div className="sub-card-total">
                   119<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: "8px" }}>
@@ -734,21 +716,21 @@ function Special115X() {
                 <div className="sub-card-total">
                   160<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">低空经济</div>
                 <div className="sub-card-total">
                   96<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">光电科技</div>
                 <div className="sub-card-total">
                   288<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
             </div>
           </div>
@@ -761,28 +743,28 @@ function Special115X() {
                 <div className="sub-card-total">
                   60<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">网络通信</div>
                 <div className="sub-card-total">
                   95<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">智能网联汽..</div>
                 <div className="sub-card-total">
                   76<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card mini">
                 <div className="sub-card-name">现代纺织与服装</div>
                 <div className="sub-card-total">
                   284<small>家</small>
                 </div>
-                <div className="sub-card-today">今日+12</div>
+                <div className="sub-card-today">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
             </div>
           </div>
@@ -844,14 +826,14 @@ function Special115X() {
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">生物医药与企业</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today up">今日+12</div>
+                <div className="sub-card-today up">今日<span className="sub-card-today-value--pos">+12</span></div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: "8px" }}>
@@ -860,21 +842,21 @@ function Special115X() {
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">智能网联汽车</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">新能源装备</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
             </div>
             <div className="cluster-grid-row" style={{ marginTop: "8px" }}>
@@ -883,21 +865,21 @@ function Special115X() {
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">高端通用设备</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
               <div className="cluster-sub-card">
                 <div className="sub-card-name">现代纺织与服装</div>
                 <div className="sub-card-total">
                   3,245<small>家</small>
                 </div>
-                <div className="sub-card-today down">今日-12</div>
+                <div className="sub-card-today down">今日<span className="sub-card-today-value--neg">-12</span></div>
               </div>
             </div>
             <div
@@ -936,6 +918,7 @@ const SCENE_DATA = [
     todayDynamics: null,
     sceneId: "6",
     sceneName: "人工智能",
+    sceneTitle: "人工智能",
   },
   {
     id: 2,
@@ -948,6 +931,7 @@ const SCENE_DATA = [
     todayDynamics: null,
     sceneId: "5",
     sceneName: "115X专项",
+    sceneTitle: "“115X”先进制造业集群场景",
   },
   {
     id: 3,
@@ -960,29 +944,30 @@ const SCENE_DATA = [
     todayDynamics: null,
     sceneId: "1",
     sceneName: "数商企业",
+    sceneTitle: "数商企业",
   },
-  {
-    id: 4,
-    name: "党建企业专题场景",
-    description: "党建企业专项筛选",
-    subName: "党建企业专项动态",
-    enterprises: 350,
-    dynamics: 23,
-    todayEnterprises: 1,
-    todayDynamics: 2,
-    sceneId: "3",
-  },
-  {
-    id: 5,
-    name: "出海企业专题场景",
-    description: "出海企业专项筛选",
-    subName: "出海企业专项动态",
-    enterprises: 9876,
-    dynamics: 19,
-    todayEnterprises: 3,
-    todayDynamics: 1,
-    sceneId: "2",
-  },
+  // {
+  //   id: 4,
+  //   name: "党建企业专题场景",
+  //   description: "党建企业专项筛选",
+  //   subName: "党建企业专项动态",
+  //   enterprises: 350,
+  //   dynamics: 23,
+  //   todayEnterprises: 1,
+  //   todayDynamics: 2,
+  //   sceneId: "3",
+  // },
+  // {
+  //   id: 5,
+  //   name: "出海企业专题场景",
+  //   description: "出海企业专项筛选",
+  //   subName: "出海企业专项动态",
+  //   enterprises: 9876,
+  //   dynamics: 19,
+  //   todayEnterprises: 3,
+  //   todayDynamics: 1,
+  //   sceneId: "2",
+  // },
 ];
 
 function FocusScene({ sceneOverviews }) {
@@ -991,18 +976,11 @@ function FocusScene({ sceneOverviews }) {
     if (!scene.sceneName) return scene;
 
     const sceneOverview = sceneOverviews?.[scene.sceneName];
-    // "115X专项"的企业数量暂时写死
     return {
       ...scene,
-      enterprises:
-        scene.sceneName === "115X专项"
-          ? 2152
-          : (sceneOverview?.enterpriseTotal ?? null),
+      enterprises: sceneOverview?.enterpriseTotal ?? null,
       dynamics: sceneOverview?.dynamicTotal ?? null,
-      todayEnterprises:
-        scene.sceneName === "115X专项"
-          ? 0
-          : (sceneOverview?.difference ?? null),
+      todayEnterprises: sceneOverview?.difference ?? null,
       todayDynamics: sceneOverview?.dynamicDifference ?? null,
     };
   });
@@ -1094,7 +1072,7 @@ function FocusScene({ sceneOverviews }) {
               <div
                 className="scene-metric-box"
                 onClick={() => {
-                  scene.id == 1 && navigate("/scene-enterprise");
+                  scene.sceneName && navigate(`/scene-enterprise?sceneName=${scene.sceneTitle}`);
                 }}
               >
                 <div className="metric-row-top">

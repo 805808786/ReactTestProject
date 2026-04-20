@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import iconNewspaper from "../assets/icon-dynamic-newspaper.svg";
 import iconCalendar from "../assets/icon-dynamic-calendar.svg";
 import iconBuilding from "../assets/icon-dynamic-building.svg";
@@ -157,9 +157,12 @@ function getServiceTaskStatus(status) {
 export default function SceneEnterpriseDynamicDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const [data, setData] = useState(DEFAULT_DETAIL);
   const [expandedServiceTaskKey, setExpandedServiceTaskKey] = useState(null);
   const [attachmentSheetOpen, setAttachmentSheetOpen] = useState(false);
+  const processPanelRefs = useRef({});
+  const hasScrolledToProcess = useRef(false);
 
   // 反馈弹框状态
   const [feedbackOpen, setFeedbackOpen] = useState(false);
@@ -251,6 +254,33 @@ export default function SceneEnterpriseDynamicDetail() {
     fetchDetail();
   }, [id]);
 
+  // 数据加载后自动滚动到指定 processId
+  useEffect(() => {
+    const targetProcessId = searchParams.get("processId");
+    if (!targetProcessId || !data.serviceProcesses?.length || hasScrolledToProcess.current) return;
+
+    const targetProcess = data.serviceProcesses.find(
+      (p) => String(p.id) === String(targetProcessId)
+    );
+    if (!targetProcess) return;
+
+    // 展开第一个任务的反馈
+    const firstTask = targetProcess.tasks?.[0];
+    if (firstTask) {
+      const taskKey = `${targetProcess.id}-${firstTask.id}-0`;
+      setExpandedServiceTaskKey(taskKey);
+    }
+
+    // 等待渲染后滚动
+    requestAnimationFrame(() => {
+      const el = processPanelRefs.current[targetProcess.id];
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        hasScrolledToProcess.current = true;
+      }
+    });
+  }, [data.serviceProcesses, searchParams]);
+
   const handleFeedbackOpen = useCallback(() => {
     setFeedbackContent("");
     setFeedbackOpen(true);
@@ -313,7 +343,7 @@ export default function SceneEnterpriseDynamicDetail() {
 
   const isServiceDetail = data.category === "service";
   const serviceBackgroundContent =
-    data.richTextContent || data.serviceBackground || "";
+    data.richTextContent || data.content || "";
   const hasProgressAttachments = (data.progressAttachments || []).length > 0;
 
   return (
@@ -350,7 +380,7 @@ export default function SceneEnterpriseDynamicDetail() {
                     日期：{data.date}
                   </span>
                 </div>
-                <div className="dmd-service-section-title">任务背景</div>
+                <div className="dmd-service-section-title">进度总结</div>
                 {serviceBackgroundContent && (
                   <div className="dmd-service-background-box">
                     <div
@@ -361,48 +391,28 @@ export default function SceneEnterpriseDynamicDetail() {
                     />
                   </div>
                 )}
-              </div>
-            </div>
-
-            {data.serviceOpinion && (
-              <div className="dmd-service-panel">
-                <div className="dmd-service-panel-title">办理意见</div>
-                <div className="dmd-service-panel-box">
-                  <div
-                    className="dmd-service-rich-text dmd-service-opinion-text"
-                    dangerouslySetInnerHTML={{ __html: data.serviceOpinion }}
-                  />
-                </div>
-              </div>
-            )}
-
-            {data.serviceProgress && (
-              <div className="dmd-service-panel">
-                <div className="dmd-service-panel-title">办理进度</div>
-                <div className="dmd-service-panel-box dmd-service-progress-box">
-                  <div
-                    className="dmd-service-rich-text dmd-service-progress-text"
-                    dangerouslySetInnerHTML={{ __html: data.serviceProgress }}
-                  />
-                  {hasProgressAttachments && (
+                {hasProgressAttachments && (
                     <div className="dmd-service-progress-actions">
                       <button
-                        type="button"
-                        className="dmd-service-progress-btn"
-                        onClick={handleProgressPreview}
+                          type="button"
+                          className="dmd-service-progress-btn"
+                          onClick={handleProgressPreview}
                       >
                         查看办理详情
                       </button>
                     </div>
-                  )}
-                </div>
+                )}
               </div>
-            )}
+            </div>
 
             {data.serviceProcesses && data.serviceProcesses.length > 0 && (
               <>
                 {data.serviceProcesses.map((process, processIndex) => (
-                  <div key={process.id} className="dmd-service-panel">
+                  <div
+                    key={process.id}
+                    className="dmd-service-panel"
+                    ref={(el) => { processPanelRefs.current[process.id] = el; }}
+                  >
                     <div className="dmd-service-process-header">
                       <div className="dmd-service-process-company">
                         {process.serviceTargetName}
@@ -478,7 +488,7 @@ export default function SceneEnterpriseDynamicDetail() {
                               )}
                               {task.feedbackDate && (
                                 <div className="dmd-service-feedback-date">
-                                  反馈日期：{task.feedbackDate}
+                                  提交日期：{task.feedbackDate}
                                 </div>
                               )}
                             </div>

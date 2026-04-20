@@ -19,7 +19,7 @@ export const getEnterpriseChangeByDate = (date) => {
  * @param {number} params.pageLevel - 页面层级，默认 1
  */
 export const selectEnterpriseFirstTag = ({ sceneName, pageLevel = 1 }) => {
-  return request.post("/backend/sceneRadar/selectEnterpriseFirstTag", {
+  return request.post("/backend/sceneRadar/selectEnterpriseFirstTagV2", {
     sceneName,
     pageLevel,
   });
@@ -38,7 +38,7 @@ export const selectEnterpriseFirstTag = ({ sceneName, pageLevel = 1 }) => {
  * @param {string} params.street - 所属街道
  */
 export const searchEnterpriseByTag = (date) => {
-  return request.post("/backend/sceneRadar/searchEnterpriseByTag", { ...date });
+  return request.post("/backend/sceneRadar/searchEnterpriseByTagV2", { ...date });
 };
 
 /**
@@ -55,7 +55,7 @@ export const selectEnterpriseSecondTag = ({
   sceneName,
   selectDate,
 }) => {
-  return request.post("/backend/sceneRadar/selectEnterpriseSecondTag", {
+  return request.post("/backend/sceneRadar/selectEnterpriseSecondTagV2", {
     firstTag,
     firstTagId,
     sceneName,
@@ -70,7 +70,7 @@ export const selectEnterpriseSecondTag = ({
  * @param {string} params.sceneName - 场景名称，如 "人工智能"
  */
 export const getDataCountInfo = ({ selectDate, sceneName }) => {
-  return request.post("/backend/sceneRadar/dataCountInfo", {
+  return request.post("/backend/sceneRadar/dataCountInfoV2", {
     selectDate,
     sceneName,
   });
@@ -79,11 +79,11 @@ export const getDataCountInfo = ({ selectDate, sceneName }) => {
 /**
  * 获取场景概览（企业总数、变化企业数、动态总数、动态变化数）
  * @param {object} params
- * @param {string} params.sceneName - 场景名称，如 "人工智能"
+ * @param {string} params.type - 场景类型，如 "1： 人工智能、2: 数商企业、3: 115x专项"
  */
-export const getSceneOverview = ({ sceneName }) => {
-  return request.post("/backend/sceneRadar/getSceneOverview", {
-    sceneName,
+export const getSceneOverview = ({ type }) => {
+  return request.post("/backend/sceneRadar/listSceneGroupOverviewByType", {
+    type,
   });
 };
 
@@ -634,6 +634,87 @@ export const enterpriseDynamicArchivesCount = ({
  * @param {boolean} [params.isOriginalDate=true] - 是否原始日期
  * @param {string} params.enterpriseName - 企业名称
  */
+/**
+ * 获取企业服务动态（流程任务列表）
+ * POST /client/recommend/listProcessTaskByEnterpriseId
+ * @param {object} params
+ * @param {string} params.enterpriseId - 企业 ID
+ */
+export const listProcessTaskByEnterpriseId = ({ enterpriseId }) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskByEnterpriseId', {
+    enterpriseId,
+  });
+};
+
+/**
+ * 首页重点企业模块（区内/区外）
+ */
+export const homeEnterpriseModules = () => {
+  return dailyMessageRequest.post('/client/recommend/homeEnterpriseModules');
+};
+
+/**
+ * 重点企业模块列表（分页）
+ * @param {object} params
+ * @param {number} params.regionType - 区域类型 1=区内 2=区外（必填）
+ * @param {number} [params.itemType] - 条目类型 1=服务动态 2=新闻动态
+ * @param {string} [params.startDate] - 开始日期 yyyy-MM-dd
+ * @param {string} [params.endDate] - 结束日期 yyyy-MM-dd
+ * @param {number} [params.currentPage] - 当前页码
+ * @param {number} [params.pageSize] - 每页数量
+ */
+export const listEnterpriseModules = ({ regionType, itemType, startDate, endDate, currentPage, pageSize }) => {
+  return dailyMessageRequest.post('/client/recommend/listEnterpriseModules', {
+    regionType,
+    ...(itemType != null && { itemType }),
+    ...(startDate && { startDate }),
+    ...(endDate && { endDate }),
+    currentPage,
+    pageSize,
+  });
+};
+
+/**
+ * 部门任务汇总总数
+ */
+export const getProcessTaskDeptTotal = ({ leadOrgId, date, limit } = {}) => {
+  return dailyMessageRequest.post('/client/recommend/getProcessTaskDeptTotal', {
+    ...(leadOrgId != null && { leadOrgId }),
+    ...(date && { date }),
+    ...(limit != null && { limit }),
+  });
+};
+
+/**
+ * 按部门和时间筛选处置流程任务列表
+ */
+export const listProcessTaskByDeptAndDate = ({ leadOrgId, date, currentPage, pageSize }) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskByDeptAndDate', {
+    ...(leadOrgId != null && { leadOrgId }),
+    ...(date && { date }),
+    currentPage,
+    pageSize,
+  });
+};
+
+/**
+ * 部门任务汇总统计列表
+ */
+export const listProcessTaskDeptSummary = ({ leadOrgId, date, limit } = {}) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskDeptSummary', {
+    leadOrgId,
+    date,
+    limit
+  });
+};
+
+/**
+ * 查询所有部门下拉选项
+ */
+export const listProcessTaskDepts = () => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskDepts');
+};
+
 export const enterpriseDynamicArchivesList = ({
   frontendId,
   type,

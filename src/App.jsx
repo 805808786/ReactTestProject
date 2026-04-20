@@ -28,6 +28,8 @@ import DailyMessageList from './pages/DailyMessageList'
 import DailyMessageDetail from './pages/DailyMessageDetail'
 import PdfPreview from './pages/PdfPreview'
 import EnterpriseChangeList from './pages/EnterpriseChangeList'
+import KeyEnterprises from './pages/KeyEnterprises'
+import ServiceDepartment from './pages/ServiceDepartment'
 import './index.css'
 
 function App() {
@@ -63,6 +65,8 @@ function App() {
         <Route path="/daily-message-detail/:id" element={<DailyMessageDetail />} />
         <Route path="/pdf-preview" element={<PdfPreview />} />
         <Route path="/enterprise-change-list" element={<EnterpriseChangeList />} />
+        <Route path="/key-enterprises/:regionType" element={<KeyEnterprises />} />
+        <Route path="/service-departments" element={<ServiceDepartment />} />
       </Routes>
     </HashRouter>
   )
