@@ -9,8 +9,7 @@
 .app {
   max-width: 480px;
   margin: 0 auto;
-  background: url('../assets/container.png') no-repeat center top / 100% 100%;
-  background-attachment: fixed;
+  background: #F9FAFB;
   min-height: 100vh;
   /* font-family:
     "Noto Sans SC",
@@ -1490,7 +1489,7 @@
 .key-focus-v2 {
   padding: 0 0 16px;
   position: relative;
-  z-index: 5;
+  z-index: 15;
   display: flex;
   flex-direction: column;
   gap: 12px;
