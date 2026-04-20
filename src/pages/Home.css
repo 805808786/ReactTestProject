@@ -235,11 +235,6 @@
   /* Inactive color */
 }
 
-/* Active item styling */
-.bottom-nav-item.active .tab-icon {
-  filter: invert(27%) sepia(91%) saturate(2852%) hue-rotate(218deg) brightness(101%) contrast(98%);
-}
-
 .center-item {
   /* height: 50px;
   justify-content: center; */
@@ -275,7 +270,7 @@
 }
 
 .bottom-nav-item.active .bottom-nav-label {
-  color: #613EEA;
+  color: #0052D9;
   font-weight: 600;
 }
 
@@ -287,7 +282,7 @@
 }
 
 .center-item.active .bottom-nav-label {
-  color: #613EEA;
+  color: #0052D9;
 }
 
 /* Hide old Tab Bar */

@@ -12,12 +12,16 @@ import { getSceneOverview, homeEnterpriseModules, getProcessTaskDeptTotal, listP
 import { getSceneNewsOverview } from "../api/sceneEnterpriseDynamic";
 
 import sceneRadarIcon from "../assets/tabs/redesign/scene-radar.svg";
+import sceneRadarUnactiveIcon from "../assets/tabs/redesign/scene-radar-unactive.svg";
 import specialThemesIcon from "../assets/tabs/redesign/special-themes.svg";
+import specialThemesUnactiveIcon from "../assets/tabs/redesign/special-themes-unactive.svg";
 import homeBtnIcon from "../assets/tabs/redesign/home-btn.svg";
 import homeBtnUnactiveIcon from "../assets/tabs/redesign/home-btn-unactive.svg";
 
 import dataContributionIcon from "../assets/tabs/redesign/data-contribution.svg";
+import dataContributionIconUnactiveIcon from "../assets/tabs/redesign/data-contribution-unactive.svg";
 import policyMatchingIcon from "../assets/tabs/redesign/policy-matching.svg";
+import policyMatchingIconUnactiveIcon from "../assets/tabs/redesign/policy-matching-unactive.svg";
 import icon115 from "../assets/special-115x/115-badge-icon.svg";
 import icon296 from "../assets/special-115x/icon-special-296.svg";
 import chevronRightIcon from "../assets/chevron-right.svg";
@@ -33,8 +37,8 @@ import iconTrendUp from "../assets/overview-redesign/icon-trend-up.svg";
 import iconSearchInput from "../assets/icon-search-input.svg";
 
 const bottomTabs = [
-  { label: "墅企专题", icon: specialThemesIcon, logicCase: 1 },
-  { label: "场景雷达", icon: sceneRadarIcon, logicCase: 3 },
+  { label: "墅企专题", icon: specialThemesIcon, unactiveIcon: specialThemesUnactiveIcon, logicCase: 1 },
+  { label: "场景雷达", icon: sceneRadarIcon, unactiveIcon: sceneRadarUnactiveIcon, logicCase: 3 },
   {
     label: "首页",
     icon: homeBtnIcon,
@@ -42,8 +46,8 @@ const bottomTabs = [
     logicCase: 0,
     isCenter: true,
   },
-  { label: "数据贡献", icon: dataContributionIcon, logicCase: 4 },
-  { label: "政策匹配", icon: policyMatchingIcon, logicCase: 5 },
+  { label: "数据贡献", icon: dataContributionIcon, unactiveIcon: dataContributionIconUnactiveIcon, logicCase: 4 },
+  { label: "政策匹配", icon: policyMatchingIcon, unactiveIcon: policyMatchingIconUnactiveIcon, logicCase: 5 },
 ];
 
 
