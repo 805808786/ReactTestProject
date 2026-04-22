@@ -126,7 +126,7 @@
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
 }
 
 .ke-svc-info {
@@ -269,7 +269,7 @@
   font-size: 12px;
   color: #155dfc;
   white-space: nowrap;
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
 }
 
 .ke-news-title {

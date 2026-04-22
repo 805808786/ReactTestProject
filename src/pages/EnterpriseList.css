@@ -481,7 +481,7 @@
 }
 
 .el-sheet-section-text {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 13px;
   color: #364153;
   line-height: 1.39;
@@ -514,7 +514,7 @@
   align-items: center;
   flex-wrap: nowrap;
   gap: 4px;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 13px;
   line-height: 1.4;
 }

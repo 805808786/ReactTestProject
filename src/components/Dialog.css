@@ -44,7 +44,7 @@
 
 /* Dialog Descriptions - Figma specs: Alibaba PuHuiTi, 400, 16px, center aligned, 60% black */
 .dialog-descriptions {
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-weight: 400;
   font-size: 16px;
   line-height: 1.3125; /* Updated to match Figma 60:1905 */

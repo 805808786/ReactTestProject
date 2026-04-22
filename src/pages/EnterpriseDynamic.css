@@ -88,7 +88,7 @@
 
 .ed-search-input::placeholder {
   color: #717182;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
 }
@@ -131,7 +131,7 @@
   cursor: pointer;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.9);
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   transition: background 0.15s;
 }
@@ -269,7 +269,7 @@
   border: 1px solid #BEDBFF;
   border-radius: 10px;
   color: #155DFC;
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 16px;
   font-weight: 500;
 }

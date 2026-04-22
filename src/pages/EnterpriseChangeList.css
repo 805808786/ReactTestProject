@@ -82,7 +82,7 @@
   cursor: pointer;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.9);
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   transition: background 0.15s;
   min-width: 0;
@@ -128,7 +128,7 @@
   font-size: 12px;
   line-height: 16px;
   color: #000000;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   flex-shrink: 0;
 }
 
@@ -239,7 +239,7 @@
   white-space: nowrap;
   padding: 0;
   cursor: pointer;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
 }
 
 .ecl-card-tags {
@@ -258,7 +258,7 @@
   line-height: 20px;
   padding: 2px 10px;
   box-sizing: border-box;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
 }
 
 .ecl-tag--more {

@@ -87,7 +87,7 @@
   padding: 4px 12px 4px 40px;
   font-size: 14px;
   color: #0A0A0A;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   outline: none;
   box-sizing: border-box;
 }
@@ -192,7 +192,7 @@
   padding: 2px 8px;
   background: #F0FDF4;
   border-radius: 4px;
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #00A63E;
@@ -201,7 +201,7 @@
 }
 
 .we-industry-tag {
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -244,7 +244,7 @@
 }
 
 .we-growth-label {
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -270,7 +270,7 @@
 }
 
 .we-date-text {
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -318,7 +318,7 @@
 }
 
 .we-reason-text {
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #364153;
@@ -360,7 +360,7 @@
 }
 
 .we-metric-label {
-  font-family: 'Alibaba PuHuiTi', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #4A5565;

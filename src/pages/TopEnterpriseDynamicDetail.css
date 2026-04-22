@@ -155,7 +155,7 @@
   font-weight: 400;
   color: #6A7282;
   line-height: 1.333em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
 }
 
 /* ===== 分隔线 ===== */
@@ -199,7 +199,7 @@
   color: #364153;
   line-height: 1.625em;
   letter-spacing: -0.011em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
 }
 
 /* ===== 关联企业卡片 ===== */
@@ -241,7 +241,7 @@
   font-weight: 400;
   color: #6A7282;
   line-height: 1.333em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   margin-left: 8px;
 }
 
@@ -300,7 +300,7 @@
   font-weight: 400;
   color: #4A5565;
   line-height: 1.333em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -310,7 +310,7 @@
 .tedd-company-dot {
   font-size: 12px;
   color: #4A5565;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   flex-shrink: 0;
 }
 
@@ -319,7 +319,7 @@
   font-weight: 400;
   color: #4A5565;
   line-height: 1.333em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
 }
 
 /* 状态标签 */
@@ -355,6 +355,6 @@
   font-weight: 400;
   color: #155DFC;
   line-height: 1.333em;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   cursor: pointer;
 }

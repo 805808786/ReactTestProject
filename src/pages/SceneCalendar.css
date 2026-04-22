@@ -134,7 +134,7 @@
 }
 
 .sc-title-text {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-weight: 400;
   font-size: 14px;
   line-height: 22px;
@@ -420,7 +420,7 @@
 
 /* 发布背景正文 */
 .sc-tl-bg-text {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-weight: 400;
   font-size: 12px;
   line-height: 14.75px;

@@ -89,7 +89,7 @@
 }
 
 .pc-person-role {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #FFFFFF;
@@ -98,7 +98,7 @@
 }
 
 .pc-role-sep {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #FFFFFF;
@@ -107,7 +107,7 @@
 }
 
 .pc-person-dept {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #FFFFFF;
@@ -141,7 +141,7 @@
 }
 
 .pc-star-label {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #FFFFFF;
@@ -162,7 +162,7 @@
 }
 
 .pc-cumulative-label {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #FFFFFF;
@@ -276,7 +276,7 @@
 .pc-quality-tag {
   padding: 4px 8px;
   border-radius: 4px;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   line-height: 1.3333;
@@ -298,7 +298,7 @@
 }
 
 .pc-meta-text {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -306,7 +306,7 @@
 }
 
 .pc-meta-sep {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -332,7 +332,7 @@
 .pc-record-desc {
   margin: 0;
   padding-left: 24px;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #364153;
@@ -395,7 +395,7 @@
 }
 
 .pc-reviewer-time {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -404,7 +404,7 @@
 
 .pc-review-comment {
   margin: 0;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #364153;

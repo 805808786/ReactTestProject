@@ -71,7 +71,7 @@
 }
 
 .dc-stat-label {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #FFFFFF;
@@ -216,7 +216,7 @@
   background: #F0FDF4;
   border-radius: 4px;
   padding: 2px 8px;
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #00A63E;
@@ -224,7 +224,7 @@
 }
 
 .dc-dept-total {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -288,7 +288,7 @@
 }
 
 .dc-room-name {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 14px;
   font-weight: 400;
   color: #101828;
@@ -297,7 +297,7 @@
 }
 
 .dc-room-count {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -352,7 +352,7 @@
 }
 
 .dc-person-role {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #6A7282;
@@ -383,7 +383,7 @@
 }
 
 .dc-person-contribution {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #4A5565;
@@ -398,7 +398,7 @@
 }
 
 .dc-person-detail-text {
-  font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif;
+  /* font-family: 'Alibaba PuHuiTi', 'PingFang SC', sans-serif; */
   font-size: 12px;
   font-weight: 400;
   color: #155DFC;
