@@ -315,7 +315,7 @@
 }
 
 .cd-tag-section--purple {
-  background: #FAF5FF;
+  background: #E2F6ED;
 }
 
 .cd-tag-section-title {
@@ -367,7 +367,7 @@
 }
 
 .cd-tag-toggle-btn--purple {
-  color: #9333EA;
+  color: #00A63E;
 }
 
 /* ===== 通用 Tag ===== */
@@ -390,8 +390,8 @@
 }
 
 .cd-tag--purple {
-  background: #F3E8FF;
-  color: #9333EA;
+  background: #ECFDF5;
+  color: #00A66E;
   border: none;
   padding: 4px 8px;
   font-size: 13px;

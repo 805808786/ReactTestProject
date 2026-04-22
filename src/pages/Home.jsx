@@ -436,14 +436,14 @@ function KeyFocus({ sceneOverview }) {
       <div className="kf-recent-focus">
         <div className="kf-recent-focus-title">最近关注</div>
         <ServiceEnterpriseCard
-          title={enterpriseModules?.insideModule?.moduleTitle || '区内重点服务企业'}
+          title={enterpriseModules?.insideModule?.moduleTitle || '区内企业'}
           total={enterpriseModules?.insideModule?.total || 0}
           items={enterpriseModules?.insideModule?.previewList || []}
           regionType={1}
           navigate={navigate}
         />
         <ServiceEnterpriseCard
-          title={enterpriseModules?.outsideModule?.moduleTitle || '区外重点服务企业'}
+          title={enterpriseModules?.outsideModule?.moduleTitle || '区外企业'}
           total={enterpriseModules?.outsideModule?.total || 0}
           items={enterpriseModules?.outsideModule?.previewList || []}
           regionType={2}

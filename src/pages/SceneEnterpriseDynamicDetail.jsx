@@ -28,8 +28,12 @@ const DEFAULT_DETAIL = {
 
 function mapNewsDetailToData(apiData) {
   if (!apiData) return null;
+  let type = apiData.newsType || "新闻动态";
+  if (type == '领导走访') {
+    type = '新闻动态';
+  }
   return {
-    type: apiData.newsType || "新闻动态",
+    type: type,
     category: "news",
     title: apiData.articleTitle || apiData.title || "",
     summary: apiData.contentSummary || apiData.summary || "",

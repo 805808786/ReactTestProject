@@ -12,7 +12,7 @@ const ITEM_TYPES = ['服务动态', '新闻动态', '企业挖掘'];
 const ITEM_TYPE_MAP = { '服务动态': 1, '新闻动态': 2, '企业挖掘': 5 };
 const TASK_STATUS_MAP = { 0: '待开始', 1: '办理中', 2: '已完成' };
 const TASK_STATUS_CLASS = { 0: 'pending', 1: 'processing', 2: 'done' };
-const REGION_TITLE = { 1: '区内重点服务企业', 2: '区外重点服务企业' };
+const REGION_TITLE = { 1: '区内企业', 2: '区外企业' };
 
 function FilterButton({ label, active, count, onClick }) {
   return (

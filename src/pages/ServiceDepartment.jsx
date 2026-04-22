@@ -157,7 +157,7 @@ export default function ServiceDepartment() {
 
   return (
     <div className="sd-page">
-      <PageHeader title="企业服务部门" onBack={() => navigate(-1)} />
+      <PageHeader title="关联部门" onBack={() => navigate(-1)} />
 
       <div className="sd-body" ref={contentRef}>
         <div className="sd-filter-area">
