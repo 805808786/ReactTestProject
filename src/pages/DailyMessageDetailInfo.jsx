@@ -188,7 +188,7 @@ export default function SceneEnterpriseDynamicDetail() {
             })),
             relatedDepartments: (newsData.orgList || []).map((o) => ({
               id: o.platformOrgId,
-              name: o.platformOrgName,
+              name: o.platformOrgName || o.extractedOrgName || "",
             })),
           }));
         }

@@ -613,36 +613,45 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       {/* 快速导航 */}
       <div className="cd-quick-nav-wrapper">
         <div className="cd-quick-nav">
-          <button className="cd-quick-nav-toggle" onClick={() => setNavExpanded(!navExpanded)}>
-            <div className="cd-quick-nav-toggle-left">
-              <img src={iconZap} alt="快速导航" width={16} height={16} />
-              <span className="cd-quick-nav-label">快速导航</span>
-              <span className="cd-quick-nav-count">(15个模块)</span>
-            </div>
-            <img
-              src={navExpanded ? iconChevronUp : iconChevronDown}
-              alt="展开"
-              width={16}
-              height={16}
-            />
-          </button>
-          {navExpanded && (
-            <div className="cd-quick-nav-grid">
-              {QUICK_NAV_ITEMS.map((item) => (
-                <button
-                  key={item.key}
-                  className="cd-quick-nav-item"
-                  onClick={() => {
-                    setNavExpanded(false);
-                    setTimeout(() => scrollToSection(item.key), 50);
-                  }}
-                >
-                  <img src={item.icon} alt={item.label} width={20} height={20} />
-                  <span>{item.label}</span>
+          {(() => {
+            const visibleNavItems = newsFlashItems.length > 0
+              ? QUICK_NAV_ITEMS
+              : QUICK_NAV_ITEMS.filter(item => item.key !== 'flash');
+            return (
+              <>
+                <button className="cd-quick-nav-toggle" onClick={() => setNavExpanded(!navExpanded)}>
+                  <div className="cd-quick-nav-toggle-left">
+                    <img src={iconZap} alt="快速导航" width={16} height={16} />
+                    <span className="cd-quick-nav-label">快速导航</span>
+                    <span className="cd-quick-nav-count">({visibleNavItems.length}个模块)</span>
+                  </div>
+                  <img
+                    src={navExpanded ? iconChevronUp : iconChevronDown}
+                    alt="展开"
+                    width={16}
+                    height={16}
+                  />
                 </button>
-              ))}
-            </div>
-          )}
+                {navExpanded && (
+                  <div className="cd-quick-nav-grid">
+                    {visibleNavItems.map((item) => (
+                      <button
+                        key={item.key}
+                        className="cd-quick-nav-item"
+                        onClick={() => {
+                          setNavExpanded(false);
+                          setTimeout(() => scrollToSection(item.key), 50);
+                        }}
+                      >
+                        <img src={item.icon} alt={item.label} width={20} height={20} />
+                        <span>{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       </div>
 
@@ -709,7 +718,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       )} */}
 
       {/* 企业快讯 */}
-      <EnterpriseNewsFlash items={newsFlashItems} navigate={navigate} sectionRefs={sectionRefs} />
+      {newsFlashItems.length > 0 && <EnterpriseNewsFlash items={newsFlashItems} navigate={navigate} sectionRefs={sectionRefs} />}
 
       {/* 企业基本信息 */}
       <div className={`cd-section-card${collapsedSections.basic ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['basic'] = el}>

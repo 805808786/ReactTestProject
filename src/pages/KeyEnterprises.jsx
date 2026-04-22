@@ -8,8 +8,8 @@ import { listEnterpriseModules } from '../api/enterprise';
 import './KeyEnterprises.css';
 import './SceneEnterprise.css';
 
-const ITEM_TYPES = ['服务动态', '新闻动态'];
-const ITEM_TYPE_MAP = { '服务动态': 1, '新闻动态': 2 };
+const ITEM_TYPES = ['服务动态', '新闻动态','企业挖掘'];
+const ITEM_TYPE_MAP = { '服务动态': 1, '新闻动态': 2, '企业挖掘': 5 };
 const TASK_STATUS_MAP = { 0: '待开始', 1: '办理中', 2: '已完成' };
 const TASK_STATUS_CLASS = { 0: 'pending', 1: 'processing', 2: 'done' };
 const REGION_TITLE = { 1: '区内重点服务企业', 2: '区外重点服务企业' };
@@ -134,6 +134,9 @@ export default function KeyEnterprises() {
     if (item.itemType === 2) {
       return <NewsCard key={`news-${item.newsContentId}-${item.enterpriseId}`} item={item} navigate={navigate} />;
     }
+    else if (item.itemType === 5) {
+      return <EnterpriseMiningCard key={`emining-${item.enterpriseId}`} item={item} navigate={navigate} />;
+    }
     return <ServiceCard key={`svc-${item.recommendId}-${item.enterpriseId}`} item={item} navigate={navigate} />;
   };
 
@@ -240,6 +243,7 @@ function ServiceCard({ item, navigate }) {
       )}
       {item.recommendId && (
           <div className="ke-svc-detail-row" onClick={() => navigate(`/daily-message-detail/${item.recommendId}`)}>
+            {/* 如果item.isRead为false，显示红点 */}
             <span className="ke-svc-detail-text">查看任务详情</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path d="M9 6l6 6-6 6" stroke="#003cab" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -257,7 +261,7 @@ function NewsCard({ item, navigate }) {
       <div className="ke-news-top">
         <span className="ke-svc-badge ke-svc-badge--news">新闻动态</span>
         <div className="ke-news-top-right" onClick={() => navigate(`/scene-enterprise-dynamic-detail/${item.newsContentId}`)}>
-          <span className="ke-news-dot" />
+          {/* {!item.isRead && <span className="ke-news-dot" />} */}
           <span className="ke-news-link">查看详情 →</span>
         </div>
       </div>
@@ -269,6 +273,35 @@ function NewsCard({ item, navigate }) {
         <div className="ke-news-summary">
           <span className="ke-news-summary-label">摘要: </span>
           <span className="ke-news-summary-text">{item.contentSummary}</span>
+        </div>
+      )}
+      <div className="ke-news-footer">
+        <span className="ke-news-date">{item.publishDate || ''}</span>
+      </div>
+    </div>
+  );
+}
+
+
+/* ===== 企业挖掘卡片 ===== */
+function EnterpriseMiningCard({ item, navigate }) {
+  return (
+    <div className="ke-news-card">
+      <div className="ke-news-top">
+        <span className="ke-svc-badge ke-svc-badge--dig">企业挖掘</span>
+        <div className="ke-news-top-right" onClick={() => navigate(`/daily-message-detail/${item.recommendId}`)}>
+          {!item.isRead && <span className="ke-news-dot" />}
+          <span className="ke-news-link">查看详情 →</span>
+        </div>
+      </div>
+      <div className="ke-news-title">
+        <span className="ke-news-dot-red" />
+        <span className="ke-news-title-text">{item.title || ''}</span>
+      </div>
+      {item.remark && (
+        <div className="ke-news-summary">
+          <span className="ke-news-summary-label">摘要: </span>
+          <span className="ke-news-summary-text">{item.remark}</span>
         </div>
       )}
       <div className="ke-news-footer">

@@ -56,7 +56,7 @@
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  padding: 15px 16px;
+  padding: 6px 8px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -98,6 +98,12 @@
 .ke-svc-badge--news {
   background: #2ba471;
   color: #e3f9e9;
+  width: 66px;
+}
+
+.ke-svc-badge--dig {
+  background: #F6685D;
+  color: #E3F9E9;
   width: 66px;
 }
 
@@ -282,6 +288,14 @@
   flex-shrink: 0;
 }
 
+.ke-news-dot-red{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #F6685D;
+  flex-shrink: 0;
+}
+
 .ke-news-title-text {
   font-size: 16px;
   font-weight: 500;
@@ -296,7 +310,7 @@
 .ke-news-summary {
   font-size: 16px;
   line-height: 19.5px;
-  height: 39px;
+  /* height: 39px; */
   overflow: hidden;
   font-family: 'MiSans', sans-serif;
 }

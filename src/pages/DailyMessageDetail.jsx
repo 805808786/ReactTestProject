@@ -193,7 +193,7 @@ export default function SceneEnterpriseDynamicDetail() {
             })),
             relatedDepartments: (newsData.orgList || []).map((o) => ({
               id: o.platformOrgId,
-              name: o.platformOrgName,
+              name: o.platformOrgName || o.extractedOrgName || "",
             })),
           }));
         }
@@ -569,16 +569,11 @@ export default function SceneEnterpriseDynamicDetail() {
 
                 {/* 挖掘内容 */}
                 {
-                  data.category == "dig" && data.richTextContent ? <div className="dmd-summary-box">
+                  data.category == "dig" && data.richTextContent && <div className="dmd-summary-box">
                     <p className="dmd-summary-text">
                       <div dangerouslySetInnerHTML={{ __html: data.richTextContent }} />
                     </p>
-                  </div> : (
-                    <div
-                      className="dmd-rich-content"
-                      dangerouslySetInnerHTML={{ __html: data.richTextContent }}
-                    />
-                  )
+                  </div>
                 }
 
                 {/* 来源链接按钮 */}

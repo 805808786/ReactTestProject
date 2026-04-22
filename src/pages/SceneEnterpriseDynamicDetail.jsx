@@ -38,9 +38,9 @@ function mapNewsDetailToData(apiData) {
     subSummary: null,
     sourceLink: apiData.articleUrl
       ? {
-          url: apiData.articleUrl,
-          label: apiData.newsSource || "查看原文",
-        }
+        url: apiData.articleUrl,
+        label: apiData.newsSource || "查看原文",
+      }
       : null,
     paragraphs: [],
     relatedCompanies: (apiData.enterpriseList || []).map(
@@ -60,7 +60,7 @@ function mapNewsDetailToData(apiData) {
     ),
     relatedDepartments: (apiData.orgList || []).map((org, index) => ({
       id: org.platformOrgId || org.id || `org-${index}`,
-      name: org.platformOrgName || org.name || "",
+      name: org.platformOrgName || org.name || org.extractedOrgName || "",
       legalPerson: org.legalPerson || "",
     })),
     richTextContent: null,
