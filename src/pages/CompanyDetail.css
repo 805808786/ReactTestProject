@@ -2106,6 +2106,17 @@
   gap: 8px;
   padding-bottom: 12px;
   cursor: pointer;
+  position: relative;
+}
+
+.cd-newsflash-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 3.5px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #E5E7EB;
 }
 
 .cd-newsflash-item:last-child {
@@ -2124,6 +2135,8 @@
   border-radius: 50%;
   background: #3B82F6;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .cd-newsflash-date {

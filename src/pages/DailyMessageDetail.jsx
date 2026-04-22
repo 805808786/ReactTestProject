@@ -92,7 +92,7 @@ function mapApiDetailToData(apiData) {
     type: tagText,
     category,
     title: apiData.title || "",
-    summary: apiData.content || apiData.richTextContent || null,
+    summary: apiData.cardType == 5 ? apiData.remark : apiData.content || apiData.richTextContent || null,
     date: formatDateToDay(apiData.publishTime || apiData.gmtCreate || ""),
     source: "",
     sourceLink: null,
