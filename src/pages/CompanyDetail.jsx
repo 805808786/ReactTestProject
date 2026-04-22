@@ -469,7 +469,6 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
         setNewsFlashItems(res.data?.data || res.data || []);
       })
       .catch((err) => {
-        console.error('获取企业快讯失败:', err);
         setNewsFlashItems([]);
       });
   }, [id]);

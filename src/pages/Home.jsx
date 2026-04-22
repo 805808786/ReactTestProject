@@ -36,6 +36,8 @@ import iconKeyEnterpriseChevronItem from "../assets/icon-key-enterprise-chevron-
 import iconTrendUp from "../assets/overview-redesign/icon-trend-up.svg";
 import iconSearchInput from "../assets/icon-search-input.svg";
 
+import dayjs from "dayjs";
+
 const bottomTabs = [
   { label: "墅企专题", icon: specialThemesIcon, unactiveIcon: specialThemesUnactiveIcon, logicCase: 1 },
   { label: "场景雷达", icon: sceneRadarIcon, unactiveIcon: sceneRadarUnactiveIcon, logicCase: 3 },
@@ -149,13 +151,13 @@ export default function Home() {
 
   useEffect(() => {
     const sceneNames = [
-      {type: "1", sceneName: "人工智能"},
-      {type: "2", sceneName: "数商企业"},
-      {type: "3", sceneName: "115X专项"}
+      { type: "1", sceneName: "人工智能" },
+      { type: "2", sceneName: "数商企业" },
+      { type: "3", sceneName: "115X专项" }
     ];
 
     Promise.allSettled(
-      sceneNames.map(({sceneName, type}) =>
+      sceneNames.map(({ sceneName, type }) =>
         Promise.all([
           getSceneOverview({ type }),
           getSceneNewsOverview({ sceneName }),
@@ -287,7 +289,8 @@ function KeyFocus({ sceneOverview }) {
   const [deptItems, setDeptItems] = useState([]);
 
   useEffect(() => {
-    getDailyMessageList({ currentPage: 1, pageSize: 1 })
+    const today = dayjs().format("YYYY-MM-DD");
+    getDailyMessageList({ currentPage: 1, pageSize: 1, "startTime": today, "endTime": today })
       .then((res) => {
         setMessageTotal(Number(res.data?.total || 0));
       })
@@ -488,19 +491,19 @@ function EnterpriseOverview() {
   const changeNum = enterpriseData?.changeNum;
   const displayDate = enterpriseData?.changeDate
     ? new Date(enterpriseData.changeDate)
-        .toLocaleDateString("zh-CN", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        })
-        .replace(/\//g, ".")
+      .toLocaleDateString("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\//g, ".")
     : today
-        .toLocaleDateString("zh-CN", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        })
-        .replace(/\//g, ".");
+      .toLocaleDateString("zh-CN", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      })
+      .replace(/\//g, ".");
 
   const stats = enterpriseData?.statistics || {};
   const newAndMoveIn = (stats.newNum || 0) + (stats.newMoveInNum || 0);

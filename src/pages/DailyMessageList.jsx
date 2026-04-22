@@ -17,20 +17,25 @@ const CARD_TYPE_CATEGORY_MAP = {
   2: "news",
   3: "related",
   4: "service",
+  5: "dig",
   recommend: "recommend",
   news: "news",
   related: "related",
   service: "service",
+  dig: "dig"
 };
 const CARD_TYPE_TAG_MAP = {
   1: "每日推荐",
   2: "新闻动态",
   3: "与我相关",
   4: "精准服务",
+  5: "企业挖掘",
   recommend: "每日推荐",
   news: "新闻动态",
   related: "与我相关",
   service: "精准服务",
+  dig: "企业挖掘"
+
 };
 const CARD_TYPE_DOT_COLOR_MAP = {
   1: "#F59E0B",
