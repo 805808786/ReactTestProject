@@ -8,7 +8,7 @@ import { listEnterpriseModules } from '../api/enterprise';
 import './KeyEnterprises.css';
 import './SceneEnterprise.css';
 
-const ITEM_TYPES = ['服务动态', '新闻动态','企业挖掘'];
+const ITEM_TYPES = ['服务动态', '新闻动态', '企业挖掘'];
 const ITEM_TYPE_MAP = { '服务动态': 1, '新闻动态': 2, '企业挖掘': 5 };
 const TASK_STATUS_MAP = { 0: '待开始', 1: '办理中', 2: '已完成' };
 const TASK_STATUS_CLASS = { 0: 'pending', 1: 'processing', 2: 'done' };
@@ -16,24 +16,24 @@ const REGION_TITLE = { 1: '区内重点服务企业', 2: '区外重点服务企�
 
 function FilterButton({ label, active, count, onClick }) {
   return (
-      <button
-          className={`se-filter-btn${active ? " se-filter-btn--active" : ""}`}
-          onClick={onClick}
-      >
+    <button
+      className={`se-filter-btn${active ? " se-filter-btn--active" : ""}`}
+      onClick={onClick}
+    >
       <span>
         {label}
         {count > 0 ? `(${count})` : ""}
       </span>
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-        >
-          <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9" />
-        </svg>
-      </button>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path d="M16.5 9H7.5L12 15.75L16.5 9Z" fill="black" fillOpacity="0.9" />
+      </svg>
+    </button>
   );
 }
 
@@ -232,23 +232,23 @@ function ServiceCard({ item, navigate }) {
         {item.leadOrgName && <span className="ke-svc-org">{item.leadOrgName}</span>}
       </div>
       {item.feedbackResult && (
-          <div className="ke-svc-box">
-            <p className="ke-svc-box-text">
-              <span className="ke-svc-box-label">反馈结果：</span>
-              {item.feedbackResult}
-            </p>
-            {item.feedbackDate && (<p className="ke-svc-feedback-date">反馈日期：{item.feedbackDate}</p>
-            )}
-          </div>
+        <div className="ke-svc-box">
+          <p className="ke-svc-box-text">
+            <span className="ke-svc-box-label">反馈结果：</span>
+            {item.feedbackResult}
+          </p>
+          {item.feedbackDate && (<p className="ke-svc-feedback-date">反馈日期：{item.feedbackDate}</p>
+          )}
+        </div>
       )}
       {item.recommendId && (
-          <div className="ke-svc-detail-row" onClick={() => navigate(`/daily-message-detail/${item.recommendId}`)}>
-            {!item.isRead && <span className="ke-news-dot" />}
-            <span className="ke-svc-detail-text">查看任务详情</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M9 6l6 6-6 6" stroke="#003cab" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
+        <div className="ke-svc-detail-row" onClick={() => navigate(`/daily-message-detail/${item.recommendId}`)}>
+          {!item.isRead && <span className="ke-news-dot" />}
+          <span className="ke-svc-detail-text">查看任务详情</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6l6 6-6 6" stroke="#003cab" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
       )}
     </div>
   );
@@ -276,7 +276,7 @@ function NewsCard({ item, navigate }) {
         </div>
       )}
       <div className="ke-news-footer">
-        <span className="ke-news-date">{item.publishDate || ''}</span>
+        <span className="ke-news-date">{item.publishDate || item.sortDate || ''}</span>
       </div>
     </div>
   );
@@ -305,7 +305,7 @@ function EnterpriseMiningCard({ item, navigate }) {
         </div>
       )}
       <div className="ke-news-footer">
-        <span className="ke-news-date">{item.publishDate || ''}</span>
+        <span className="ke-news-date">{item.publishDate || item.sortDate || ''}</span>
       </div>
     </div>
   );
