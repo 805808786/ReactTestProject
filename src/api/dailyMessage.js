@@ -51,3 +51,11 @@ export const addFeedback = ({ recommendId, content }) => {
 export const countUnread = () => {
   return dailyMessageRequest.post('/client/recommend/countUnread')
 }
+
+/**
+ * 统计未读数量
+ * POST /client/recommend/countUnread
+ */
+export const countUnreadByTime = ({ startTime, endTime }) => {
+  return dailyMessageRequest.post('/client/recommend/countUnreadByTime', { startTime, endTime })
+}

@@ -7,7 +7,7 @@ import { useEnterpriseStore } from "../store/enterpriseStore";
 import { useBottomNavStore } from "../store/bottomNavStore";
 import { useChatStore } from "../store/chatStore";
 import PageHeader from "../components/PageHeader";
-import { countUnread, getDailyMessageList } from "../api/dailyMessage";
+import { countUnreadByTime, getDailyMessageList } from "../api/dailyMessage";
 import { getSceneOverview, homeEnterpriseModules, getProcessTaskDeptTotal, listProcessTaskDeptSummary } from "../api/enterprise";
 import { getSceneNewsOverview } from "../api/sceneEnterpriseDynamic";
 
@@ -300,7 +300,8 @@ function KeyFocus({ sceneOverview }) {
   }, []);
 
   useEffect(() => {
-    countUnread()
+    const today = dayjs().format("YYYY-MM-DD");
+    countUnreadByTime({ "startTime": today, "endTime": today })
       .then((res) => {
         setUnreadCount(Number(res.data || 0));
       })
