@@ -22,10 +22,12 @@ const CARD_TYPE_CATEGORY_MAP = {
   2: "news",
   3: "related",
   4: "service",
+  5: "dig",
   recommend: "recommend",
   news: "news",
   related: "related",
   service: "service",
+  dig: "dig"
 };
 
 const CARD_TYPE_TAG_MAP = {
@@ -33,11 +35,12 @@ const CARD_TYPE_TAG_MAP = {
   2: "新闻动态",
   3: "与我相关",
   4: "精准服务",
+  5: "企业挖掘"
 };
 
 const DEFAULT_DETAIL = {
-  type: "场景动态",
-  category: "news",
+  type: "",
+  category: "",
   title: "加载中...",
   date: "",
   source: "",
@@ -81,8 +84,8 @@ function formatDateToDay(str) {
 function mapApiDetailToData(apiData) {
   if (!apiData) return null;
   const cardType = apiData.cardType;
-  const category = CARD_TYPE_CATEGORY_MAP[cardType] || "news";
-  const tagText = CARD_TYPE_TAG_MAP[cardType] || "场景动态";
+  const category = CARD_TYPE_CATEGORY_MAP[cardType] || "";
+  const tagText = CARD_TYPE_TAG_MAP[cardType] || "";
 
   // 基础字段
   const result = {
@@ -97,12 +100,13 @@ function mapApiDetailToData(apiData) {
     relatedCompanies: [],
     relatedDepartments: [],
     link: null,
-    richTextContent: null,
+    richTextContent: apiData.richTextContent || null,
     serviceBackground: "",
     serviceOpinion: "",
     serviceProgress: "",
     serviceProcesses: [],
     progressAttachments: [],
+
   };
 
   if (cardType === 1) {
@@ -352,6 +356,7 @@ export default function SceneEnterpriseDynamicDetail() {
     data.richTextContent || data.content || "";
   const hasProgressAttachments = (data.progressAttachments || []).length > 0;
 
+
   return (
     <div className="dmd-container">
       {/* ===== 头部 ===== */}
@@ -532,6 +537,8 @@ export default function SceneEnterpriseDynamicDetail() {
                   </p>
                 </div>
 
+
+
                 {/* 正文段落 */}
                 {data.paragraphs && data.paragraphs.length > 0 ? (
                   data.category == "recommend" ? (
@@ -553,12 +560,26 @@ export default function SceneEnterpriseDynamicDetail() {
                 ) : null}
 
                 {/* 富文本内容 */}
-                {data.richTextContent && (
+                {/* {data.richTextContent && (
                   <div
                     className="dmd-rich-content"
                     dangerouslySetInnerHTML={{ __html: data.richTextContent }}
                   />
-                )}
+                )} */}
+
+                {/* 挖掘内容 */}
+                {
+                  data.category == "dig" && data.richTextContent ? <div className="dmd-summary-box">
+                    <p className="dmd-summary-text">
+                      <div dangerouslySetInnerHTML={{ __html: data.richTextContent }} />
+                    </p>
+                  </div> : (
+                    <div
+                      className="dmd-rich-content"
+                      dangerouslySetInnerHTML={{ __html: data.richTextContent }}
+                    />
+                  )
+                }
 
                 {/* 来源链接按钮 */}
                 {data.sourceLink && (

@@ -2,6 +2,8 @@
 .sd-page {
   min-height: 100vh;
   background: #f5f5f5;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
 .sd-body {
@@ -154,6 +156,33 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.sd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  gap: 12px;
+}
+
+.sd-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e6eaf5;
+  border-top-color: #1777ff;
+  border-radius: 50%;
+  animation: sd-spin 0.8s linear infinite;
+}
+
+@keyframes sd-spin {
+  to { transform: rotate(360deg); }
+}
+
+.sd-loading-text {
+  font-size: 14px;
+  color: #aaaaaa;
 }
 
 .sd-empty {

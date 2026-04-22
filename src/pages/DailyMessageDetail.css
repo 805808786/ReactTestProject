@@ -124,6 +124,11 @@
   color: #FFF1E9;
 }
 
+.dmd-badge--dig{
+  background: #F6685d !important;
+  color: #ffd9c2 !important;
+}
+
 
 
 /* 标题行 */
@@ -161,6 +166,11 @@
 .dmd-green-dot--service {
   background: #E37318;
 }
+
+.dmd-green-dot--dig {
+  background: #F6685d !important;
+}
+
 
 .dmd-title {
   font-size: 18px;

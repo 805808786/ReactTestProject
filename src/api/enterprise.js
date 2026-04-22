@@ -647,6 +647,19 @@ export const listProcessTaskByEnterpriseId = ({ enterpriseId }) => {
 };
 
 /**
+ * 获取企业快讯列表（按企业ID分页）
+ * POST /client/recommend/listLeaderBoardByEnterpriseId
+ */
+export const listLeaderBoardByEnterpriseId = ({ currentPage = 1, pageSize = 10, enterpriseId, sortField = 'generateTime' }) => {
+  return dailyMessageRequest.post('/client/recommend/listLeaderBoardByEnterpriseId', {
+    currentPage,
+    pageSize,
+    enterpriseId,
+    sortField,
+  });
+};
+
+/**
  * 首页重点企业模块（区内/区外）
  */
 export const homeEnterpriseModules = () => {

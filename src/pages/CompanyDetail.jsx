@@ -44,9 +44,11 @@ import iconActivity from '../assets/icon-cd-activity.svg';
 import iconProcessTasks from '../assets/icon-cd-iconProcessTasks.svg';
 import iconNewsFileText from '../assets/icon-cd-news-filetext.svg';
 import iconZap from '../assets/icon-cd-zap.svg';
+import iconFlash from '../assets/icon-cd-flash.svg';
 import iconChevronUp from '../assets/icon-cd-chevron-up.svg';
 import iconChevronDown from '../assets/icon-cd-chevron-down.svg';
 import iconCaretDown from '../assets/icon-caret-down-small.svg';
+import iconNavFlash from '../assets/icon-cd-nav-flash.svg';
 import iconNavInfo from '../assets/icon-cd-nav-info.svg';
 import iconNavProduct from '../assets/icon-cd-nav-product.svg';
 import iconNavPatent from '../assets/icon-cd-nav-patent.svg';
@@ -62,7 +64,7 @@ import iconNavFinance from '../assets/icon-cd-nav-finance.svg';
 import iconNavBid from '../assets/icon-cd-nav-bid.svg';
 import iconNavEquity from '../assets/icon-cd-nav-equity.svg';
 import './CompanyDetail.css';
-import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo, serviceMatrixList, selectEnterpriseVisitsList, getBusinessCommunityEnterpriseAppealPage, getBusinessCommunityEnterpriseNewsPage, getManageRiskEarlyWarningPage, enterpriseDynamicArchivesCount, enterpriseDynamicArchivesList, listProcessTaskByEnterpriseId } from '../api/enterprise';
+import { getSslmEnterprisesInfoById, getSslmEnterprisesTagListById, dataService, selectListByName, selectCopyrightListByName, getSslmEnterprisesInfoEntityById, getSslmEnterprisesById, getEnterpriseTalent, selectListBuildingTrends, queryPolicyRedemptionTotal, queryPolicyRedemptionPage, modelPredictionDemand, getFinancingInfo, getBidInfo, getEnterpriseEquityPenetrationInfo, serviceMatrixList, selectEnterpriseVisitsList, getBusinessCommunityEnterpriseAppealPage, getBusinessCommunityEnterpriseNewsPage, getManageRiskEarlyWarningPage, enterpriseDynamicArchivesCount, enterpriseDynamicArchivesList, listProcessTaskByEnterpriseId, listLeaderBoardByEnterpriseId } from '../api/enterprise';
 
 const TABS = [
   { key: 'data', label: '企业数据', icon: iconTabData, activeIcon: iconTabDataActive },
@@ -73,6 +75,7 @@ const TABS = [
 ];
 
 const QUICK_NAV_ITEMS = [
+  { key: 'flash', label: '企业快讯', icon: iconNavFlash },
   { key: 'basic', label: '基本信息', icon: iconNavInfo },
   { key: 'product', label: '服务产品', icon: iconNavProduct },
   { key: 'patent', label: '专利', icon: iconNavPatent },
@@ -208,6 +211,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [equityData, setEquityData] = useState({});
   const [processTasks, setProcessTasks] = useState([]);
   const [expandedTaskIds, setExpandedTaskIds] = useState(new Set());
+  const [newsFlashItems, setNewsFlashItems] = useState([]);
   const sectionRefs = useRef({});
   const navigate = useNavigate();
 
@@ -457,6 +461,19 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       });
   }, [id]);
 
+  // 从 API 获取企业快讯
+  useEffect(() => {
+    if (!id) return;
+    listLeaderBoardByEnterpriseId({ currentPage: 1, pageSize: 999, enterpriseId: id, sortField: 'generateTime' })
+      .then((res) => {
+        setNewsFlashItems(res.data?.data || res.data || []);
+      })
+      .catch((err) => {
+        console.error('获取企业快讯失败:', err);
+        setNewsFlashItems([]);
+      });
+  }, [id]);
+
   // 从 API 获取服务动态
   useEffect(() => {
     if (!id) return;
@@ -601,7 +618,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
             <div className="cd-quick-nav-toggle-left">
               <img src={iconZap} alt="快速导航" width={16} height={16} />
               <span className="cd-quick-nav-label">快速导航</span>
-              <span className="cd-quick-nav-count">(14个模块)</span>
+              <span className="cd-quick-nav-count">(15个模块)</span>
             </div>
             <img
               src={navExpanded ? iconChevronUp : iconChevronDown}
@@ -631,7 +648,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       </div>
 
       {/* 服务动态 */}
-      {processTasks.length > 0 && (
+      {/* {processTasks.length > 0 && (
         <div className="cd-sd-section">
           <div className="cd-sd-header">
             <img src={iconProcessTasks} alt="服务动态" width={20} height={20} />
@@ -690,7 +707,10 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
             );
           })}
         </div>
-      )}
+      )} */}
+
+      {/* 企业快讯 */}
+      <EnterpriseNewsFlash items={newsFlashItems} navigate={navigate} sectionRefs={sectionRefs} />
 
       {/* 企业基本信息 */}
       <div className={`cd-section-card${collapsedSections.basic ? ' cd-section-card--collapsed' : ''}`} ref={el => sectionRefs.current['basic'] = el}>
@@ -2051,6 +2071,119 @@ function LifecycleTab() {
         </div>
       </div>
       <div style={{ height: 24 }} />
+    </div>
+  );
+}
+
+/* ===================== 企业快讯 ===================== */
+const NEWSFLASH_TYPE_LABEL = { 2: '新闻', 3: '走访', 4: '任务', 5: '挖掘' };
+
+function newsFlashDateLabel(dateStr) {
+  if (!dateStr) return '';
+  const match = String(dateStr).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (match) return `${match[1]}.${match[2]}.${match[3]}`;
+  return dateStr;
+}
+
+function EnterpriseNewsFlash({ items, navigate, sectionRefs }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const displayItems = isExpanded ? items : items.slice(0, 2);
+  const SERVICE_TASK_STATUS_MAP = {
+    0: { label: "待开始", className: "pending" },
+    1: { label: "进行中", className: "processing" },
+    2: { label: "已完成", className: "done" },
+  };
+
+  function getServiceTaskStatus(status) {
+    return SERVICE_TASK_STATUS_MAP[status] || SERVICE_TASK_STATUS_MAP[0];
+  }
+
+  return (
+    <div className="cd-section-card cd-newsflash" ref={el => sectionRefs.current['flash'] = el}>
+      <div className="cd-section-header">
+        <img src={iconFlash} alt="企业快讯" width={20} height={20} className="cd-newsflash-icon" />
+        <span className="cd-section-title">企业快讯</span>
+        <button className="cd-section-toggle" onClick={() => setIsExpanded(!isExpanded)}>
+          <img src={isExpanded ? iconChevronUpBlue : iconChevronDownBlue} alt="" width={14} height={14} />
+          <span>{isExpanded ? '收起' : '展开'}</span>
+        </button>
+      </div>
+
+      {items.length === 0 ? (
+        <div className="cd-no-data">暂无企业快讯记录</div>
+      ) : (
+        <div className={`cd-newsflash-list${isExpanded ? ' cd-newsflash-list--expanded' : ''}`}>
+          {displayItems.map((item) => {
+            const dateStr = newsFlashDateLabel(item.publishTime || '');
+            const typeLabel = NEWSFLASH_TYPE_LABEL[item.cardType];
+            const isTask = item.cardType === 4;
+            const content = item.cardType === 5 ? item.remark : item.content;
+            return (
+              <div key={item.id} className="cd-newsflash-item" onClick={() => navigate(`/daily-message-detail/${item.id}`)}>
+                <div className="cd-newsflash-date-row">
+                  <span className="cd-newsflash-dot" />
+                  <span className="cd-newsflash-date">{dateStr}</span>
+                </div>
+
+                {
+                  isTask ? (item.recommendServiceProcessTask && item.recommendServiceProcessTask.length > 0 && item.recommendServiceProcessTask.map((x, xi) =>
+                    <div className="cd-newsflash-card" key={x.id}>
+                      <div className="cd-newsflash-title">
+                        {typeLabel && <span className="cd-newsflash-type-prefix">{typeLabel}：</span>}
+                        {x.taskContent}
+                        {!item.isRead && <span className="cd-newsflash-unread-dot" />}
+                      </div>
+                      {x.feedbackResult ? <div className="cd-newsflash-desc">{x.feedbackResult}</div> : null}
+                      <div className="cd-newsflash-tags">
+                        <span className="cd-newsflash-task-btn"                        >
+                          {getServiceTaskStatus(x.status).label}
+                        </span>
+                        <span className="cd-newsflash-org">{x.leadOrgName}</span>
+                      </div>
+                      <div className='cd-newsflash-feedback-date'>
+                        反馈日期： {x.feedbackDate}
+                      </div>
+                    </div>)) : <div className="cd-newsflash-card">
+                    <div className="cd-newsflash-title">
+                      {typeLabel && <span className="cd-newsflash-type-prefix">{typeLabel}：</span>}
+                      {item.title}
+                      {!item.isRead && <span className="cd-newsflash-unread-dot" />}
+                    </div>
+                    {content ? <div className="cd-newsflash-desc">{content}</div> : null}
+                  </div>
+                }
+
+                {/* <div className="cd-newsflash-card">
+                  <div className="cd-newsflash-title">
+                    {typeLabel && <span className="cd-newsflash-type-prefix">{typeLabel}：</span>}
+                    {item.title}
+                    {!item.isRead && <span className="cd-newsflash-unread-dot" />}
+                  </div>
+                  {item.remark ? <div className="cd-newsflash-desc">{item.remark}</div> : null}
+                  {(isTask || item.leadOrgNames) && (
+                    <div className="cd-newsflash-tags">
+                      {isTask && (
+                        <span
+                          className="cd-newsflash-task-btn"
+                          onClick={(e) => { e.stopPropagation(); navigate(`/daily-message-detail/${item.id}`); }}
+                        >
+                          办理任务
+                        </span>
+                      )}
+                      {item.leadOrgNames && (
+                        <span className="cd-newsflash-org">{item.leadOrgNames}</span>
+                      )}
+                    </div>
+                  )}
+                </div> */}
+
+
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

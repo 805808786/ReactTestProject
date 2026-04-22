@@ -31,6 +31,7 @@ import PdfPreview from './pages/PdfPreview'
 import EnterpriseChangeList from './pages/EnterpriseChangeList'
 import KeyEnterprises from './pages/KeyEnterprises'
 import ServiceDepartment from './pages/ServiceDepartment'
+import EnterpriseExcavation from './pages/EnterpriseExcavation'
 import './index.css'
 
 function App() {
@@ -69,6 +70,7 @@ function App() {
         <Route path="/enterprise-change-list" element={<EnterpriseChangeList />} />
         <Route path="/key-enterprises/:regionType" element={<KeyEnterprises />} />
         <Route path="/service-departments" element={<ServiceDepartment />} />
+        <Route path="/enterprise-excavation/:id" element={<EnterpriseExcavation />} />
       </Routes>
     </HashRouter>
   )

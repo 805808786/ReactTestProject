@@ -176,7 +176,12 @@ export default function ServiceDepartment() {
           </div>
         </div>
 
-        {!loading && groupedItems.length === 0 ? (
+        {loading ? (
+          <div className="sd-loading">
+            <div className="sd-loading-spinner" />
+            <span className="sd-loading-text">加载中...</span>
+          </div>
+        ) : groupedItems.length === 0 ? (
           <div className="sd-empty">暂无数据</div>
         ) : (
           <div className="sd-list">

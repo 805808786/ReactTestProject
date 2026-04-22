@@ -1,0 +1,154 @@
+.ee-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: #f8f8f8;
+  overflow: hidden;
+}
+
+.ee-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.ee-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+  box-shadow: 0px 4px 6px -4px rgba(0, 0, 0, 0.1),
+    0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.ee-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+.ee-header-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ee-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: #0a0a0a;
+  line-height: 1.55;
+  letter-spacing: -0.024em;
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
+    sans-serif;
+}
+
+.ee-date-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ee-date-text {
+  font-size: 12px;
+  color: #6a7282;
+  line-height: 1.33;
+  font-family: "Alibaba PuHuiTi", "PingFang SC", sans-serif;
+}
+
+.ee-separator {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.ee-box {
+  background: #eff6ff;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ee-box-label {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.31;
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
+    sans-serif;
+}
+
+.ee-box-label--red {
+  color: #d54941;
+}
+
+.ee-box-label--black {
+  color: #0a0a0a;
+}
+
+.ee-box-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.22;
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
+    sans-serif;
+}
+
+.ee-box-content {
+  font-size: 16px;
+  font-weight: 500;
+  color: #364153;
+  line-height: 1.22;
+  font-family: "PingFang SC", -apple-system, BlinkMacSystemFont, "Microsoft YaHei",
+    sans-serif;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ee-box-content p {
+  margin: 0 0 2px;
+}
+
+.ee-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 0;
+}
+
+.ee-loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #155dfc;
+  border-radius: 50%;
+  animation: ee-spin 0.8s linear infinite;
+}
+
+@keyframes ee-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ee-loading-text {
+  font-size: 14px;
+  color: #6a7282;
+}
+
+.ee-empty {
+  text-align: center;
+  padding: 60px 0;
+  font-size: 14px;
+  color: #9ca3af;
+}
