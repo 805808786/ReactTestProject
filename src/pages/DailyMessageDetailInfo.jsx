@@ -8,7 +8,7 @@ import iconLinkBlue from "../assets/icon-link-blue.svg";
 import iconFeedback from "../assets/icon-feedback.svg";
 import iconClose from "../assets/icon-close.svg";
 import iconChevronDownBlue from "../assets/icon-cd-chevron-down-blue.svg";
-import "./DailyMessageDetail.css";
+import "./DailyMessageDetailInfo.css";
 import PageHeader from "../components/PageHeader";
 import { getDailyMessageDetail, addFeedback } from "../api/dailyMessage";
 import {
@@ -342,12 +342,13 @@ export default function SceneEnterpriseDynamicDetail() {
   }
 
   const isServiceDetail = data.category === "service";
-
-  console.log(data)
-
   const serviceBackgroundContent =
     data.richTextContent || data.content || "";
   const hasProgressAttachments = (data.progressAttachments || []).length > 0;
+
+  const allTasksFlat = (data.serviceProcesses || []).flatMap(p => p.tasks || []);
+  const uniqueDeptCount = new Set(allTasksFlat.map(t => t.leadOrgName).filter(Boolean)).size;
+  const taskCountTotal = allTasksFlat.length;
 
   return (
     <div className="dmd-container">
@@ -395,57 +396,94 @@ export default function SceneEnterpriseDynamicDetail() {
                   </div>
                 )}
                 {hasProgressAttachments && (
-                  <div className="dmd-service-progress-actions">
-                    <button
-                      type="button"
-                      className="dmd-service-progress-btn"
-                      onClick={handleProgressPreview}
-                    >
-                      查看办理详情
-                    </button>
-                  </div>
+                    <div className="dmd-service-progress-actions">
+                      <button
+                          type="button"
+                          className="dmd-service-progress-btn"
+                          onClick={handleProgressPreview}
+                      >
+                        查看办理详情
+                      </button>
+                    </div>
                 )}
               </div>
             </div>
 
-            {/* 服务清单 */}
-            {data.serviceProcesses && data.serviceProcesses.length > 0 && (() => {
-              const totalTasks = data.serviceProcesses.reduce((sum, p) => sum + (p.tasks?.length || 0), 0);
-              return (
-                <>
-                  <p className="dmd-service-list-label">
-                    服务清单（{data.serviceProcesses.length}家企业 · {totalTasks}项事宜）
-                  </p>
-                  {data.serviceProcesses.map((process) => (
-                    <div
-                      key={process.id}
-                      className="dmd-service-company-card"
-                      ref={(el) => { processPanelRefs.current[process.id] = el; }}
-                    >
-                      <div className="dmd-service-company-header">
-                        <div className="dmd-service-company-badge">
-                          {process.serviceTargetName}
-                        </div>
-                        <span className="dmd-service-company-count">{process.tasks?.length || 0}项事宜</span>
-                      </div>
-                      <div className="dmd-service-company-divider" />
-                      {(process.tasks || []).map((task, taskIndex) => (
-                        <div key={task.id}>
-                          <div className="dmd-service-task-row">
-                            <div className="dmd-service-task-dept">{task.leadOrgName}</div>
-                            <span className="dmd-service-task-arrow">→</span>
-                            <p className="dmd-service-task-text">{task.taskContent}</p>
+            {data.serviceProcesses && data.serviceProcesses.length > 0 && (
+              <>
+                <div className="dmd-service-list-subtitle">
+                  服务清单（{uniqueDeptCount}个部门 · {taskCountTotal}项事宜）
+                </div>
+
+                {data.serviceProcesses.map((process) =>
+                  process.tasks.map((task, taskIndex) => {
+                    const taskKey = `${process.id}-${task.id}-${taskIndex}`;
+                    const taskStatus = getServiceTaskStatus(task.status);
+                    const isExpanded = expandedServiceTaskKey === taskKey;
+                    const hasFeedbackContent = task.feedbackResult || task.feedbackDate;
+
+                    return (
+                      <div
+                        key={taskKey}
+                        className="dmd-service-panel"
+                        ref={taskIndex === 0 ? (el) => { processPanelRefs.current[process.id] = el; } : null}
+                      >
+                        <div className="dmd-service-task-meta">
+                          <div className="dmd-service-task-meta-left">
+                            <span
+                              className={`dmd-service-task-status dmd-service-task-status--${taskStatus.className}`}
+                            >
+                              {taskStatus.label}
+                            </span>
+                            <span className="dmd-service-task-org">
+                              {task.leadOrgName}
+                            </span>
                           </div>
-                          {taskIndex < (process.tasks.length - 1) && (
-                            <div className="dmd-service-task-divider" />
-                          )}
+                          <button
+                            type="button"
+                            className="dmd-service-task-toggle"
+                            onClick={() => handleServiceTaskToggle(taskKey)}
+                          >
+                            <span>{isExpanded ? "收起反馈" : "展开反馈"}</span>
+                            <img
+                              src={iconChevronDownBlue}
+                              alt=""
+                              className={`dmd-service-task-toggle-icon${isExpanded ? " dmd-service-task-toggle-icon--expanded" : ""}`}
+                            />
+                          </button>
                         </div>
-                      ))}
-                    </div>
-                  ))}
-                </>
-              );
-            })()}
+
+                        {isExpanded && (
+                          <>
+                            <div className="dmd-service-task-box">
+                              <p className="dmd-service-task-text">
+                                <span className="dmd-service-task-label">任务目标：</span>
+                                <span>{task.taskContent}</span>
+                              </p>
+                            </div>
+                            {hasFeedbackContent && (
+                              <div className="dmd-service-feedback-box">
+                                {task.feedbackResult && (
+                                  <p className="dmd-service-feedback-text">
+                                    <span className="dmd-service-task-label">反馈结果：</span>
+                                    <span>{task.feedbackResult}</span>
+                                  </p>
+                                )}
+                                {task.feedbackDate && (
+                                  <p className="dmd-service-feedback-date">
+                                    反馈日期：{task.feedbackDate}
+                                  </p>
+                                )}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })
+                )}
+              </>
+            )}
           </>
         ) : (
           <>

@@ -62,6 +62,7 @@ function HomeCardHeader({ title, countText, onClick }) {
       <div className="kf-service-title">{title}</div>
       <div className="kf-service-header-right">
         <span className="kf-service-count">{countText}</span>
+        <div className="kf-service-dot-Wrapper"><div className="kf-service-dot" /></div>
         <img
           src={iconKeyEnterpriseChevron}
           alt=""
@@ -72,15 +73,14 @@ function HomeCardHeader({ title, countText, onClick }) {
   );
 }
 
-const REGION_COLOR = { 1: '#00A63E', 2: '#E37318' };
+const REGION_COLOR = { 1: '#155DFC', 2: '#E37318' };
 
 function ServiceEnterpriseCard({ title, total, items, regionType, navigate }) {
   const prefix = regionType === 1 ? '区内' : '区外';
-  const rest = title.replace(prefix, '');
   const coloredTitle = (
     <>
       <span style={{ color: REGION_COLOR[regionType] }}>{prefix}</span>
-      {rest}
+      企业
     </>
   );
   return (
@@ -376,10 +376,7 @@ function KeyFocus({ sceneOverview }) {
           <div className="kf-section-box ai-box">
             <div className="kf-section-header">
               <div className="kf-section-title-grp">
-                <div className="kf-section-icon-bg purple-bg">
-                  <img src={iconAi} alt="AI" />
-                </div>
-                <span className="kf-section-name purple-text">人工智能</span>
+                <span className="kf-section-name">人工智能</span>
               </div>
               <div
                 className="kf-tag-badge purple-badge"
@@ -432,29 +429,30 @@ function KeyFocus({ sceneOverview }) {
         </div>
       </div>
 
-      <ServiceEnterpriseCard
-        title={enterpriseModules?.insideModule?.moduleTitle || '区内重点服务企业'}
-        total={enterpriseModules?.insideModule?.total || 0}
-        items={enterpriseModules?.insideModule?.previewList || []}
-        regionType={1}
-        navigate={navigate}
-      />
-
-      <ServiceEnterpriseCard
-        title={enterpriseModules?.outsideModule?.moduleTitle || '区外重点服务企业'}
-        total={enterpriseModules?.outsideModule?.total || 0}
-        items={enterpriseModules?.outsideModule?.previewList || []}
-        regionType={2}
-        navigate={navigate}
-      />
-
-      <ServiceDepartmentCard
-        title="企业服务部门"
-        total={deptTotal}
-        items={deptItems}
-        onHeaderClick={() => navigate('/service-departments')}
-        onItemClick={(item) => navigate(`/service-departments?leadOrgId=${item.leadOrgId}`)}
-      />
+      <div className="kf-recent-focus">
+        <div className="kf-recent-focus-title">最近关注</div>
+        <ServiceEnterpriseCard
+          title={enterpriseModules?.insideModule?.moduleTitle || '区内重点服务企业'}
+          total={enterpriseModules?.insideModule?.total || 0}
+          items={enterpriseModules?.insideModule?.previewList || []}
+          regionType={1}
+          navigate={navigate}
+        />
+        <ServiceEnterpriseCard
+          title={enterpriseModules?.outsideModule?.moduleTitle || '区外重点服务企业'}
+          total={enterpriseModules?.outsideModule?.total || 0}
+          items={enterpriseModules?.outsideModule?.previewList || []}
+          regionType={2}
+          navigate={navigate}
+        />
+        <ServiceDepartmentCard
+          title="关联部门"
+          total={deptTotal}
+          items={deptItems}
+          onHeaderClick={() => navigate('/service-departments')}
+          onItemClick={(item) => navigate(`/service-departments?leadOrgId=${item.leadOrgId}`)}
+        />
+      </div>
     </section>
   );
 }

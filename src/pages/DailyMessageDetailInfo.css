@@ -56,7 +56,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px 16px;
+  padding: 16px 16px 24px;
 }
 
 /* ===== 卡片通用样式 ===== */
@@ -544,6 +544,46 @@
   background: #EFF6FF;
 }
 
+.dmd-service-list-subtitle {
+  color: #646482;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: normal;
+  flex-shrink: 0;
+}
+
+.dmd-service-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  padding: 15px 16px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid #E6EAF5;
+  box-sizing: border-box;
+}
+
+.dmd-service-panel-title {
+  color: #181818;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
+}
+
+.dmd-service-panel-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+
 .dmd-service-rich-text {
   color: #364153;
   font-size: 16px;
@@ -601,242 +641,153 @@
   cursor: pointer;
 }
 
-/* 新的服务对象卡片样式 */
-.service-processes-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  margin-top: 16px;
-}
-
-.service-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  padding: 16px;
-  border-radius: 16px;
-  background: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  box-sizing: border-box;
-}
-
-.service-card-header {
+.dmd-service-process-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #F0F0F0;
 }
 
-.service-target-name {
+.dmd-service-process-company {
   flex: 1;
   min-width: 0;
-  color: #181818;
+  color: #1777FF;
   font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  margin: 0;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
 }
 
-.service-company-link {
+.dmd-service-company-link {
   flex-shrink: 0;
   padding: 0;
   border: none;
   background: transparent;
   color: #155DFC;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 16px;
   cursor: pointer;
-  transition: color 0.2s ease;
 }
 
-.service-company-link:hover {
-  color: #0047CC;
-}
-
-.service-tasks {
+.dmd-service-task-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px;
   width: 100%;
 }
 
-.service-task {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.dmd-service-task-box,
+.dmd-service-feedback-box {
   width: 100%;
-  padding: 12px;
+  padding: 13px;
   border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  background: #F9FAFB;
-  box-sizing: border-box;
-  transition: all 0.2s ease;
-}
-
-.service-task:hover {
-  border-color: #D1D5DB;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.service-task-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 4px;
-}
-
-.service-task-status {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 52px;
-  height: 20px;
-  padding: 0 10px;
-  border-radius: 12px;
-  color: #FFFFFF;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  box-sizing: border-box;
-}
-
-.service-task-status--pending {
-  background: #E37318;
-}
-
-.service-task-status--processing {
-  background: #0052D9;
-}
-
-.service-task-status--done {
-  background: #2BA471;
-}
-
-.service-task-department {
-  color: #181818;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  letter-spacing: -0.01em;
-}
-
-.service-task-content {
-  color: #4B5563;
-  font-size: 14px;
-  line-height: 20px;
-  word-break: break-word;
-  letter-spacing: 0.01em;
-}
-
-/* ===== 服务清单 ===== */
-.dmd-service-list-label {
-  margin: 0;
-  color: #646482;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: normal;
-}
-
-.dmd-service-company-card {
+  border-radius: 10px;
   background: #FFFFFF;
-  border: 1px solid #E6EAF5;
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  flex-shrink: 0;
-  width: 100%;
   box-sizing: border-box;
 }
 
-.dmd-service-company-header {
+.dmd-service-task-text,
+.dmd-service-feedback-text {
+  color: #364153;
+  font-size: 16px;
+  line-height: 19.5px;
+  word-break: break-word;
+}
+
+.dmd-service-task-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 10px;
+  gap: 12px;
 }
 
-.dmd-service-company-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 10px;
-  background: #EBF3FF;
-  border-radius: 8px;
-  color: #1777FF;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.dmd-service-company-count {
-  color: #A0A0B4;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: normal;
-  white-space: nowrap;
-}
-
-.dmd-service-company-divider {
-  height: 1px;
-  background: #F0F2FA;
-  flex-shrink: 0;
-}
-
-.dmd-service-task-row {
+.dmd-service-task-meta-left {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding-top: 10px;
-  overflow: hidden;
+  gap: 15px;
+  min-width: 0;
 }
 
-.dmd-service-task-dept {
+.dmd-service-task-status {
   display: inline-flex;
   align-items: center;
-  padding: 3px 8px;
-  background: #F2F4FC;
-  border-radius: 6px;
-  color: #505A78;
+  justify-content: center;
+  min-width: 46px;
+  height: 19px;
+  padding: 0 8px;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 12px;
-  font-weight: 700;
-  line-height: normal;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.dmd-service-task-arrow {
-  color: #B4B9D2;
-  font-size: 13px;
-  font-weight: 400;
-  flex-shrink: 0;
-}
-
-.dmd-service-task-text {
-  margin: 0;
-  color: #232337;
-  font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  flex: 1;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.dmd-service-task-status--pending {
+  background: #E37318;
+}
+
+.dmd-service-task-status--processing {
+  background: #0052D9;
+}
+
+.dmd-service-task-status--done {
+  background: #2BA471;
+}
+
+.dmd-service-task-org {
+  color: #1777FF;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
+}
+
+.dmd-service-task-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #003CAB;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
+  cursor: pointer;
+}
+
+.dmd-service-task-toggle-icon {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.dmd-service-task-toggle-icon--expanded {
+  transform: rotate(180deg);
+}
+
+.dmd-service-feedback-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dmd-service-feedback-date {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19.5px;
+  text-align: right;
 }
 
 .dmd-service-task-divider {
+  width: 100%;
   height: 1px;
-  background: #F5F6FC;
-  /* margin-top: 10px; */
+  background: #E7E7E7;
 }
 
 .dmd-attachment-overlay {

@@ -361,11 +361,11 @@
 }
 
 .tc-tl-delta--pos {
-  color: #F4200D;
+  color: #00A63E;
 }
 
 .tc-tl-delta--neg {
-  color: #0AA34E;
+  color: #FB2C36;
 }
 
 /* 变化原因列表行 */
