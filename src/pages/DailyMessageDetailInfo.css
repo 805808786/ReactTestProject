@@ -544,6 +544,48 @@
   background: #EFF6FF;
 }
 
+.dmd-service-enterprise-card {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.dmd-service-enterprise-card-content {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between;
+  padding: 16px !important;
+  gap: 8px !important;
+  min-height: 57px;
+  box-sizing: border-box;
+}
+
+.dmd-service-enterprise-name {
+  color: #101828;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: -0.3125px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dmd-service-enterprise-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #003CAB;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.1504px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .dmd-service-list-subtitle {
   color: #646482;
   font-size: 13px;
@@ -1059,4 +1101,32 @@
     opacity: 1;
     transform: translateX(-50%) translateY(0);
   }
+}
+
+/* ===== Loading ===== */
+.dmd-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 120px;
+  gap: 12px;
+}
+
+.dmd-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e6eaf5;
+  border-top-color: #1777ff;
+  border-radius: 50%;
+  animation: dmd-spin 0.8s linear infinite;
+}
+
+@keyframes dmd-spin {
+  to { transform: rotate(360deg); }
+}
+
+.dmd-loading-text {
+  font-size: 14px;
+  color: #aaaaaa;
 }

@@ -698,6 +698,18 @@ export const listProcessTaskByDeptAndDate = ({ leadOrgId, date, currentPage, pag
 };
 
 /**
+ * 按部门分组查询处置流程任务列表（按日期筛选）
+ */
+export const listProcessTaskDeptGroupByDate = ({ leadOrgId, date, currentPage, pageSize }) => {
+  return dailyMessageRequest.post('/client/recommend/listProcessTaskDeptGroupByDate', {
+    ...(leadOrgId != null && { leadOrgId }),
+    ...(date && { date }),
+    currentPage,
+    pageSize,
+  });
+};
+
+/**
  * 部门任务汇总统计列表
  */
 export const listProcessTaskDeptSummary = ({ leadOrgId, date, limit } = {}) => {

@@ -55,7 +55,7 @@ const DEFAULT_DETAIL = {
 
 const SERVICE_TASK_STATUS_MAP = {
   0: { label: "待开始", className: "pending" },
-  1: { label: "办理中", className: "processing" },
+  1: { label: "进行中", className: "processing" },
   2: { label: "已完成", className: "done" },
 };
 
@@ -165,6 +165,9 @@ export default function SceneEnterpriseDynamicDetail() {
   const hasScrolledToProcess = useRef(false);
 
   // 反馈弹框状态
+  const [loading, setLoading] = useState(true);
+
+  // 反馈弹框状态
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackContent, setFeedbackContent] = useState("");
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
@@ -251,7 +254,7 @@ export default function SceneEnterpriseDynamicDetail() {
       }
     };
 
-    fetchDetail();
+    fetchDetail().finally(() => setLoading(false));
   }, [id]);
 
   // 数据加载后自动滚动到指定 processId
@@ -364,7 +367,12 @@ export default function SceneEnterpriseDynamicDetail() {
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="dmd-body">
-        {isServiceDetail ? (
+        {loading ? (
+          <div className="dmd-loading">
+            <div className="dmd-loading-spinner" />
+            <span className="dmd-loading-text">加载中...</span>
+          </div>
+        ) : isServiceDetail ? (
           <>
             <div className="dmd-card dmd-service-top-card">
               <div className="dmd-card-content dmd-service-top-card-content">
@@ -421,6 +429,7 @@ export default function SceneEnterpriseDynamicDetail() {
                       key={process.id}
                       className="dmd-service-company-card"
                       ref={(el) => { processPanelRefs.current[process.id] = el; }}
+                      onClick={() => navigate(`/daily-message-detail-info/${id}?processId=${process.id}`)}
                     >
                       <div className="dmd-service-company-header">
                         <div className="dmd-service-company-badge">

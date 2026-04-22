@@ -55,7 +55,7 @@ const DEFAULT_DETAIL = {
 
 const SERVICE_TASK_STATUS_MAP = {
   0: { label: "待开始", className: "pending" },
-  1: { label: "办理中", className: "processing" },
+  1: { label: "进行中", className: "processing" },
   2: { label: "已完成", className: "done" },
 };
 
@@ -164,6 +164,8 @@ export default function SceneEnterpriseDynamicDetail() {
   const processPanelRefs = useRef({});
   const hasScrolledToProcess = useRef(false);
 
+  const [loading, setLoading] = useState(true);
+
   // 反馈弹框状态
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackContent, setFeedbackContent] = useState("");
@@ -251,7 +253,7 @@ export default function SceneEnterpriseDynamicDetail() {
       }
     };
 
-    fetchDetail();
+    fetchDetail().finally(() => setLoading(false));
   }, [id]);
 
   // 数据加载后自动滚动到指定 processId
@@ -346,9 +348,16 @@ export default function SceneEnterpriseDynamicDetail() {
     data.richTextContent || data.content || "";
   const hasProgressAttachments = (data.progressAttachments || []).length > 0;
 
-  const allTasksFlat = (data.serviceProcesses || []).flatMap(p => p.tasks || []);
-  const uniqueDeptCount = new Set(allTasksFlat.map(t => t.leadOrgName).filter(Boolean)).size;
-  const taskCountTotal = allTasksFlat.length;
+  const targetProcessId = searchParams.get("processId");
+  const filteredProcesses = targetProcessId
+    ? (data.serviceProcesses || []).filter(p => String(p.id) === String(targetProcessId))
+    : (data.serviceProcesses || []);
+  const primaryProcess = filteredProcesses[0] || (data.serviceProcesses || [])[0];
+  const serviceEnterpriseId = primaryProcess?.enterpriseId;
+  const serviceEnterpriseName = primaryProcess?.serviceTargetName || "";
+  const filteredTasksFlat = filteredProcesses.flatMap(p => p.tasks || []);
+  const uniqueDeptCount = new Set(filteredTasksFlat.map(t => t.leadOrgName).filter(Boolean)).size;
+  const taskCountTotal = filteredTasksFlat.length;
 
   return (
     <div className="dmd-container">
@@ -365,57 +374,39 @@ export default function SceneEnterpriseDynamicDetail() {
 
       {/* ===== 主体区域（可滚动） ===== */}
       <div className="dmd-body">
-        {isServiceDetail ? (
+        {loading ? (
+          <div className="dmd-loading">
+            <div className="dmd-loading-spinner" />
+            <span className="dmd-loading-text">加载中...</span>
+          </div>
+        ) : isServiceDetail ? (
           <>
-            <div className="dmd-card dmd-service-top-card">
-              <div className="dmd-card-content dmd-service-top-card-content">
-                <div className="dmd-service-header">
-                  <img
-                    src={iconBuilding}
-                    alt="精准服务"
-                    width={20}
-                    height={20}
-                  />
-                  <span className="dmd-service-title">{data.title}</span>
-                </div>
-                <div className="dmd-service-date-row">
-                  <img src={iconCalendar} alt="日期" width={12} height={12} />
-                  <span className="dmd-service-date-text">
-                    日期：{data.date}
-                  </span>
-                </div>
-                <div className="dmd-service-section-title">进度总结</div>
-                {serviceBackgroundContent && (
-                  <div className="dmd-service-background-box">
-                    <div
-                      className="dmd-service-rich-text dmd-service-background-text"
-                      dangerouslySetInnerHTML={{
-                        __html: serviceBackgroundContent,
-                      }}
-                    />
+            {serviceEnterpriseName && (
+              <div className="dmd-card dmd-service-enterprise-card">
+                <div className="dmd-card-content dmd-service-enterprise-card-content">
+                  <div className="dmd-service-header" style={{ flex: 1, minWidth: 0 }}>
+                    <img src={iconBuilding} alt="企业" width={20} height={20} style={{ flexShrink: 0 }} />
+                    <span className="dmd-service-enterprise-name">{serviceEnterpriseName}</span>
                   </div>
-                )}
-                {hasProgressAttachments && (
-                    <div className="dmd-service-progress-actions">
-                      <button
-                          type="button"
-                          className="dmd-service-progress-btn"
-                          onClick={handleProgressPreview}
-                      >
-                        查看办理详情
-                      </button>
-                    </div>
-                )}
+                  {serviceEnterpriseId && (
+                    <button
+                      className="dmd-service-enterprise-link"
+                      onClick={() => navigate(`/company-detail/${serviceEnterpriseId}`)}
+                    >
+                      查看企业 →
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
-            {data.serviceProcesses && data.serviceProcesses.length > 0 && (
+            {filteredProcesses.length > 0 && (
               <>
                 <div className="dmd-service-list-subtitle">
                   服务清单（{uniqueDeptCount}个部门 · {taskCountTotal}项事宜）
                 </div>
 
-                {data.serviceProcesses.map((process) =>
+                {filteredProcesses.map((process) =>
                   process.tasks.map((task, taskIndex) => {
                     const taskKey = `${process.id}-${task.id}-${taskIndex}`;
                     const taskStatus = getServiceTaskStatus(task.status);

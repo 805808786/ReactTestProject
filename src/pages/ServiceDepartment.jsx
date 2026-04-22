@@ -1,10 +1,9 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
-import InfiniteList from './components/InfiniteList';
 import FilterSheet from './components/FilterSheet';
 import DateSelection from './components/dataSelection/index';
-import { listProcessTaskByDeptAndDate, listProcessTaskDepts } from '../api/enterprise';
+import { listProcessTaskDeptGroupByDate, listProcessTaskDepts } from '../api/enterprise';
 import './ServiceDepartment.css';
 
 const TASK_STATUS_MAP = { 0: '待开始', 1: '办理中', 2: '已完成' };
@@ -27,65 +26,38 @@ function FilterButton({ label, active, count, onClick }) {
   );
 }
 
-function TaskCard({ item, navigate }) {
+function DeptCard({ group, navigate }) {
+  const { deptName, taskCount, tasks } = group;
   return (
     <div className="sd-card">
       <div className="sd-card-header">
-        <span className="sd-dept-name">{item.leadOrgName}</span>
-        <span className={`sd-status sd-status--${TASK_STATUS_CLASS[item.status] || 'pending'}`}>
-          {TASK_STATUS_MAP[item.status] || '待开始'}
-        </span>
+        <div className="sd-dept-badge">{deptName}</div>
+        <div className="sd-count-badge">{taskCount}项</div>
       </div>
-
-      <div className="sd-enterprise-row">
-        <span className="sd-badge-svc">服务企业</span>
-        <span className="sd-enterprise-name">{item.serviceTargetName}</span>
-        <span className="sd-link" onClick={() => navigate(`/company-detail/${item.enterpriseId}`)}>
-          查看企业 →
-        </span>
-      </div>
-
-      {item.taskContent && (
-        <div className="sd-box">
-          <p className="sd-box-text">
-            <span className="sd-box-label">任务目标：</span>
-            {item.taskContent}
-          </p>
-        </div>
-      )}
-
-      {item.feedbackResult && (
-        <div className="sd-box">
-          <p className="sd-box-text">
-            <span className="sd-box-label">反馈结果：</span>
-            {item.feedbackResult}
-          </p>
-          {item.feedbackDate && (
-            <p className="sd-feedback-date">反馈日期：{formatDate(item.feedbackDate)}</p>
-          )}
-        </div>
-      )}
-
-      <div
-        className="sd-detail-row"
-        onClick={() => navigate(`/daily-message-detail/${item.recommendId}?processId=${item.processId}`)}
-      >
-        <span className="sd-detail-text">查看任务详情</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path d="M9 6l6 6-6 6" stroke="#003cab" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+      <div className="sd-divider" />
+      <div className="sd-tasks">
+        {tasks.map((task, idx) => (
+          <div key={task.id ?? idx}>
+            {idx > 0 && <div className="sd-item-divider" />}
+            <div
+              className="sd-task-item"
+              onClick={() => navigate(`/daily-message-detail/${task.recommendId}?processId=${task.processId}`)}
+            >
+              <div className="sd-task-row">
+                <span className="sd-enterprise-name">{task.serviceTargetName}</span>
+                <span className={`sd-status sd-status--${TASK_STATUS_CLASS[task.status] ?? 'pending'}`}>
+                  {TASK_STATUS_MAP[task.status] ?? '待开始'}
+                </span>
+              </div>
+              {task.taskContent && (
+                <p className="sd-task-content">{task.taskContent}</p>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
-}
-
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const parts = dateStr.split('-');
-  if (parts.length === 3) {
-    return `${parts[0]}年${parseInt(parts[1])}月${parseInt(parts[2])}日`;
-  }
-  return dateStr;
 }
 
 export default function ServiceDepartment() {
@@ -102,10 +74,7 @@ export default function ServiceDepartment() {
   const [confirmedDate, setConfirmedDate] = useState(null);
 
   const [displayedItems, setDisplayedItems] = useState([]);
-  const [hasMore, setHasMore] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
   const contentRef = useRef(null);
   const filtersRef = useRef({ leadOrgId: undefined, confirmedDate: null });
 
@@ -137,56 +106,37 @@ export default function ServiceDepartment() {
     filtersRef.current = { leadOrgId: orgId, confirmedDate };
   }, [deptFilter, confirmedDate, deptNameToId]);
 
-  const fetchData = useCallback(async (page = 1, isRefresh = false) => {
+  const fetchData = useCallback(async () => {
     const { leadOrgId, confirmedDate: cd } = filtersRef.current;
     try {
-      const res = await listProcessTaskByDeptAndDate({
+      const res = await listProcessTaskDeptGroupByDate({
         leadOrgId,
         date: cd || undefined,
-        currentPage: page,
-        pageSize: 10,
       });
-
-      const items = res.data?.data || [];
-      const total = res.data?.total || 0;
-
-      setDisplayedItems((prev) => {
-        const updated = isRefresh ? items : [...prev, ...items];
-        setHasMore(updated.length < total);
-        return updated;
-      });
-      setCurrentPage(page);
+      setDisplayedItems(res.data || []);
     } catch (err) {
       console.error('获取部门任务列表失败:', err);
-      if (isRefresh) {
-        setDisplayedItems([]);
-      }
+      setDisplayedItems([]);
     }
   }, []);
 
   useEffect(() => {
-    setCurrentPage(1);
     setLoading(true);
     setDisplayedItems([]);
-    setHasMore(false);
     if (contentRef.current) {
       contentRef.current.scrollTop = 0;
     }
-    fetchData(1, true).finally(() => setLoading(false));
+    fetchData().finally(() => setLoading(false));
   }, [deptFilter, confirmedDate, fetchData]);
 
-  const handleLoadMore = useCallback(async () => {
-    if (loading || !hasMore) return;
-    setLoading(true);
-    await fetchData(currentPage + 1);
-    setLoading(false);
-  }, [loading, hasMore, currentPage, fetchData]);
-
-  const handleRefresh = useCallback(async () => {
-    setRefreshing(true);
-    await fetchData(1, true);
-    setRefreshing(false);
-  }, [fetchData]);
+  const groupedItems = useMemo(() => {
+    return displayedItems.map((item) => ({
+      id: item.leadOrgId || item.leadOrgName,
+      deptName: item.leadOrgName,
+      taskCount: item.taskCount,
+      tasks: item.taskList || [],
+    }));
+  }, [displayedItems]);
 
   const handleCalendarOpen = () => {
     setPendingDate(confirmedDate);
@@ -226,17 +176,15 @@ export default function ServiceDepartment() {
           </div>
         </div>
 
-        <InfiniteList
-          items={displayedItems}
-          renderItem={(item) => (
-            <TaskCard key={item.id} item={item} navigate={navigate} />
-          )}
-          onLoadMore={handleLoadMore}
-          onRefresh={handleRefresh}
-          hasMore={hasMore}
-          loading={loading}
-          refreshing={refreshing}
-        />
+        {!loading && groupedItems.length === 0 ? (
+          <div className="sd-empty">暂无数据</div>
+        ) : (
+          <div className="sd-list">
+            {groupedItems.map((group) => (
+              <DeptCard key={group.id} group={group} navigate={navigate} />
+            ))}
+          </div>
+        )}
       </div>
 
       <FilterSheet

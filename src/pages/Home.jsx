@@ -1002,9 +1002,9 @@ function FocusScene({ sceneOverviews }) {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <circle cx="12" cy="12" r="9" stroke="#9810FA" strokeWidth="2" />
-              <circle cx="12" cy="12" r="5" stroke="#9810FA" strokeWidth="2" />
-              <circle cx="12" cy="12" r="2" fill="#9810FA" />
+              <circle cx="12" cy="12" r="9" stroke="#155DFC" strokeWidth="2" />
+              <circle cx="12" cy="12" r="5" stroke="#155DFC" strokeWidth="2" />
+              <circle cx="12" cy="12" r="2" fill="#155DFC" />
             </svg>
           </div>
           <span className="card-title">场景雷达</span>

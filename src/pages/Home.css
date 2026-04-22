@@ -337,7 +337,7 @@
 }
 
 .scene-icon-bg {
-  background: #faf5ff;
+  background: #F2F8FF;
 }
 
 .card-title {
@@ -636,8 +636,8 @@
 }
 
 .scene-item-card {
-  background: #F9F5FF;
-  border-radius: 12px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #EEF2FF 100%);
   padding: 16px;
 }
 
@@ -660,7 +660,7 @@
 }
 
 .scene-item-badge {
-  background: #9810FA;
+  background: #155DFC;
   color: #FFFFFF;
   font-size: 12px;
   padding: 4px 8px;
@@ -702,7 +702,7 @@
 }
 
 .metric-arrow {
-  color: #9810FA;
+  color: #155DFC;
   font-size: 14px;
 }
 
@@ -716,7 +716,7 @@
 .metric-val {
   font-size: 18px;
   font-weight: 700;
-  color: #9810FA;
+  color: #155DFC;
 }
 
 .metric-val small {
@@ -727,8 +727,8 @@
 
 .metric-delta {
   font-size: 12px;
-  color: #9810FA;
-  background: #F4EBFF;
+  color: #155DFC;
+  /* background: #F4EBFF; */
   padding: 1px 4px;
   border-radius: 4px;
 }

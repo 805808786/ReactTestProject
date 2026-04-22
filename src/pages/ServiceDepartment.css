@@ -37,146 +37,136 @@
   height: 24px;
 }
 
-/* ===== 任务卡片 ===== */
+/* ===== 部门任务卡片 ===== */
 .sd-card {
   background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-  padding: 15px 16px;
+  border: 1px solid #e6eaf5;
+  border-radius: 14px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
 .sd-card-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
 }
 
-.sd-dept-name {
-  font-size: 16px;
+.sd-dept-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 8px;
+  background: #f2f4f8;
+  font-size: 14px;
   font-weight: 700;
-  color: #000;
-  letter-spacing: -0.1504px;
+  color: #465069;
+  white-space: nowrap;
+}
+
+.sd-count-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 10px;
+  background: #f2f4fc;
+  font-size: 12px;
+  color: #646482;
+  white-space: nowrap;
+}
+
+.sd-divider {
+  height: 1px;
+  background: #f0f2fa;
+  width: 100%;
+}
+
+.sd-tasks {
+  display: flex;
+  flex-direction: column;
+}
+
+.sd-item-divider {
+  height: 1px;
+  background: #f5f6fc;
+  width: 100%;
+}
+
+.sd-task-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.sd-task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sd-enterprise-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1777ff;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
+  min-width: 0;
 }
 
 .sd-status {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  height: 19px;
   padding: 2px 8px;
-  border-radius: 12px;
+  border-radius: 4px;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 20px;
-  white-space: nowrap;
-}
-
-.sd-status--pending {
-  background: #9ca3af;
-}
-
-.sd-status--processing {
-  background: #0052d9;
-}
-
-.sd-status--done {
-  background: #2ba471;
-}
-
-.sd-enterprise-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.sd-badge-svc {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 21px;
-  padding: 3px 9px;
-  border-radius: 8px;
-  background: #0052d9;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
-.sd-enterprise-name {
-  flex: 1;
-  min-width: 0;
+.sd-status--pending {
+  background: #f2f4f8;
+  color: #9ca3af;
+}
+
+.sd-status--processing {
+  background: #fff7e6;
+  color: #fa8c00;
+}
+
+.sd-status--done {
+  background: #e8f5e9;
+  color: #2ba471;
+}
+
+.sd-task-content {
   font-size: 16px;
-  font-weight: 700;
-  color: #1777ff;
-  letter-spacing: -0.1504px;
+  color: #323241;
+  line-height: 20px;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.sd-link {
-  font-size: 12px;
-  font-weight: 400;
-  color: #155dfc;
-  white-space: nowrap;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.sd-box {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 13px;
-}
-
-.sd-box-text {
-  font-size: 16px;
-  color: #364153;
-  line-height: 19.5px;
-  margin: 0;
-}
-
-.sd-box-label {
-  font-weight: 700;
-  color: #000;
-}
-
-.sd-feedback-date {
+.sd-empty {
+  padding-top: 80px;
+  text-align: center;
   font-size: 14px;
-  color: #000;
-  margin: 8px 0 0;
-  line-height: 19.5px;
-  white-space: nowrap;
-}
-
-.sd-detail-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 5px;
-  cursor: pointer;
-}
-
-.sd-detail-text {
-  font-size: 14px;
-  font-weight: 500;
-  color: #003cab;
-  letter-spacing: -0.1504px;
-  line-height: 20px;
+  color: #aaaaaa;
 }
 
 /* 列表项间距 */
-.sd-body .infinite-list {
+.sd-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  padding-bottom: 28px;
 }
