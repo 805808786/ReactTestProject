@@ -106,7 +106,9 @@ function mapApiDetailToData(apiData) {
     serviceProgress: "",
     serviceProcesses: [],
     progressAttachments: [],
-
+    cardType: apiData.cardType,
+    enterpriseId: apiData.enterpriseId,
+    enterpriseName: apiData.enterpriseName || "",
   };
 
   if (cardType === 1) {
@@ -350,12 +352,12 @@ export default function SceneEnterpriseDynamicDetail() {
 
   const isServiceDetail = data.category === "service";
 
-  console.log(data)
-
   const serviceBackgroundContent =
     data.richTextContent || data.content || "";
   const hasProgressAttachments = (data.progressAttachments || []).length > 0;
 
+
+  console.log(data)
 
   return (
     <div className="dmd-container">
@@ -710,6 +712,54 @@ export default function SceneEnterpriseDynamicDetail() {
                 </div>
               </div>
             )}
+
+            {(data.cardType == 1 || data.cardType == 5) && <div className="dmd-card">
+              <div className="dmd-card-content">
+                {/* 卡片标题 */}
+                <div className="dmd-section-header">
+                  <img
+                    src={iconBuilding}
+                    alt="关联企业"
+                    width={16}
+                    height={16}
+                  />
+                  <span className="dmd-section-title">关联企业</span>
+                  <span className="dmd-section-count">
+                    (1家)
+                  </span>
+                </div>
+
+                {/* 企业列表 */}
+                <div className="dmd-company-list">
+                  <div className="dmd-company-item">
+                    {/* 企业信息行 */}
+                    <div className="dmd-company-main">
+                      {/* 左侧：名称 + 基本信息 */}
+                      <div className="dmd-company-left">
+                        <div className="dmd-company-name">
+                          {data.enterpriseName}
+                        </div>
+                      </div>
+                      {data.enterpriseId && (
+                        <div
+                          className="dmd-company-detail-row"
+                          onClick={() =>
+                            navigate(`/company-detail/${data.enterpriseId}`)
+                          }
+                        >
+                          <span className="dmd-company-detail-link">
+                            查看详情 →
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    {/* 查看详情 */}
+                  </div>
+                </div>
+              </div>
+            </div>}
+
+
           </>
         )}
       </div>

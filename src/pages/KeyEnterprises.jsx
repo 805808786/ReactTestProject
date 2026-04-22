@@ -243,7 +243,7 @@ function ServiceCard({ item, navigate }) {
       )}
       {item.recommendId && (
           <div className="ke-svc-detail-row" onClick={() => navigate(`/daily-message-detail/${item.recommendId}`)}>
-            {/* 如果item.isRead为false，显示红点 */}
+            {!item.isRead && <span className="ke-news-dot" />}
             <span className="ke-svc-detail-text">查看任务详情</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path d="M9 6l6 6-6 6" stroke="#003cab" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
