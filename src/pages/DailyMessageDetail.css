@@ -252,6 +252,7 @@
   word-wrap: break-word;
   word-break: break-word;
   overflow-x: hidden;
+  white-space: pre-line;
 }
 
 .dmd-summary--green {

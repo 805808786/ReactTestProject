@@ -100,6 +100,19 @@ export default function CompanyDetail() {
   const [apiBasicInfo, setApiBasicInfo] = useState(null);
   const [apiTagsInfo, setApiTagsInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [newsFlashItems, setNewsFlashItems] = useState([]);
+
+  // 从 API 获取企业快讯
+  useEffect(() => {
+    if (!id) return;
+    listLeaderBoardByEnterpriseId({ currentPage: 1, pageSize: 999, enterpriseId: id, sortField: 'generateTime' })
+        .then((res) => {
+          setNewsFlashItems(res.data?.data || res.data || []);
+        })
+        .catch((err) => {
+          setNewsFlashItems([]);
+        });
+  }, [id]);
 
   // 从 API 获取企业基本信息
   useEffect(() => {
@@ -173,7 +186,7 @@ export default function CompanyDetail() {
 
           {/* ===== 内容区域 ===== */}
           <div className="cd-body">
-            {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} apiTagsInfo={apiTagsInfo} />}
+            {activeTab === 'data' && <EnterpriseDataTab apiBasicInfo={apiBasicInfo} apiTagsInfo={apiTagsInfo} newsFlashItems={newsFlashItems}/>}
             {activeTab === 'service-matrix' && <ServiceMatrixTab />}
             {activeTab === 'enterprise-service' && <EnterpriseServiceTab />}
             {activeTab === 'dynamic' && <EnterpriseDynamicTab navigate={navigate} companyId={id} />}
@@ -186,7 +199,7 @@ export default function CompanyDetail() {
 }
 
 /* ===================== 企业数据 Tab ===================== */
-function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
+function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo, newsFlashItems }) {
   const [navExpanded, setNavExpanded] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState({});
   const [labelExpanded, setLabelExpanded] = useState(false);
@@ -211,7 +224,6 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
   const [equityData, setEquityData] = useState({});
   const [processTasks, setProcessTasks] = useState([]);
   const [expandedTaskIds, setExpandedTaskIds] = useState(new Set());
-  const [newsFlashItems, setNewsFlashItems] = useState([]);
   const sectionRefs = useRef({});
   const navigate = useNavigate();
 
@@ -458,18 +470,6 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
       .catch((err) => {
         console.error('获取企业股权穿透信息失败:', err);
         setEquityData({});
-      });
-  }, [id]);
-
-  // 从 API 获取企业快讯
-  useEffect(() => {
-    if (!id) return;
-    listLeaderBoardByEnterpriseId({ currentPage: 1, pageSize: 999, enterpriseId: id, sortField: 'generateTime' })
-      .then((res) => {
-        setNewsFlashItems(res.data?.data || res.data || []);
-      })
-      .catch((err) => {
-        setNewsFlashItems([]);
       });
   }, [id]);
 
@@ -1176,7 +1176,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
           {financingRecords.length > 0 ? financingRecords.map((item, idx) => (
             <div key={idx} className="cd-finance-card-new">
               <div className="cd-finance-top-new">
-                <span className="cd-finance-round-new">{item.name || '未知轮次'}</span>
+                <span className="cd-finance-round-new">{item.financing || '未知轮次'}</span>
                 <span className="cd-finance-amount-new">{item.financingMoney || '-'}</span>
               </div>
               <div className="cd-finance-row-new">
@@ -1185,7 +1185,7 @@ function EnterpriseDataTab({ apiBasicInfo, apiTagsInfo }) {
               </div>
               <div className="cd-finance-row-new">
                 <span className="cd-finance-label-new">投资方：</span>
-                <span className="cd-finance-value-new">{item.financing || '-'}</span>
+                <span className="cd-finance-value-new">{item.name || '-'}</span>
               </div>
             </div>
           )) : <div className="cd-no-data">暂无融资数据</div>}
@@ -2123,7 +2123,7 @@ function EnterpriseNewsFlash({ items, navigate, sectionRefs }) {
       ) : (
         <div className={`cd-newsflash-list${isExpanded ? ' cd-newsflash-list--expanded' : ''}`}>
           {displayItems.map((item) => {
-            const dateStr = newsFlashDateLabel(item.publishTime || '');
+            const dateStr = newsFlashDateLabel(item.generateTime || '');
             const typeLabel = NEWSFLASH_TYPE_LABEL[item.cardType];
             const isTask = item.cardType === 4;
             const content = item.cardType === 5 ? item.remark : item.content;
