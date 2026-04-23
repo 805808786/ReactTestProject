@@ -346,11 +346,11 @@ export default function EnterpriseCalendar() {
               dynamicReasons.push({ text: '拱墅区区内企业迁出', delta: `-${item.newCancelEnterprisesNum}家`, deltaPositive: false });
             }
 
-            if (item.localToRegisteredNum > 0) {
-              dynamicReasons.push({ text: '在册企业转为在地', delta: `${item.localToRegisteredNum}家`, deltaPositive: false, type: "local" });
-            }
             if (item.registeredToLocalNum > 0) {
-              dynamicReasons.push({ text: '在地企业转为在册', delta: `${item.registeredToLocalNum}家`, deltaPositive: false, type: "local" });
+              dynamicReasons.push({ text: '在册企业转为在地', delta: `${item.registeredToLocalNum}家`, deltaPositive: false, type: "local" });
+            }
+            if (item.localToRegisteredNum > 0) {
+              dynamicReasons.push({ text: '在地企业转为在册', delta: `${item.localToRegisteredNum}家`, deltaPositive: false, type: "local" });
             }
 
 
